@@ -1,12 +1,16 @@
 #pragma once
 #include <string>
+#include <cwctype>
 
 class Line
 {
 public:
-    std::string line;
-
     Line();
-    std::string popWord();
+    std::wstring popWord();
+    std::wstring getLine();
+    void setLine(std::wstring newLine);
+private:
+    std::wstring line;
+
 };
 

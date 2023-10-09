@@ -127,17 +127,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="myClass.cpp" />
+    <ClCompile Include="Line.cpp" />
     <ClCompile Include="ProgLab0.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="myClass.h" />
+    <ClCompile Include="Reader.cpp" />
+    <ClCompile Include="Words.cpp" />
+    <ClCompile Include="Writer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="in.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="out.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Line.h" />
+    <ClInclude Include="ProgLab0.h" />
+    <ClInclude Include="Reader.h" />
+    <ClInclude Include="Words.h" />
+    <ClInclude Include="Writer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

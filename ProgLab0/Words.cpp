@@ -2,24 +2,29 @@
 
 Words::Words()
 {
-    count = 0;
+    _count = 0;
 }
 
-void Words::makeMap(std::list<std::string>* list)
+void Words::makeMap(std::list<std::wstring>* list)
 {
     for (auto i = list->begin(); i != list->end(); i++) {
         Line line;
-        line.line = *i;
-        while (!line.line.empty()) {
-            std::string word = line.popWord();
-            auto isFound = myMap.find(word);
-            if (isFound != myMap.end()) {
-                myMap.at(word)++;
+        line.setLine(*i);
+        while (!line.getLine().empty()) {
+            std::wstring word = line.popWord();
+            _count++;
+            auto isFound = mapWords.find(word);
+            if (isFound != mapWords.end()) {
+                mapWords.at(word)++;
             }
             else {
-                myMap.emplace(word, 1);
-                count++;
+                mapWords.emplace(word, 1);
             }
         }
     }
+}
+
+int Words::getCount()
+{
+    return _count;
 }

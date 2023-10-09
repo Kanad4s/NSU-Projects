@@ -12,9 +12,9 @@ long double calculateTrapezoidIntegral(long long int n) {
     for (int i = 0; i < n; i++) {
         long double x1 = i * section;
         long double x2 = (i + 1) * section;
-        result += (function(x1) + function(x2)) * 0.5 * (x2 - x1);
+        result += (function(x1) + function(x2)) * 0.5;
     }
-    return result;
+    return result * section;
 }
 
 int main(int argc, const char* argv[]) {

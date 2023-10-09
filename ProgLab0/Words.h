@@ -6,10 +6,13 @@
 class Words
 {
 public:
-    int count;
-    std::map<std::string, int> myMap;
+    std::map<std::wstring, int> mapWords;
 
     Words();
-    void makeMap(std::list<std::string>* list);
+    void makeMap(std::list<std::wstring>* list);
+    int getCount();
+
+private:
+    int _count;
 };
 

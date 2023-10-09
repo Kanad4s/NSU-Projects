@@ -1,1 +1,2 @@
 C:\Users\Никита\source\repos\ProgLab0\x64\Debug\ProgLab0.exe
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab0\x64\Debug\ProgLab0.exe

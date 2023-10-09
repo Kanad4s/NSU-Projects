@@ -1,2 +1,3 @@
 ﻿  EvmpuLab1.cpp
-  EvmpuLab1.vcxproj -> C:\Users\Никита\source\repos\EvmpuLab1\x64\Debug\EvmpuLab1.exe
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\Evmpu\EvmpuLab1\EvmpuLab1.cpp(21,21): warning C4244: инициализация: преобразование "double" в "__int64", возможна потеря данных
+  EvmpuLab1.vcxproj -> C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\Evmpu\EvmpuLab1\x64\Debug\EvmpuLab1.exe
