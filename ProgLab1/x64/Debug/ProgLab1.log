@@ -1,0 +1,5 @@
+﻿  BitArray.cpp
+  ProgLab1.cpp
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\ProgLab1.cpp(7,9): warning C4101: array: неиспользованная локальная переменная
+  Создание кода...
+  ProgLab1.vcxproj -> C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\x64\Debug\ProgLab1.exe
