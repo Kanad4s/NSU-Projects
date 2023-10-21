@@ -3,8 +3,10 @@
 #include <iostream>
 
 namespace {
-	int DEFOLT_ARRAY_SIZE = sizeof(long int);
+	int DEFOLT_ARRAY_SIZE = sizeof(long);
 	int SIZE_LONG = sizeof(long);
+	int BITS_IN_BYTE = 8;
+	int BITS_IN_LONG = sizeof(long) * 8;
 }
 
 BitArray::BitArray() : _array(std::vector<unsigned long>(DEFOLT_ARRAY_SIZE))
@@ -17,18 +19,16 @@ BitArray::BitArray() : _array(std::vector<unsigned long>(DEFOLT_ARRAY_SIZE))
 
 BitArray::~BitArray()
 {
-	//delete[] _array;
 }
 
 BitArray::BitArray(unsigned long nBits, unsigned long value)// : _array(std::vector<int>(nBits / 8 + 1))
 {
-	if (nBits % 8 == 0) {
-		_array = std::vector<unsigned long>(nBits / 8);
+	if (nBits % BITS_IN_LONG == 0) {
+		_array = std::vector<unsigned long>(nBits / BITS_IN_LONG);
 	}
 	else {
-		_array = std::vector<unsigned long>(nBits / 8 + 1);
+		_array = std::vector<unsigned long>(nBits / BITS_IN_LONG + 1);
 	}
-	//_array = new int[nBits];
 	_size = nBits;
 	insertBits(value);
 }
@@ -39,6 +39,34 @@ BitArray::BitArray(const BitArray& b)
 	_size = b._size;
 }
 
+void BitArray::swap(BitArray& b)
+{
+	BitArray tmp = BitArray(b);
+	b._array = _array;
+	b._size = _size;
+	_array = tmp._array;
+	_size = tmp._size;
+}
+
+void BitArray::resize(int nBits, bool value)
+{
+
+	unsigned long difference = nBits - _size;
+	_size = nBits;
+	int newSize = _size / BITS_IN_LONG;
+	_size % BITS_IN_LONG != 0 ? newSize = 1 : newSize = newSize;
+	_array.resize(_size / BITS_IN_LONG);
+	//_size += difference;
+	/*if (difference <= 0) {
+		_size += difference;
+		_array.erase(_array.begin() + _size / BITS_IN_LONG, _array.end());
+	}
+	else {
+		_size = nBits;
+		_array.resize(_size / BITS_IN_LONG);
+	}*/
+}
+
 void BitArray::getArray(std::vector<unsigned long> array)
 {
 	array = _array;
@@ -46,7 +74,7 @@ void BitArray::getArray(std::vector<unsigned long> array)
 
 void BitArray::nothing()
 {
-	_array[2] = 10;
+	_array[1] = 10;
 }
 
 void BitArray::insertBits(unsigned long value)

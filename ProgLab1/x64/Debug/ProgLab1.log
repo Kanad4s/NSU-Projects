@@ -1,4 +1,5 @@
 ﻿  BitArray.cpp
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\BitArray.cpp(54,27): warning C4267: инициализация: преобразование из "size_t" в "unsigned long"; возможна потеря данных
   ProgLab1.cpp
 C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\ProgLab1.cpp(7,9): warning C4101: array: неиспользованная локальная переменная
   Создание кода...
