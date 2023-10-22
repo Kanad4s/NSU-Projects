@@ -169,12 +169,52 @@ BitArray& BitArray::operator=(const BitArray& other)
 	return *this;
 }
 
-BitArray& BitArray::operator~()
+BitArray& BitArray::operator&=(const BitArray& b)
 {
+	if (_size != b._size) {
+		throw std::invalid_argument("argument has different size");
+	}
 	for (int i = 0; i < _array.size(); i++) {
-		_array[i] = ~_array[i];
+		_array[i] &= b._array[i];
 	}
 	return *this;
+}
+
+BitArray& BitArray::operator|=(const BitArray& b)
+{
+	if (_size != b._size) {
+		throw std::invalid_argument("argument has different size");
+	}
+	for (int i = 0; i < _array.size(); i++) {
+		_array[i] |= b._array[i];
+	}
+	return *this;
+}
+
+BitArray& BitArray::operator^=(const BitArray& b)
+{
+	if (_size != b._size) {
+		throw std::invalid_argument("argument has different size");
+	}
+	for (int i = 0; i < _array.size(); i++) {
+		_array[i] ^= b._array[i];
+	}
+	return *this;
+}
+
+BitArray BitArray::operator~()
+{
+	BitArray bitArray(*this);
+	for (int i = 0; i < _array.size(); i++) {
+		bitArray._array[i] = ~_array[i];
+	}
+	return bitArray;
+}
+
+BitArray& BitArray::operator<<(int n)
+{
+
+	// TODO: вставьте здесь оператор return
 }
 
 bool BitArray::operator[](int i) const
@@ -187,6 +227,18 @@ bool BitArray::operator[](int i) const
 	}
 	return _array[i / BITS_IN_LONG] & (1 << (i % BITS_IN_LONG));
 }
+
+bool BitArray::operator==(const BitArray& b)
+{
+	return (_array == b._array && _size == b._size);
+}
+
+bool BitArray::operator!=(const BitArray& b)
+{
+	return !(*this == b);
+}
+
+
 
 std::string BitArray::toString() const
 {
@@ -227,4 +279,25 @@ void BitArray::insertBits(bool value, size_t begin, size_t end)
 	for (int i = begin; i < end; i++) {
 		insertBit(value, i);
 	}
+}
+
+BitArray operator&(const BitArray& b1, const BitArray& b2)
+{
+	BitArray bitArray(b1);
+	bitArray &= b2;
+	return bitArray;
+}
+
+BitArray operator|(const BitArray& b1, const BitArray& b2)
+{
+	BitArray bitArray(b1);
+	bitArray |= b2;
+	return bitArray;
+}
+
+BitArray operator^(const BitArray& b1, const BitArray& b2)
+{
+	BitArray bitArray(b1);
+	bitArray ^= b2;
+	return bitArray;
 }

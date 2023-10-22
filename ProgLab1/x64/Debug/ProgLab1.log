@@ -1,5 +1,2 @@
 ﻿  ProgLab1.cpp
-C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\ProgLab1.cpp(15,22): warning C4305: аргумент: усечение из "int" в "bool"
-C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\ProgLab1.cpp(7,9): warning C4101: array: неиспользованная локальная переменная
-C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\ProgLab1.cpp(26,34): warning C4101: ex: неиспользованная локальная переменная
   ProgLab1.vcxproj -> C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\x64\Debug\ProgLab1.exe

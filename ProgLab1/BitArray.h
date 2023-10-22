@@ -1,13 +1,14 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <stdexcept>
 
 class BitArray
 {
 public:
 	BitArray();
 	~BitArray();
-	BitArray(unsigned long nBits, unsigned long value);
+	explicit BitArray(unsigned long nBits, unsigned long value);
 	BitArray(const BitArray& b);
 
 	void swap(BitArray& b);
@@ -18,22 +19,29 @@ public:
 	void set(int n, bool value);
 	void reset();
 	void reset(int n);
+	void getArray(std::vector<unsigned long> array);
 
 	bool any() const;
 	bool none() const;
 	bool empty() const;
+	bool operator[](int i) const;
+
+	bool operator==(const BitArray& b);
+	bool operator!=(const BitArray& b);
 
 	int count() const;
 	size_t size() const;
 
-	BitArray& operator=(const BitArray& b);
-	BitArray& operator~();
-	bool operator[](int i) const;
-
 	std::string toString() const;
 
-	void getArray(std::vector<unsigned long> array);
+	BitArray& operator=(const BitArray& b);
+	BitArray& operator&=(const BitArray& b);
+	BitArray& operator|=(const BitArray& b);
+	BitArray& operator^=(const BitArray& b);
+	BitArray& operator<<(int n);
 
+	BitArray operator~();
+	
 private:
 	void insertBit(bool bit, int position);
 	void insertBits(bool value, size_t begin, size_t end);
@@ -41,3 +49,6 @@ private:
 	size_t _size;
 };
 
+BitArray operator&(const BitArray& b1, const BitArray& b2);
+BitArray operator|(const BitArray& b1, const BitArray& b2);
+BitArray operator^(const BitArray& b1, const BitArray& b2);
