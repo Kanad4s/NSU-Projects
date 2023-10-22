@@ -1,9 +1,8 @@
 #include "BitArray.h"
-//#include <memory>
 #include <iostream>
 
 namespace {
-	int DEFOLT_ARRAY_SIZE = sizeof(long);
+	int DEFOLT_ARRAY_SIZE = 1;
 	int SIZE_LONG = sizeof(long);
 	int BITS_IN_BYTE = 8;
 	int BITS_IN_LONG = sizeof(long) * 8;
@@ -11,14 +10,13 @@ namespace {
 
 BitArray::BitArray() : _array(std::vector<unsigned long>(DEFOLT_ARRAY_SIZE))
 {
-	/*std::shared_ptr<bool[]> _array1 = std::make_shared<bool[]>(DEFOLT_ARRAY_SIZE);
-	BitArray::_array = _array1;*/
-	//_array = new int[DEFOLT_ARRAY_SIZE];
-	_size = DEFOLT_ARRAY_SIZE;
+	_size = BITS_IN_LONG;
 }
 
 BitArray::~BitArray()
 {
+	_size = 0;
+	_array.clear();
 }
 
 BitArray::BitArray(unsigned long nBits, unsigned long value)// : _array(std::vector<int>(nBits / 8 + 1))
@@ -50,6 +48,9 @@ void BitArray::swap(BitArray& b)
 
 void BitArray::resize(unsigned long nBits, bool value)
 {
+	if (nBits < 0) {
+		throw std::invalid_argument("nBits less than 0");
+	}
 	unsigned long newSize = nBits / BITS_IN_LONG;
 	if (nBits % BITS_IN_LONG != 0) {
 		newSize += 1;
@@ -84,9 +85,13 @@ void BitArray::set()
 
 void BitArray::set(int n, bool value)
 {
-	if (n < _size) {
-		insertBit(value, n);
+	if (n >= _size) {
+		throw std::invalid_argument("n is out of range");
 	}
+	else if (n < 0) {
+		throw std::invalid_argument("n is negative");
+	}
+	insertBit(value, n);
 }
 
 void BitArray::reset()
@@ -96,12 +101,16 @@ void BitArray::reset()
 
 void BitArray::reset(int n)
 {
-	if (n < _size) {
-		insertBit(false, n);
+	if (n >= _size) {
+		throw std::invalid_argument("n is out of range");
 	}
+	else if (n < 0) {
+		throw std::invalid_argument("n is negative");
+	}
+	insertBit(false, n);
 }
 
-bool BitArray::any()
+bool BitArray::any() const
 {
 	bool isAnyBits = false;
 	for (int i = 0; i < _array.size(); i++) {
@@ -113,7 +122,7 @@ bool BitArray::any()
 	return isAnyBits;
 }
 
-bool BitArray::none()
+bool BitArray::none() const
 {
 	bool isNoneBits = true;
 	for (int i = 0; i < _array.size(); i++) {
@@ -125,14 +134,14 @@ bool BitArray::none()
 	return isNoneBits;
 }
 
-bool BitArray::empty()
+bool BitArray::empty() const
 {
 	bool isEmpty;
 	_size == 0 ? isEmpty = true : isEmpty = false;
 	return isEmpty;
 }
 
-int BitArray::count()
+int BitArray::count() const
 {
 	int nTrue = 0;
 	for (int i = 0; i < _size; i++) {
@@ -145,9 +154,54 @@ int BitArray::count()
 	return nTrue;
 }
 
-int BitArray::size()
+size_t BitArray::size() const
 {
 	return _size;
+}
+
+BitArray& BitArray::operator=(const BitArray& other)
+{
+	if (this == &other) {
+		return *this;
+	}
+	_array = other._array;
+	_size = other._size;
+	return *this;
+}
+
+BitArray& BitArray::operator~()
+{
+	for (int i = 0; i < _array.size(); i++) {
+		_array[i] = ~_array[i];
+	}
+	return *this;
+}
+
+bool BitArray::operator[](int i) const
+{
+	if (i >= _size) {
+		throw std::invalid_argument("i is out of range");
+	}
+	else if (i < 0) {
+		throw std::invalid_argument("i is negative");
+	}
+	return _array[i / BITS_IN_LONG] & (1 << (i % BITS_IN_LONG));
+}
+
+std::string BitArray::toString() const
+{
+	std::string arrayString = "";
+	for (int i = 0; i < _size; i++) {
+		int elementArrayNumber = i / BITS_IN_LONG;
+		int elementBitPosition = i % BITS_IN_LONG;
+		if (_array[elementArrayNumber] & 1 << elementBitPosition) {
+			arrayString += "1";
+		}
+		else {
+			arrayString += "0";
+		}
+	}
+	return arrayString;
 }
 
 void BitArray::getArray(std::vector<unsigned long> array)
@@ -168,7 +222,7 @@ void BitArray::insertBit(bool bit, int position)
 
 }
 
-void BitArray::insertBits(bool value, unsigned int begin, unsigned int end)
+void BitArray::insertBits(bool value, size_t begin, size_t end)
 {
 	for (int i = begin; i < end; i++) {
 		insertBit(value, i);
