@@ -1,5 +1,11 @@
 ﻿  BitArray.cpp
-C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\BitArray.cpp(54,27): warning C4267: инициализация: преобразование из "size_t" в "unsigned long"; возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\BitArray.cpp(58,20): warning C4267: аргумент: преобразование из "size_t" в "unsigned int"; возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\BitArray.cpp(60,28): warning C4267: аргумент: преобразование из "size_t" в "unsigned int"; возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\BitArray.cpp(76,17): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\BitArray.cpp(82,22): warning C4267: аргумент: преобразование из "size_t" в "unsigned int"; возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\BitArray.cpp(94,23): warning C4267: аргумент: преобразование из "size_t" в "unsigned int"; возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\BitArray.cpp(150,9): warning C4267: return: преобразование из "size_t" в "int"; возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\BitArray.cpp(178,24): warning C4018: <: несоответствие типов со знаком и без знака
   ProgLab1.cpp
 C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\ProgLab1.cpp(7,9): warning C4101: array: неиспользованная локальная переменная
   Создание кода...

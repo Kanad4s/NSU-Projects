@@ -30,7 +30,7 @@ BitArray::BitArray(unsigned long nBits, unsigned long value)// : _array(std::vec
 		_array = std::vector<unsigned long>(nBits / BITS_IN_LONG + 1);
 	}
 	_size = nBits;
-	insertBits(value);
+	_array[0] = value;
 }
 
 BitArray::BitArray(const BitArray& b)
@@ -48,23 +48,106 @@ void BitArray::swap(BitArray& b)
 	_size = tmp._size;
 }
 
-void BitArray::resize(int nBits, bool value)
+void BitArray::resize(unsigned long nBits, bool value)
 {
-
-	unsigned long difference = nBits - _size;
-	_size = nBits;
-	int newSize = _size / BITS_IN_LONG;
-	_size % BITS_IN_LONG != 0 ? newSize = 1 : newSize = newSize;
-	_array.resize(_size / BITS_IN_LONG);
-	//_size += difference;
-	/*if (difference <= 0) {
-		_size += difference;
-		_array.erase(_array.begin() + _size / BITS_IN_LONG, _array.end());
+	unsigned long newSize = nBits / BITS_IN_LONG;
+	if (nBits % BITS_IN_LONG != 0) {
+		newSize += 1;
 	}
-	else {
-		_size = nBits;
-		_array.resize(_size / BITS_IN_LONG);
-	}*/
+	_array.resize(newSize);
+	insertBits(value, _size, nBits);
+	if (_size > nBits) {
+		insertBits(false, nBits, _size);
+	}
+	_size = nBits;
+}
+
+void BitArray::clear()
+{
+	_array.clear();
+	_size = 0;
+}
+
+void BitArray::pushBack(bool bit)
+{
+	if (_size == _array.size() * BITS_IN_LONG) {
+		_array.resize(_array.size() + 1);
+	}
+	insertBit(bit, _size);
+	_size += 1;
+}
+
+void BitArray::set()
+{
+	insertBits(true, 0, _size);
+}
+
+void BitArray::set(int n, bool value)
+{
+	if (n < _size) {
+		insertBit(value, n);
+	}
+}
+
+void BitArray::reset()
+{
+	insertBits(false, 0, _size);
+}
+
+void BitArray::reset(int n)
+{
+	if (n < _size) {
+		insertBit(false, n);
+	}
+}
+
+bool BitArray::any()
+{
+	bool isAnyBits = false;
+	for (int i = 0; i < _array.size(); i++) {
+		if (_array[i] != 0) {
+			isAnyBits = true;
+			break;
+		}
+	}
+	return isAnyBits;
+}
+
+bool BitArray::none()
+{
+	bool isNoneBits = true;
+	for (int i = 0; i < _array.size(); i++) {
+		if (_array[i] != 0) {
+			isNoneBits = false;
+			break;
+		}
+	}
+	return isNoneBits;
+}
+
+bool BitArray::empty()
+{
+	bool isEmpty;
+	_size == 0 ? isEmpty = true : isEmpty = false;
+	return isEmpty;
+}
+
+int BitArray::count()
+{
+	int nTrue = 0;
+	for (int i = 0; i < _size; i++) {
+		int elementArrayNumber = i / BITS_IN_LONG;
+		int elementBitPosition = i % BITS_IN_LONG;
+		if (_array[elementArrayNumber] & 1 << elementBitPosition) {
+			nTrue++;
+		}
+	}
+	return nTrue;
+}
+
+int BitArray::size()
+{
+	return _size;
 }
 
 void BitArray::getArray(std::vector<unsigned long> array)
@@ -72,26 +155,22 @@ void BitArray::getArray(std::vector<unsigned long> array)
 	array = _array;
 }
 
-void BitArray::nothing()
+void BitArray::insertBit(bool bit, int position)
 {
-	_array[1] = 10;
+	int arrayElementNumber = position / BITS_IN_LONG;
+	int elementBitPosition = position % BITS_IN_LONG;
+	if (bit) {
+		_array[arrayElementNumber] |= 1 << elementBitPosition;
+	}
+	else {
+		_array[arrayElementNumber] &= ~(1 << elementBitPosition);
+	}
+
 }
 
-void BitArray::insertBits(unsigned long value)
+void BitArray::insertBits(bool value, unsigned int begin, unsigned int end)
 {
-	_array[0] = value;
-	//for (int i = 0; i < sizeof(value) * 8; i++) {
-	//	for (int j = 0; j < SIZE_LONG; j++) {
-
-	//	}
-	//	if (value & 1 << i) {
-	//		//std::cout << i << ", if" << std::endl;
-	//		array[i] = 1;
-	//	}
-	//	else {
-	//		//std::cout << i << ", else" << std::endl;
-	//		array[i] = 0;
-	//	}
-	//	//array[i] |= (value | 1 << i);
-	//}
+	for (int i = begin; i < end; i++) {
+		insertBit(value, i);
+	}
 }
