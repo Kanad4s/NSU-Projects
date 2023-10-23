@@ -213,8 +213,44 @@ BitArray BitArray::operator~()
 
 BitArray& BitArray::operator<<(int n)
 {
+	if (n < 0) {
+		throw std::invalid_argument("n is negative");
+	}
+	n = n % _size;
+	if (n == 0) {
+		return *this;
+	}
+	size_t nEmptyElements = n / BITS_IN_LONG;
+	BitArray bitArray(*this);
+	for (int i = 0; i < nEmptyElements; i++) {
+		_array[i] = 0;
+	}
+	int subtracted = n % BITS_IN_LONG;
+	int difference = BITS_IN_LONG - subtracted;
+	_array[nEmptyElements] = bitArray._array[0] << subtracted;
+	for (size_t i = nEmptyElements + 1; i < _array.size(); i++) {
+		_array[i] = bitArray._array[i - nEmptyElements] << subtracted;
+		_array[i] += bitArray._array[i - nEmptyElements - 1] >> difference;
+	}
+	return *this;
+}
+
+BitArray& BitArray::operator>>(int n)
+{
+	if (n < 0) {
+		throw std::invalid_argument("n is negative");
+	}
+	if (n >= _size) {
+		insertBits(false, 0, _size);
+	}
+	size_t nEmptyElements = n / BITS_IN_LONG;
+	BitArray bitArray(*this);
+	for (int i = _array.size() - 1; i > _array.size() - nEmptyElements - 1; i--) {
+		_array[i] = 0;
+	}
 
 	// TODO: вставьте здесь оператор return
+	return *this;
 }
 
 bool BitArray::operator[](int i) const
@@ -252,6 +288,9 @@ std::string BitArray::toString() const
 		else {
 			arrayString += "0";
 		}
+		if (elementBitPosition == 31) {
+			arrayString += " ";
+		}
 	}
 	return arrayString;
 }
@@ -261,10 +300,10 @@ void BitArray::getArray(std::vector<unsigned long> array)
 	array = _array;
 }
 
-void BitArray::insertBit(bool bit, int position)
+void BitArray::insertBit(bool bit, size_t position)
 {
-	int arrayElementNumber = position / BITS_IN_LONG;
-	int elementBitPosition = position % BITS_IN_LONG;
+	size_t arrayElementNumber = position / BITS_IN_LONG;
+	size_t elementBitPosition = position % BITS_IN_LONG;
 	if (bit) {
 		_array[arrayElementNumber] |= 1 << elementBitPosition;
 	}
@@ -276,7 +315,7 @@ void BitArray::insertBit(bool bit, int position)
 
 void BitArray::insertBits(bool value, size_t begin, size_t end)
 {
-	for (int i = begin; i < end; i++) {
+	for (size_t i = begin; i < end; i++) {
 		insertBit(value, i);
 	}
 }

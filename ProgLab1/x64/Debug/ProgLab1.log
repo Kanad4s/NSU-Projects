@@ -1,2 +1,5 @@
-﻿  ProgLab1.cpp
+﻿  BitArray.cpp
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\BitArray.cpp(248,13): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  ProgLab1.cpp
+  Создание кода...
   ProgLab1.vcxproj -> C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\x64\Debug\ProgLab1.exe

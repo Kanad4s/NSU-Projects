@@ -39,11 +39,12 @@ public:
 	BitArray& operator|=(const BitArray& b);
 	BitArray& operator^=(const BitArray& b);
 	BitArray& operator<<(int n);
+	BitArray& operator>>(int n);
 
 	BitArray operator~();
 	
 private:
-	void insertBit(bool bit, int position);
+	void insertBit(bool bit, size_t position);
 	void insertBits(bool value, size_t begin, size_t end);
 	std::vector<unsigned long> _array;
 	size_t _size;
