@@ -41,6 +41,8 @@ public:
 	BitArray& operator<<(int n);
 	BitArray& operator>>(int n);
 
+	BitArray operator<<(int n) const;
+	BitArray operator>>(int n) const;
 	BitArray operator~();
 	
 private:

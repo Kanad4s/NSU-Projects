@@ -242,15 +242,36 @@ BitArray& BitArray::operator>>(int n)
 	}
 	if (n >= _size) {
 		insertBits(false, 0, _size);
+		return *this;
+	}
+	else if (n == 0) {
+		return *this;
 	}
 	size_t nEmptyElements = n / BITS_IN_LONG;
 	BitArray bitArray(*this);
-	for (int i = _array.size() - 1; i > _array.size() - nEmptyElements - 1; i--) {
+	for (int i = _array.size() - 1; i > _array.size() - 1 - nEmptyElements; i--) {
 		_array[i] = 0;
 	}
-
-	// TODO: вставьте здесь оператор return
+	int subtracted = n % BITS_IN_LONG;
+	int difference = BITS_IN_LONG - subtracted;
+	_array[_array.size() - 1 - nEmptyElements] = bitArray._array[_array.size() - 1] >> subtracted;
+	for (int i = _array.size() - 2 - nEmptyElements; i >= 0; i--) {
+		_array[i] = bitArray._array[i + nEmptyElements] >> subtracted;
+		_array[i] += bitArray._array[i + nEmptyElements + 1] << difference;
+	}
 	return *this;
+}
+
+BitArray BitArray::operator<<(int n) const
+{
+	BitArray bitArray(*this);
+	return bitArray << n;
+}
+
+BitArray BitArray::operator>>(int n) const
+{
+	BitArray bitArray(*this);
+	return bitArray >> n;
 }
 
 bool BitArray::operator[](int i) const
