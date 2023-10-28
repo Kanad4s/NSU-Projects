@@ -11,12 +11,14 @@ int main()
     bitArray.set(38, true);
     std::cout << bitArray.toString() << std::endl;
     std::cout << bitArray2.toString() << std::endl;
-    ba = bitArray.operator<<(5);
+    ba = bitArray >> 5;
     std::cout << bitArray.toString() << std::endl;
-
+    std::cout << ba.toString() << std::endl;
+    
     bitArray ^= bitArray2;
     std::string arrayString = bitArray.toString();
     std::cout << arrayString << std::endl;
+    bitArray.clear();
 
     std::vector<unsigned long> test{2};
     std::vector<unsigned long> test2{ 4 };

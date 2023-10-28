@@ -3,8 +3,6 @@
 
 namespace {
 	int DEFOLT_ARRAY_SIZE = 1;
-	int SIZE_LONG = sizeof(long);
-	int BITS_IN_BYTE = 8;
 	int BITS_IN_LONG = sizeof(long) * 8;
 }
 
@@ -222,7 +220,7 @@ BitArray& BitArray::operator<<(int n)
 	}
 	size_t nEmptyElements = n / BITS_IN_LONG;
 	BitArray bitArray(*this);
-	for (int i = 0; i < nEmptyElements; i++) {
+	for (size_t i = 0; i < nEmptyElements; i++) {
 		_array[i] = 0;
 	}
 	int subtracted = n % BITS_IN_LONG;
@@ -240,14 +238,14 @@ BitArray& BitArray::operator>>(int n)
 	if (n < 0) {
 		throw std::invalid_argument("n is negative");
 	}
-	if (n >= _size) {
+	else if (n >= _size) {
 		insertBits(false, 0, _size);
 		return *this;
 	}
 	else if (n == 0) {
 		return *this;
 	}
-	size_t nEmptyElements = n / BITS_IN_LONG;
+	int nEmptyElements = n / BITS_IN_LONG;
 	BitArray bitArray(*this);
 	for (int i = _array.size() - 1; i > _array.size() - 1 - nEmptyElements; i--) {
 		_array[i] = 0;
