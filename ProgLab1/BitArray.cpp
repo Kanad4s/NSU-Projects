@@ -19,7 +19,8 @@ BitArray::~BitArray()
 
 BitArray::BitArray(unsigned long nBits, unsigned long value)// : _array(std::vector<int>(nBits / 8 + 1))
 {
-	if (nBits % BITS_IN_LONG == 0) {
+	
+	if (nBits != 0 && nBits % BITS_IN_LONG == 0) {
 		_array = std::vector<unsigned long>(nBits / BITS_IN_LONG);
 	}
 	else {
@@ -55,9 +56,6 @@ void BitArray::resize(unsigned long nBits, bool value)
 	}
 	_array.resize(newSize);
 	insertBits(value, _size, nBits);
-	if (_size > nBits) {
-		insertBits(false, nBits, _size);
-	}
 	_size = nBits;
 }
 
@@ -83,13 +81,13 @@ void BitArray::set()
 
 void BitArray::set(int n, bool value)
 {
-	if (n >= _size) {
+	if (n > _size) {
 		throw std::invalid_argument("n is out of range");
 	}
-	else if (n < 0) {
-		throw std::invalid_argument("n is negative");
+	else if (n <= 0) {
+		throw std::invalid_argument("n is not positive");
 	}
-	insertBit(value, n);
+	insertBit(value, n - 1);
 }
 
 void BitArray::reset()
@@ -99,13 +97,13 @@ void BitArray::reset()
 
 void BitArray::reset(int n)
 {
-	if (n >= _size) {
+	if (n > _size) {
 		throw std::invalid_argument("n is out of range");
 	}
-	else if (n < 0) {
-		throw std::invalid_argument("n is negative");
+	else if (n <= 0) {
+		throw std::invalid_argument("n is not positive");
 	}
-	insertBit(false, n);
+	insertBit(false, n - 1);
 }
 
 bool BitArray::any() const
@@ -134,9 +132,7 @@ bool BitArray::none() const
 
 bool BitArray::empty() const
 {
-	bool isEmpty;
-	_size == 0 ? isEmpty = true : isEmpty = false;
-	return isEmpty;
+	return (_size == 0);
 }
 
 int BitArray::count() const
@@ -247,7 +243,7 @@ BitArray& BitArray::operator>>(int n)
 	}
 	int nEmptyElements = n / BITS_IN_LONG;
 	BitArray bitArray(*this);
-	for (int i = _array.size() - 1; i > _array.size() - 1 - nEmptyElements; i--) {
+	for (size_t i = _array.size() - 1; i > _array.size() - 1 - nEmptyElements; i--) {
 		_array[i] = 0;
 	}
 	int subtracted = n % BITS_IN_LONG;
@@ -283,14 +279,27 @@ bool BitArray::operator[](int i) const
 	return _array[i / BITS_IN_LONG] & (1 << (i % BITS_IN_LONG));
 }
 
-bool BitArray::operator==(const BitArray& b)
+bool BitArray::operator==(const BitArray& a) const
 {
-	return (_array == b._array && _size == b._size);
+	if (_size != a._size) {
+		return false;
+	}
+	for (int i = 0; i < _array.size() - 1; i++) {
+		if (_array[i] != a._array[i]) {
+			return false;
+		}
+	}
+	for (int i = 0; i < _size - (_array.size() - 1) * BITS_IN_LONG; i++) {
+		if ((_array[_array.size() - 1] & 1 << i) != (a._array[a._array.size() - 1] & 1 << i)) {
+			return false;
+		}
+	}
+	return true;
 }
 
-bool BitArray::operator!=(const BitArray& b)
+bool BitArray::operator!=(const BitArray& a) const
 {
-	return !(*this == b);
+	return !(*this == a);
 }
 
 
@@ -307,16 +316,11 @@ std::string BitArray::toString() const
 		else {
 			arrayString += "0";
 		}
-		if (elementBitPosition == 31) {
+		/*if (elementBitPosition == 31) {
 			arrayString += " ";
-		}
+		}*/
 	}
 	return arrayString;
-}
-
-void BitArray::getArray(std::vector<unsigned long> array)
-{
-	array = _array;
 }
 
 void BitArray::insertBit(bool bit, size_t position)

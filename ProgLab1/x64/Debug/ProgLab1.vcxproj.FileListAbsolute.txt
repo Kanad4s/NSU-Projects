@@ -1,1 +1,3 @@
 C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\x64\Debug\ProgLab1.exe
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\x64\Debug\ProgLab1.vcxproj.CopyComplete
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\ProgLab1\x64\Debug\gmock.dll

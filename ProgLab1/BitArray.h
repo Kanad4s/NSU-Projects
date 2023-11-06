@@ -19,15 +19,13 @@ public:
 	void set(int n, bool value);
 	void reset();
 	void reset(int n);
-	void getArray(std::vector<unsigned long> array);
 
 	bool any() const;
 	bool none() const;
 	bool empty() const;
 	bool operator[](int i) const;
-
-	bool operator==(const BitArray& b);
-	bool operator!=(const BitArray& b);
+	bool operator==(const BitArray& a) const;
+	bool operator!=(const BitArray& a) const;
 
 	int count() const;
 	size_t size() const;
