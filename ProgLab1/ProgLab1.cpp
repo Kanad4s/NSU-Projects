@@ -6,18 +6,24 @@ class BitArrayArguments {
 public:
     BitArray firstArg;
     BitArray secondArg;
-    std::string result;
-    BitArrayArguments(BitArray firstArg, BitArray secondArg, std::string result);
-    BitArrayArguments(BitArray firstArg, std::string result);
-
+    BitArray result;
+    int shift = 0;
+    BitArrayArguments(BitArray firstArg, BitArray secondArg, BitArray result);
+    BitArrayArguments(BitArray firstArg, BitArray result, int shift);
+    BitArrayArguments(BitArray firstArg, BitArray result);
 };
 
-BitArrayArguments::BitArrayArguments(BitArray firstArg, BitArray secondArg, std::string result) :
+BitArrayArguments::BitArrayArguments(BitArray firstArg, BitArray secondArg, BitArray result) :
     firstArg(std::move(firstArg)),
     secondArg(std::move(secondArg)),
     result(std::move(result)) {}
 
-BitArrayArguments::BitArrayArguments(BitArray firstArg, std::string result) :
+BitArrayArguments::BitArrayArguments(BitArray firstArg, BitArray result, int shift) :
+    firstArg(std::move(firstArg)),
+    result(std::move(result)),
+    shift(std::move(shift)) {}
+
+BitArrayArguments::BitArrayArguments(BitArray firstArg, BitArray result) :
     firstArg(std::move(firstArg)),
     result(std::move(result)) {}
 
@@ -188,16 +194,6 @@ TEST(BitArrayTest, TestToString) {
     ASSERT_EQ("00000000000000000000000000000000000", value.toString());
 }
 
-class BitArrayComparse : public testing::Test {
-public:
-    BitArray array1, array2, array3, array4, array5, array6;
-protected:
-    void SetUp() {
-
-    }
-    void TearDown() {}
-};
-
 TEST_F(BitArrayTestCommon, TestOperatorComparison) {
     ASSERT_TRUE(array1 == defaultArray);
     ASSERT_TRUE(array4 == array4);
@@ -218,21 +214,128 @@ TEST_F(BitArrayTestCommon, TestOpearatorEquality) {
     ASSERT_EQ(array2, array2);
 }
 
+TEST_F(BitArrayTestCommon, TestOperatorTilda) {
+    ASSERT_EQ(~emptyArray, BitArray(0, 0));
+    ASSERT_EQ(~array1, fullArray);
+    ASSERT_EQ(~fullArray, defaultArray);
+    ASSERT_EQ(~array2, BitArray(sizeof(long) * 8, ULONG_MAX - 1));
+}
 
+class BitArrayOperatorAnd : public testing::TestWithParam<BitArrayArguments> {};
+
+INSTANTIATE_TEST_SUITE_P(
+    BitArrayTest,
+    BitArrayOperatorAnd,
+    testing::Values(
+        BitArrayArguments(BitArray(32, 64), BitArray(32, 63), BitArray(32, 0)),
+        BitArrayArguments(BitArray(32, 255), BitArray(32, 202), BitArray(32, 202)),
+        BitArrayArguments(BitArray(32, 202), BitArray(32, 53), BitArray(32, 0)),
+        BitArrayArguments(BitArray(32, 456), BitArray(32, 456), BitArray(32, 456)))
+);
+
+TEST_P(BitArrayOperatorAnd, TestOperatorAnd) {
+    BitArrayArguments value = GetParam();
+    ASSERT_EQ(value.firstArg & value.secondArg, value.result);
+}
+
+TEST_P(BitArrayOperatorAnd, TestOperatorAndEquality) {
+    BitArrayArguments value = GetParam();
+    value.firstArg &= value.secondArg;
+    ASSERT_EQ(value.firstArg, value.result);
+}
+
+class BitArrayOperatorOr : public testing::TestWithParam<BitArrayArguments> {};
+
+INSTANTIATE_TEST_SUITE_P(
+    BitArrayTest,
+    BitArrayOperatorOr,
+    testing::Values(
+        BitArrayArguments(BitArray(32, 64), BitArray(32, 63), BitArray(32, 127)),
+        BitArrayArguments(BitArray(32, 255), BitArray(32, 202), BitArray(32, 255)),
+        BitArrayArguments(BitArray(32, 202), BitArray(32, 53), BitArray(32, 255)),
+        BitArrayArguments(BitArray(32, 456), BitArray(32, 456), BitArray(32, 456)))
+);
+
+TEST_P(BitArrayOperatorOr, TestOperatorOr) {
+    BitArrayArguments value = GetParam();
+    ASSERT_EQ(value.firstArg | value.secondArg, value.result);
+}
+
+TEST_P(BitArrayOperatorOr, TestOperatorOrEquality) {
+    BitArrayArguments value = GetParam();
+    value.firstArg |= value.secondArg;
+    ASSERT_EQ(value.firstArg, value.result);
+}
+
+class BitArrayOperatorXor : public testing::TestWithParam<BitArrayArguments> {};
+
+INSTANTIATE_TEST_SUITE_P(
+    BitArrayTest,
+    BitArrayOperatorXor,
+    testing::Values(
+        BitArrayArguments(BitArray(32, 64), BitArray(32, 63), BitArray(32, 127)),
+        BitArrayArguments(BitArray(32, 255), BitArray(32, 202), BitArray(32, 53)),
+        BitArrayArguments(BitArray(32, 202), BitArray(32, 53), BitArray(32, 255)),
+        BitArrayArguments(BitArray(32, 456), BitArray(32, 456), BitArray(32, 0))
+        )
+);
+
+TEST_P(BitArrayOperatorXor, TestOperatorXor) {
+    BitArrayArguments value = GetParam();
+    ASSERT_EQ(value.firstArg ^ value.secondArg, value.result);
+}
+
+TEST_P(BitArrayOperatorXor, TestOperatorXorEquality) {
+    BitArrayArguments value = GetParam();
+    value.firstArg ^= value.secondArg;
+    ASSERT_EQ(value.firstArg, value.result);
+}
+
+class BitArrayOperatorBitwiseShiftLeft : public testing::TestWithParam<BitArrayArguments> {};
+
+INSTANTIATE_TEST_SUITE_P(
+    BitArrayTest,
+    BitArrayOperatorBitwiseShiftLeft,
+    testing::Values(
+        BitArrayArguments(BitArray(32, 1), BitArray(32, 16), 4),
+        BitArrayArguments(BitArray(32, 255), BitArray(32, 255), 32),
+        BitArrayArguments(BitArray(32, 42), BitArray(32, 42 * 32), 5),
+        BitArrayArguments(BitArray(32, 21), BitArray(32, 5 * 536870912), 29),
+        BitArrayArguments(BitArray(20, 80), BitArray(20, 160), 21),
+        BitArrayArguments(BitArray(60, 765), BitArray(60, 765), 60)
+    )
+);
+
+TEST_P(BitArrayOperatorBitwiseShiftLeft, TestOperatorBitwiseShiftLeft) {
+    BitArrayArguments value = GetParam();
+    value.firstArg << value.shift;
+    ASSERT_EQ(value.firstArg, value.result);
+}
+
+class BitArrayOperatorBitwiseShiftRight : public testing::TestWithParam<BitArrayArguments> {};
+
+INSTANTIATE_TEST_SUITE_P(
+    BitArrayTest,
+    BitArrayOperatorBitwiseShiftRight,
+    testing::Values(
+        BitArrayArguments(BitArray(32, 16), BitArray(32, 1), 4),
+        BitArrayArguments(BitArray(32, ULONG_MAX), BitArray(32, 0), 32),
+        BitArrayArguments(BitArray(32, 42 * 32), BitArray(32, 42), 5),
+        BitArrayArguments(BitArray(32, 5 * 536870912), BitArray(32, 5), 29),
+        BitArrayArguments(BitArray(20, 160), BitArray(20, 0), 765),
+        BitArrayArguments(BitArray(70, 536870912), BitArray(70, 0), 70)
+    )
+);
+
+TEST_P(BitArrayOperatorBitwiseShiftRight, TestOperatorBitwiseShiftRight) {
+    BitArrayArguments value = GetParam();
+    value.firstArg >> value.shift;
+    ASSERT_EQ(value.firstArg, value.result);
+}
 
 int main(int argc, char** argv)
 {
     //std::cout << value1.toString() << std::endl;
-    BitArray bitArray = BitArray(33, 98769876);
-    BitArray bitArray2 = BitArray(33, 20);
-    bitArray.set(33, true);
-    if (bitArray != bitArray2) {
-        std::cout << ULONG_MAX << std::endl;
-        std::cout << bitArray.toString() << std::endl;
-        std::cout << bitArray2.toString() << std::endl;
-    }
-    /*std::cout << LONG_MAX << " " << 21921929 << std::endl;
-    std::cout << 21921929 << std::endl;*/
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

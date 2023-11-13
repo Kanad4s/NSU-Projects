@@ -17,7 +17,7 @@ BitArray::~BitArray()
 	_array.clear();
 }
 
-BitArray::BitArray(unsigned long nBits, unsigned long value)// : _array(std::vector<int>(nBits / 8 + 1))
+BitArray::BitArray(unsigned long nBits, unsigned long value)
 {
 	
 	if (nBits != 0 && nBits % BITS_IN_LONG == 0) {
