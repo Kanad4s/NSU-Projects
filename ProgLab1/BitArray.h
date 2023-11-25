@@ -7,7 +7,7 @@ class BitArray
 {
 public:
 	BitArray();
-	~BitArray();
+	virtual ~BitArray();
 	explicit BitArray(unsigned long nBits, unsigned long value);
 	BitArray(const BitArray& b);
 
