@@ -1,0 +1,3 @@
+#N MyUniverse number 1
+#R BB3/SS23
+         * *                                                                                      *
