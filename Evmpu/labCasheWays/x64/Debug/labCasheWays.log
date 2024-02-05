@@ -1,0 +1,7 @@
+﻿  labCasheWays.cpp
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\Evmpu\labCasheWays\labCasheWays.cpp(82,38): warning C4244: =: преобразование "unsigned __int64" в "_Ty", возможна потеря данных
+          with
+          [
+              _Ty=double
+          ]
+  labCasheWays.vcxproj -> C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\Evmpu\labCasheWays\x64\Debug\labCasheWays.exe

@@ -1,0 +1,13 @@
+﻿  labCashe.cpp
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\Evmpu\labCashe\labCashe.cpp(1,24): warning C4081: требуется "идентификатор"; обнаружен "строка"
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\Evmpu\labCashe\labCashe.cpp(8,1): warning C4005: RAND_MAX: изменение макроопределения
+C:\Windows Kits\10\Include\10.0.22621.0\ucrt\stdlib.h(348,1): message : см. предыдущее определение "RAND_MAX"
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\Evmpu\labCashe\labCashe.cpp(53,23): warning C4018: <: несоответствие типов со знаком и без знака
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\Evmpu\labCashe\labCashe.cpp(64,5): warning C4273: rand: несовместимое связывание dll
+C:\Windows Kits\10\Include\10.0.22621.0\ucrt\stdlib.h(352,37): message : см. предыдущее определение "rand"
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\Evmpu\labCashe\labCashe.cpp(106,24): warning C4244: return: преобразование "unsigned __int64" в "unsigned int", возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\Evmpu\labCashe\labCashe.cpp(111,16): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\Evmpu\labCashe\labCashe.cpp(130,17): warning C4244: *=: преобразование "float" в "unsigned int", возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\Evmpu\labCashe\labCashe.cpp(140,16): warning C4305: инициализация: усечение из "double" в "float"
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\Evmpu\labCashe\labCashe.cpp(152,23): warning C4018: <: несоответствие типов со знаком и без знака
+  labCashe.vcxproj -> C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\Evmpu\labCashe\x64\Debug\labCashe.exe

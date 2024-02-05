@@ -1,0 +1,3 @@
+﻿  EvmpuVector.cpp
+C:\Users\Никита\source\repos\EvmpuVector\EvmpuVector.cpp(380,26): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+  EvmpuVector.vcxproj -> C:\Users\Никита\source\repos\EvmpuVector\x64\Debug\EvmpuVector.exe

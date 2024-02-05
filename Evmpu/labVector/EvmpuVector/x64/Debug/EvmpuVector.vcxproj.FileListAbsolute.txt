@@ -1,0 +1,3 @@
+C:\Users\Никита\source\repos\EvmpuVector\x64\Debug\EvmpuVector.exe
+C:\Users\Никита\source\repos\EvmpuVector\x64\Debug\EvmpuVector.vcxproj.CopyComplete
+C:\Users\Никита\source\repos\EvmpuVector\x64\Debug\openblas.dll
