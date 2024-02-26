@@ -22,7 +22,6 @@ void printVector(const double* vector, const int size)
 double calculateDeterminant(const double* matrix, const int size)
 {
     double determinant = 0;
-#pragma omp parallel for reduction(+:determinant)
     for (int i = 0; i < size; i++) {
         determinant += matrix[i] * matrix[i];
     }
@@ -31,7 +30,6 @@ double calculateDeterminant(const double* matrix, const int size)
 
 void fillVectorWithValue(double* vector, const int size, const int value)
 {
-#pragma omp for
     for (int i = 0; i < size; i++) {
         vector[i] = value;
     }
@@ -39,7 +37,6 @@ void fillVectorWithValue(double* vector, const int size, const int value)
 
 void vectorSubtraction(const double* minuend, const double* subtrahend, double* result, const int size)
 {
-#pragma omp for
     for (int i = 0; i < size; i++) {
         result[i] = minuend[i] - subtrahend[i];
     }
@@ -47,7 +44,6 @@ void vectorSubtraction(const double* minuend, const double* subtrahend, double* 
 
 void multiplyVectorByScalar(double* vector, double* result, const int size, const double scalar)
 {
-#pragma omp for
     for (int i = 0; i < size; i++) {
         result[i] = vector[i] * scalar;
     }
@@ -56,7 +52,6 @@ void multiplyVectorByScalar(double* vector, double* result, const int size, cons
 void multiplyMatrixByVector(const double* matrix, const double* vector, double* result, const int size)
 {
     fillVectorWithValue(result, size, ZERO_VALUE);
-#pragma omp for
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
             result[i] += matrix[i * size + j] * vector[j];
@@ -116,18 +111,14 @@ double* iterationMethod(const double* matrix, double* rightPartVector, const int
     double* multiplyVector = generateZeroVector(size);
     double rightPartDeterminant = calculateDeterminant(rightPartVector, size);
     bool run = true;
-#pragma omp parallel
-{
-        do {
-            copyVector(solutionVector, solutionCopyVector, size);
-            multiplyMatrixByVector(matrix, solutionCopyVector, multiplyVector, size);
-            vectorSubtraction(multiplyVector, rightPartVector, multiplyVector, size);
-            multiplyVectorByScalar(multiplyVector, solutionCopyVector, size, TAU);
-            vectorSubtraction(solutionVector, solutionCopyVector, solutionVector, size);
-#pragma omp single
-            run = !isAccuracyAchieved(calculateDeterminant(multiplyVector, size), rightPartDeterminant);
-        } while (run);
-}
+    do {
+        copyVector(solutionVector, solutionCopyVector, size);
+        multiplyMatrixByVector(matrix, solutionCopyVector, multiplyVector, size);
+        vectorSubtraction(multiplyVector, rightPartVector, multiplyVector, size);
+        multiplyVectorByScalar(multiplyVector, solutionCopyVector, size, TAU);
+        vectorSubtraction(solutionVector, solutionCopyVector, solutionVector, size);
+        run = !isAccuracyAchieved(calculateDeterminant(multiplyVector, size), rightPartDeterminant);
+    } while (run);
     delete[] solutionCopyVector;
     delete[] multiplyVector;
     return solutionVector;
@@ -143,6 +134,6 @@ int main()
     std::cout << "TIME: " << finish - start << std::endl;
     //printVector(solutionVector, SIZE_VECTOR);
     delete[] matrix;
-    //delete[] solutionVector;
+    delete[] solutionVector;
     delete[] rightPartVector;
 }
