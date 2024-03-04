@@ -1,6 +1,6 @@
+#include <cstring>
 #include <iostream>
 #include <math.h>
-#include <cstring>
 #include <omp.h>
 
 enum {
@@ -135,14 +135,20 @@ double* iterationMethod(const double* matrix, double* rightPartVector, const int
 
 int main()
 {
-    double* matrix = generateSquareMatrix(SIZE_VECTOR);
-    double* rightPartVector = generateRightPartVector(SIZE_VECTOR);
-    double start = omp_get_wtime();
-    double* solutionVector = iterationMethod(matrix, rightPartVector, SIZE_VECTOR);
-    double finish = omp_get_wtime();
-    std::cout << "TIME: " << finish - start << std::endl;
-    //printVector(solutionVector, SIZE_VECTOR);
-    delete[] matrix;
-    delete[] solutionVector;
-    delete[] rightPartVector;
+    double time = 0;
+    int nIterations = 1;
+    for (int i = 0; i < nIterations; i++)
+    {
+        double* matrix = generateSquareMatrix(SIZE_VECTOR);
+        double* rightPartVector = generateRightPartVector(SIZE_VECTOR);
+        double start = omp_get_wtime();
+        double* solutionVector = iterationMethod(matrix, rightPartVector, SIZE_VECTOR);
+        double finish = omp_get_wtime();
+        time += finish - start;
+        //printVector(solutionVector, SIZE_VECTOR);
+        delete[] matrix;
+        delete[] solutionVector;
+        delete[] rightPartVector;
+    }
+    std::cout << "TIME: " << time / nIterations << std::endl;
 }
