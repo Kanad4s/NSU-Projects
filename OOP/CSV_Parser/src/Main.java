@@ -1,5 +1,7 @@
 
 public class Main {
+    //javac Main.java
+    //java Main.java
     final static int BUFFER_SIZE = 256;
     public static void main(String[] args) throws Exception {
         String inputFile = "test.txt";

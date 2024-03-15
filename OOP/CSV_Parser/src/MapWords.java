@@ -1,5 +1,3 @@
-import org.jetbrains.annotations.NotNull;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -11,7 +9,7 @@ public class MapWords {
         map = new HashMap<>();
     }
 
-    public void extendMap(@NotNull String line, int size) {
+    public void extendMap(String line, int size) {
         String[] words = line.split(ALLOWED_SYMBOLS_REGEX);
         for (int i = 0; i < words.length; i++) {
             int value;
