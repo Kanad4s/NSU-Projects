@@ -1,15 +1,16 @@
-import java.io.FileNotFoundException;
 
 public class Main {
-    final static int BUFFER_SIZE = 11;
-
-    public static void main(String[] args) throws FileNotFoundException {
-        System.out.printf("Hello and welcome!\n");
+    final static int BUFFER_SIZE = 256;
+    public static void main(String[] args) throws Exception {
         String inputFile = "test.txt";
+        String outputFile = "out.csv";
         CSVParser parser = new CSVParser(BUFFER_SIZE);
-        Reader readerTXT = new ReaderTXT();
+        MyReader readerTXT = new ReaderTXT(inputFile);
         parser.setReader(readerTXT);
         parser.makeMap();
-        //parser.read(readerTXT, inputFile);
+        //parser.printMap();
+        MyWriter writerCSV = new WriterCSV(outputFile);
+        parser.setWriter(writerCSV);
+        parser.writeSortedMap();
     }
 }

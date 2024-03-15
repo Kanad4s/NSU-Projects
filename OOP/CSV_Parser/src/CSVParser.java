@@ -1,35 +1,35 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class CSVParser {
-    private String _inputFile = "test.txt";
-    private byte[] _buffer;
-    private MapWords _mapWords;
-    private Reader _reader;
+    private final static String SEPARATE_SYMBOL = ";";
+    private final byte[] _buffer;
+    private final MapWords _mapWords;
+    private MyReader _reader;
+    private MyWriter _writer;
 
     public CSVParser(int bufferSize) throws FileNotFoundException {
         _buffer = new byte[bufferSize];
         _mapWords = new MapWords();
     }
-
-    public void setReader(Reader reader) {
+    public void setReader(MyReader reader) {
         _reader = reader;
     }
-
-    public void makeMap() {
-        int read = 0;
-        read = _reader.read(_inputFile, _buffer);
-        String s = new String(_buffer, 0, read);
-        System.out.print(s);
-        while (read != 0) {
-            StringBuilder line = new StringBuilder(new String(_buffer, 0, read));
+    public void setWriter(MyWriter writer) {
+        _writer = writer;
+    }
+    public void makeMap() throws Exception {
+        int read = _reader.read(_buffer);
+        while (read != -1) {
+            String line = new String(_buffer, 0, read);
             _mapWords.extendMap(line, read);
-            read = _reader.read(_inputFile, _buffer);
-            System.out.println(new String(_buffer, 0, read));
+            read = _reader.read(_buffer);
         }
     }
-    public void read(Reader reader, String inputFile) {
-        int read = reader.read(inputFile, _buffer);
-        String s = new String(_buffer, 0, read);
-        System.out.println(s);
+    public void writeSortedMap() throws IOException {
+        _writer.writeMap(_mapWords.getSortedMap(), _mapWords.getWordsCount(), SEPARATE_SYMBOL);
+    }
+    public void printMap(){
+        _mapWords.printMap();
     }
 }

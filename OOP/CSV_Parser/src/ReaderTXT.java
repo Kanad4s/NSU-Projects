@@ -1,22 +1,14 @@
-import javax.print.DocFlavor;
 import java.io.*;
-import java.util.Arrays;
 
-public class ReaderTXT extends Reader{
-    private final int _bufferSize = 11;
-
-    public ReaderTXT() throws FileNotFoundException {
+public class ReaderTXT extends MyReader {
+    private final BufferedInputStream bufferedInputStream;
+    public ReaderTXT(String fileName) throws FileNotFoundException {
+        bufferedInputStream = new BufferedInputStream(new FileInputStream(fileName));
     }
     @Override
-    public int read(String fileName, byte[] buffer) {
-        File inputFile = new File(fileName);
+    public int read(byte[] buffer) throws Exception {
         int read = 0;
-        try (InputStream inputStream = new FileInputStream(inputFile)) {
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-            read = bufferedInputStream.read(buffer);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        read = bufferedInputStream.read(buffer);
         return read;
     }
 
