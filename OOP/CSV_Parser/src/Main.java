@@ -1,7 +1,7 @@
 
 public class Main {
     //javac Main.java
-    //java Main.java
+    //java Main
     final static int BUFFER_SIZE = 4096;
     public static void main(String[] args) throws Exception {
         try {
