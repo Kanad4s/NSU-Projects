@@ -23,6 +23,10 @@ public class MapWords {
         _wordsCount += words.length;
     }
 
+    public void printMap() {
+        map.entrySet().forEach(System.out::println);
+    }
+
     public Map<String, Integer> getSortedMap() {
         return map.entrySet()
                 .stream()
@@ -35,9 +39,5 @@ public class MapWords {
 
     public int getWordsCount() {
         return _wordsCount;
-    }
-
-    public void printMap() {
-        map.entrySet().forEach(System.out::println);
     }
 }

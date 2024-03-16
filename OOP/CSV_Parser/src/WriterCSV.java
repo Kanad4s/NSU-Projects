@@ -17,7 +17,7 @@ public class WriterCSV extends MyWriter{
                     100 * (float)value.get(i) / wordsCount + "\n";
             bufferedOutputStream.write(line.getBytes("windows-1251"));
             bufferedOutputStream.flush();
-            System.out.print(line);
+            //System.out.print(line);
         }
     }
 

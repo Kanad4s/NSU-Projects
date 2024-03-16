@@ -2,17 +2,20 @@
 public class Main {
     //javac Main.java
     //java Main.java
-    final static int BUFFER_SIZE = 256;
+    final static int BUFFER_SIZE = 4096;
     public static void main(String[] args) throws Exception {
-        String inputFile = "test.txt";
-        String outputFile = "out.csv";
-        CSVParser parser = new CSVParser(BUFFER_SIZE);
-        MyReader readerTXT = new ReaderTXT(inputFile);
-        parser.setReader(readerTXT);
-        parser.makeMap();
-        //parser.printMap();
-        MyWriter writerCSV = new WriterCSV(outputFile);
-        parser.setWriter(writerCSV);
-        parser.writeSortedMap();
+        try {
+            CommandLineParser commandLineParser = new CommandLineParser();
+            commandLineParser.parse(args);
+            String inputFile = commandLineParser.getInputFile();
+            String outputFile = commandLineParser.getOutputFile();
+            CSVParser parser = new CSVParser(BUFFER_SIZE);
+            parser.setReader(new ReaderTXT(inputFile));
+            parser.makeMap();
+            parser.setWriter(new WriterCSV(outputFile));
+            parser.writeSortedMap();
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
     }
 }
