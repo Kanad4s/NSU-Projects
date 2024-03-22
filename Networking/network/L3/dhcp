@@ -1,0 +1,11 @@
+ip dhcp excluded-address 10.0.15.1 10.0.15.5
+ip dhcp excluded-address 10.0.15.10
+
+ip dhcp pool LAN_15
+ network 10.0.15.0 255.255.255.0
+ default-router 10.0.15.3
+ dns-server 9.9.9.9
+exit
+
+//не надо в реальном оборудовании, но необходима в некоторых версиях cisco packet tracer
+ip routing
