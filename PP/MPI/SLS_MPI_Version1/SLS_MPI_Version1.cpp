@@ -20,7 +20,8 @@ void printVector(const double* vector, const int size)
     std::cout << std::endl;
 }
 
-void printPartMatrix(const double* matrix, const int partSize, const int shift, const int matrixSize, const int nProcesses, const int rank)
+void printPartMatrix(const double* matrix, const int partSize, const int shift, const int matrixSize,
+                     const int nProcesses, const int rank)
 {
     for (int i = 0; i < nProcesses; i++) {
         MPI_Barrier(MPI_COMM_WORLD);
@@ -74,12 +75,18 @@ void multiplyVectorByScalar(double* vector, double* result, const int size, cons
     }
 }
 
-void multiplyMatrixByVector(const double* matrix, const double* vector, double* result, const int size)
+//todo
+void multiplyPartMatrixByVector(const double* partMatrix, const double* vector, double* result, const int vectorSize,
+                                const int partMatrixSize, const int shift, const int rank, const int nProcesses)
 {
-    fillVectorWithValue(result, size, ZERO_VALUE);
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
-            result[i] += matrix[i * size + j] * vector[j];
+    fillVectorWithValue(result, vectorSize, ZERO_VALUE);
+    int lineShift = shift % vectorSize;
+    int vectorIndex = lineShift;
+    for (int i = 0; i < partMatrixSize; i++) {
+        result[i] += partMatrix[i] * vector[vectorIndex];
+        vectorIndex++;
+        if (vectorIndex % vectorSize == 0) {
+            vectorIndex = 0;
         }
     }
 }
@@ -143,13 +150,10 @@ int calculateShift(const int matrixSize, const int partMatrixSize, const int ran
     return shift;
 }
 
-double* generatePartMatrix(const double* matrix, const int matrixSize, const int rank, const int nProcesses)
+double* generatePartMatrix(const double* matrix, const int matrixSize, const int shift, const int partMatrixSize)
 {
-    int partMatrixSize = calculatePartMatrixSize(matrixSize * matrixSize, rank, nProcesses);
-    int shift = calculateShift(matrixSize * matrixSize, partMatrixSize, rank, nProcesses);
     double* partMatrix = new double[partMatrixSize];
     memcpy(partMatrix, &matrix[shift], partMatrixSize * sizeof(double));
-    printPartMatrix(partMatrix, partMatrixSize, shift, matrixSize, nProcesses, rank);
     return partMatrix;
 }
 
@@ -163,20 +167,27 @@ void copyVector(const double* vector, double* copy, const int size)
     memcpy(copy, vector, size * sizeof(double));
 }
 
-double* iterationMethod(const double* matrix, const double* rightPartVector, const int matrixSize, const int rank, const int nProcesses)
+//x^(n+1) = x^n – τ(Ax^n – b)
+double* iterationMethod(const double* matrix, const double* rightPartVector, const int matrixSideSize, const int rank, const int nProcesses)
 {
-    double* solutionVector = generateSolutionVector(matrixSize);
-    double* solutionCopyVector = generateZeroVector(matrixSize);
-    double* multiplyVector = generateZeroVector(matrixSize);
-    double rightPartDeterminant = calculateDeterminant(rightPartVector, matrixSize);
+    int partMatrixSize = calculatePartMatrixSize(matrixSideSize * matrixSideSize, rank, nProcesses);
+    int shift = calculateShift(matrixSideSize * matrixSideSize, partMatrixSize, rank, nProcesses);
+    double* partMatrix = generatePartMatrix(matrix, matrixSideSize, shift, partMatrixSize);
+    //printPartMatrix(partMatrix, partMatrixSize, shift, matrixSize, nProcesses, rank);
+
+    double* solutionVector = generateSolutionVector(matrixSideSize);
+    double* solutionCopyVector = generateZeroVector(matrixSideSize);
+    double* multiplyVector = generateZeroVector(matrixSideSize);
+    double rightPartDeterminant = calculateDeterminant(rightPartVector, matrixSideSize);
     bool run = true;
     do {
-        copyVector(solutionVector, solutionCopyVector, matrixSize);
-        multiplyMatrixByVector(matrix, solutionCopyVector, multiplyVector, matrixSize);
-        vectorSubtraction(multiplyVector, rightPartVector, multiplyVector, matrixSize);
-        multiplyVectorByScalar(multiplyVector, solutionCopyVector, matrixSize, TAU);
-        vectorSubtraction(solutionVector, solutionCopyVector, solutionVector, matrixSize);
-        run = !isAccuracyAchieved(calculateDeterminant(multiplyVector, matrixSize), rightPartDeterminant);
+        copyVector(solutionVector, solutionCopyVector, matrixSideSize);
+        //todo
+        multiplyPartMatrixByVector(matrix, solutionCopyVector, multiplyVector, matrixSideSize);
+        vectorSubtraction(multiplyVector, rightPartVector, multiplyVector, matrixSideSize);
+        multiplyVectorByScalar(multiplyVector, solutionCopyVector, matrixSideSize, TAU);
+        vectorSubtraction(solutionVector, solutionCopyVector, solutionVector, matrixSideSize);
+        run = !isAccuracyAchieved(calculateDeterminant(multiplyVector, matrixSideSize), rightPartDeterminant);
     } while (run);
     delete[] solutionCopyVector;
     delete[] multiplyVector;
