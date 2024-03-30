@@ -2,3 +2,4 @@ enable
 conf t
 no ip domain-lookup
 ip domain-name nsu
+sh ip int br

@@ -3,6 +3,7 @@ interface fa0/20
  exit
 interface fa0/20.15
  encapsulation dot1q 15
+ //маска 29 - 255.255.255.248
  ip address 10.0.15.3 255.255.255.0
  ip helper-address 10.0.15.3
  exit
