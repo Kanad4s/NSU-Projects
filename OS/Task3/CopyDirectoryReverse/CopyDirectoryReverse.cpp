@@ -1,4 +1,5 @@
-﻿#include <direct.h>
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include <direct.h>
 #include <dirent.h>
 #include <stdarg.h>
 #include <stdbool.h>
@@ -15,6 +16,7 @@ enum pos {
 enum constants {
     BUFFER_SIZE = 256,
     MAX_LEN_NAME_FILE = 256,
+    MAX_NAME_FILE_LENGTH = 256,
     MY_ERROR = -1,
     MIN_NUMBER_ARGS = 2,
     CORRECT_NUMBER_ARGS = 2,
@@ -145,131 +147,145 @@ void reverse_line(char* line, const size_t size) {
 ///// \param path_origin_folder
 ///// \param d_entry
 ///// \return
-//bool is_correct_len_folder(char** name_rev_folder, char** path_rev_folder, char** path_origin_folder,
-//    const struct dirent* d_entry) {
-//    char* name_new_rev_folder, * path_new_rev_folder, * path_new_origin_folder;
-//
-//    if (strlen(d_entry->d_name) > MAX_LEN_NAME_FILE) {
-//        size_t relocation_size = strlen(d_entry->d_name) - MAX_LEN_NAME_FILE + INCREASE_POS;
-//
-//        name_new_rev_folder = (char*)realloc(*name_rev_folder, relocation_size * sizeof(char));
-//        if (name_new_rev_folder == NULL) {
-//            perror("Memory allocation name_rev_folder error\n");
-//            return false;
-//        }
-//
-//        *name_rev_folder = name_new_rev_folder;
-//
-//        path_new_rev_folder = (char*)realloc(*path_rev_folder, relocation_size * sizeof(char));
-//        if (path_new_rev_folder == NULL) {
-//            perror("Memory allocation path_new_rev_folder error\n");
-//            return false;
-//        }
-//        *path_rev_folder = path_new_rev_folder;
-//
-//        path_new_origin_folder = (char*)realloc(*path_origin_folder, relocation_size * sizeof(char));
-//        if (path_new_origin_folder == NULL) {
-//            perror("Error: failed to reallocate path_new_origin_folder memory\n");
-//            return false;
-//        }
-//        *path_origin_folder = path_new_origin_folder;
-//    }
-//    return true;
-//}
-//
-//size_t create_reverse_folder(const char*, const char*);
+bool is_correct_len_folder(char** name_rev_folder, char** path_rev_folder, char** path_origin_folder,
+    const struct dirent* d_entry) {
+    char* name_new_rev_folder, * path_new_rev_folder, * path_new_origin_folder;
 
-size_t fillDirectory(const char* pathOriginDirectory, const char* pathReverseDirectory) {
+    if (strlen(d_entry->d_name) > MAX_LEN_NAME_FILE) {
+        size_t relocation_size = strlen(d_entry->d_name) - MAX_LEN_NAME_FILE + INCREASE_POS;
+
+        name_new_rev_folder = (char*)realloc(*name_rev_folder, relocation_size * sizeof(char));
+        if (name_new_rev_folder == NULL) {
+            perror("Memory allocation name_rev_folder error\n");
+            return false;
+        }
+
+        *name_rev_folder = name_new_rev_folder;
+
+        path_new_rev_folder = (char*)realloc(*path_rev_folder, relocation_size * sizeof(char));
+        if (path_new_rev_folder == NULL) {
+            perror("Memory allocation path_new_rev_folder error\n");
+            return false;
+        }
+        *path_rev_folder = path_new_rev_folder;
+
+        path_new_origin_folder = (char*)realloc(*path_origin_folder, relocation_size * sizeof(char));
+        if (path_new_origin_folder == NULL) {
+            perror("Error: failed to reallocate path_new_origin_folder memory\n");
+            return false;
+        }
+        *path_origin_folder = path_new_origin_folder;
+    }
+    return true;
+}
+
+bool isDEntryNameLengthAvailable(int nameLength) {
+    if (nameLength > MAX_NAME_FILE_LENGTH) {
+        return false;
+    }
+    return true;
+}
+
+void reverseLine(char* lineToReverse, char* reverseLine) {
+    int lineLength = strlen(lineToReverse);
+    char* bufferLine = (char*)malloc(sizeof(char) * strlen(lineToReverse));
+    memcpy(bufferLine, lineToReverse, lineLength);
+    for (int i = 0; i < lineLength; i++) {
+        reverseLine[i] = bufferLine[lineLength - 1 - i];
+    }
+}
+
+bool isCurrentOrPreviouseDirectory(char* directory) {
+    return (strcmp(directory, ".") == 0 || strcmp(directory, "..") == 0);
+}
+
+size_t createReverseFile() {
+
+}
+
+size_t createReverseDirectory(char* pathToDirectory, char* pathToReverseDirectory);
+
+size_t fillDirectory(const char* pathToOriginDirectory, const char* pathToReverseDirectory) {
     struct dirent* dEntry;
-    DIR* dir = opendir(pathOriginDirectory);
+    DIR* dir = opendir(pathToOriginDirectory);
     if (dir == NULL) {
-        perror("The file was not open dir");
+        perror("The file was not open");
         return MY_ERROR;
     }
 
     char* nameReverseDirectory = (char*)malloc(MAX_LEN_NAME_FILE * sizeof(char));
-    if (nameReverseDirectory == NULL) {
-        closedir(dir);
-        perror("Error: failed to reallocate memory name_rev_folder\n");
-        return MY_ERROR;
-    }
-
-    char* path_new_rev_folder = (char*)malloc(MAX_LEN_NAME_FILE + strlen(pathReverseDirectory) * sizeof(char));
-    if (path_new_rev_folder == NULL) {
-        closedir(dir);
-        free(nameReverseDirectory);
-        perror("Error: failed to reallocate memory path_new_rev_folder\n");
-        return MY_ERROR;
-    }
-    char* path_new_origin_folder = (char*)malloc((MAX_LEN_NAME_FILE + strlen(pathOriginDirectory)) * sizeof(char));
-    if (path_new_origin_folder == NULL) {
-        closedir(dir);
-        free(nameReverseDirectory);
-        free(path_new_rev_folder);
-        perror("Error: failed to reallocate memory path_new_origin_folder\n");
-        return MY_ERROR;
-    }
-
+    char* pathToNewReverseDirectory = (char*)malloc(MAX_LEN_NAME_FILE + strlen(pathToReverseDirectory) * sizeof(char));
+    char* pathToNewOriginDirectory = (char*)malloc((MAX_LEN_NAME_FILE + strlen(pathToOriginDirectory)) * sizeof(char));
     size_t ret = OK;
-
+    int i = 0;
     while ((dEntry = readdir(dir)) != NULL) {
+        i++;
+        printf("%d %s\n", i, dEntry->d_name);
+        if (!isDEntryNameLengthAvailable(strlen(dEntry->d_name))) {
+            nameReverseDirectory = (char*)realloc(nameReverseDirectory, sizeof(char) * strlen(dEntry->d_name));
+            pathToNewReverseDirectory = (char*)realloc(pathToNewReverseDirectory, sizeof(char) * (strlen(pathToNewReverseDirectory) +
+                                        MAX_NAME_FILE_LENGTH));
+        }
+        memcpy(nameReverseDirectory, dEntry->d_name, strlen(dEntry->d_name));
+        reverseLine(nameReverseDirectory, nameReverseDirectory);
 
-        if (!is_correct_len_folder(&nameReverseDirectory,
-            &path_new_rev_folder,
-            &path_new_origin_folder,
-            dEntry)) {
-            free(nameReverseDirectory);
-            free(path_new_rev_folder);
-            free(path_new_origin_folder);
-            closedir(dir);
-            return MY_ERROR;
-        } 
+        int newOriginDirectoryPathLength = sprintf(pathToNewOriginDirectory, "%s/%s", pathToOriginDirectory, dEntry->d_name);
+        int newReverseDirectoryPathLength = sprintf(pathToNewReverseDirectory, "%s/%s", pathToReverseDirectory, nameReverseDirectory);
 
-        nameReverseDirectory = strncpy(nameReverseDirectory, dEntry->d_name, strlen(dEntry->d_name));
-        reverse_line(nameReverseDirectory, strlen(nameReverseDirectory));
-
-
-        int ret_reverse = sprintf(path_new_rev_folder, "%s/%s", pathReverseDirectory, nameReverseDirectory);
-        int ret_origin = sprintf(path_new_origin_folder, "%s/%s", pathOriginDirectory, dEntry->d_name);
-
-        if (ret_reverse < 0 || ret_origin < 0) {
+        if (newOriginDirectoryPathLength < 0 || newReverseDirectoryPathLength < 0) {
             closedir(dir);
             free(nameReverseDirectory);
-            free(path_new_rev_folder);
-            free(path_new_origin_folder);
-            perror("Error call sprintf");
+            free(pathToNewReverseDirectory);
+            free(pathToNewOriginDirectory);
+            perror("error call sprintf ");
             return MY_ERROR;
         }
-
-        if (dEntry->d_type == DT_DIR && !is_curr_or_prev_dir(dEntry->d_name)) {
-            ret = create_reverse_folder(path_new_origin_folder, path_new_rev_folder);
+        printf("newOriginPath: %s\nnewReversePath: %s\n", pathToNewOriginDirectory, pathToNewReverseDirectory);
+        if (dEntry->d_type == DT_DIR && !isCurrentOrPreviouseDirectory(dEntry->d_name)) {
+            ret = createReverseDirectory(pathToNewOriginDirectory, pathToNewReverseDirectory);
         }
         else if (dEntry->d_type == DT_REG) {
-            ret = create_reverse_file(path_new_origin_folder, path_new_rev_folder);
+            ret = createReverseFile();
+        }
+
+        memset(nameReverseDirectory, 0, strlen(nameReverseDirectory) * sizeof(char));
+        memset(pathToNewReverseDirectory, 0, strlen(pathToNewReverseDirectory) * sizeof(char));
+        memset(pathToNewOriginDirectory, 0, strlen(pathToNewOriginDirectory) * sizeof(char));
+    }
+
+    return MY_ERROR;
+    /*while ((dEntry = readdir(dir)) != NULL) {
+
+
+       /* if (dEntry->d_type == DT_DIR && !is_curr_or_prev_dir(dEntry->d_name)) {
+            ret = create_reverse_folder(path_new_origin_folder, pathToNewReverseDirectory);
+        }
+        else if (dEntry->d_type == DT_REG) {
+            ret = create_reverse_file(path_new_origin_folder, pathToNewReverseDirectory);
         }
 
         if (ret == MY_ERROR ||
             !(dEntry->d_type == DT_DIR || dEntry->d_type == DT_REG)) {
             free(nameReverseDirectory);
-            free(path_new_rev_folder);
+            free(pathToNewReverseDirectory);
             free(path_new_origin_folder);
             closedir(dir);
             return MY_ERROR;
         }
 
         memset(nameReverseDirectory, 0, strlen(path_new_origin_folder) * sizeof(char));
-        memset(path_new_rev_folder, 0, strlen(path_new_origin_folder) * sizeof(char));
+        memset(pathToNewReverseDirectory, 0, strlen(path_new_origin_folder) * sizeof(char));
         memset(path_new_origin_folder, 0, strlen(path_new_origin_folder) * sizeof(char));
     }
 
     free(nameReverseDirectory);
-    free(path_new_rev_folder);
+    free(pathToNewReverseDirectory);
     free(path_new_origin_folder);
     closedir(dir);
-    return OK;
+    return OK;*/
 }
 
-char* findOriginDirectoryName(char* pathToDirectory) {
+char* getOriginDirectoryName(char* pathToDirectory) {
     char* originDirectoryName = strrchr(pathToDirectory, '/');
     if (originDirectoryName == NULL) {
         originDirectoryName = pathToDirectory;
@@ -280,47 +296,40 @@ char* findOriginDirectoryName(char* pathToDirectory) {
     return originDirectoryName;
 }
 
-void reverseLine(char* lineToReverse, char* reverseLine)
-{
-    int nameLength = strlen(lineToReverse);
-    for (int i = 0; i < nameLength; i++) {
-        reverseLine[i] = lineToReverse[nameLength - 1 - i];
-    }
+char* getPathToOriginDirectory(char* directoryPath, char* directoryName) {
+    int pathToDirectoryLength = strlen(directoryPath) - strlen(directoryName);
+    char* pathToDirectory = (char*)malloc(sizeof(char) * pathToDirectoryLength);
+    memcpy(pathToDirectory, directoryPath, sizeof(char) * pathToDirectoryLength);
+    return pathToDirectory;
 }
 
-void fillDirectory(char* pathToOriginDirectory, char* pathToReverseDirectory)
-{
-
-}
-
-size_t createReverseDirectory(char* directoryName, char* pathToDirectory)
-{
-    //int ret = mkdir(directoryName, 0666);
-    int ret = _mkdir(directoryName);
+size_t createReverseDirectory(char* pathToDirectory, char* pathToReverseDirectory) {
+    //int ret = mkdir(pathToReverseDirectory, 0666);
+    int ret = _mkdir(pathToReverseDirectory);
     if (ret == -1) {
         perror("error ");
         return MY_ERROR;
     }
-    fillDirectory(pathToDirectory, pathToDirectory);
+    ret = fillDirectory(pathToDirectory, pathToReverseDirectory);
     //fill_folder(path_origin_folder, path_reverse_folder);
     return OK;
 }
 
-size_t run1(int argc, char* argv[])
-{
+size_t run1(int argc, char* argv[]) {
     if (argc != CORRECT_NUMBER_ARGS) {
         fprintf(stderr, "use: %s path/to/directory\n", argv[1]);
         return MY_ERROR;
     }
-    char* originDirectoryName = findOriginDirectoryName(argv[1]);
-
+    char* originDirectoryName = getOriginDirectoryName(argv[1]);
+    char* pathToOriginDirectory = getPathToOriginDirectory(argv[1], originDirectoryName);
+    //printf("name: %s, path: %s\n", originDirectoryName, pathToOriginDirectory);
     int directoryNameLength = strlen(originDirectoryName);
     if (directoryNameLength == 0) {
         return MY_ERROR;
     }
     char* reverseDirectoryName = (char *)calloc(directoryNameLength, sizeof(char));
     reverseLine(originDirectoryName, reverseDirectoryName);
-    int ret = createReverseDirectory(reverseDirectoryName, reverseDirectoryName);
+    int ret = createReverseDirectory(originDirectoryName, pathToOriginDirectory);
     //std::cout << lengt << std::endl;
     //createReverseDirectory()
 }
