@@ -20,8 +20,7 @@ void printDirectory(const char* pathToDirectory) {
 
     DIR* dir = opendir(pathToDirectory);
     if (dir == NULL) {
-        printf("Directory %s ", pathToDirectory);
-        perror("was not open\n");
+        perror("error openning directory");
         return;
     }
     struct dirent* dEntry = readdir(dir);
@@ -51,21 +50,43 @@ void touchFile(const char* fileName) {
     }
 }
 
-enum returnStatus is_file_reg(const char* name_file) {
-    struct stat stat_file;
-
-    int ret = stat(name_file, &stat_file);
-    if (ret == MY_ERROR) {
-        perror("Error in call stat\n");
-        return MY_ERROR;
+int isFileRegular(const char* fileName) {
+    struct stat fileStat;
+    stat(fileName, &fileStat);
+    if (errno) {
+        perror("Error getting file statistic");
+        return 0;
     }
-
-    if (!S_ISREG(stat_file.st_mode)) {
-        perror("The file is not a reg\n");
-        return MY_ERROR;
-    }
-    return OK;
+    return S_ISREG(fileStat.st_mode);
 }
+
+void printFile(const char* filePath) {
+    if (!isFileRegular(filePath)) {
+        printf("file is not regular\n");
+        return;
+    }
+    FILE* file = fopen(filePath, "a+");
+    if (file == NULL) {
+        perror("Error openning file");
+        return;
+    }
+    //
+    struct stat fileStat;
+    stat(filePath, &fileStat);
+    size_t fileSize = fileStat.st_size;
+    char buffer[BUFFER_SIZE];
+    size_t bytesRead = BUFFER_SIZE;
+    while (bytesRead == BUFFER_SIZE) {
+        bytesRead = fread(buffer, sizeof(char), BUFFER_SIZE, file);
+        if (errno) {
+            perror("Error reading file");
+            return;
+        }
+        fwrite(buffer, sizeof(char), bytesRead, stdout);
+    }
+    fclose(file);
+}
+
 
 enum returnStatus write_to_file_implements(const char* buffer, const size_t size_written, FILE* stream) {
     size_t sum_written = 0;
@@ -86,7 +107,6 @@ enum returnStatus write_file(FILE* ptr_file) {
     long file_size = ftell(ptr_file);
     printf("%ld", file_size);
     size_t ret = fseek(ptr_file, 0, SEEK_SET);
-
     if (ret == MY_ERROR) {
         fclose(ptr_file);
         perror("Error in call file seek\n");
@@ -112,21 +132,6 @@ enum returnStatus write_file(FILE* ptr_file) {
     }
 
     return OK;
-}
-
-void printFile(const char* filePath) {
-    if (is_file_reg(filePath) == MY_ERROR)
-        return MY_ERROR;
-
-    FILE* ptr_file = fopen(filePath, "a+");
-    if (ptr_file == NULL) {
-        perror("Error occurred while open file\n");
-        return MY_ERROR;
-    }
-
-    enum returnStatus ret = write_file(ptr_file);
-    fclose(ptr_file);
-    return ret;
 }
 
 enum returnStatus removeFile(const char* path_name_file) {

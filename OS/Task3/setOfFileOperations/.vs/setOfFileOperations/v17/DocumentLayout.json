@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task3\\setOfFileOperations\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{33992CCD-F7D2-4895-9237-C6BC59F5E814}|setOfFileOperations.vcxproj|C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task3\\setOfFileOperations\\setCommands.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{33992CCD-F7D2-4895-9237-C6BC59F5E814}|setOfFileOperations.vcxproj|solutionrelative:setCommands.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{33992CCD-F7D2-4895-9237-C6BC59F5E814}|setOfFileOperations.vcxproj|C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task3\\setOfFileOperations\\setCommands.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{33992CCD-F7D2-4895-9237-C6BC59F5E814}|setOfFileOperations.vcxproj|solutionrelative:setCommands.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33992CCD-F7D2-4895-9237-C6BC59F5E814}|setOfFileOperations.vcxproj|C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task3\\setOfFileOperations\\setCommands.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{33992CCD-F7D2-4895-9237-C6BC59F5E814}|setOfFileOperations.vcxproj|solutionrelative:setCommands.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{33992CCD-F7D2-4895-9237-C6BC59F5E814}|setOfFileOperations.vcxproj|C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task3\\setOfFileOperations\\setOfFileOperations.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -22,24 +22,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "setCommands.cpp",
               "DocumentMoniker": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task3\\setOfFileOperations\\setCommands.cpp",
               "RelativeDocumentMoniker": "setCommands.cpp",
               "ToolTip": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task3\\setOfFileOperations\\setCommands.cpp",
               "RelativeToolTip": "setCommands.cpp",
-              "ViewState": "AQIAACoAAAAAAAAAAAAhwDUAAAAdAAAA",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABcAAAAPAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-04-05T13:58:57.31Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "setCommands.h",
               "DocumentMoniker": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task3\\setOfFileOperations\\setCommands.h",
               "RelativeDocumentMoniker": "setCommands.h",
@@ -58,7 +58,7 @@
               "RelativeDocumentMoniker": "setOfFileOperations.cpp",
               "ToolTip": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task3\\setOfFileOperations\\setOfFileOperations.cpp",
               "RelativeToolTip": "setOfFileOperations.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEQAAAArAAAA",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAAEQAAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-04-05T13:54:53.929Z",
               "EditorCaption": ""
