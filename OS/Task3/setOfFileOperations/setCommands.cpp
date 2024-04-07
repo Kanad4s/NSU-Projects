@@ -2,6 +2,8 @@
 
 enum constant_read {
     BUFFER_SIZE = 256,
+    LINK_EXTRA_LENGTH = 4,
+    SYMBOLIC_LINK_EXTRA_LENGTH = 7
 };
 
 enum permitted {
@@ -70,7 +72,6 @@ void printFile(const char* filePath) {
         perror("Error openning file");
         return;
     }
-    //
     struct stat fileStat;
     stat(filePath, &fileStat);
     size_t fileSize = fileStat.st_size;
@@ -87,104 +88,60 @@ void printFile(const char* filePath) {
     fclose(file);
 }
 
+void removeFile(const char* fileName) {
+    int ret = remove(fileName);
+    if (errno) {
+        perror("Error removing file");
+    }
+}
 
-enum returnStatus write_to_file_implements(const char* buffer, const size_t size_written, FILE* stream) {
-    size_t sum_written = 0;
+int isSymbolicLink(const char* link) {
+    struct stat statLink;
+    stat(link, &statLink);
+    if (errno) {
+        perror("Error getting link statistic");
+        return 0;
+    }
+    return S_ISLNK(statLink.st_mode);
+}
 
-    while (sum_written < size_written) {
-        int written = fwrite(buffer + sum_written, sizeof(char), size_written - sum_written, stream);
+void makeSymbolicLink(const char* fileName) {
+    char* linkName = (char*)malloc(sizeof(char) * (strlen(fileName) + SYMBOLIC_LINK_EXTRA_LENGTH));
+    sprintf(linkName, "%sSymLink", fileName);
+    symlink(fileName, linkName);
+    if (errno) {
+        free(linkName);
+        perror("Error making symbolic link");
+        return;
+    }
+    free(linkName);
+}
 
-        if (written <= MY_ERROR) {
-            perror("Error in call fwrite");
-            return MY_ERROR;
+void printSymbolicLink(const char* link) {
+    if (!isSymbolicLink(link)) {
+        printf("File is not symbolic link\n");
+        return;
+    }
+    char* buffer = (char*)malloc(sizeof(char) * BUFFER_SIZE);
+    size_t bytesRead = readlink(link, buffer, BUFFER_SIZE);
+    if (errno) {
+        free(buffer);
+        perror("Error reading link");
+        return;
+    }
+    int i = 2;
+    while (bytesRead == BUFFER_SIZE) {
+        buffer = (char*)realloc(buffer, sizeof(char) * BUFFER_SIZE * i);
+        bytesRead = readlink(link, buffer, BUFFER_SIZE);
+        if (errno) {
+            free(buffer);
+            perror("Error reading link");
+            return;
         }
-        sum_written += written;
+        i++;
     }
-    return OK;
-}
-
-enum returnStatus write_file(FILE* ptr_file) {
-    long file_size = ftell(ptr_file);
-    printf("%ld", file_size);
-    size_t ret = fseek(ptr_file, 0, SEEK_SET);
-    if (ret == MY_ERROR) {
-        fclose(ptr_file);
-        perror("Error in call file seek\n");
-        return MY_ERROR;
-    }
-
-    char buffer[BUFFER_SIZE];
-    long bytes_left = file_size;
-    while (bytes_left > 0) {
-        long bytes_to_read = bytes_left < BUFFER_SIZE ? bytes_left : BUFFER_SIZE;
-
-        size_t bytes_read = fread(buffer, 1, bytes_to_read, ptr_file);
-        if (feof(ptr_file) || ferror(ptr_file)) {
-            perror("Failed to read input file when call file read\n");
-            return MY_ERROR;
-        }
-        bytes_left -= bytes_read;
-
-        enum returnStatus writing_status = write_to_file_implements(buffer, bytes_read, stdout);
-        if (writing_status == MY_ERROR) {
-            return MY_ERROR;
-        }
-    }
-
-    return OK;
-}
-
-enum returnStatus removeFile(const char* path_name_file) {
-    int ret = remove(path_name_file);
-    if (ret == MY_ERROR) {
-        perror("Error occurred while remove file\n");
-        return MY_ERROR;
-    }
-    return OK;
-}
-
-enum returnStatus is_sym_link(const char* sym_link) {
-    struct stat stat_link;
-
-    int ret = stat(sym_link, &stat_link);
-    if (ret == MY_ERROR) {
-        perror("Error in call stat\n");
-        return MY_ERROR;
-    }
-
-    if (!S_ISLNK(stat_link.st_mode)) {
-        perror("The file is not a symbolic link\n");
-        return MY_ERROR;
-    }
-    return OK;
-}
-
-enum returnStatus makeSymbolicLink(const char* name_file) {
-    int ret = symlink(name_file, "symbol_link");
-    if (ret == MY_ERROR) {
-        perror("Error occurred while symlink\n");
-        return MY_ERROR;
-    }
-    return OK;
-}
-
-enum returnStatus printSymbolicLink(const char* sym_link) {
-    if (is_sym_link(sym_link) == MY_ERROR) {
-        return MY_ERROR;
-    }
-
-    char buffer[BUFFER_SIZE];
-    size_t sum_written = readlink(sym_link, buffer, BUFFER_SIZE);
-    if (sum_written == MY_ERROR) {
-        perror("Error in call readlink");
-        return MY_ERROR;
-    }
-
-    enum returnStatus writing_status = write_to_file_implements(buffer, sum_written, stdout);
-    if (writing_status == MY_ERROR) {
-        return MY_ERROR;
-    }
-    return OK;
+    fwrite(buffer, sizeof(char), bytesRead, stdout);
+    free(buffer);
 }
 
 enum returnStatus printFileFromSymbolicLink(const char* sym_link) {
@@ -211,7 +168,7 @@ enum returnStatus printFileFromSymbolicLink(const char* sym_link) {
 }
 
 enum returnStatus removeSymbolicLink(const char* sym_link) {
-    enum returnStatus ret = is_sym_link(sym_link);
+    enum returnStatus ret = isSymbolicLink(sym_link);
     if (ret == MY_ERROR)
         return MY_ERROR;
 

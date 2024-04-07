@@ -2,6 +2,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
@@ -15,9 +16,9 @@ void printDirectory(const char* pathToDirectory);
 void removeDirectory(const char* directoryName);
 void touchFile(const char* fileName);
 void printFile(const char* filePath);
-enum returnStatus removeFile(const char* path_name_file);
-enum returnStatus makeSymbolicLink(const char* name_file);
-enum returnStatus printSymbolicLink(const char* sym_link);
+void removeFile(const char* fileName);
+void makeSymbolicLink(const char* fileName);
+void printSymbolicLink(const char* link);
 enum returnStatus printFileFromSymbolicLink(const char* sym_link);
 enum returnStatus removeSymbolicLink(const char* sym_link);
 enum returnStatus makeHardLink(const char* hard_link);

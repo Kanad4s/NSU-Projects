@@ -35,7 +35,7 @@ void executeCommand(const char* name_command, const char* name_util) {
     else if (strcmp(name_command, "removeFile") == 0) {
         removeFile(name_util); //f
     }
-    else if (strcmp(name_command, "makeSymbolLink") == 0) {
+    else if (strcmp(name_command, "makeSymLink") == 0) {
         makeSymbolicLink(name_util); //g
     }
     else if (strcmp(name_command, "printSymLink") == 0) {
