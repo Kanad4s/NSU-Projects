@@ -141,6 +141,7 @@ void printSymbolicLink(const char* link) {
         i++;
     }
     fwrite(buffer, sizeof(char), bytesRead, stdout);
+    fwrite("\n", sizeof(char), 1, stdout);
     free(buffer);
 }
 
