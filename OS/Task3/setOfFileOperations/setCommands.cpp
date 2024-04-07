@@ -97,7 +97,7 @@ void removeFile(const char* fileName) {
 
 int isSymbolicLink(const char* link) {
     struct stat statLink;
-    stat(link, &statLink);
+    lstat(link, &statLink);
     if (errno) {
         perror("Error getting link statistic");
         return 0;
