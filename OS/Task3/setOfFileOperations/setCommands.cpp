@@ -129,7 +129,6 @@ void printSymbolicLink(const char* link) {
         perror("Error reading link");
         return;
     }
-    int i = 2;
     while (bytesRead == BUFFER_SIZE) {
         buffer = (char*)realloc(buffer, sizeof(char) * BUFFER_SIZE * i);
         bytesRead = readlink(link, buffer, BUFFER_SIZE);
@@ -145,35 +144,17 @@ void printSymbolicLink(const char* link) {
     free(buffer);
 }
 
-enum returnStatus printFileFromSymbolicLink(const char* sym_link) {
-    if (is_sym_link(sym_link) == MY_ERROR) {
-        return MY_ERROR;
-    }
-
-    char buffer[BUFFER_SIZE];
-    size_t ret = readlink(sym_link, buffer, BUFFER_SIZE);
-    if (ret == MY_ERROR) {
-        perror("Error in call readlink");
-        return MY_ERROR;
-    }
-
-    FILE* ptr_file = fopen(buffer, "a+"); //TODO change rb
-    if (ptr_file == NULL) {
-        perror("Error in call fopen");
-        return MY_ERROR;
-    }
-
-    ret = write_file(ptr_file);
-    fclose(ptr_file);
-    return ret;
+void printFileFromSymbolicLink(const char* link) {
+    printFile(link);
 }
 
-enum returnStatus removeSymbolicLink(const char* sym_link) {
-    enum returnStatus ret = isSymbolicLink(sym_link);
-    if (ret == MY_ERROR)
-        return MY_ERROR;
-
-    return removeFile(sym_link);
+void removeSymbolicLink(const char* link) {
+    if (isSymbolicLink(link)) {
+        removeFile(link);
+    }
+    else {
+        fprintf(stdout, "File is not symbolic link\n");
+    }
 }
 
 enum returnStatus makeHardLink(const char* hard_link) {
