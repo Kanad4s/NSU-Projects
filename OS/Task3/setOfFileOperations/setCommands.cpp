@@ -3,7 +3,8 @@
 enum constant_read {
     BUFFER_SIZE = 256,
     LINK_EXTRA_LENGTH = 4,
-    SYMBOLIC_LINK_EXTRA_LENGTH = 7
+    SYMBOLIC_LINK_EXTRA_LENGTH = 7,
+    HARD_LINK_EXTRA_LENTGH = 8
 };
 
 enum permitted {
@@ -157,71 +158,72 @@ void removeSymbolicLink(const char* link) {
     }
 }
 
-enum returnStatus makeHardLink(const char* hard_link) {
-    int ret = link(hard_link, "hard_link");
-    if (ret == MY_ERROR) {
-        perror("Error in call link\n");
-        return MY_ERROR;
+void makeHardLink(const char* fileName) {
+    char* linkName = (char*)malloc(sizeof(char) * (strlen(fileName) + HARD_LINK_EXTRA_LENTGH));
+    sprintf(linkName, "%sHardLink", fileName);
+    link(fileName, linkName);
+    if (errno) {
+        free(linkName);
+        perror("Error making link");
+        return;
     }
-    return OK;
+    free(linkName);
 }
 
-enum returnStatus removeHardLink(const char* hard_link) {
-    int ret = unlink(hard_link);
-    if (ret == MY_ERROR) {
-        perror("Error in call unlink\n");
-        return MY_ERROR;
+void removeHardLink(const char* link) {
+    unlink(link);
+    if (errno) {
+        perror("Error removing link");
     }
-    return OK;
 }
 
-char* get_permissions(struct stat* file_stat) {
+char* getRights(struct stat* fileStat) {
     char* permissions = (char*)malloc(10);
-    permissions[0] = (S_ISDIR(file_stat->st_mode) ? 'd' : '-');
-    permissions[0] = (file_stat->st_mode & S_IRUSR ? 'r' : '-');
-    permissions[1] = (file_stat->st_mode & S_IWUSR ? 'w' : '-');
-    permissions[2] = (file_stat->st_mode & S_IXUSR ? 'x' : '-');
-    permissions[3] = (file_stat->st_mode & S_IRGRP ? 'r' : '-');
-    permissions[4] = (file_stat->st_mode & S_IWGRP ? 'w' : '-');
-    permissions[5] = (file_stat->st_mode & S_IXUSR ? 'x' : '-');
-    permissions[6] = (file_stat->st_mode & S_IROTH ? 'r' : '-');
-    permissions[7] = (file_stat->st_mode & S_IWOTH ? 'w' : '-');
-    permissions[8] = (file_stat->st_mode & S_IXOTH ? 'x' : '-');
-    permissions[9] = (file_stat->st_mode & S_ISVTX ? 't' : ' ');
-
+    permissions[0] = '-';
+    if (S_ISLNK(fileStat->st_mode)) {
+        permissions[0] = 'l';
+    }
+    else if (S_ISDIR(fileStat->st_mode)) {
+        permissions[0] = 'd';
+    }
+    permissions[1] = (fileStat->st_mode & S_IRUSR ? 'r' : '-');
+    permissions[2] = (fileStat->st_mode & S_IWUSR ? 'w' : '-');
+    permissions[3] = (fileStat->st_mode & S_IXUSR ? 'x' : '-');
+    permissions[4] = (fileStat->st_mode & S_IRGRP ? 'r' : '-');
+    permissions[5] = (fileStat->st_mode & S_IWGRP ? 'w' : '-');
+    permissions[6] = (fileStat->st_mode & S_IXUSR ? 'x' : '-');
+    permissions[7] = (fileStat->st_mode & S_IROTH ? 'r' : '-');
+    permissions[8] = (fileStat->st_mode & S_IWOTH ? 'w' : '-');
+    permissions[9] = (fileStat->st_mode & S_IXOTH ? 'x' : '-');
     return permissions;
 }
 
-enum returnStatus printRights(const char* name_file) {
-    struct stat buff;
-
-    int ret = stat(name_file, &buff);
-    if (ret == MY_ERROR) {
-        perror("Error in call stat\n");
-        return MY_ERROR;
+void printRights(const char* fileName) {
+    struct stat fileState;
+    stat(fileName, &fileState);
+    if (errno) {
+        perror("Error getting file statistic");
+        return;
     }
-    char* permissions = get_permissions(&buff);
-    printf("permissions: %s\n", permissions);
-    printf("count hard links: %ld\n", buff.st_nlink);
-
+    char* permissions = getRights(&fileState);
+    printf("rights: %s\n", permissions);
+    printf("hard links: %ld\n", fileState.st_nlink);
     free(permissions);
-    return OK;
 }
 
-enum returnStatus changeRights(const char* name_file) {
-    struct stat buff;
-    int ret = stat(name_file, &buff);
-    if (ret == MY_ERROR) {
-        perror("Error in call stat\n");
-        return MY_ERROR;
+void changeRights(const char* fileName) {
+    struct stat fileStat;
+    stat(fileName, &fileStat);
+    if (errno) {
+        perror("Error getting file statistic");
+        return;
     }
-
     mode_t new_mode = (mode_t)(rand() % ALL_FOR_ALL);
-
-    ret = chmod(name_file, new_mode);
-    if (ret == MY_ERROR) {
-        perror("Error changing file permissions\n");
-        return MY_ERROR;
+    chmod(fileName, new_mode);
+    if (errno) {
+        perror("Error changing rights");
     }
-    return OK;
+    //mode of 'as' changed from 0666 (rw - rw - rw - ) to 0644 (rw - r--r--)
 }
+
+//Each MODE is of the form '[ugoa]*([-+=]([rwxXst]*|[ugo]))+|[-+=][0-7]+'.
