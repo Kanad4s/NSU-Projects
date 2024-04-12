@@ -133,7 +133,7 @@ double* iterationMethod(const double* matrix, double* rightPartVector, const int
 int main()
 {
     double time = 0;
-    int nIterations = 10;
+    int nIterations = 2;
     for (int i = 0; i < nIterations; i++) {
         double* matrix = generateSquareMatrix(SIZE_VECTOR);
         double* rightPartVector = generateRightPartVector(SIZE_VECTOR);
