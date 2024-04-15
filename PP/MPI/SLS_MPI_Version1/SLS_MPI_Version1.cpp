@@ -62,9 +62,9 @@ void fillVectorWithValue(double* vector, int size, int value)
     }
 }
 
-void vectorSubtraction( double* minuend, double* subtrahend, double* result, int size)
+void vectorSubtraction(double* minuend, double* subtrahend, double* result, int vectorSize)
 {
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < vectorSize; i++) {
         result[i] = minuend[i] - subtrahend[i];
     }
 }
@@ -191,9 +191,10 @@ double* iterationMethod(double* matrix, double* rightPartVector, int matrixSideS
         printVector(multiplyResultVector, matrixSideSize, rank);
         //todo
         vectorSubtraction(multiplyResultVector, rightPartVector, multiplyResultVector, matrixSideSize);
-        /*multiplyVectorByScalar(multiplyResultVector, solutionCopyVector, matrixSideSize, TAU);
+        multiplyVectorByScalar(multiplyResultVector, solutionCopyVector, matrixSideSize, TAU);
         vectorSubtraction(solutionVector, solutionCopyVector, solutionVector, matrixSideSize);
-        run = !isAccuracyAchieved(calculateDeterminant(multiplyResultVector, matrixSideSize), rightPartDeterminant);*/
+        //todo
+        //run = !isAccuracyAchieved(calculateDeterminant(multiplyResultVector, matrixSideSize), rightPartDeterminant);
         run = false;
     } while (run);
     delete[] solutionCopyVector;
