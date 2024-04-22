@@ -1,0 +1,13 @@
+﻿  SLS_MPI_Version2.cpp
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\SLS_MPI_Version2\SLS_MPI_Version2.cpp(117,9): error C2660: MPI_Sendrecv_replace: функция не принимает 0 аргументов
+  C:\Program Files (x86)\Microsoft SDKs\MPI\Include\mpi.h(1299,1):
+   см. объявление "MPI_Sendrecv_replace"
+  C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\SLS_MPI_Version2\SLS_MPI_Version2.cpp(117,9):
+  при попытке сопоставить список аргументов "()"
+  
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\SLS_MPI_Version2\SLS_MPI_Version2.cpp(259,9): error C2660: multiplyPartMatrixByPartVector: функция не принимает 8 аргументов
+  C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\SLS_MPI_Version2\SLS_MPI_Version2.cpp(106,6):
+   см. объявление "multiplyPartMatrixByPartVector"
+  C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\SLS_MPI_Version2\SLS_MPI_Version2.cpp(259,9):
+  при попытке сопоставить список аргументов "(double *, int, double *, int, double *, int, int, int)"
+  
