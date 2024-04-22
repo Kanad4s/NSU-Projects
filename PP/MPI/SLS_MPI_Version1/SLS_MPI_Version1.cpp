@@ -5,7 +5,7 @@
 #include <omp.h>
 
 enum {
-    SIZE_VECTOR = 8,//4096,
+    SIZE_VECTOR = 1024,//4096,
     ZERO_VALUE = 0,
     ROOT = 0
 };
@@ -33,14 +33,14 @@ void printPartMatrix(double* matrix, int partSize, int shift, int matrixSideSize
             printf("\n");
             //free space
             for (int i = 0; i < shift % matrixSideSize; i++) {
-                printf(" ");
+                printf("  ");
             }
             //part of matrix
             for (int i = 0; i < partSize; i++) {
                 if (i != 0 && (i + shift) % matrixSideSize == 0) {
                     printf("\n");
                 }
-                printf("%f ", matrix[i]);
+                printf("%1.0f ", matrix[i]);
             }
             printf("\n");
         }
@@ -70,17 +70,25 @@ void fillVectorWithValue(double* vector, int size, int value)
     }
 }
 
-void vectorSubtraction(double* minuend, double* subtrahend, double* result, int vectorSize)
+void vectorPartSubtraction(double* minuend, double* subtrahend, double* result, int vectorSize, int rank, int nProcesses, int partSize)
 {
-    for (int i = 0; i < vectorSize; i++) {
-        result[i] = minuend[i] - subtrahend[i];
+    int shift = rank * partSize;
+    if (rank + 1 == nProcesses && partSize != 0) {
+        partSize = vectorSize - shift;
+    }
+    for (int i = 0; i < partSize; i++) {
+        result[shift + i] = minuend[shift + i] - subtrahend[shift + i];
     }
 }
 
-void multiplyVectorByScalar(double* vector, double* result, int vectorSize, double scalar)
+void multiplyVectorPartByScalar(double* vector, double* result, int vectorSize, double scalar, int rank, int nProcesses, int partSize)
 {
-    for (int i = 0; i < vectorSize; i++) {
-        result[i] = vector[i] * scalar;
+    int shift = rank * partSize;
+    if (rank + 1 == nProcesses && partSize != 0) {
+        partSize = vectorSize - shift;
+    }
+    for (int i = 0; i < partSize; i++) {
+        result[shift + i] = vector[shift + i] * scalar;
     }
 }
 
@@ -101,22 +109,6 @@ void multiplyPartMatrixByVector(double* partMatrix, int partMatrixSize, double* 
     }
 }
 
-void multiplyPartMatrixByPartVector(double* partMatrix, int partMatrixSize, double* multiplyVector, int partVectorSize, 
-                                    double* result, int resultSize, int shift, int rank)
-{
-    fillVectorWithValue(result, resultSize, ZERO_VALUE);
-    int resultLineIndex = shift % SIZE_VECTOR;
-    for (int i = 0; i < partVectorSize; i++) {
-        for (int j = 0; j < resultSize; j++) {
-            int matrixElementLineIndex = i * resultSize + j;
-            result[j] += partMatrix[matrixElementLineIndex] * multiplyVector[i];
-            if (matrixElementLineIndex % SIZE_VECTOR == 0) {
-                resultLineIndex++;
-            }
-        }
-    }
-}
-
 double* generateZeroVector(int vectorSize)
 {
     double* vector = new double[vectorSize];
@@ -131,33 +123,11 @@ double* generateSolutionVector(int vectorSize)
     return solutionVector;
 }
 
-double* generatePartSolutionVector(int partVectorSize)
-{
-    double* partSolutionVector = generateZeroVector(partVectorSize);
-    fillVectorWithValue(partSolutionVector, partVectorSize, ZERO_VALUE);
-    return partSolutionVector;
-}
-
 double* generateRightSideVector(int vectorSize)
 {
     double* rightSideVector = generateZeroVector(vectorSize);
     fillVectorWithValue(rightSideVector, vectorSize, vectorSize + 1);
     return rightSideVector;
-}
-
-double* generateRightPartVector(double* rightSideVector, int rightSideVectorSize, int partVectorSize, int rank)
-{
-    double* rightPartVector = generateZeroVector(partVectorSize);
-    for (int i = 0; i < partVectorSize; i++) {
-        int elementIndex = rank * partVectorSize + i;
-        if (elementIndex < rightSideVectorSize) {
-            rightPartVector[i] = rightSideVector[elementIndex];
-        }
-        else {
-            rightPartVector[i] = 0;
-        }
-    }
-    return rightPartVector;
 }
 
 double* generateSquareMatrix(int sideSize)
@@ -177,34 +147,41 @@ double* generateSquareMatrix(int sideSize)
 int calculatePartMatrixSize(int matrixSize, int rank, int nProcesses) 
 {
     int partMatrixSize = matrixSize / nProcesses;
-    /*int valuesLeft = matrixSize % nProcesses;
+    int valuesLeft = matrixSize % nProcesses;
     if (valuesLeft != 0 && rank < valuesLeft) {
         partMatrixSize++;
-    }*/
-    if (matrixSize % nProcesses != 0) {
-        partMatrixSize++;
     }
-    //std::cout << "rank = " << rank << ", newSize = " << newSize << std::endl;
     return partMatrixSize;
 }
 
-int calculateShift(int matrixSize, int partMatrixSize, int rank, int nProcesses)
+int calculateMatrixShift(int matrixSize, int partMatrixSize, int rank, int nProcesses)
 {
     int valuesLeft = matrixSize % nProcesses;
     int shift = 0;
-    /*if (rank < valuesLeft) {
+    if (rank < valuesLeft) {
         shift = rank * partMatrixSize;
     }
     else {
         shift = rank * partMatrixSize + valuesLeft;
-    }*/
-    shift = rank * partMatrixSize;
+    }
     return shift;
+}
+
+int calculateVectorProcessingPart(int vectorSize, int rank, int nProcesses)
+{
+    int processPart;
+    if (vectorSize < nProcesses) {
+        rank < vectorSize ? processPart = 1 : processPart = 0;
+    }
+    else {
+        processPart = vectorSize / nProcesses;
+    }
+    return processPart;
 }
 
 double* generatePartMatrix(double* matrix, int matrixSize, int shift, int partMatrixSize)
 {
-    double* partMatrix = new double[partMatrixSize];
+    double* partMatrix = generateZeroVector(partMatrixSize);
     memcpy(partMatrix, &matrix[shift], partMatrixSize * sizeof(double));
     return partMatrix;
 }
@@ -219,99 +196,56 @@ void copyVector(double* source, double* destination, int size)
     memcpy(destination, source, size * sizeof(double));
 }
 
-int calculatePartVectorSize(int partMatrixSize, int nProcesses) 
+void prepareForReduce(double* vector, int vectorSize, int matrixShift, int partMatrixSize, int rank)
 {
-    int partVectorSize = partMatrixSize;
-    while (partMatrixSize % nProcesses != 0) {
-        partVectorSize++;
+    int firstPart = matrixShift / vectorSize;
+    for (int i = 0; i < firstPart; i++) {
+        vector[i] = 0;
     }
-    return partVectorSize / nProcesses;
-}
-
-int GetCntCurrentFillLineMatrix(const int rank, const int cntProcess, const int newSize) {
-    int resultFillLine = 0;
-    for (int startRank = 1; startRank <= rank; ++startRank) {
-        resultFillLine += newSize / cntProcess;
+    int lastPartBegin = (matrixShift + partMatrixSize) / vectorSize;
+    if ((matrixShift + partMatrixSize) % vectorSize != 0) {
+        lastPartBegin++;
     }
-    return resultFillLine;
-}
-
-double* generatePartMatrix1(const int rank, const int cntProcess, const int fictitiousSize) {
-    int partFictitiousSizeMatrix = fictitiousSize * (fictitiousSize / cntProcess);
-    printf("%d\n", partFictitiousSizeMatrix);
-    double* partMatrix = generateZeroVector(partFictitiousSizeMatrix);
-
-    int countRows = fictitiousSize / cntProcess;
-    int index = countRows * rank;
-    int numberCntLine = GetCntCurrentFillLineMatrix(rank, cntProcess, fictitiousSize);
-
-    for (int i = 0, offset = 0; i < countRows; ++i, offset += fictitiousSize) {
-        if (numberCntLine + i + 1 <= SIZE_VECTOR) {
-            for (int j = 0; j < SIZE_VECTOR; ++j) {
-                partMatrix[offset + j] = 1.0;
-            }
-            partMatrix[index + i] = 2.0;
-        }
-        index += fictitiousSize;
+    for (int i = lastPartBegin; i < vectorSize; i++) {
+        vector[i] = 0;
     }
-    return partMatrix;
 }
 
 //x^(n+1) = x^n – τ(Ax^n – b)
 double* iterationMethod(double* matrix, double* rightSideVector, int matrixSideSize, int rank, int nProcesses)
 {
     int partMatrixSize = calculatePartMatrixSize(matrixSideSize * matrixSideSize, rank, nProcesses);
-    int shift = calculateShift(matrixSideSize * matrixSideSize, partMatrixSize, rank, nProcesses);
-    //double* partMatrix = generatePartMatrix(matrix, matrixSideSize, shift, partMatrixSize);
-    //printPartMatrix(partMatrix, partMatrixSize, shift, matrixSideSize, nProcesses, rank);
-    int partVectorSize = calculatePartVectorSize(matrixSideSize, nProcesses);
-    int partsUnitySize = partVectorSize * nProcesses;
-    double* partMatrix = generatePartMatrix1(rank, nProcesses, partVectorSize * nProcesses);
-    //printf("%d, sizeVector: %d, sizeUnity: %d\n", rank, partVectorSize, partsUnitySize);
-    double* rightPartVector = generateRightPartVector(rightSideVector, matrixSideSize, partVectorSize, rank);
-    double* solutionVector = generateSolutionVector(partsUnitySize);
-    double* solutionPartVector = generateSolutionVector(partVectorSize);
-    double* scatteredVector = generateZeroVector(partVectorSize);
-    double* multiplyResultVector = generateZeroVector(partsUnitySize);
-    double* multiplyMatrixVector = generateZeroVector(partsUnitySize);
-    double partDeterminant = 0, rightSideNorm = 0, resultNorm = 0;
-    partDeterminant = calculateDeterminant(rightPartVector, partVectorSize);
-    MPI_Allreduce(&partDeterminant, &rightSideNorm, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-    rightSideNorm = sqrt(rightSideNorm);
-    //printf("rank: %d, %f,%f\n", rank, partDeterminant, rightSideNorm);
+    int matrixShift = calculateMatrixShift(matrixSideSize * matrixSideSize, partMatrixSize, rank, nProcesses);
+    double* partMatrix = generatePartMatrix(matrix, matrixSideSize * matrixSideSize, matrixShift, partMatrixSize);
+    int vectorProcessingPart = calculateVectorProcessingPart(matrixSideSize, rank, nProcesses);
+    double* solutionVector = generateSolutionVector(matrixSideSize);
+    double* solutionReduceVector = generateZeroVector(matrixSideSize);
+    double* processingVector = generateZeroVector(matrixSideSize);
+    double* normVector = generateZeroVector(matrixSideSize);
+    double solutionNorm = 0;
+    double rightSideNorm = calculateNorm(rightSideVector, matrixSideSize);
     bool run = true;
-    int i = 0;
-    do {
+    while (run) {
         //Ax
-        multiplyPartMatrixByPartVector(partMatrix, partMatrixSize, solutionPartVector, partVectorSize,
-                                       multiplyResultVector, partsUnitySize, shift, rank);
-        //printVector(multiplyResultVector, partsUnitySize, rank);
-        MPI_Allreduce(multiplyResultVector, multiplyMatrixVector, partsUnitySize, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-        MPI_Scatter(multiplyMatrixVector, partVectorSize, MPI_DOUBLE, scatteredVector, partVectorSize,
-                    MPI_DOUBLE, ROOT, MPI_COMM_WORLD);
+        multiplyPartMatrixByVector(partMatrix, partMatrixSize, solutionVector,
+            processingVector, matrixSideSize, matrixShift);
         //Ax-b
-        vectorSubtraction(scatteredVector, rightSideVector, scatteredVector, partVectorSize);
-        partDeterminant = calculateDeterminant(scatteredVector, partVectorSize);
-        MPI_Allreduce(&partDeterminant, &resultNorm, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
+        vectorPartSubtraction(processingVector, rightSideVector, processingVector, matrixSideSize, rank, nProcesses, vectorProcessingPart);
+        prepareForReduce(processingVector, matrixSideSize, matrixShift, partMatrixSize, rank);
+        MPI_Allreduce(processingVector, normVector, matrixSideSize, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
+        solutionNorm = calculateNorm(normVector, matrixSideSize);
         //t(Ax-b)
-        multiplyVectorByScalar(scatteredVector, scatteredVector, partVectorSize, TAU);
+        multiplyVectorPartByScalar(processingVector, processingVector, matrixSideSize, TAU, rank, nProcesses, vectorProcessingPart);
         //x-t(Ax-b)
-        vectorSubtraction(solutionPartVector, scatteredVector, scatteredVector, partVectorSize);
-        //printVector(solutionVector, matrixSideSize, rank);
-        copyVector(scatteredVector, solutionPartVector, partVectorSize);
-        run = !isAccuracyAchieved(sqrt(resultNorm), rightSideNorm);
-        i++;
-        if (i == 2) {
-            run = false;
-        }
-    } while (run);
-    MPI_Gather(scatteredVector, partVectorSize, MPI_DOUBLE, solutionVector, partVectorSize, MPI_DOUBLE, ROOT, MPI_COMM_WORLD);
+        vectorPartSubtraction(solutionVector, processingVector, solutionReduceVector, matrixSideSize, rank, nProcesses, vectorProcessingPart);
+        prepareForReduce(solutionReduceVector, matrixSideSize, matrixShift, partMatrixSize, rank);
+        MPI_Allreduce(solutionReduceVector, solutionVector, matrixSideSize, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
+        run = !isAccuracyAchieved(solutionNorm, rightSideNorm);
+    }
     delete[] partMatrix;
-    delete[] rightPartVector;
-    delete[] solutionPartVector;
-    delete[] scatteredVector;
-    delete[] multiplyResultVector;
-    delete[] multiplyMatrixVector;
+    delete[] solutionReduceVector;
+    delete[] processingVector;
+    delete[] normVector;
     return solutionVector;
 }
 
@@ -326,14 +260,12 @@ int main(int argc, char** argv)
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     double* solutionVector = iterationMethod(matrix, rightPartVector, SIZE_VECTOR, rank, nProcesses);
     double finish = MPI_Wtime();
-    //std::cout << "TIME: " << finish - start << std::endl;
     if (rank == 0) {
         printf("Time: %f\n", finish - start);
+        //printVector(solutionVector, SIZE_VECTOR, 0);
     }
-    //printVector(solutionVector, SIZE_VECTOR, 0);
     delete[] matrix;
     delete[] solutionVector;
     delete[] rightPartVector;
     MPI_Finalize();
-    //mpiexec -n 4 .\SLS_MPI_Version1.exe
 }
