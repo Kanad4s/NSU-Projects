@@ -5,7 +5,7 @@
 #include <math.h>
 
 enum {
-    SIZE_VECTOR = 8,//4096,
+    SIZE_VECTOR = 4,//4096,
     ZERO_VALUE = 0,
     ROOT = 0
 };
@@ -88,24 +88,25 @@ void multiplyVectorByScalar(double* vector, double* result, int vectorSize, doub
 
 //vector != result
 void multiplyPartMatrixByPartVector(double* partMatrix, int partMatrixSize, double* multiplyVector, int vectorSize,
-                                    double* result, int resultSize, int shift, int rank, int nProcesses, int matrixSideSize)
+                                    double* result, int resultSize, int rank, int nProcesses)
 {
-    MPI_Status status;
     fillVectorWithValue(result, resultSize, ZERO_VALUE);
+    MPI_Status status;
+    int recvRank = (rank + 1) % nProcesses;
+    int sendRank = (rank + nProcesses - 1) % nProcesses;
+    int columnShift = rank * vectorSize;
     for (int partsDone = 0; partsDone < nProcesses; partsDone++) {
-        
-        int lineShift = vectorSize * rank;
-        for (int i = 0; i < partMatrixSize / matrixSideSize; i++) {
+        int lineShift = ((rank + partsDone) % nProcesses) * vectorSize;
+        for (int i = 0; i < partMatrixSize / resultSize; i++) {
             for (int j = 0; j < vectorSize; j++) {
-                result[i] += partMatrix[i * matrixSideSize + lineShift + j] * multiplyVector[j];
+                result[columnShift + i] += partMatrix[i * resultSize + lineShift + j] * multiplyVector[j];
             }
         }
-        int sendRank = (rank + 1) % nProcesses;
-        int recvRank = (rank + nProcesses - 1) % nProcesses;
-        if (rank == 0) {
-            printf("send:%d, recv:%d, vSize:%d\n", sendRank, recvRank, vectorSize);
+        /*if (rank == 2) {
+            printf("send:%d, recv:%d, columnShift:%d\n", sendRank, recvRank, columnShift);
             printVector(multiplyVector, vectorSize, rank);
-        }
+            printVector(result, resultSize, rank);
+        }*/
         MPI_Sendrecv_replace(multiplyVector, vectorSize, MPI_DOUBLE, sendRank, 0, recvRank, 0, MPI_COMM_WORLD, &status);
     }
 }
@@ -243,7 +244,7 @@ double* iterationMethod(double* matrix, double* rightSideVector, int matrixSideS
     while (run) {
         //Ax
         multiplyPartMatrixByPartVector(partMatrix, partMatrixSize, solutionPartVector, partVectorSize,
-            multiplyResultVector, partsUnitySize, shift, rank, nProcesses, matrixSideSize);
+            multiplyResultVector, partsUnitySize, rank, nProcesses);
         MPI_Allreduce(multiplyResultVector, multiplyMatrixVector, partsUnitySize, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
         MPI_Scatter(multiplyMatrixVector, partVectorSize, MPI_DOUBLE, scatteredVector, partVectorSize,
             MPI_DOUBLE, ROOT, MPI_COMM_WORLD);
