@@ -110,9 +110,6 @@ double* generateSolutionVector(int vectorSize)
 {
     double* solutionVector = generateZeroVector(vectorSize);
     fillVectorWithValue(solutionVector, vectorSize, ZERO_VALUE);
-    /*for (int i = 0; i < vectorSize; i++) {
-        solutionVector[i] = i;
-    }*/
     return solutionVector;
 }
 

@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\SLS_MPI_Version2\\",
+  "WorkspaceRootPath": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\Task1\\SLS_MPI_Version2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B7B34BC0-C4AB-4FEA-BD16-488999A9D770}|SLS_MPI_Version2.vcxproj|C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\SLS_MPI_Version2\\SLS_MPI_Version2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{B7B34BC0-C4AB-4FEA-BD16-488999A9D770}|SLS_MPI_Version2.vcxproj|C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\Task1\\SLS_MPI_Version2\\SLS_MPI_Version2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{B7B34BC0-C4AB-4FEA-BD16-488999A9D770}|SLS_MPI_Version2.vcxproj|solutionrelative:SLS_MPI_Version2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -20,11 +20,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "SLS_MPI_Version2.cpp",
-              "DocumentMoniker": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\SLS_MPI_Version2\\SLS_MPI_Version2.cpp",
+              "DocumentMoniker": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\Task1\\SLS_MPI_Version2\\SLS_MPI_Version2.cpp",
               "RelativeDocumentMoniker": "SLS_MPI_Version2.cpp",
-              "ToolTip": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\SLS_MPI_Version2\\SLS_MPI_Version2.cpp",
+              "ToolTip": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\Task1\\SLS_MPI_Version2\\SLS_MPI_Version2.cpp",
               "RelativeToolTip": "SLS_MPI_Version2.cpp",
-              "ViewState": "AQIAAMcAAAAAAAAAAAAAwN8AAAAUAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAGEAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-04-22T15:18:50.836Z",
               "EditorCaption": ""
