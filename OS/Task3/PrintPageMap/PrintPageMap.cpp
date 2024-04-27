@@ -1,14 +1,78 @@
-﻿#include <stdio.h>
-#include <stdint.h>
+﻿#include <errno.h>
 #include <fcntl.h>
-#include <unistd.h>
-#include <inttypes.h>
+#include <malloc.h>
+#include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
+#define PAGE_SIZE 0x1000
+#define NAME_SIZE 256
+#define OFFSET_SIZE 12
 
-void printMap(char* argv[]) {
+unsigned long long getOffset(char fileName[]) {
+    char* maps = (char *)malloc(NAME_SIZE * sizeof(char));
+    strcat(maps, fileName);
+    strcat(maps, "/maps");
+    char* offsetLine = (char*)malloc(OFFSET_SIZE * sizeof(char));
+    int fd = open(maps, O_RDONLY); // O_RDONLY means read only
+    if (fd < 0) {
+        perror("Error openning /maps");
+    }
+    if (pread(fd, offsetLine, OFFSET_SIZE, 0) != OFFSET_SIZE) {
+        perror("Error reading offset");
+    }
+    char* endPtr;
+    //printf("%llu", strtoull(offsetLine, &endPtr, 16));
+    close(fd);
+    free(maps);
+    return strtoull(offsetLine, &endPtr, 16);
+}
 
+int hasInformation(unsigned long long data) {
+    if (((data >> 55) & 1) || ((data >> 56) & 1) || ((data >> 61) & 1) || ((data >> 62) & 1) || ((data >> 63) & 1)) {
+        return 1;
+    }
+    return 0;
+}
+
+void printPageInfo(unsigned long long address, unsigned long long data) {
+    printf("virtual address: 0x%-16llx, soft-dirty: %lld, exclusively mapped: %lld, file page/shared: %lld, swapped: %lld, present: %lld\n",
+        address, (data >> 55) & 1, (data >> 56) & 1, (data >> 61) & 1, (data >> 62) & 1, (data >> 63) & 1);
+}
+
+void printMap(int argc, char fileName[]) {
+    char* pagemap = (char*)malloc(NAME_SIZE * sizeof(char));
+    strcat(pagemap, fileName);
+    strcat(pagemap, "/pagemap");
+    int fd = open(pagemap, O_RDONLY);
+    if (fd < 0) {
+        perror("Failed to open pagemap file");
+        close(fd);
+        return;
+    }
+
+    unsigned long long offset = getOffset(fileName);
+
+    for (unsigned long long i = offset; i < 0xffffffffffff; i += PAGE_SIZE) {
+        unsigned long long data;
+        unsigned long long shift = (i / PAGE_SIZE) * sizeof(data);
+        if (pread(fd, &data, sizeof(data), shift) != sizeof(data)) {
+            perror("Error reading pagemap");
+            close(fd);
+            return;
+        }
+        if (hasInformation(data)) {
+            printPageInfo(i, data);
+        }
+        else {
+            printf("virtual address: 0x%-16llx, data:%llu\n", i, data);
+        }
+        usleep(1000000);
+    }
+    close(fd);
+    free(pagemap);
 }
 
 int main(int argc, char* argv[])
@@ -17,61 +81,94 @@ int main(int argc, char* argv[])
         printf("program does not have arguments\n");
         return 0;
     }
+    char filename[NAME_SIZE] = "/proc/self";
+    printMap(argc, filename);
+    return 0;
+}
+#include <errno.h>
+#include <fcntl.h>
+#include <malloc.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
+#define PAGE_SIZE 0x1000
+#define NAME_SIZE 256
+#define OFFSET_SIZE 12
+
+unsigned long long getOffset(char fileName[]) {
+    char* maps = (char *)malloc(NAME_SIZE * sizeof(char));
+    strcat(maps, fileName);
+    strcat(maps, "/maps");
+    char* offsetLine = (char*)malloc(OFFSET_SIZE * sizeof(char));
+    int fd = open(maps, O_RDONLY); // O_RDONLY means read only
+    if (fd < 0) {
+        perror("Error openning /maps");
+    }
+    if (pread(fd, offsetLine, OFFSET_SIZE, 0) != OFFSET_SIZE) {
+        perror("Error reading offset");
+    }
+    char* endPtr;
+    //printf("%llu", strtoull(offsetLine, &endPtr, 16));
+    close(fd);
+    free(maps);
+    return strtoull(offsetLine, &endPtr, 16);
+}
+
+int hasInformation(unsigned long long data) {
+    if (((data >> 55) & 1) || ((data >> 56) & 1) || ((data >> 61) & 1) || ((data >> 62) & 1) || ((data >> 63) & 1)) {
+        return 1;
+    }
     return 0;
 }
 
-#define PAGE_SIZE 4096
+void printPageInfo(unsigned long long address, unsigned long long data) {
+    printf("virtual address: 0x%-12llx, data:0x%-12llx, soft-dirty: %lld, exclusively mapped: %lld, file page/shared: %lld, swapped: %lld, present: %lld\n",
+        address, data, (data >> 55) & 1, (data >> 56) & 1, (data >> 61) & 1, (data >> 62) & 1, (data >> 63) & 1);
+}
 
-int main1(int argc, char* argv[]) {
-    pid_t pid;
-    char filename[256] = "/proc/self/pagemap";
-    int fd;
-    uint64_t pagemap_value;
-    unsigned long v_address;
-    off_t offset;
-    ssize_t bytes_read = sizeof(uint64_t);
-
-    pid = getpid();
-    fd = open(filename, O_RDONLY);
+void printMap(int argc, char fileName[]) {
+    char* pagemap = (char*)malloc(NAME_SIZE * sizeof(char));
+    strcat(pagemap, fileName);
+    strcat(pagemap, "/pagemap");
+    int fd = open(pagemap, O_RDONLY);
     if (fd < 0) {
         perror("Failed to open pagemap file");
-        return 1;
-    }
-
-    if (argc > 1 && strcmp(argv[1], "stack") == 0) {
-        v_address = (unsigned long)(&v_address);
-    }
-
-    else if (argc > 1 && strcmp(argv[1], "heap") == 0) {
-        int* heap = malloc(sizeof(int));
-        v_address = (unsigned long)(&heap[0]);
-        free(heap);
-    }
-    else if (argc > 1 && strcmp(argv[1], "static") == 0) {
-        static int num = 5;
-        v_address = (unsigned long)(&num);
-    }
-
-    else {
-        v_address = 0;
-    }
-
-    offset = (v_address / PAGE_SIZE) * sizeof(uint64_t);
-
-    if (lseek(fd, offset, SEEK_SET) == -1) {
-        perror("Failed to seek in pagemap file");
         close(fd);
-        return 1;
+        return;
     }
 
-    while (bytes_read == sizeof(uint64_t)) {
-        bytes_read = read(fd, &pagemap_value, sizeof(uint64_t));
-        printf("%.12lx: 0x%" PRIx64 " pid: %d \n", v_address, pagemap_value, pid);
-        v_address += 1;
-        sleep(1);
+    unsigned long long offset = getOffset(fileName);
+
+    for (unsigned long long i = offset; i < 0xffffffffffff; i += PAGE_SIZE) {
+        unsigned long long data;
+        unsigned long long shift = (i / PAGE_SIZE) * sizeof(data);
+        if (pread(fd, &data, sizeof(data), shift) != sizeof(data)) {
+            perror("Error reading pagemap");
+            close(fd);
+            return;
+        }
+        if (hasInformation(data)) {
+            printPageInfo(i, data);
+        }
+        else {
+            printf("virtual address: 0x%-12llx, data:0x%-12llx\n", i, data);
+        }
+        usleep(400000);
     }
     close(fd);
+    free(pagemap);
+}
 
+int main(int argc, char* argv[])
+{
+    if (argc > 1) {
+        printf("program does not have arguments\n");
+        return 0;
+    }
+    char filename[NAME_SIZE] = "/proc/self";
+    printMap(argc, argv[1]);
     return 0;
 }
