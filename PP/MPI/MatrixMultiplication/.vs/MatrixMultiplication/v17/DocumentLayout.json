@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\MatrixMultiplication\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{460D638D-96F1-40B2-A286-014507CD00C3}|MatrixMultiplication.vcxproj|C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\MatrixMultiplication\\MatrixMultiplication.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{460D638D-96F1-40B2-A286-014507CD00C3}|MatrixMultiplication.vcxproj|solutionrelative:MatrixMultiplication.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MatrixMultiplication.cpp",
+              "DocumentMoniker": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\MatrixMultiplication\\MatrixMultiplication.cpp",
+              "RelativeDocumentMoniker": "MatrixMultiplication.cpp",
+              "ToolTip": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\MatrixMultiplication\\MatrixMultiplication.cpp",
+              "RelativeToolTip": "MatrixMultiplication.cpp",
+              "ViewState": "AQIAAFMAAAAAAAAAAAAAAGQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-04-28T05:30:10.152Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
