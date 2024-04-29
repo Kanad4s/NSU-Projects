@@ -61,9 +61,6 @@ void createComms(int coords[], int dims[], int rank, int nProcesses, MPI_Comm* c
     int periods[NUMBER_DIMS] = { 0, 0 };
     int reorder = 1;
     MPI_Cart_create(MPI_COMM_WORLD, NUMBER_DIMS, dims, periods, reorder, comm2d);
-    /*for (int i = 0; i < 2; i++) {
-        printf("%d ", dims[i]);
-    }*/
     MPI_Cart_coords(*comm2d, rank, NUMBER_DIMS, coords);
     int coordsLine[NUMBER_DIMS] = { 0, 1 };
     int coordsColumn[NUMBER_DIMS] = { 1, 0 };
@@ -81,20 +78,17 @@ void distributeMatrixA(double* A, double* partA, int partASize, int coords[], MP
         MPI_Scatter(A, partASize, MPI_DOUBLE, partA, partASize, MPI_DOUBLE, ROOT, commColumn);
     }
     MPI_Bcast(partA, partASize, MPI_DOUBLE, ROOT, commLine);
-    //printVector(partA, partASize, 20);
 }
 
 void distributeMatrixB(double* B, double* partB, int partBSize, int coords[], int n2, int n3,int rank, MPI_Comm commColumn, MPI_Comm commLine) {
     if (coords[X] == 0) {
         MPI_Datatype vectorType;
         MPI_Type_vector(n2, partBSize / n2, n3, MPI_DOUBLE, &vectorType);
-        //MPI_Type_commit(&vectorType);
         MPI_Type_create_resized(vectorType, 0, sizeof(double) * partBSize / n2, &vectorType);
         MPI_Type_commit(&vectorType);
         MPI_Scatter(B, 1, vectorType, partB, partBSize, MPI_DOUBLE, ROOT, commLine);
     }
     MPI_Bcast(partB, partBSize, MPI_DOUBLE, ROOT, commColumn);
-    //printVector(partB, partBSize, rank);
 }
 
 double* multiplyPartMatrices(double* partA, double* partB, int partASize, int partBSize, int n1, int n2, int n3, int coords[]) {
@@ -102,7 +96,6 @@ double* multiplyPartMatrices(double* partA, double* partB, int partASize, int pa
     for (int i = 0; i < n1; i++) {
         for (int k = 0; k < n3; k++) {
             for (int j = 0; j < n2; j++) {
-                //printf("%1.0f * %1.0f\n", partA[i * n2 + j], partB[k * n2 + j]);
                 result[i * n3 + k] += partA[i * n2 + j] * partB[j * n3 + k];
             }
         }
@@ -110,29 +103,7 @@ double* multiplyPartMatrices(double* partA, double* partB, int partASize, int pa
     return result;
 }
 
-void CreateMatrixCFromSeparatedBlock(double* partC, double* C, int sizePartRow,  int sizePartColumn, int countColumn, int dims[],
-                                     int rank, int cntProcess, MPI_Comm comm2d) {
-    MPI_Datatype vectorType, newType;
-    MPI_Type_vector(sizePartRow, sizePartColumn, countColumn, MPI_DOUBLE, &vectorType);
-    MPI_Type_commit(&vectorType);
-
-    MPI_Type_create_resized(vectorType, 0, sizePartColumn * sizeof(double), &newType);
-    MPI_Type_commit(&newType);
-
-    int receiveCounts[2];
-    int displays[2];
-
-    if(rank == ROOT)
-        //CreateParametersGatherv(receiveCounts, displays, dims);
-
-    MPI_Gatherv(partC, sizePartColumn * sizePartRow, MPI_DOUBLE, C, receiveCounts, displays, newType, ROOT, comm2d);
-
-    //FreeDatatypeMPI(vectorType, newType);
-}
-
-/*CreateMatrixCFromSeparatedBlock(partMatrixC, C, SIZE_MATRIX::n1 / dims[COORDS::X], SIZE_MATRIX::n3 / dims[COORDS::Y],
-                                    SIZE_MATRIX::n3, dims,  rank, cntProcess, comm2d);*/
-void CreateParametersGatherv(int recvCounts[], int displs[], int dims[], int n1, int n2, int n3) {
+void CreateGathervOptions(int recvCounts[], int displs[], int dims[], int n1) {
     int sizeShift = n1 * dims[Y] / dims[X];
     for (int i = 0; i < dims[X]; ++i) {
         for (int j = 0; j < dims[Y]; ++j) {
@@ -141,21 +112,19 @@ void CreateParametersGatherv(int recvCounts[], int displs[], int dims[], int n1,
         }
     }
 }
-void unitResultParts(double* result, double* partResult, int partResultSize, int nLinesPart, int nColumnsPart, int n1, int n2, int n3,
-                     int dims[], MPI_Comm* comm2d, int nProcesses) {
+void unitResultParts(double* result, double* partResult, int partResultSize, int nLinesPart, int nColumnsPart, int n1, int n3,
+                     int dims[], int nProcesses, MPI_Comm* comm2d) {
     MPI_Datatype matrixPart;
-    //MPI_Type_vector(n2, partBSize / n2, n3, MPI_DOUBLE, &vectorType);
     MPI_Type_vector(nLinesPart, nColumnsPart, n3, MPI_DOUBLE, &matrixPart);
     MPI_Type_commit(&matrixPart);
     MPI_Type_create_resized(matrixPart, 0, sizeof(double) * nColumnsPart, &matrixPart);
     MPI_Type_commit(&matrixPart);
-    //MPI_Gather(partResult, 1, matrixPart, result, partResultSize, MPI_DOUBLE, ROOT, *comm2d);
     int* receiveCounts = new int[nProcesses];
     int* displays = new int[nProcesses];
-    CreateParametersGatherv(receiveCounts, displays, dims, n1, n2, n3);
+    CreateGathervOptions(receiveCounts, displays, dims, n1);
     MPI_Gatherv(partResult, partResultSize, MPI_DOUBLE, result, receiveCounts, displays, matrixPart, ROOT, *comm2d);
-    //MPI_Gatherv(partC, sizePartColumn * sizePartRow, MPI_DOUBLE, C, receiveCounts, displays, newType, ROOT, comm2d);
-    //MPI_Gather(partResult, partResultSize, MPI_DOUBLE, result, 1, matrixPart, ROOT, *comm2d);
+    delete[] receiveCounts;
+    delete[] displays;
 }
 
 double* multiplyMatrices(double* A, double* B, int n1, int n2, int n3, int rank, int nProcesses) {
@@ -165,32 +134,18 @@ double* multiplyMatrices(double* A, double* B, int n1, int n2, int n3, int rank,
     createComms(coords, dims, rank, nProcesses, &comm2d, &commColumn, &commLine);
     int partASize, partBsize;
     calculateSizes(&partASize, &partBsize, n1, n2, n3, dims);
-    if (rank == 0) {
-        for (int i = 0; i < 2; i++) {
-            //printf("%d ", dims[i]);
-        }
-        //printf("\n");
-        //printf("%d\n", partASize);
-        //printVector(A, n1 * n2, rank);
-    }
     double* partA = generateZeroVector(partASize);
     double* partB = generateZeroVector(partBsize);
     distributeMatrixA(A, partA, partASize, coords, commColumn, commLine);
     distributeMatrixB(B, partB, partBsize, coords, n2, n3, rank, commColumn, commLine);
     double* partResult = multiplyPartMatrices(partA, partB, partASize, partBsize, partASize / n2, n2, partBsize / n2, coords);
     int partResultSize = partASize / n2 * partBsize / n2;
-    printVector(partResult, partResultSize, rank);
     double* result = generateZeroVector(n1 * n3);
-    unitResultParts(result, partResult, partResultSize, partASize / n2, partBsize / n2, n1, n2, n3, dims, &comm2d, nProcesses);
-    if (rank == 0) {
-        printVector(result, n1 * n3, rank);
-    }
-
-    /*printf("\nrank:%d\n", rank);
-    for (int i = 0; i < 2; i++) {
-        printf("%d ", coords[i]);
-    }*/
-    return partResult;
+    unitResultParts(result, partResult, partResultSize, partASize / n2, partBsize / n2, n1, n3, dims, nProcesses, &comm2d);
+    delete[] partA;
+    delete[] partB;
+    delete[] partResult;
+    return result;
 }
 
 int main(int argc, char* argv[])
@@ -206,6 +161,7 @@ int main(int argc, char* argv[])
     double finish = MPI_Wtime();
     if (rank == 0) {
         printf("Time: %f\n", finish - start);
+        printVector(solution, N1 * N3, rank);
     }
     delete[] A;
     delete[] B;
