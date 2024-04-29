@@ -110,7 +110,53 @@ double* multiplyPartMatrices(double* partA, double* partB, int partASize, int pa
     return result;
 }
 
+void CreateMatrixCFromSeparatedBlock(double* partC, double* C, int sizePartRow,  int sizePartColumn, int countColumn, int dims[],
+                                     int rank, int cntProcess, MPI_Comm comm2d) {
+    MPI_Datatype vectorType, newType;
+    MPI_Type_vector(sizePartRow, sizePartColumn, countColumn, MPI_DOUBLE, &vectorType);
+    MPI_Type_commit(&vectorType);
 
+    MPI_Type_create_resized(vectorType, 0, sizePartColumn * sizeof(double), &newType);
+    MPI_Type_commit(&newType);
+
+    int receiveCounts[2];
+    int displays[2];
+
+    if(rank == ROOT)
+        //CreateParametersGatherv(receiveCounts, displays, dims);
+
+    MPI_Gatherv(partC, sizePartColumn * sizePartRow, MPI_DOUBLE, C, receiveCounts, displays, newType, ROOT, comm2d);
+
+    //FreeDatatypeMPI(vectorType, newType);
+}
+
+/*CreateMatrixCFromSeparatedBlock(partMatrixC, C, SIZE_MATRIX::n1 / dims[COORDS::X], SIZE_MATRIX::n3 / dims[COORDS::Y],
+                                    SIZE_MATRIX::n3, dims,  rank, cntProcess, comm2d);*/
+void CreateParametersGatherv(int recvCounts[], int displs[], int dims[], int n1, int n2, int n3) {
+    int sizeShift = n1 * dims[Y] / dims[X];
+    for (int i = 0; i < dims[X]; ++i) {
+        for (int j = 0; j < dims[Y]; ++j) {
+            recvCounts[i * dims[Y] + j] = 1;
+            displs[i * dims[Y] + j] = i * sizeShift + j;
+        }
+    }
+}
+void unitResultParts(double* result, double* partResult, int partResultSize, int nLinesPart, int nColumnsPart, int n1, int n2, int n3,
+                     int dims[], MPI_Comm* comm2d, int nProcesses) {
+    MPI_Datatype matrixPart;
+    //MPI_Type_vector(n2, partBSize / n2, n3, MPI_DOUBLE, &vectorType);
+    MPI_Type_vector(nLinesPart, nColumnsPart, n3, MPI_DOUBLE, &matrixPart);
+    MPI_Type_commit(&matrixPart);
+    MPI_Type_create_resized(matrixPart, 0, sizeof(double) * nColumnsPart, &matrixPart);
+    MPI_Type_commit(&matrixPart);
+    //MPI_Gather(partResult, 1, matrixPart, result, partResultSize, MPI_DOUBLE, ROOT, *comm2d);
+    int* receiveCounts = new int[nProcesses];
+    int* displays = new int[nProcesses];
+    CreateParametersGatherv(receiveCounts, displays, dims, n1, n2, n3);
+    MPI_Gatherv(partResult, partResultSize, MPI_DOUBLE, result, receiveCounts, displays, matrixPart, ROOT, *comm2d);
+    //MPI_Gatherv(partC, sizePartColumn * sizePartRow, MPI_DOUBLE, C, receiveCounts, displays, newType, ROOT, comm2d);
+    //MPI_Gather(partResult, partResultSize, MPI_DOUBLE, result, 1, matrixPart, ROOT, *comm2d);
+}
 
 double* multiplyMatrices(double* A, double* B, int n1, int n2, int n3, int rank, int nProcesses) {
     int coords[NUMBER_DIMS] = { 0, 0 };
@@ -121,7 +167,7 @@ double* multiplyMatrices(double* A, double* B, int n1, int n2, int n3, int rank,
     calculateSizes(&partASize, &partBsize, n1, n2, n3, dims);
     if (rank == 0) {
         for (int i = 0; i < 2; i++) {
-            printf("%d ", dims[i]);
+            //printf("%d ", dims[i]);
         }
         //printf("\n");
         //printf("%d\n", partASize);
@@ -131,11 +177,14 @@ double* multiplyMatrices(double* A, double* B, int n1, int n2, int n3, int rank,
     double* partB = generateZeroVector(partBsize);
     distributeMatrixA(A, partA, partASize, coords, commColumn, commLine);
     distributeMatrixB(B, partB, partBsize, coords, n2, n3, rank, commColumn, commLine);
-    printVector(partA, partASize, rank);
-    printVector(partB, partBsize, rank);
-
     double* partResult = multiplyPartMatrices(partA, partB, partASize, partBsize, partASize / n2, n2, partBsize / n2, coords);
-    printVector(partResult, n1 * n3, rank);
+    int partResultSize = partASize / n2 * partBsize / n2;
+    printVector(partResult, partResultSize, rank);
+    double* result = generateZeroVector(n1 * n3);
+    unitResultParts(result, partResult, partResultSize, partASize / n2, partBsize / n2, n1, n2, n3, dims, &comm2d, nProcesses);
+    if (rank == 0) {
+        printVector(result, n1 * n3, rank);
+    }
 
     /*printf("\nrank:%d\n", rank);
     for (int i = 0; i < 2; i++) {

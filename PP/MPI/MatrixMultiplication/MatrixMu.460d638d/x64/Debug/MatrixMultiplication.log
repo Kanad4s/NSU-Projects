@@ -1,11 +1,11 @@
 ﻿  MatrixMultiplication.cpp
-C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\MatrixMultiplication\MatrixMultiplication.cpp(151,37): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
-C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\MatrixMultiplication\MatrixMultiplication.cpp(151,33): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
-C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\MatrixMultiplication\MatrixMultiplication.cpp(152,37): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
-C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\MatrixMultiplication\MatrixMultiplication.cpp(152,33): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
-C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\MatrixMultiplication\MatrixMultiplication.cpp(158,55): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
-C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\MatrixMultiplication\MatrixMultiplication.cpp(158,51): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
-C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\MatrixMultiplication\MatrixMultiplication.cpp(158,47): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\MatrixMultiplication\MatrixMultiplication.cpp(202,37): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\MatrixMultiplication\MatrixMultiplication.cpp(202,33): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\MatrixMultiplication\MatrixMultiplication.cpp(203,37): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\MatrixMultiplication\MatrixMultiplication.cpp(203,33): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\MatrixMultiplication\MatrixMultiplication.cpp(209,55): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\MatrixMultiplication\MatrixMultiplication.cpp(209,51): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\MatrixMultiplication\MatrixMultiplication.cpp(209,47): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
   MatrixMultiplication.vcxproj -> C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\MatrixMultiplication\x64\Debug\MatrixMultiplication.exe
   "pwsh.exe" не является внутренней или внешней
   командой, исполняемой программой или пакетным файлом.
