@@ -1,9 +1,9 @@
 ﻿#include <iostream>
 #include "mpi.h"
 
-const double N1 = 8;
-const double N2 = 4;
-const double N3 = 8;
+const double N1 = 4;
+const double N2 = 6;
+const double N3 = 4;
 
 enum {
     NUMBER_DIMS = 2,
@@ -27,7 +27,7 @@ double* generateMatrixA(int nLines, int nColumns) {
     for (int i = 0; i < nLines; i++) {
         
         for (int j = 0; j < nColumns; j++) {
-            matrix[i * nColumns + j] = j + 1 + addPart;
+            matrix[i * nColumns + j] = j + 1 + i * nColumns;
         }
         if (i != 0 && (i - 1) % 2 == 0) {
             addPart += nColumns;
@@ -41,7 +41,7 @@ double* generateMatrixB(int nLines, int nColumns) {
     double* matrix = new double[nLines * nColumns];
     for (int i = 0; i < nLines; i++) {
         for (int j = 0; j < nColumns; j++) {
-            matrix[i * nColumns + j] = j + 1;
+            matrix[i * nColumns + j] = j + 1 + 24 + i * nColumns;
         }
     }
     return matrix;
@@ -97,9 +97,20 @@ void distributeMatrixB(double* B, double* partB, int partBSize, int coords[], in
     //printVector(partB, partBSize, rank);
 }
 
-double* multiplyPartMatrices(double* partA, double* partB, int n1, int n2, int n3, int coords[]) {
-
+double* multiplyPartMatrices(double* partA, double* partB, int partASize, int partBSize, int n1, int n2, int n3, int coords[]) {
+    double* result = generateZeroVector(n1 * n3);
+    for (int i = 0; i < n1; i++) {
+        for (int k = 0; k < n3; k++) {
+            for (int j = 0; j < n2; j++) {
+                //printf("%1.0f * %1.0f\n", partA[i * n2 + j], partB[k * n2 + j]);
+                result[i * n3 + k] += partA[i * n2 + j] * partB[j * n3 + k];
+            }
+        }
+    }
+    return result;
 }
+
+
 
 double* multiplyMatrices(double* A, double* B, int n1, int n2, int n3, int rank, int nProcesses) {
     int coords[NUMBER_DIMS] = { 0, 0 };
@@ -120,17 +131,17 @@ double* multiplyMatrices(double* A, double* B, int n1, int n2, int n3, int rank,
     double* partB = generateZeroVector(partBsize);
     distributeMatrixA(A, partA, partASize, coords, commColumn, commLine);
     distributeMatrixB(B, partB, partBsize, coords, n2, n3, rank, commColumn, commLine);
-    //printVector(partA, partASize, rank);
-    //distributeMatrices(A, B, partA, partB, partASize, partBsize, coords, rank, commColumn, commLine);
-    /*printVector(A, n1 * n2, rank);
-    printf("\nB\n");
-    printVector(B, n2 * n3, rank);*/
+    printVector(partA, partASize, rank);
+    printVector(partB, partBsize, rank);
+
+    double* partResult = multiplyPartMatrices(partA, partB, partASize, partBsize, partASize / n2, n2, partBsize / n2, coords);
+    printVector(partResult, n1 * n3, rank);
+
     /*printf("\nrank:%d\n", rank);
     for (int i = 0; i < 2; i++) {
         printf("%d ", coords[i]);
     }*/
-    double* result = new double[n1 * n3];
-    return result;
+    return partResult;
 }
 
 int main(int argc, char* argv[])
