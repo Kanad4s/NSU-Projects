@@ -5,11 +5,10 @@ import Model.Resources;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.function.Function;
 
 public class RecordTable {
     private JTable _table;
@@ -24,7 +23,7 @@ public class RecordTable {
     }
 
     private ArrayList<String[]> getPreviousPlayers() {
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(Resources.RECORD_TABLE_NAME))) {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(Resources.PATH_RECORD_TABLE))) {
             _players = (ArrayList<String[]>) objectInputStream.readObject();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -43,5 +42,21 @@ public class RecordTable {
         _frame.pack();
         _frame.setLocationRelativeTo(null);
         _frame.setVisible(true);
+    }
+
+    public void addPlayer(String name, int score) {
+        String[] player = new String[]{name, Integer.toString(score)};
+
+        _players.add(player);
+        _players.sort(Comparator.comparing(
+                (Function<String[], String>) array->String.valueOf(Integer.parseInt(array[1]))).reversed()
+        );
+
+        try (FileOutputStream fileOutputStream = new FileOutputStream(Resources.PATH_RECORD_TABLE);
+             ObjectOutputStream oos = new ObjectOutputStream(fileOutputStream)) {
+            oos.writeObject(_players);
+        } catch (IOException e) {
+            System.err.println("Result table not found");
+        }
     }
 }
