@@ -59,10 +59,15 @@ public class View {
 
     private void createButtonScore() {
         _scoreButton = new JButton("Score");
+        _scoreButton.addActionListener(e -> {
+            RecordTable recordTable = new RecordTable();
+            recordTable.fillRecordTable();
+        });
     }
 
     private void createButtonExit() {
         _exitButton = new JButton("Exit");
+        _exitButton.addActionListener(e -> System.exit(0));
     }
 
     private void showButtons() {
