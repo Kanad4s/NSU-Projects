@@ -1,10 +1,11 @@
 package View.Panels;
 
-import Model.Resources;
-
 import java.awt.*;
 
-public class LayoutMy implements LayoutManager {
+import static Model.Resources.BUTTON_HEIGHT;
+import static Model.Resources.BUTTON_WIDTH;
+
+public class ButtonsLayout implements LayoutManager {
 
     @Override
     public void addLayoutComponent(String name, Component comp) {
@@ -30,9 +31,9 @@ public class LayoutMy implements LayoutManager {
     public void layoutContainer(Container parent) {
         for (int i = 0; i < parent.getComponentCount(); i++) {
             Component comp = parent.getComponent(i);
-            comp.setBounds(parent.getWidth() / 2 - Resources.BUTTON_WIDTH / 2,
-                    parent.getHeight() / 2 - Resources.BUTTON_HEIGHT * parent.getComponentCount() / 2 + i * Resources.BUTTON_HEIGHT,
-                    Resources.BUTTON_WIDTH, Resources.BUTTON_HEIGHT);
+            comp.setBounds(parent.getWidth() / 2 - BUTTON_WIDTH / 2,
+                    parent.getHeight() / 2 - BUTTON_HEIGHT * parent.getComponentCount() / 2 + i * BUTTON_HEIGHT,
+                    BUTTON_WIDTH, BUTTON_HEIGHT);
         }
     }
 }

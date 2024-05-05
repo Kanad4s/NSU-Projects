@@ -21,7 +21,7 @@ public class View {
     }
 
     private void createFrame() {
-        _frame = new JFrame();
+        _frame = new JFrame(Resources.MAIN_MENU_NAME);
         _frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         _frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -54,6 +54,7 @@ public class View {
 
     private void createButtonAbout() {
         _aboutButton = new JButton("About");
+        _aboutButton.addActionListener(e -> new GameRules());
     }
 
     private void createButtonScore() {
@@ -69,6 +70,6 @@ public class View {
         _frame.getContentPane().add(_aboutButton);
         _frame.getContentPane().add(_scoreButton);
         _frame.getContentPane().add(_exitButton);
-        _frame.setLayout(new LayoutMy());
+        _frame.setLayout(new ButtonsLayout());
     }
 }
