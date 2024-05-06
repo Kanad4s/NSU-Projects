@@ -9,6 +9,9 @@ public class Resources {
     public static final String PATH_RHODE = "../Tetris/src/main/resources/Assets/Rhode.png";
     public static final String PATH_SMASHBOY = "../Tetris/src/main/resources/Assets/Smashboy.png";
     public static final String PATH_TEEWEE = "../Tetris/src/main/resources/Assets/Teewee.png";
+    public static final String PATH_GAME_AREA_MIDDLE = "../Tetris/src/main/resources/Assets/GameArea/BackMiddle1.png";
+    public static final String PATH_GAME_AREA_SIDE = "../Tetris/src/main/resources/Assets/GameArea/BackSide.png";
+    public static final String PATH_GAME_AREA_BACK = "../Tetris/src/main/resources/Assets/GameArea/Backk.png";
     public static final String MAIN_MENU_NAME = "Tetris";
     public static final String GAME_RULES_NAME = "GameRules";
     public static final String RECORD_TABLE_NAME = "Records";

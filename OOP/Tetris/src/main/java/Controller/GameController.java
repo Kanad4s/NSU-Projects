@@ -1,16 +1,20 @@
 package Controller;
 
-import Model.Model;
-import View.Panels.View;
+import View.Panels.GameArea;
 
-public class GameController {
-    private Model model;
-    private View view;
-    public GameController() {
-        model = new Model();
-        view = new View();
+public class GameController implements Runnable{
+    private GameArea _gameArea;
+
+    public GameController(){
+        _gameArea = new GameArea();
+
     }
-    public void launch() {
-        view.showMainMenu();
+
+    @Override
+    public void run() {
+
+        while (true) {
+
+        }
     }
 }

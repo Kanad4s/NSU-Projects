@@ -1,12 +1,12 @@
 package org.Application;
 
-import Controller.GameController;
+import Controller.launchController;
 
 public class Main {
     public static void main(String[] args) {
-        GameController gameController = new GameController();
+        launchController gameController = new launchController();
         try {
-            gameController.launch();
+            gameController.launchMainMenu();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

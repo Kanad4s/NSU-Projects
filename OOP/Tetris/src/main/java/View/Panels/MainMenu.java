@@ -1,11 +1,14 @@
 package View.Panels;
 
+import Controller.GameController;
 import Model.Resources;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class View {
+public class MainMenu {
 
     private JFrame _frame;
     private JPanel _panel;
@@ -35,7 +38,7 @@ public class View {
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
         };
-        _panel.setOpaque(false);
+        //_panel.setOpaque(true);
     }
 
     private void createButtons() {
@@ -48,7 +51,10 @@ public class View {
     private void createButtonStart() {
         _startButton = new JButton("Start");
         _startButton.addActionListener(e -> {
-
+            _frame.dispose();
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            executorService.execute(new GameController());
+            executorService.shutdown();
         });
     }
 
