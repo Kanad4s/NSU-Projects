@@ -5,7 +5,7 @@ import java.awt.*;
 import static Model.Resources.BUTTON_HEIGHT;
 import static Model.Resources.BUTTON_WIDTH;
 
-public class ButtonsLayout implements LayoutManager {
+public class ButtonsMenuLayout implements LayoutManager {
 
     @Override
     public void addLayoutComponent(String name, Component comp) {

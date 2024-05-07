@@ -15,6 +15,12 @@ public class Resources {
     public static final String MAIN_MENU_NAME = "Tetris";
     public static final String GAME_RULES_NAME = "GameRules";
     public static final String RECORD_TABLE_NAME = "Records";
+    public static final String KEY_UP = "UP";
+    public static final String KEY_DOWN = "DOWN";
+    public static final String KEY_LEFT = "LEFT";
+    public static final String KEY_RIGHT = "RIGHT";
+    public static final String KEY_ROTATE = "SPACE";
     public static final int BUTTON_HEIGHT = 100;
     public static final int BUTTON_WIDTH = 300;
+    public static final int SHAPE_COLORS_COUNT = 2;
 }

@@ -81,6 +81,6 @@ public class MainMenu {
         _frame.getContentPane().add(_aboutButton);
         _frame.getContentPane().add(_scoreButton);
         _frame.getContentPane().add(_exitButton);
-        _frame.setLayout(new ButtonsLayout());
+        _frame.setLayout(new ButtonsMenuLayout());
     }
 }
