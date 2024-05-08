@@ -55,6 +55,10 @@ public class Model implements MyObservable {
         notifyObservers();
     }
 
+    public boolean isShapeMoveDown() {
+        return false;
+    }
+
     @Override
     public void registerObserver(MyObserver o) {
         _observers.add(o);

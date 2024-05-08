@@ -8,7 +8,9 @@ import Model.Model;
 //import static Model.Resources.KEY_UP;
 
 public class MovementController {
-    public MovementController(JFrame frame, Model model) {
+    public MovementController() {};
+
+    public void setControl(JFrame frame, Model model) {
         InputMap inputMap = frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap actionMap = frame.getRootPane().getActionMap();
         inputMap.put(KeyStroke.getKeyStroke(KEY_UP), "up");

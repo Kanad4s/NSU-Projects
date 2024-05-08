@@ -49,6 +49,7 @@ public class GameAreaView implements MyObserver {
                 super.paintComponent(g);
                 drawBackground(g, getHeight(), getWidth(), this);
                 drawPlayerPoints(g);
+                DrawShape.draw(g, );
             }
         };
         //_panel.setOpaque(true);

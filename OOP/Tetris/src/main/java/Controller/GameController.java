@@ -11,7 +11,7 @@ public class GameController implements Runnable{
     public GameController(){
         _model = new Model();
         gameAreaView = new GameAreaView(_model);
-        _movementController = new MovementController(gameAreaView.getFrame(), _model);
+        _movementController = new MovementController();
     }
 
     @Override
@@ -24,5 +24,6 @@ public class GameController implements Runnable{
 
     private void launchGame() {
         gameAreaView.showArea();
+        _movementController.setControl(gameAreaView.getFrame(), _model);
     }
 }

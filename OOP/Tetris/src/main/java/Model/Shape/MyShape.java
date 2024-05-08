@@ -1,7 +1,5 @@
 package Model.Shape;
 
-import Model.Resources;
-
 import java.awt.*;
 import java.util.Random;
 
@@ -55,27 +53,35 @@ public abstract class MyShape {
         }
     };
 
-    private int getWidth() {
+    public int getWidth() {
         return _shape.length;
     }
 
-    private int getHeight() {
+    public int getHeight() {
         return _shape[0].length;
     }
 
-    public int get_y() {
+    public boolean isShape(int x, int y) {
+        return _shape[x][y];
+    }
+
+    public Color getColor() {
+        return _currentColor;
+    }
+
+    public int getY() {
         return _y;
     }
 
-    public void set_y(int y) {
+    public void setY(int y) {
         _y = y;
     }
 
-    public int get_x() {
+    public int getX() {
         return _x;
     }
 
-    public void set_x(int x) {
+    public void setX(int x) {
         _x = x;
     }
 
