@@ -1,6 +1,7 @@
 package View.Panels;
 
 import Controller.launchController;
+import Model.Model;
 import Model.MyObserver;
 import Model.Resources;
 
@@ -12,8 +13,10 @@ public class GameAreaView implements MyObserver {
     private JFrame _frame;
     private JPanel _panel;
     private JButton _buttonRestart, _buttonMenu;
+    private Model _model;
 
-    public GameAreaView() {
+    public GameAreaView(Model model) {
+        _model = model;
         createFrame();
         createPanel();
         _frame.setContentPane(_panel);
@@ -45,6 +48,7 @@ public class GameAreaView implements MyObserver {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 drawBackground(g, getHeight(), getWidth(), this);
+                drawPlayerPoints(g);
             }
         };
         //_panel.setOpaque(true);
@@ -83,6 +87,14 @@ public class GameAreaView implements MyObserver {
             launchController gameController = new launchController();
             gameController.launchMainMenu();
         });
+    }
+
+    private void drawPlayerPoints(Graphics g) {
+        Font font = new Font("Points", Font.BOLD, Resources.TEXT_POINTS_SIZE);
+        g.setFont(font);
+        g.setColor(new Color(88, 114, 140));
+        g.drawString("POINTS", _frame.getWidth() * 2 / 3, Resources.TEXT_POINTS_SIZE);
+        g.drawString(_model.getPoints().toString(), _frame.getWidth() * 2 / 3, 2 * Resources.TEXT_POINTS_SIZE);
     }
 }
 

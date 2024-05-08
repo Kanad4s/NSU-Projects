@@ -9,8 +9,8 @@ public class GameController implements Runnable{
     private Model _model;
 
     public GameController(){
-        gameAreaView = new GameAreaView();
         _model = new Model();
+        gameAreaView = new GameAreaView(_model);
         _movementController = new MovementController(gameAreaView.getFrame(), _model);
     }
 

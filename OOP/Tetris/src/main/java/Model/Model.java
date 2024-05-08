@@ -11,11 +11,18 @@ public class Model implements MyObservable {
     private MyShape[] _shapes;
     private Random _random;
     private MyShape _currentShape;
+    private Integer _points;
 
     public Model() {
         _random = new Random();
         _observers = new ArrayList<MyObserver>();
         _shapes = new MyShape[] {new Hero(), new Teewee(), new Smashboy(), new Rhode(), new Ricky()};
+        spawnShape();
+        _points = 0;
+    }
+
+    public Integer getPoints() {
+        return _points;
     }
 
     public void spawnShape() {

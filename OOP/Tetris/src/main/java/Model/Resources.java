@@ -23,4 +23,5 @@ public class Resources {
     public static final int BUTTON_HEIGHT = 100;
     public static final int BUTTON_WIDTH = 300;
     public static final int SHAPE_COLORS_COUNT = 2;
+    public static final int TEXT_POINTS_SIZE = 60;
 }
