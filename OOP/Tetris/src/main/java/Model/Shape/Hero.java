@@ -6,6 +6,7 @@ public class Hero extends MyShape {
                 {true},
                 {true},
                 {true},
+                {true},
         });
     }
 }

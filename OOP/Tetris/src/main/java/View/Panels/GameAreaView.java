@@ -4,6 +4,7 @@ import Controller.launchController;
 import Model.Model;
 import Model.MyObserver;
 import Model.Resources;
+import View.DrawShape;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,7 +50,7 @@ public class GameAreaView implements MyObserver {
                 super.paintComponent(g);
                 drawBackground(g, getHeight(), getWidth(), this);
                 drawPlayerPoints(g);
-                DrawShape.draw(g, );
+                DrawShape.drawShape(g, _model.getCurrentShape(), _frame.getWidth());
             }
         };
         //_panel.setOpaque(true);

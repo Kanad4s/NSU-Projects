@@ -1,5 +1,7 @@
 package Model.Shape;
 
+import Model.Resources;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -30,7 +32,7 @@ public abstract class MyShape {
     }
 
     public void spawn() {
-        _x = 0;
+        _x = Resources.BLOCKS_IN_ROW / 2 - _random.nextInt(3);
         _y = 0;
     }
 

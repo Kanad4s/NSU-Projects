@@ -17,6 +17,7 @@ public class GameController implements Runnable{
     @Override
     public void run() {
         launchGame();
+        System.out.println("Game over");
         while (true) {
 
         }

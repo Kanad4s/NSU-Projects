@@ -25,8 +25,12 @@ public class Model implements MyObservable {
         return _points;
     }
 
+    public MyShape getCurrentShape() {
+        return _currentShape;
+    }
+
     public void spawnShape() {
-        MyShape _currentShape = _shapes[_random.nextInt(_shapes.length)];
+        _currentShape = _shapes[_random.nextInt(_shapes.length)];
         _currentShape.spawn();
     }
 
