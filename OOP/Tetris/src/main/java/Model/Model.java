@@ -15,6 +15,7 @@ public class Model implements MyObservable {
     private Color[][] _placedShapes;
     private int _areaWidth;
     private int _areaHeight;
+    private  int _areaBlockSize;
 
     public Model() {
         _random = new Random();
@@ -79,6 +80,8 @@ public class Model implements MyObservable {
     public void spawnNextShape() {
         addPoints();
         moveShapeToBackground();
+        System.out.println(_placedShapes.length);
+        System.out.println(_placedShapes[0].length);
         clearLines(_areaHeight, _areaWidth);
         generateShape();
     }
@@ -91,7 +94,11 @@ public class Model implements MyObservable {
         _areaWidth = frameWidth / 3;
         _areaWidth = _areaWidth - _areaWidth % 10;
         _areaHeight = frameHeight;
-        _placedShapes = new Color[_areaHeight][_areaWidth];
+        _areaBlockSize = _areaWidth / Resources.BLOCKS_IN_ROW;
+    }
+
+    public void createPlacedShapes() {
+        _placedShapes = new Color[_areaHeight / _areaBlockSize][_areaWidth / _areaBlockSize];
     }
 
     public int getAreaWidth() {
@@ -119,9 +126,9 @@ public class Model implements MyObservable {
 
     private void clearLines(int areaHeight, int areaWidth) {
         int cntBlocksInRow;
-        for (int row = 0; row < areaHeight; row++) {
+        for (int row = 0; row < areaHeight / _areaBlockSize; row++) {
             cntBlocksInRow = 0;
-            for (int column = 0; column < areaWidth; column++) {
+            for (int column = 0; column < areaWidth / _areaBlockSize; column++) {
                 if (_placedShapes[row][column] != null) ++cntBlocksInRow;
             }
             if (cntBlocksInRow == Resources.BLOCKS_IN_ROW) {

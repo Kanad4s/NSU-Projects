@@ -11,8 +11,7 @@ public class CheckMovement {
         if (shape.getY() + height >= areaHeight / (areaWidth / Resources.BLOCKS_IN_ROW)) {
             return true;
         }
-
-        for (int column = 0; column < width; column++) {
+        for (int column = 0; column < width ; column++) {
             for (int row = height - 1; row >= 0; row--) {
                 int x = column + shape.getX();
                 int y = row + shape.getY();

@@ -43,6 +43,7 @@ public class GameController implements Runnable{
     private void launchGame() {
         gameAreaView.showArea();
         _model.setAreaSize(gameAreaView.getFrame().getHeight(), gameAreaView.getFrame().getWidth());
+        _model.createPlacedShapes();
         _model.registerObserver(gameAreaView);
         _movementController.setControl(gameAreaView.getFrame(), _model);
     }
