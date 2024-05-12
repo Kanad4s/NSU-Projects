@@ -25,5 +25,7 @@ public class Resources {
     public static final int SHAPE_COLORS_COUNT = 2;
     public static final int TEXT_POINTS_SIZE = 60;
     public static final int BLOCKS_IN_ROW = 10;
-    public static final int BLOCKS_IN_BLOCK = 30;
+    public static final int POINTS_PER_SHAPE = 10;
+    public static final int DELAY = 450;
+
 }
