@@ -66,10 +66,10 @@ public class Model implements MyObservable {
     }
 
     public void moveShapeRotate() {
-        //if (CheckMovement.checkMoveRotateShape(_currentShape, _placedShapes)) {
+        if (CheckMovement.checkMoveRotateShape(_currentShape, _placedShapes, _areaWidth, _areaHeight)) {
             _currentShape.moveRotate();
             notifyObservers();
-        //}
+        }
     }
 
     public boolean isShapeMoving() {

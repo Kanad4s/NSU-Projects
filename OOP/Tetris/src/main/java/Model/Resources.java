@@ -19,7 +19,7 @@ public class Resources {
     public static final String KEY_DOWN = "DOWN";
     public static final String KEY_LEFT = "LEFT";
     public static final String KEY_RIGHT = "RIGHT";
-    public static final String KEY_ROTATE = "SPACE";
+    public static final String KEY_ROTATE = "Q";
     public static final int BUTTON_HEIGHT = 100;
     public static final int BUTTON_WIDTH = 300;
     public static final int SHAPE_COLORS_COUNT = 2;

@@ -14,15 +14,8 @@ public abstract class MyShape {
     protected Color _currentColor;
     protected Random _random = new Random();
     protected Color[] _colors = new Color[] {
-            Color.red,
-            Color.green,
-            Color.blue,
-            Color.yellow,
-            Color.orange,
-            Color.pink,
-            Color.cyan,
-            Color.magenta,
-            Color.gray,
+            Color.red, Color.green, Color.blue, Color.yellow, Color.orange, Color.pink,
+            Color.cyan, Color.magenta, Color.gray, Color.darkGray, Color.white, Color.LIGHT_GRAY
     };
     private final int CNT_ROTATIONS = 4;
 
@@ -102,8 +95,7 @@ public abstract class MyShape {
     }
 
     public void moveRotate() {
-        _rotationPosition = _random.nextInt(_shapeRotattions.length);
-        _shape = _shapeRotattions[_rotationPosition];
+        nextRotation();
     }
 
     public int getLeftSide() {
