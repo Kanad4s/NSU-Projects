@@ -8,7 +8,7 @@ public class CheckMovement {
     static public boolean isBarrier(MyShape shape, Color[][] placedShape, int areaWidth, int areaHeight) {
         int width = shape.getWidth();
         int height = shape.getHeight();
-        if (shape.getY() + height >= areaHeight / (Resources.BLOCKS_IN_ROW * 2) - 1) {
+        if (shape.getY() + height - 1 >= areaHeight / (areaWidth / Resources.BLOCKS_IN_ROW)) {
             return true;
         }
 
@@ -43,9 +43,9 @@ public class CheckMovement {
         return true;
     }
 
-    static public boolean checkMoveRightShape(MyShape shape, Color[][] placedShape){
-        //if (shape.getRightSide() >= Context.getWIDTH() / Context.getRATE_VALUE())
-         //   return false;
+    static public boolean checkMoveRightShape(MyShape shape, Color[][] placedShape, int areaWidth){
+        if (shape.getRightSide() >= Resources.BLOCKS_IN_ROW)
+            return false;
 
         int w = shape.getWidth();
         int h = shape.getHeight();
@@ -60,14 +60,14 @@ public class CheckMovement {
         return true;
     }
 
-    static public boolean checkMoveRotateShape(MyShape shape, Color[][] placedShape){
-        shape.nextRotation();
-        if (!checkMoveRightShape(shape, placedShape) ||
-                !checkMoveLeftShape(shape, placedShape)) {
-            shape.previousRotation();
-            return false;
-        }
-        shape.previousRotation();
-        return true;
-    }
+//    static public boolean checkMoveRotateShape(MyShape shape, Color[][] placedShape){
+//        shape.nextRotation();
+//        if (!checkMoveRightShape(shape, placedShape, ) ||
+//                !checkMoveLeftShape(shape, placedShape)) {
+//            shape.previousRotation();
+//            return false;
+//        }
+//        shape.previousRotation();
+//        return true;
+//    }
 }
