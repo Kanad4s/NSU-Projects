@@ -11,9 +11,13 @@ public class DrawShape {
             for (int x = 0; x < width; x++) {
                 if (shape.isShape(x, y)) {
                     DrawBlock.draw(g, x + shape.getX(), y + shape.getY(), shape.getColor(),
-                            gameAreaWidth / 3, gameAreaWidth / 3);
+                            gameAreaWidth , gameAreaWidth);
                 }
             }
         }
+    }
+
+    public static void drawShapesBackground(Graphics g, MyShape shape) {
+
     }
 }

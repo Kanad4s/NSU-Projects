@@ -48,19 +48,19 @@ public class GameAreaView implements MyObserver {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
+                _model.setAreaSize(getHeight(), getWidth());
                 drawBackground(g, getHeight(), getWidth(), this);
                 drawPlayerPoints(g);
-                DrawShape.drawShape(g, _model.getCurrentShape(), _frame.getWidth());
+                DrawShape.drawShape(g, _model.getCurrentShape(), _model.getAreaWidth());
             }
         };
-        //_panel.setOpaque(true);
+        _panel.setOpaque(true);
     }
 
     private void drawBackground(Graphics g, int height, int width, ImageObserver observer) {
         Image middleImage = new ImageIcon(Resources.PATH_GAME_AREA_MIDDLE).getImage();
         Image backImage = new ImageIcon(Resources.PATH_GAME_AREA_BACK).getImage();
         g.drawImage(backImage, 0, 0, width, height, observer);
-        _model.setAreaSize(height, width);
         g.drawImage(middleImage, width / 3, 0, _model.getAreaWidth(), _model.getAreaHeight(), observer);
     }
 
