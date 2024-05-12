@@ -8,6 +8,7 @@ import java.util.Random;
 public abstract class MyShape {
     protected int _x;
     protected int _y;
+    protected int _rotationPosition;
     protected boolean[][] _shape;
     protected boolean[][][] _shapeRotattions;
     protected Color _currentColor;
@@ -101,6 +102,23 @@ public abstract class MyShape {
     }
 
     public void moveRotate() {
-        _shape = _shapeRotattions[_random.nextInt(_shapeRotattions.length)];
+        _rotationPosition = _random.nextInt(_shapeRotattions.length);
+        _shape = _shapeRotattions[_rotationPosition];
+    }
+
+    public int getLeftSide() {
+        return _x;
+    }
+
+    public int getRightSide() {
+        return _x + getWidth();
+    }
+
+    public void nextRotation() {
+        _shape = _shapeRotattions[(++_rotationPosition) % CNT_ROTATIONS];
+    }
+
+    public void previousRotation() {
+        _shape = _shapeRotattions[(--_rotationPosition) % CNT_ROTATIONS];
     }
 }

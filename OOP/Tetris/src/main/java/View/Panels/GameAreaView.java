@@ -60,7 +60,8 @@ public class GameAreaView implements MyObserver {
         Image middleImage = new ImageIcon(Resources.PATH_GAME_AREA_MIDDLE).getImage();
         Image backImage = new ImageIcon(Resources.PATH_GAME_AREA_BACK).getImage();
         g.drawImage(backImage, 0, 0, width, height, observer);
-        g.drawImage(middleImage, width / 3, 0, width / 3, height, observer);
+        _model.setAreaSize(height, width);
+        g.drawImage(middleImage, width / 3, 0, _model.getAreaWidth(), _model.getAreaHeight(), observer);
     }
 
     private void addButtons() {

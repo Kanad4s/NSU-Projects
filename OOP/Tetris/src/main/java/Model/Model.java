@@ -13,6 +13,8 @@ public class Model implements MyObservable {
     private MyShape _currentShape;
     private Integer _points;
     private Color[][] _placedShapes;
+    private int _areaWidth;
+    private int _areaHeight;
 
     public Model() {
         _random = new Random();
@@ -20,10 +22,6 @@ public class Model implements MyObservable {
         _shapes = new MyShape[] {new Hero(), new Teewee(), new Smashboy(), new Rhode(), new Ricky()};
         generateShape();
         _points = 0;
-    }
-
-    public void getSizes(int areaHeight, int areaWidth) {
-        _placedShapes = new Color[areaHeight][areaWidth];
     }
 
     public Integer getPoints() {
@@ -40,39 +38,68 @@ public class Model implements MyObservable {
     }
 
     public void moveShapeUp() {
-        _currentShape.moveUp();
-        notifyObservers();
+        if (CheckMovement.checkMoveUp(_currentShape)) {
+            _currentShape.moveUp();
+            notifyObservers();
+        }
     }
 
     public void moveShapeDown() {
-        _currentShape.moveDown();
+        if (!CheckMovement.isBarrier(_currentShape, _placedShapes, _areaWidth, _areaHeight)) {
+            _currentShape.moveDown();
+        }
         notifyObservers();
     }
 
     public void moveShapeLeft() {
-        _currentShape.moveLeft();
-        notifyObservers();
+        if (CheckMovement.checkMoveLeftShape(_currentShape, _placedShapes)) {
+            _currentShape.moveLeft();
+            notifyObservers();
+        }
     }
 
     public void moveShapeRight() {
-        _currentShape.moveRight();
-        notifyObservers();
+        if (CheckMovement.checkMoveRightShape(_currentShape, _placedShapes)) {
+            _currentShape.moveRight();
+            notifyObservers();
+        }
     }
 
     public void moveShapeRotate() {
-        _currentShape.moveRotate();
-        notifyObservers();
+        if (CheckMovement.checkMoveRotateShape(_currentShape, _placedShapes)) {
+            _currentShape.moveRotate();
+            notifyObservers();
+        }
     }
 
-    public boolean isShapeMoving(int areaWidth, int areaHeight) {
-        return !CheckMovement.isBarrier(_currentShape, _placedShapes, areaWidth, areaHeight);
+    public boolean isShapeMoving() {
+        return !CheckMovement.isBarrier(_currentShape, _placedShapes, _areaWidth, _areaHeight);
     }
 
-    public void spawnNextShape(int width, int height) {
+    public void spawnNextShape() {
         addPoints();
         moveShapeToBackground();
-        clearLines(height, width);
+        clearLines(_areaHeight, _areaWidth);
         generateShape();
+    }
+
+    public boolean isBlockOutOfBounds() {
+        return _currentShape.getY() <= 0;
+    }
+
+    public void setAreaSize(int frameHeight, int frameWidth) {
+        _areaWidth = frameWidth / 3;
+        _areaWidth = _areaWidth - _areaWidth % 10;
+        _areaHeight = frameHeight;
+        _placedShapes = new Color[_areaHeight][_areaWidth];
+    }
+
+    public int getAreaWidth() {
+        return _areaWidth;
+    }
+
+    public int getAreaHeight() {
+        return _areaHeight;
     }
 
     private void addPoints() {
@@ -90,22 +117,23 @@ public class Model implements MyObservable {
         }
     }
 
-    private void clearLines(int height, int width) {
+    private void clearLines(int areaHeight, int areaWidth) {
         int cntBlocksInRow;
-        for (int row = 0; row < height; row++) {
+        for (int row = 0; row < areaHeight; row++) {
             cntBlocksInRow = 0;
-            for (int column = 0; column < width; column++) {
+            for (int column = 0; column < areaWidth; column++) {
                 if (_placedShapes[row][column] != null) ++cntBlocksInRow;
             }
             if (cntBlocksInRow == Resources.BLOCKS_IN_ROW) {
                 _points += 100;
-                clearLine(row, width);
-                shiftRowsDown(row, width);
-                clearLine(0, width);
-                notifyObservers();
+                clearLine(row, areaWidth);
+                shiftRowsDown(row, areaWidth);
+                clearLine(0, areaWidth);
             }
         }
+        notifyObservers();
     }
+
     private void clearLine(int row, int width) {
         for (int i = 0; i < width; i++) {
             _placedShapes[row][i] = null;

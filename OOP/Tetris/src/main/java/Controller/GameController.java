@@ -19,7 +19,7 @@ public class GameController implements Runnable{
     public void run() {
         launchGame();
         while (true) {
-            while (_model.isShapeMoving(gameAreaView.getFrame().getWidth() / 3, gameAreaView.getFrame().getHeight())) {
+            while (_model.isShapeMoving()) {
                 try {
                     _model.moveShapeDown();
                     Thread.sleep(Resources.DELAY);
@@ -28,14 +28,21 @@ public class GameController implements Runnable{
                     throw new RuntimeException(e);
                 }
             }
-            System.out.println("Game over");
-            _model.spawnNextShape(gameAreaView.getFrame().getWidth() / 3, gameAreaView.getFrame().getHeight());
+
+            if (_model.isBlockOutOfBounds()) {
+                System.out.println("Game Over");
+                Thread.currentThread().interrupt();
+                //PerformanceGameArea.gameOver();
+            }
+
+            System.out.println("New shape");
+            _model.spawnNextShape();
         }
     }
 
     private void launchGame() {
         gameAreaView.showArea();
-        _model.getSizes(gameAreaView.getFrame().getHeight(), gameAreaView.getFrame().getWidth() / 3);
+        _model.setAreaSize(gameAreaView.getFrame().getHeight(), gameAreaView.getFrame().getWidth());
         _model.registerObserver(gameAreaView);
         _movementController.setControl(gameAreaView.getFrame(), _model);
     }
