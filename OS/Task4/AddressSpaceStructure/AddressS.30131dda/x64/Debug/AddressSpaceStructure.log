@@ -1,0 +1,5 @@
+﻿  AddressSpaceStructure.cpp
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\OS\Task4\AddressSpaceStructure\AddressSpaceStructure.cpp(10,9): warning C4101: localFuncNot: неиспользованная локальная переменная
+  AddressSpaceStructure.vcxproj -> C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\OS\Task4\AddressSpaceStructure\x64\Debug\AddressSpaceStructure.exe
+  "pwsh.exe" не является внутренней или внешней
+  командой, исполняемой программой или пакетным файлом.

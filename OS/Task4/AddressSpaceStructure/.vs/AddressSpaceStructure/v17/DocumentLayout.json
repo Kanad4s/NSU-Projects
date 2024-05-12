@@ -1,0 +1,69 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task4\\AddressSpaceStructure\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{30131DDA-A1DA-493D-9646-BB926DAD4E78}|AddressSpaceStructure.vcxproj|C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task4\\AddressSpaceStructure\\AddressSpaceStructure.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{30131DDA-A1DA-493D-9646-BB926DAD4E78}|AddressSpaceStructure.vcxproj|solutionrelative:AddressSpaceStructure.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_1\\local.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_1\\vars.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "vars.c",
+              "DocumentMoniker": "C:\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_1\\vars.c",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_1\\vars.c",
+              "ToolTip": "C:\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_1\\vars.c",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_1\\vars.c",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAAA8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-05-10T13:46:10.856Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "local.c",
+              "DocumentMoniker": "C:\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_1\\local.c",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_1\\local.c",
+              "ToolTip": "C:\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_1\\local.c",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_1\\local.c",
+              "ViewState": "AQIAABUAAAAAAAAAAAAAACYAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-05-10T13:46:02.929Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AddressSpaceStructure.cpp",
+              "DocumentMoniker": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task4\\AddressSpaceStructure\\AddressSpaceStructure.cpp",
+              "RelativeDocumentMoniker": "AddressSpaceStructure.cpp",
+              "ToolTip": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task4\\AddressSpaceStructure\\AddressSpaceStructure.cpp",
+              "RelativeToolTip": "AddressSpaceStructure.cpp",
+              "ViewState": "AQIAAE0AAAAAAAAAAAAgwGMAAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-05-10T13:45:45.705Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
