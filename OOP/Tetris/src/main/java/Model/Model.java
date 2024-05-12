@@ -80,8 +80,6 @@ public class Model implements MyObservable {
     public void spawnNextShape() {
         addPoints();
         moveShapeToBackground();
-        System.out.println(_placedShapes.length);
-        System.out.println(_placedShapes[0].length);
         clearLines(_areaHeight, _areaWidth);
         generateShape();
     }
@@ -133,23 +131,23 @@ public class Model implements MyObservable {
             }
             if (cntBlocksInRow == Resources.BLOCKS_IN_ROW) {
                 _points += 100;
-                clearLine(row, areaWidth);
-                shiftRowsDown(row, areaWidth);
-                clearLine(0, areaWidth);
+                clearLine(row, Resources.BLOCKS_IN_ROW);
+                shiftRowsDown(row, Resources.BLOCKS_IN_ROW);
+                clearLine(0, Resources.BLOCKS_IN_ROW);
             }
         }
         notifyObservers();
     }
 
-    private void clearLine(int row, int width) {
-        for (int i = 0; i < width; i++) {
+    private void clearLine(int row, int blocksInRow) {
+        for (int i = 0; i < blocksInRow; i++) {
             _placedShapes[row][i] = null;
         }
     }
 
-    private void shiftRowsDown(int curRow, int width) {
+    private void shiftRowsDown(int curRow, int blocksInRow) {
         for (int row = curRow; row > 0; row--) {
-            for (int column = 0; column < width; column++ ) {
+            for (int column = 0; column < blocksInRow; column++ ) {
                 _placedShapes[row][column] = _placedShapes[row - 1][column];
             }
         }
