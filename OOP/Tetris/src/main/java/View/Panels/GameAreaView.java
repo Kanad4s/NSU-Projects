@@ -52,6 +52,7 @@ public class GameAreaView implements MyObserver {
                 drawBackground(g, getHeight(), getWidth(), this);
                 drawPlayerPoints(g);
                 DrawShape.drawShape(g, _model.getCurrentShape(), _model.getAreaWidth(), _model.getAreaHeight());
+                GameAreaShapesView.drawBackGround(g, _model.getPlacedShapes(), _model.getAreaWidth(), _model.getAreaHeight());
             }
         };
         _panel.setOpaque(true);

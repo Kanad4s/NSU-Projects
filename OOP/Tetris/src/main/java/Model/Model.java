@@ -29,6 +29,10 @@ public class Model implements MyObservable {
         return _points;
     }
 
+    public Color[][] getPlacedShapes() {
+        return _placedShapes;
+    }
+
     public MyShape getCurrentShape() {
         return _currentShape;
     }
