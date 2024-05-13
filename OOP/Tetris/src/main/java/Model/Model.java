@@ -119,6 +119,7 @@ public class Model implements MyObservable {
         }
         _points = 0;
         _currentShape.spawn();
+        notifyObservers();
     }
 
     private void addPoints() {

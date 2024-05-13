@@ -19,6 +19,8 @@ public class RecordTable {
     public RecordTable() {
         _frame = new JFrame(Resources.GAME_RULES_NAME);
         _tableModel = new DefaultTableModel();
+        _tableModel.addColumn("Player");
+        _tableModel.addColumn("Points");
         _players = getPreviousPlayers();
     }
 
@@ -32,7 +34,6 @@ public class RecordTable {
     }
 
     public void fillRecordTable() {
-        _tableModel.setColumnIdentifiers(new String[]{"Player", "Score"});
         for (String[] player : _players) {
             _tableModel.addRow(player);
         }
@@ -56,7 +57,7 @@ public class RecordTable {
              ObjectOutputStream oos = new ObjectOutputStream(fileOutputStream)) {
             oos.writeObject(_players);
         } catch (IOException e) {
-            System.err.println("Result table not found");
+            System.out.println("Result table not found");
         }
     }
 }

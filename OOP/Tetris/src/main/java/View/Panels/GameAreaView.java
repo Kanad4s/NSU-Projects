@@ -81,6 +81,7 @@ public class GameAreaView implements MyObserver {
         _buttonRestart = new JButton("Restart");
         _buttonRestart.addActionListener(e -> {
             _model.restart();
+
         });
     }
 
