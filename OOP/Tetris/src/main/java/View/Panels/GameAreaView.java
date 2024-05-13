@@ -80,7 +80,7 @@ public class GameAreaView implements MyObserver {
     private void createButtonRestart() {
         _buttonRestart = new JButton("Restart");
         _buttonRestart.addActionListener(e -> {
-            //todo
+            _model.restart();
         });
     }
 

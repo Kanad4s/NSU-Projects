@@ -28,10 +28,15 @@ public abstract class MyShape {
     public void spawn() {
         _x = Resources.BLOCKS_IN_ROW / 2 - _random.nextInt(3);
         _y = 0;
+        setColor();
     }
 
     private void setColor() {
-        _currentColor = _colors[_random.nextInt(_colors.length)];
+        Color newColor = _colors[_random.nextInt(_colors.length)];
+        while (_currentColor == newColor) {
+            newColor = _colors[_random.nextInt(_colors.length)];
+        }
+        _currentColor = newColor;
     }
 
     private void generateShapeRotations() {

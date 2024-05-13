@@ -25,6 +25,8 @@ public class GameController implements Runnable{
                     Thread.sleep(Resources.DELAY);
                     System.out.println("delay");
                 } catch (InterruptedException e) {
+                    System.out.println("Game Over");
+                    Thread.currentThread().interrupt();
                     throw new RuntimeException(e);
                 }
             }

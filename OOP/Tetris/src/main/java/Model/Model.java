@@ -111,6 +111,16 @@ public class Model implements MyObservable {
         return _areaHeight;
     }
 
+    public void restart() {
+        for (int i = 0; i < _placedShapes.length; i++) {
+            for (int j = 0; j < _placedShapes[i].length; j++) {
+                _placedShapes[i][j] = null;
+            }
+        }
+        _points = 0;
+        _currentShape.spawn();
+    }
+
     private void addPoints() {
         _points += Resources.POINTS_PER_SHAPE;
     }
