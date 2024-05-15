@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 
 import static Model.Resources.*;
 import Model.Model;
-//import static Model.Resources.KEY_UP;
 
 public class MovementController {
     public MovementController() {};

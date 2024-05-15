@@ -16,8 +16,4 @@ public class DrawShape {
             }
         }
     }
-
-    public static void drawShapesBackground(Graphics g, MyShape shape) {
-
-    }
 }

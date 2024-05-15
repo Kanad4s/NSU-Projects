@@ -27,19 +27,16 @@ public class GameController implements Runnable, MyObserver {
                 try {
                     _model.moveShapeDown();
                     Thread.sleep(Resources.DELAY);
-                    System.out.println("delay");
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
             if (_model.isBlockOutOfBounds() && _isPlaying) {
-                System.out.println("Game Over");
                 Thread.currentThread().interrupt();
                 _isPlaying = false;
                 gameOver();
             }
             if (_isPlaying) {
-                System.out.println("New shape");
                 _model.spawnNextShape();
             }
         }

@@ -24,15 +24,6 @@ public class RecordTable {
         _players = getPreviousPlayers();
     }
 
-    private ArrayList<String[]> getPreviousPlayers() {
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(Resources.PATH_RECORD_TABLE))) {
-            _players = (ArrayList<String[]>) objectInputStream.readObject();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return _players;
-    }
-
     public void fillRecordTable() {
         for (String[] player : _players) {
             _tableModel.addRow(player);
@@ -47,17 +38,24 @@ public class RecordTable {
 
     public void addPlayer(String name, int score) {
         String[] player = new String[]{name, Integer.toString(score)};
-
         _players.add(player);
         _players.sort(Comparator.comparing(
-                (Function<String[], String>) array->String.valueOf(Integer.parseInt(array[1]))).reversed()
-        );
+                (Function<String[], String>) array->String.valueOf(Integer.parseInt(array[1]))).reversed());
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(Resources.PATH_RECORD_TABLE);
              ObjectOutputStream oos = new ObjectOutputStream(fileOutputStream)) {
             oos.writeObject(_players);
         } catch (IOException e) {
-            System.out.println("Result table not found");
+            System.err.println("Result table not found");
         }
+    }
+
+    private ArrayList<String[]> getPreviousPlayers() {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(Resources.PATH_RECORD_TABLE))) {
+            _players = (ArrayList<String[]>) objectInputStream.readObject();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return _players;
     }
 }

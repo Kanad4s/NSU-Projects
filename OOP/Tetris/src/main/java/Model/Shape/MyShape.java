@@ -6,14 +6,14 @@ import java.awt.*;
 import java.util.Random;
 
 public abstract class MyShape {
-    protected int _x;
-    protected int _y;
-    protected int _rotationPosition;
-    protected boolean[][] _shape;
-    protected boolean[][][] _shapeRotattions;
-    protected Color _currentColor;
-    protected Random _random = new Random();
-    protected Color[] _colors = new Color[] {
+    private int _x;
+    private int _y;
+    private int _rotationPosition;
+    private boolean[][] _shape;
+    private boolean[][][] _shapeRotattions;
+    private Color _currentColor;
+    private Random _random = new Random();
+    private Color[] _colors = new Color[] {
             Color.red, Color.green, Color.blue, Color.yellow, Color.orange, Color.pink,
             Color.cyan, Color.magenta, Color.gray, Color.darkGray, Color.white, Color.LIGHT_GRAY
     };

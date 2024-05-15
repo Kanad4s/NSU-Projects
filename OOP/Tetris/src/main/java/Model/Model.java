@@ -89,7 +89,7 @@ public class Model implements MyObservable {
     }
 
     public boolean isBlockOutOfBounds() {
-        return _currentShape.getY() <= 0;
+        return (_currentShape.getY() <= 0 && _points != 0);
     }
 
     public void setAreaSize(int frameHeight, int frameWidth) {
@@ -120,6 +120,23 @@ public class Model implements MyObservable {
         _points = 0;
         _currentShape.spawn();
         notifyObservers();
+    }
+
+    @Override
+    public void registerObserver(MyObserver o) {
+        _observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(MyObserver o) {
+        _observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (MyObserver o : _observers) {
+            o.update();
+        }
     }
 
     private void addPoints() {
@@ -162,26 +179,7 @@ public class Model implements MyObservable {
 
     private void shiftRowsDown(int curRow, int blocksInRow) {
         for (int row = curRow; row > 0; row--) {
-            for (int column = 0; column < blocksInRow; column++ ) {
-                _placedShapes[row][column] = _placedShapes[row - 1][column];
-            }
-        }
-    }
-
-    @Override
-    public void registerObserver(MyObserver o) {
-        _observers.add(o);
-    }
-
-    @Override
-    public void removeObserver(MyObserver o) {
-        _observers.remove(o);
-    }
-
-    @Override
-    public void notifyObservers() {
-        for (MyObserver o : _observers) {
-            o.update();
+            if (blocksInRow >= 0) System.arraycopy(_placedShapes[row - 1], 0, _placedShapes[row], 0, blocksInRow);
         }
     }
 }
