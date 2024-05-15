@@ -24,21 +24,6 @@
 
 #define factor (1.0 / ((2.0 / (Hx * Hx)) + (2.0 / (Hy * Hy)) + (2.0 / (Hz * Hz)) + alpha))
 
-//enum {
-//    Nx = 16,
-//    Ny = 16,
-//    Nz = 16,
-//    Dx = 2,
-//    Dy = 2,
-//    Dz = 2,
-//    X0 = -1,
-//    Y0 = -1,
-//    Z0 = -1,
-//    Hx = Dx / (Nx - 1),
-//    Hy = Dy / (Ny - 1),
-//    Hz = Dz / (Nz - 1),
-//};
-
 double phi(double x, double y, double z) {
     return x * x + y * y + z * z;
 }
@@ -84,11 +69,29 @@ void setFunctionValuesInRegion(double* functionValues, double* nextFunctionValue
     }
 }
 
-double calculateNextValue(double* functionValues, int x, int y, int z) {
-    double xSum = functionValues[z * Ny * Nx + y * Nx + x + 1] + functionValues[z * Ny * Nx + y * Nx + x + 1] / (Hx * Hx);
-    double ySum = functionValues[z * Ny * Nx + (y + 1) * Nx + x] + functionValues[z * Ny * Nx + (y - 1) * Nx + x] / (Hy * Hy);
-    double zSum = functionValues[(z + 1) * Ny * Nx + y * Nx + x] + functionValues[(z - 1) * Ny * Nx + y * Nx + x] / (Hz * Hz);
+double calculateNextInnerValue(double* functionValues, int x, int y, int z) {
+    double xSum = (functionValues[z * Ny * Nx + y * Nx + x + 1] + functionValues[z * Ny * Nx + y * Nx + x + 1]) / (Hx * Hx);
+    double ySum = (functionValues[z * Ny * Nx + (y + 1) * Nx + x] + functionValues[z * Ny * Nx + (y - 1) * Nx + x]) / (Hy * Hy);
+    double zSum = (functionValues[(z + 1) * Ny * Nx + y * Nx + x] + functionValues[(z - 1) * Ny * Nx + y * Nx + x]) / (Hz * Hz);
     double resultSum = xSum + ySum + zSum - roFunction(newCoor(X0, x, Hx), newCoor(Y0, y, Hy), newCoor(Z0, z, Hz));
+    return factor * resultSum;
+}
+
+double calculateNextDownBoundValue(double* functionValues, double* downLayer, int x, int y, int layerHeight, int rank) {
+    double xSum = (functionValues[y * Nx + x + 1] + functionValues[y * Nx + x + 1]) / (Hx * Hx);
+    double ySum = (functionValues[(y + 1) * Nx + x] + functionValues[(y - 1) * Nx + x]) / (Hy * Hy);
+    double zSum = (functionValues[Ny * Nx + y * Nx + x] + downLayer[y * Nx + x]) / (Hz * Hz);
+    double resultSum = xSum + ySum + zSum - roFunction(newCoor(X0, x, Hx), newCoor(Y0, y, Hy), newCoor(Z0, layerHeight * rank, Hz));
+    return factor * resultSum;
+}
+
+double calculateNextTopBoundValue(double* functionValues, double* topLayer, int x, int y, int layerHeight, int rank) {
+    double xSum = (functionValues[(layerHeight - 1) * Ny * Nx + y * Nx + x + 1] +
+                   functionValues[(layerHeight - 1) * Ny * Nx + y * Nx + x - 1]) / (Hx * Hx);
+    double ySum = (functionValues[(layerHeight - 1) * Ny * Nx + (y + 1) * Nx + x] + 
+                   functionValues[(layerHeight - 1) * Ny * Nx + (y - 1) * Nx + x]) / (Hy * Hy);
+    double zSum = (topLayer[y * Nx + x] + functionValues[(layerHeight - 2) * Ny * Nx + y * Nx + x]) / (Hz * Hz);
+    double resultSum = xSum + ySum + zSum - roFunction(newCoor(X0, x, Hx), newCoor(Y0, y, Hy), newCoor(Z0, (layerHeight + 1) * rank - 1, Hz));
     return factor * resultSum;
 }
 
@@ -117,7 +120,7 @@ void computeFunction(double* functionValues, double* nextFunctionValues, int lay
         for (int z = 1; z < layerHeight - 1; z++) {
             for (int y = 1; y < Ny - 1; y++) {
                 for (int x = 1; x < Nx - 1; x++) {
-                    nextFunctionValues[z * Ny * Nx + y * Ny + x] = calculateNextValue(functionValues, x, y, z);
+                    nextFunctionValues[z * Ny * Nx + y * Ny + x] = calculateNextInnerValue(functionValues, x, y, z);
                     if (fabs(nextFunctionValues[z * Ny * Nx + y * Ny + x] - functionValues[z * Ny * Nx + y * Ny + x]) > epsilon) {
                         accuracy = 1;
                     }
@@ -133,7 +136,20 @@ void computeFunction(double* functionValues, double* nextFunctionValues, int lay
             MPI_Wait(&requests[3], MPI_STATUS_IGNORE);
         }
 
-
+        for (int y = 1; y < Ny - 1; ++y) {
+            for (int x = 1; x < Nx - 1; ++x) {
+                if (rank != 0) {
+                    nextFunctionValues[y * Nx + x] = calculateNextDownBoundValue(functionValues, downLayer, x, y, layerHeight, rank);
+                }
+                if (rank != nProcesses - 1) {
+                    nextFunctionValues[(layerHeight - 1) * Ny * Nx + y * Nx + x] = calculateNextTopBoundValue(functionValues, topLayer, 
+                        x, y, layerHeight, rank);
+                }
+                if (fabs(nextFunctionValues[Nx * y + x] - functionValues[Nx * y + x]) > epsilon) {
+                    accuracy = 1;
+                }
+            }
+        }
     }
     free(downLayer);
     free(topLayer);

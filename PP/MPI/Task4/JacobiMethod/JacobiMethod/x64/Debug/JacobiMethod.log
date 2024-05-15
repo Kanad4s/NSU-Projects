@@ -1,4 +1,30 @@
 ﻿  JacobiMethod.cpp
-  JacobiMethod.vcxproj -> C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\x64\Debug\JacobiMethod.exe
-  "pwsh.exe" не является внутренней или внешней
-  командой, исполняемой программой или пакетным файлом.
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(150,29): error C2065: size: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(151,41): error C2065: previous_Phi: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(151,65): error C2065: layer_height: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(151,105): error C2065: previous_Phi: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(151,129): error C2065: layer_height: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(151,171): error C2065: hx: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(151,176): error C2065: hx: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(152,41): error C2065: previous_Phi: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(152,65): error C2065: layer_height: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(152,105): error C2065: previous_Phi: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(152,129): error C2065: layer_height: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(152,171): error C2065: hy: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(152,176): error C2065: hy: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(153,41): error C2065: previous_Phi: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(153,65): error C2065: layer_height: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(153,99): error C2065: top_layer: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(153,125): error C2065: hz: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(153,130): error C2065: hz: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(154,21): error C2065: Phi: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(154,36): error C2065: layer_height: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(154,70): error C2065: multiplier: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(154,133): error C2065: hx: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(154,146): error C2065: hy: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(154,157): error C2065: layer_height: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(154,177): error C2065: layer_height: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(154,200): error C2065: hz: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(154,120): error C3861: rho: идентификатор не найден
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(156,26): error C2065: Phi: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\PP\MPI\Task4\JacobiMethod\JacobiMethod.cpp(156,44): error C2065: previous_Phi: необъявленный идентификатор
