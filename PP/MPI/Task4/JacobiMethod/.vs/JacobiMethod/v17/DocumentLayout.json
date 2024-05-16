@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\Task4\\JacobiMethod\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4103D73F-C6FF-4CC7-B863-5113F42BB101}|JacobiMethod.vcxproj|C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\Task4\\JacobiMethod\\Source.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{4103D73F-C6FF-4CC7-B863-5113F42BB101}|JacobiMethod.vcxproj|solutionrelative:Source.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{4103D73F-C6FF-4CC7-B863-5113F42BB101}|JacobiMethod.vcxproj|C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\Task4\\JacobiMethod\\JacobiMethod.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{4103D73F-C6FF-4CC7-B863-5113F42BB101}|JacobiMethod.vcxproj|solutionrelative:JacobiMethod.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4103D73F-C6FF-4CC7-B863-5113F42BB101}|JacobiMethod.vcxproj|C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\Task4\\JacobiMethod\\Source.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{4103D73F-C6FF-4CC7-B863-5113F42BB101}|JacobiMethod.vcxproj|solutionrelative:Source.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,30 +18,30 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Source.cpp",
               "DocumentMoniker": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\Task4\\JacobiMethod\\Source.cpp",
               "RelativeDocumentMoniker": "Source.cpp",
               "ToolTip": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\Task4\\JacobiMethod\\Source.cpp",
               "RelativeToolTip": "Source.cpp",
-              "ViewState": "AQIAAIcAAAAAAAAAAAAAAJsAAAAJAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-05-09T14:23:10.324Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "JacobiMethod.cpp",
               "DocumentMoniker": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\Task4\\JacobiMethod\\JacobiMethod.cpp",
               "RelativeDocumentMoniker": "JacobiMethod.cpp",
               "ToolTip": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\PP\\MPI\\Task4\\JacobiMethod\\JacobiMethod.cpp",
               "RelativeToolTip": "JacobiMethod.cpp",
-              "ViewState": "AQIAAI4AAAAAAAAAAAArwKIAAABXAAAA",
+              "ViewState": "AQIAAKkAAAAAAAAAAAAmwL0AAAA8AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-05-08T13:25:48.239Z",
               "EditorCaption": ""

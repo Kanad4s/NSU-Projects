@@ -1,14 +1,17 @@
 ﻿#include <iostream>
 #include <cmath>
 //#include <math.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <string.h>
 #include "mpi.h"
 
 #define epsilon 1e-8
 #define alpha 1e+5
 
-#define Nx 16
-#define Ny 16
-#define Nz 16
+#define Nx 160
+#define Ny 160
+#define Nz 160
 
 #define Dx 2
 #define Dy 2
@@ -18,9 +21,9 @@
 #define Y0 -1
 #define Z0 -1
 
-#define Hx (Dx / (Nx - 1))
-#define Hy (Dy / (Ny - 1))
-#define Hz (Dz / (Nz - 1))
+double Hx = (Dx / (double)(Nx - 1));
+double Hy = (Dy / (double)(Ny - 1));
+double Hz = (Dz / (double)(Nz - 1));
 
 #define factor (1.0 / ((2.0 / (Hx * Hx)) + (2.0 / (Hy * Hy)) + (2.0 / (Hz * Hz)) + alpha))
 
@@ -95,19 +98,21 @@ double calculateNextTopBoundValue(double* functionValues, double* topLayer, int 
     return factor * resultSum;
 }
 
-bool isAccuracyAchieved(int accuracy) {
+int isAccuracyAchieved(int accuracy) {
     int isAchieved;
     MPI_Allreduce(&accuracy, &isAchieved, 1, MPI_INTEGER, MPI_SUM, MPI_COMM_WORLD);
-    return isAchieved == 0;
+    return isAchieved;
 }
 
-void computeFunction(double* functionValues, double* nextFunctionValues, int layerHeight, int rank, int nProcesses) {
+double computeFunction(double* functionValues, double* nextFunctionValues, int layerHeight, int rank, int nProcesses) {
     MPI_Request requests[4];
     double* downLayer = (double*)malloc(sizeof(double) * Nx * Ny);
     double* topLayer = (double*)malloc(sizeof(double) * Nx * Ny);
     int accuracy = 1;
+    double maxDifferenceTmp = 0;
     while (isAccuracyAchieved(accuracy)) {
         accuracy = 0;
+        maxDifferenceTmp = 0;
         memcpy(functionValues, nextFunctionValues, sizeof(double) * Nx * Ny * layerHeight);
         if (rank != 0) {
             MPI_Isend(&functionValues[0], Nx * Ny, MPI_DOUBLE, rank - 1, 1, MPI_COMM_WORLD, &requests[0]);
@@ -121,9 +126,11 @@ void computeFunction(double* functionValues, double* nextFunctionValues, int lay
             for (int y = 1; y < Ny - 1; y++) {
                 for (int x = 1; x < Nx - 1; x++) {
                     nextFunctionValues[z * Ny * Nx + y * Ny + x] = calculateNextInnerValue(functionValues, x, y, z);
-                    if (fabs(nextFunctionValues[z * Ny * Nx + y * Ny + x] - functionValues[z * Ny * Nx + y * Ny + x]) > epsilon) {
+                    double difference = fabs(nextFunctionValues[z * Ny * Nx + y * Ny + x] - functionValues[z * Ny * Nx + y * Ny + x]);
+                    if (difference > epsilon) {
                         accuracy = 1;
                     }
+                    maxDifferenceTmp = difference > maxDifferenceTmp ? difference : maxDifferenceTmp;
                 }
             }
         }
@@ -145,24 +152,30 @@ void computeFunction(double* functionValues, double* nextFunctionValues, int lay
                     nextFunctionValues[(layerHeight - 1) * Ny * Nx + y * Nx + x] = calculateNextTopBoundValue(functionValues, topLayer, 
                         x, y, layerHeight, rank);
                 }
-                if (fabs(nextFunctionValues[Nx * y + x] - functionValues[Nx * y + x]) > epsilon) {
+                double difference = fabs(nextFunctionValues[Nx * y + x] - functionValues[Nx * y + x]);
+                if (difference > epsilon) {
                     accuracy = 1;
                 }
+                maxDifferenceTmp = difference > maxDifferenceTmp ? difference : maxDifferenceTmp;
             }
         }
     }
     free(downLayer);
     free(topLayer);
+    double maxDifference = 0;
+    MPI_Reduce(&maxDifferenceTmp, &maxDifference, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
+    return maxDifference;
 }
 
-void jacobiMethod(int rank, int nProcesses) {
+double* jacobiMethod(int rank, int nProcesses) {
     int layerHeight = Nz / nProcesses;
     double* functionValues = (double*)malloc(sizeof(double) * Nx * Ny * layerHeight);
-    double* nextFunctionValues = (double*)malloc(sizeof(double) * Nx * Ny * layerHeight);
-    setFunctionValuesInRegion(functionValues, nextFunctionValues, layerHeight, rank, nProcesses);
-    computeFunction(functionValues, nextFunctionValues, layerHeight, rank, nProcesses);
+    double* finalFunctionValues = (double*)malloc(sizeof(double) * Nx * Ny * layerHeight);
+    setFunctionValuesInRegion(functionValues, finalFunctionValues, layerHeight, rank, nProcesses);
+    double maxDifference = computeFunction(functionValues, finalFunctionValues, layerHeight, rank, nProcesses);
+    //printf("%f", maxDifference);
     free(functionValues);
-    free(nextFunctionValues);
+    return finalFunctionValues;
 }
 
 
@@ -171,12 +184,10 @@ int main(int argc, char* argv[])
     int rank;
     int nProcesses;
     MPI_Init(&argc, &argv);
-    printf("%f\n", alpha);
-    
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &nProcesses);
     double start = MPI_Wtime();
-    jacobiMethod(rank, nProcesses);
+    double* functionValues = jacobiMethod(rank, nProcesses);
     double finish = MPI_Wtime();
     if (rank == 0) {
         printf("TIME: %f", finish - start);
