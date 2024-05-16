@@ -10,7 +10,7 @@ public class InputChecker {
         }
     }
 
-    public static boolean isParametr(String value) {
+    public static boolean isParameter(String value) {
         if (!Character.isLetter(value.charAt(0))) {
             return false;
         }

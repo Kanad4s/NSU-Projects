@@ -3,6 +3,7 @@ package Services.CalculatorController;
 import Services.InputChecker.InputChecker;
 import org.springframework.expression.ExpressionException;
 
+import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -23,8 +24,16 @@ public class CalculatorStack {
         return _stack.pop();
     }
 
+    public Double peekValue() {
+        try {
+            return _stack.peek();
+        } catch (EmptyStackException e) {
+            throw new EmptyStackException ();
+        }
+    }
+
     public void addDefineValue(String parametr, String value) {
-        if (InputChecker.isParametr(parametr) && InputChecker.isDouble(value)) {
+        if (InputChecker.isParameter(parametr) && InputChecker.isDouble(value)) {
             _mapDefineValues.put(parametr, Double.parseDouble(value));
         }
     }

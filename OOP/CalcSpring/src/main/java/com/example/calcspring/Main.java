@@ -10,28 +10,23 @@ import Services.Operations.Push;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import Services.CalculatorController.CalculatorControllerMain;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
+
 
 @SpringBootApplication
 public class Main {
-    private static final Logger logger = Logger.getLogger(Main.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
-	public static void main(String[] args) throws IOException, ClassNotFoundException {
+	public static void main(String[] args) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         ApplicationContext context = new AnnotationConfigApplicationContext(Configurations.class);
         CalculatorController controller = context.getBean(CalculatorController.class);
-//        if (args.length == 0) {
-//            controller = new CalculatorControllerMain();
-//        } else {
-//            controller = new CalculatorControllerMain(args[0]);
-//        }
-//        if (args.length == 0) {
-//
-//        }
-        controller.setInput(System.in);
+        if (args.length == 0) {
+            controller.setInput(System.in);
+        } else {
+            controller.setInput(args[0]);
+        }
         //controller.test();
         controller.launch();
         Operation operation = new Push();
@@ -42,10 +37,10 @@ public class Main {
         System.out.println(operation.getClass());
         System.out.println(operation.getClass().getSimpleName().toUpperCase());
 		//SpringApplication.run(CalcSpringApplication.class, args);
-        logger.info("Starting my configuration...");
+        LOGGER.info("Starting my configuration...");
         ApplicationContext context1 = new AnnotationConfigApplicationContext(LessonsConfiguration.class);
         GreetingService greetingService = context1.getBean(GreetingService.class);
-        logger.info(greetingService.sayGreeting());
+        LOGGER.info(greetingService.sayGreeting());
 	}
 
 }
