@@ -1,11 +1,11 @@
-package View.Panels;
+package View.GView;
 
 import Model.Resources;
 import View.DrawBlock;
 
 import java.awt.*;
 
-public class GameAreaShapesView {
+public class ShapesView {
     static public  void drawBackGround(Graphics graphics, Color[][] placedShape, int gameAreaWidth, int gameAreaHeight) {
         int blockSize = gameAreaWidth / Resources.BLOCKS_IN_ROW;
         for (int y = 0; y < gameAreaHeight / blockSize; y++) {

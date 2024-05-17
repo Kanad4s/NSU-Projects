@@ -1,4 +1,4 @@
-package View.Panels;
+package View.GView;
 
 import Model.Resources;
 

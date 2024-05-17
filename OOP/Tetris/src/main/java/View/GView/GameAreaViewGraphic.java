@@ -1,33 +1,48 @@
-package View.Panels;
+package View.GView;
 
-import Controller.launchController;
-import Model.Model;
-import Model.MyObserver;
+import Controller.LaunchController;
+import Model.GameArea;
 import Model.Resources;
 import View.DrawShape;
+import View.GameAreaView;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.ImageObserver;
 
-public class GameAreaView implements MyObserver {
+public class GameAreaViewGraphic implements GameAreaView {
     private JFrame _frame;
     private JPanel _panel;
     private JButton _buttonRestart, _buttonMenu;
-    private Model _model;
+    private GameArea _gameArea;
 
-    public GameAreaView(Model model) {
-        _model = model;
+    public GameAreaViewGraphic() {};
+
+    @Override
+    public void setGameArea(GameArea gameArea) {
+        _gameArea = gameArea;
+    }
+
+    @Override
+    public void showArea() {
         createFrame();
         createPanel();
         _frame.setContentPane(_panel);
         addButtons();
-    }
-
-    public void showArea() {
         _frame.setVisible(true);
     }
 
+    @Override
+    public int getAreaHeight() {
+        return _frame.getHeight();
+    }
+
+    @Override
+    public int getAreaWidth() {
+        return _frame.getWidth();
+    }
+
+    @Override
     public JFrame getFrame() {
         return _frame;
     }
@@ -48,11 +63,11 @@ public class GameAreaView implements MyObserver {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                _model.setAreaSize(getHeight(), getWidth());
+                _gameArea.setAreaSize(getHeight(), getWidth());
                 drawBackground(g, getHeight(), getWidth(), this);
                 drawPlayerPoints(g);
-                DrawShape.drawShape(g, _model.getCurrentShape(), _model.getAreaWidth(), _model.getAreaHeight());
-                GameAreaShapesView.drawBackGround(g, _model.getPlacedShapes(), _model.getAreaWidth(), _model.getAreaHeight());
+                DrawShape.drawShape(g, _gameArea.getCurrentShape(), _gameArea.getAreaWidth(), _gameArea.getAreaHeight());
+                ShapesView.drawBackGround(g, _gameArea.getPlacedShapes(), _gameArea.getAreaWidth(), _gameArea.getAreaHeight());
             }
         };
         _panel.setOpaque(true);
@@ -62,7 +77,7 @@ public class GameAreaView implements MyObserver {
         Image middleImage = new ImageIcon(Resources.PATH_GAME_AREA_MIDDLE).getImage();
         Image backImage = new ImageIcon(Resources.PATH_GAME_AREA_BACK).getImage();
         g.drawImage(backImage, 0, 0, width, height, observer);
-        g.drawImage(middleImage, width / 3, 0, _model.getAreaWidth(), _model.getAreaHeight(), observer);
+        g.drawImage(middleImage, width / 3, 0, _gameArea.getAreaWidth(), _gameArea.getAreaHeight(), observer);
     }
 
     private void addButtons() {
@@ -80,7 +95,7 @@ public class GameAreaView implements MyObserver {
     private void createButtonRestart() {
         _buttonRestart = new JButton("Restart");
         _buttonRestart.addActionListener(e -> {
-            _model.restart();
+            _gameArea.restart();
 
         });
     }
@@ -89,8 +104,9 @@ public class GameAreaView implements MyObserver {
         _buttonMenu = new JButton("Menu");
         _buttonMenu.addActionListener(e -> {
             _frame.dispose();
-            launchController gameController = new launchController();
-            gameController.launchMainMenu();
+            LaunchController launchController = new LaunchController();
+            launchController.setMenu(new MainMenuGraphic());
+            launchController.launchMainMenu();
         });
     }
 
@@ -99,7 +115,7 @@ public class GameAreaView implements MyObserver {
         g.setFont(font);
         g.setColor(new Color(88, 114, 140));
         g.drawString("POINTS", _frame.getWidth() * 2 / 3, Resources.TEXT_POINTS_SIZE);
-        g.drawString(_model.getPoints().toString(), _frame.getWidth() * 2 / 3, 2 * Resources.TEXT_POINTS_SIZE);
+        g.drawString(_gameArea.getPoints().toString(), _frame.getWidth() * 2 / 3, 2 * Resources.TEXT_POINTS_SIZE);
     }
 }
 

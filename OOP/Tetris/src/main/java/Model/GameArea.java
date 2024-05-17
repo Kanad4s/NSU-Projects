@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Model implements MyObservable {
+public class GameArea implements MyObservable {
     private ArrayList<MyObserver> _observers;
     private MyShape[] _shapes;
     private Random _random;
@@ -17,12 +17,12 @@ public class Model implements MyObservable {
     private int _areaHeight;
     private  int _areaBlockSize;
 
-    public Model() {
+    public GameArea() {
+        _points = 0;
         _random = new Random();
         _observers = new ArrayList<MyObserver>();
         _shapes = new MyShape[] {new Hero(), new Teewee(), new Smashboy(), new Rhode(), new Ricky()};
         generateShape();
-        _points = 0;
     }
 
     public Integer getPoints() {
@@ -89,7 +89,10 @@ public class Model implements MyObservable {
     }
 
     public boolean isBlockOutOfBounds() {
-        return (_currentShape.getY() <= 0 && _points != 0);
+        if (_points < Resources.POINTS_PER_SHAPE * 3) {
+            return false;
+        }
+        return _currentShape.getY() <= 0;
     }
 
     public void setAreaSize(int frameHeight, int frameWidth) {

@@ -1,60 +1,71 @@
 package Controller;
 
-import Model.Model;
+import Model.GameArea;
 import Model.MyObserver;
 import Model.Resources;
-import View.Panels.GameAreaView;
-import View.Panels.RecordTable;
+import View.GView.RecordTable;
+import View.GameAreaView;
+
 import javax.swing.*;
 
 public class GameController implements Runnable, MyObserver {
-    private final GameAreaView gameAreaView;
+    private GameAreaView _gameAreaView;
     private final MovementController _movementController;
-    private final Model _model;
+    private final GameArea _gameArea;
     private boolean _isPlaying = false;
 
     public GameController(){
-        _model = new Model();
-        gameAreaView = new GameAreaView(_model);
+        _gameArea = new GameArea();
+//        _gameAreaView = new GameAreaViewGraphic(_gameArea);
         _movementController = new MovementController();
+    }
+
+    public void setGameAreaView(GameAreaView gameAreaView) {
+        _gameAreaView = gameAreaView;
+        _gameAreaView.setGameArea(_gameArea);
     }
 
     @Override
     public void run() {
         launchGame();
         while (true) {
-            while (_model.isShapeMoving() && _isPlaying) {
+            while (_gameArea.isShapeMoving() && _isPlaying) {
                 try {
-                    _model.moveShapeDown();
+                    _gameArea.moveShapeDown();
                     Thread.sleep(Resources.DELAY);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+
             }
-            if (_model.isBlockOutOfBounds() && _isPlaying) {
+            if (_gameArea.isBlockOutOfBounds() && _isPlaying) {
+//                System.out.println(_gameArea.isBlockOutOfBounds());
+//                System.out.println(_gameArea.getPoints());
+//                System.out.println(_isPlaying);
                 Thread.currentThread().interrupt();
                 _isPlaying = false;
                 gameOver();
             }
             if (_isPlaying) {
-                _model.spawnNextShape();
+                _gameArea.spawnNextShape();
             }
         }
     }
 
     private void launchGame() {
         _isPlaying = true;
-        gameAreaView.showArea();
-        _model.setAreaSize(gameAreaView.getFrame().getHeight(), gameAreaView.getFrame().getWidth());
-        _model.createPlacedShapes();
-        _model.registerObserver(gameAreaView);
-        _model.registerObserver(this);
-        _movementController.setControl(gameAreaView.getFrame(), _model);
+        _gameAreaView.showArea();
+        _gameArea.setAreaSize(_gameAreaView.getAreaHeight(), _gameAreaView.getAreaWidth());
+//        _gameArea.setAreaSize(gameAreaViewGraphic.getFrame().getHeight(), gameAreaViewGraphic.getFrame().getWidth());
+        _gameArea.createPlacedShapes();
+        _gameArea.registerObserver(_gameAreaView);
+        _gameArea.registerObserver(this);
+        _movementController.setControl(_gameAreaView, _gameArea);
     }
 
     private void gameOver() {
         String playerName = JOptionPane.showInputDialog("Game Over\n Please, input your name.");
-        addPlayerToRecord(playerName, _model.getPoints());
+        addPlayerToRecord(playerName, _gameArea.getPoints());
     }
 
     private void addPlayerToRecord(String name, int points) {

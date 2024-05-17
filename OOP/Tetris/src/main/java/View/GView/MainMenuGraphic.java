@@ -1,19 +1,22 @@
-package View.Panels;
+package View.GView;
 
 import Controller.GameController;
 import Model.Resources;
+import View.GameAreaView;
+import View.MainMenu;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MainMenu {
+public class MainMenuGraphic implements MainMenu {
 
     private JFrame _frame;
     private JPanel _panel;
     private JButton _startButton, _aboutButton, _exitButton, _scoreButton;
 
+    @Override
     public void showMainMenu() {
         createFrame();
         createPanel();
@@ -53,7 +56,9 @@ public class MainMenu {
         _startButton.addActionListener(e -> {
             _frame.dispose();
             ExecutorService executorService = Executors.newSingleThreadExecutor();
-            executorService.execute(new GameController());
+            GameController gameController = new GameController();
+            gameController.setGameAreaView(new GameAreaViewGraphic());
+            executorService.execute(gameController);
             executorService.shutdown();
         });
     }

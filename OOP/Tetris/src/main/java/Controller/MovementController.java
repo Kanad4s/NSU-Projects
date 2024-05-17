@@ -4,13 +4,16 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 import static Model.Resources.*;
-import Model.Model;
+import Model.GameArea;
+import View.GameAreaView;
 
 public class MovementController {
     public MovementController() {};
 
-    public void setControl(JFrame frame, Model model) {
-        InputMap inputMap = frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+    public void setControl(GameAreaView gameAreaView, GameArea gameArea) {
+        JFrame frame = gameAreaView.getFrame();
+//        InputMap inputMap = frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap inputMap = frame.getRootPane().getInputMap();
         ActionMap actionMap = frame.getRootPane().getActionMap();
         inputMap.put(KeyStroke.getKeyStroke(KEY_UP), "up");
         inputMap.put(KeyStroke.getKeyStroke(KEY_DOWN), "down");
@@ -19,31 +22,31 @@ public class MovementController {
         inputMap.put(KeyStroke.getKeyStroke(KEY_ROTATE), "rotate");
         actionMap.put("up", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                model.moveShapeUp();
+                gameArea.moveShapeUp();
             }
         });
 
         actionMap.put("down", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                model.moveShapeDown();
+                gameArea.moveShapeDown();
             }
         });
 
         actionMap.put("left", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                model.moveShapeLeft();
+                gameArea.moveShapeLeft();
             }
         });
 
         actionMap.put("right", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                model.moveShapeRight();
+                gameArea.moveShapeRight();
             }
         });
 
         actionMap.put("rotate", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                model.moveShapeRotate();
+                gameArea.moveShapeRotate();
             }
         });
     }
