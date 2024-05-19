@@ -11,7 +11,7 @@ public class Print implements Operation{
     @Override
     public void calculation (CalculatorStack stack, ArrayList<String> listValues) throws Exception {
         try {
-            LOGGER.debug ("Try to print value");
+            LOGGER.debug ("Print value");
             System.out.println(stack.peekValue());
         } catch (EmptyStackException e) {
             LOGGER.error ("Failed pop element " + this.getClass ());

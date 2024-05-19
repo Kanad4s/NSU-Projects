@@ -2,6 +2,7 @@ package ru.nsu.fit.tropin.CalculatorController;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
+import ru.nsu.fit.tropin.Exceptions.OperationException;
 import ru.nsu.fit.tropin.Operations.WrongOperation;
 import ru.nsu.fit.tropin.Operations.Operation;
 import ru.nsu.fit.tropin.Services.Parser.LineParser.LineParser;
@@ -42,10 +43,12 @@ public class CalculatorControllerMain implements CalculatorController{
         while ((_line = _br.readLine()) != null) {
             _lineParser.parse(_line);
             String operationName = _lineParser.getOperation();
-//            System.out.println("Operation:" + operationName + "\n");
             Operation operation = chooseOperation(operationName);
-//            System.out.println(operation.getClass());
-            operation.calculation(_calculatorStack, _lineParser.getParameters());
+            try {
+                operation.calculation(_calculatorStack, _lineParser.getParameters());
+            } catch (OperationException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
