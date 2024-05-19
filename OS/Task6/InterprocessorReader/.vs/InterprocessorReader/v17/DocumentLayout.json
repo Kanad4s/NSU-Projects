@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task6\\InterprocessorReader\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{10A656CA-3D82-4FE9-BD5B-BD30A6CD445C}|InterprocessorReader.vcxproj|C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task6\\InterprocessorReader\\InterprocessorReader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{10A656CA-3D82-4FE9-BD5B-BD30A6CD445C}|InterprocessorReader.vcxproj|solutionrelative:InterprocessorReader.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "InterprocessorReader.cpp",
+              "DocumentMoniker": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task6\\InterprocessorReader\\InterprocessorReader.cpp",
+              "RelativeDocumentMoniker": "InterprocessorReader.cpp",
+              "ToolTip": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task6\\InterprocessorReader\\InterprocessorReader.cpp",
+              "RelativeToolTip": "InterprocessorReader.cpp",
+              "ViewState": "AQIAABsAAAAAAAAAAAAAADQAAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-05-18T01:48:24.41Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
