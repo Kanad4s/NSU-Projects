@@ -1,4 +1,4 @@
-package ru.nsu.fit.tropin.Services.Parser;
+package ru.nsu.fit.tropin.Services.Parser.LineParser;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;

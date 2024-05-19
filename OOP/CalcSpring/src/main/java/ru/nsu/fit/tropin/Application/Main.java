@@ -1,4 +1,4 @@
-package ru.nsu.fit.tropin;
+package ru.nsu.fit.tropin.Application;
 
 import ru.nsu.fit.tropin.Configurations.Configurations;
 import ru.nsu.fit.tropin.CalculatorController.CalculatorController;
@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import org.apache.log4j.Logger;
+import ru.nsu.fit.tropin.Services.Parser.CmdParser.CmdParser;
 
 
 @SpringBootApplication
@@ -16,12 +17,12 @@ public class Main {
 	public static void main(String[] args) throws Exception {
         ApplicationContext context = new AnnotationConfigApplicationContext(Configurations.class);
         CalculatorController controller = context.getBean("calculatorControllerMain", CalculatorController.class);
-        LOGGER.info("Set input");
-        if (args.length == 0) {
-            controller.setInput(System.in);
-        } else {
-            controller.setInput(args[0]);
+        CmdParser cmdParser = context.getBean(CmdParser.class);
+        LOGGER.info("Parse args");
+        if (cmdParser.parse(args)) {
+            controller.setInput(cmdParser.getInputStream());
+            controller.launch();
         }
-        controller.launch();
+        System.exit(0);
 	}
 }

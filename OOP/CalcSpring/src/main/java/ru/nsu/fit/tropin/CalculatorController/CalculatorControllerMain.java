@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import ru.nsu.fit.tropin.Operations.WrongOperation;
 import ru.nsu.fit.tropin.Operations.Operation;
-import ru.nsu.fit.tropin.Services.Parser.LineParser;
+import ru.nsu.fit.tropin.Services.Parser.LineParser.LineParser;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.*;
@@ -25,15 +25,9 @@ public class CalculatorControllerMain implements CalculatorController{
     public CalculatorControllerMain() {}
 
     @Override
-    public void setInput(InputStream inputStream) {
-        LOGGER.debug("Set console input stream");
-        _br = new BufferedReader(new InputStreamReader(System.in));
-    }
-
-    @Override
-    public void setInput(String fileName) throws FileNotFoundException {
-        LOGGER.debug("Set file input stream");
-        _br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));
+    public void setInput(InputStreamReader inputStreamReader) {
+        LOGGER.debug("Set reader input stream");
+        _br = new BufferedReader(inputStreamReader);
     }
 
     public void test() throws IOException {

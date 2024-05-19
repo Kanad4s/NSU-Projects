@@ -17,13 +17,13 @@ public class Sqrt implements Operation {
         Double value;
         try {
             value = stack.peekValue();
-            if (value < 0) {
-                LOGGER.warn("Value is negative");
-                throw new OperationException("The sqrt argument should: >= 0");
-            }
         } catch (OperationException operationException) {
             LOGGER.warn("Stack is empty for SQRT" + operationException.getMessage());
             throw  new OperationException("Stack is empty" + Arrays.toString(operationException.getStackTrace()));
+        }
+        if (value < 0) {
+            LOGGER.warn("Value is negative");
+            throw new OperationException("The sqrt argument should: >= 0");
         }
         String pushValue = Double.valueOf(sqrt(value)).toString ();
         LOGGER.debug("Push SQRT result value "  + pushValue);

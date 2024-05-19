@@ -7,7 +7,6 @@ import ru.nsu.fit.tropin.CalculatorController.CalculatorStack;
 import java.util.ArrayList;
 
 
-@CommandAnnotation(name="DEFINE")
 @Component
 public class Define implements Operation {
     @Override

@@ -56,3 +56,90 @@
 2024-05-19 21:05:25 INFO  Main:19 - Set input
 2024-05-19 21:05:25 DEBUG CalculatorController:29 - Set console input stream
 2024-05-19 21:05:25 DEBUG CalculatorController:47 - Launching CalculatorController
+2024-05-19 23:32:51 INFO  Main:20 - Set input
+2024-05-19 23:34:51 INFO  Main:20 - Set input
+2024-05-19 23:34:51 DEBUG CalculatorController:35 - Set file input stream
+2024-05-19 23:35:08 INFO  Main:20 - Set input
+2024-05-19 23:35:32 INFO  Main:20 - Set input
+2024-05-19 23:41:00 INFO  Main:20 - Set input
+2024-05-19 23:41:00 DEBUG CalculatorController:35 - Set file input stream
+2024-05-19 23:41:32 INFO  Main:20 - Set input
+2024-05-19 23:41:32 DEBUG CalculatorController:35 - Set file input stream
+2024-05-20 00:06:20 INFO  Main:22 - Parse args
+2024-05-20 00:06:20 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-20 00:06:20 INFO  CommandLineParser:38 - Set console input stream
+2024-05-20 00:06:20 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-20 00:06:20 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-20 00:09:11 INFO  Main:22 - Parse args
+2024-05-20 00:09:11 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-20 00:09:12 INFO  CommandLineParser:38 - Set console input stream
+2024-05-20 00:09:12 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-20 00:09:12 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-20 00:10:53 INFO  Main:22 - Parse args
+2024-05-20 00:10:53 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-20 00:11:51 INFO  Main:22 - Parse args
+2024-05-20 00:11:51 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-20 00:13:40 INFO  Main:22 - Parse args
+2024-05-20 00:13:40 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-20 00:14:17 INFO  Main:22 - Parse args
+2024-05-20 00:14:17 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-20 00:17:15 INFO  Main:21 - Parse args
+2024-05-20 00:17:15 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-20 00:18:34 INFO  Main:21 - Parse args
+2024-05-20 00:18:34 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-20 00:19:15 INFO  Main:21 - Parse args
+2024-05-20 00:19:15 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-20 00:20:15 INFO  Main:21 - Parse args
+2024-05-20 00:20:15 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-20 00:20:15 INFO  CommandLineParser:38 - Set file input stream
+2024-05-20 00:20:41 INFO  Main:21 - Parse args
+2024-05-20 00:20:41 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-20 00:20:41 INFO  CommandLineParser:38 - Set file input stream
+2024-05-20 00:20:52 INFO  Main:21 - Parse args
+2024-05-20 00:20:52 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-20 00:20:52 INFO  CommandLineParser:38 - Set file input stream
+2024-05-20 00:21:08 INFO  Main:21 - Parse args
+2024-05-20 00:21:08 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-20 00:21:08 INFO  CommandLineParser:38 - Set file input stream
+2024-05-20 00:21:56 INFO  Main:21 - Parse args
+2024-05-20 00:21:56 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-20 00:21:56 INFO  CommandLineParser:38 - Set file input stream
+2024-05-20 00:21:56 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-20 00:21:56 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-20 00:21:56 DEBUG CalculatorController:53 - Choose operation
+2024-05-20 00:21:56 DEBUG Operation:15 - DEFINE a as -1
+2024-05-20 00:21:56 DEBUG CalculatorController:53 - Choose operation
+2024-05-20 00:21:56 DEBUG Operation:18 - Push value in stack
+2024-05-20 00:21:56 DEBUG CalculatorController:53 - Choose operation
+2024-05-20 00:21:56 DEBUG Operation:16 - SQRT start
+2024-05-20 00:21:56 WARN  Operation:21 - Value is negative
+2024-05-20 00:21:56 WARN  Operation:25 - Stack is empty for SQRTThe sqrt argument should: >= 0
+2024-05-20 00:24:59 INFO  Main:21 - Parse args
+2024-05-20 00:24:59 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-20 00:24:59 INFO  CommandLineParser:38 - Set file input stream
+2024-05-20 00:24:59 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-20 00:24:59 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-20 00:24:59 DEBUG CalculatorController:53 - Choose operation
+2024-05-20 00:24:59 DEBUG Operation:15 - DEFINE a as -1
+2024-05-20 00:24:59 DEBUG CalculatorController:53 - Choose operation
+2024-05-20 00:24:59 DEBUG Operation:18 - Push value in stack
+2024-05-20 00:24:59 DEBUG CalculatorController:53 - Choose operation
+2024-05-20 00:24:59 DEBUG Operation:14 - Try to print value
+2024-05-20 00:24:59 DEBUG CalculatorController:53 - Choose operation
+2024-05-20 00:24:59 DEBUG Operation:16 - SQRT start
+2024-05-20 00:24:59 WARN  Operation:21 - Value is negative
+2024-05-20 00:24:59 WARN  Operation:25 - Stack is empty for SQRTThe sqrt argument should: >= 0
+2024-05-20 00:27:22 INFO  Main:21 - Parse args
+2024-05-20 00:27:22 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-20 00:27:22 INFO  CommandLineParser:38 - Set file input stream
+2024-05-20 00:27:22 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-20 00:27:22 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-20 00:27:22 DEBUG CalculatorController:53 - Choose operation
+2024-05-20 00:27:22 DEBUG Operation:15 - DEFINE a as -1
+2024-05-20 00:27:22 DEBUG CalculatorController:53 - Choose operation
+2024-05-20 00:27:22 DEBUG Operation:18 - Push value in stack
+2024-05-20 00:27:22 DEBUG CalculatorController:53 - Choose operation
+2024-05-20 00:27:22 DEBUG Operation:14 - Try to print value
+2024-05-20 00:27:22 DEBUG CalculatorController:53 - Choose operation
+2024-05-20 00:27:22 DEBUG Operation:16 - SQRT start
+2024-05-20 00:27:22 WARN  Operation:25 - Value is negative
