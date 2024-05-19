@@ -1,0 +1,4 @@
+DEFINE a -1
+PUSH a
+SQRT
+PRINT

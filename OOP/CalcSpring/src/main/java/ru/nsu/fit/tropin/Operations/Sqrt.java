@@ -18,6 +18,7 @@ public class Sqrt implements Operation {
         try {
             value = stack.peekValue();
             if (value < 0) {
+                LOGGER.warn("Value is negative");
                 throw new OperationException("The sqrt argument should: >= 0");
             }
         } catch (OperationException operationException) {

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class WrongOperation implements Operation{
     @Override
     public void calculation(CalculatorStack stack, ArrayList<String> listValues) throws Exception {
-        System.out.println("Wrong operation");
+        LOGGER.info("Wrong operation");
+        System.err.println("Wrong operation");
+//        throw new Exception("Wrong operation");
     }
 }

@@ -1,7 +1,6 @@
 package ru.nsu.fit.tropin.CalculatorController;
 
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import ru.nsu.fit.tropin.Services.InputChecker.InputChecker;
 import org.springframework.expression.ExpressionException;
 

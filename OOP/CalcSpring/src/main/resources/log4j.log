@@ -1,0 +1,58 @@
+2024-05-19 20:53:26 INFO  Main:19 - Set input
+2024-05-19 20:53:26 DEBUG CalculatorController:29 - Set console input stream
+2024-05-19 20:53:26 DEBUG CalculatorController:47 - Launching CalculatorController
+2024-05-19 20:53:30 DEBUG CalculatorController:59 - Choose operation
+2024-05-19 20:53:30 INFO  Operation:12 - Wrong operation
+2024-05-19 20:53:34 DEBUG CalculatorController:59 - Choose operation
+2024-05-19 20:53:34 INFO  Operation:12 - Wrong operation
+2024-05-19 20:53:37 DEBUG CalculatorController:59 - Choose operation
+2024-05-19 20:53:37 DEBUG Operation:16 - DEFINE a as 4
+2024-05-19 20:54:32 DEBUG CalculatorController:59 - Choose operation
+2024-05-19 20:54:32 DEBUG Operation:18 - Push value in stack
+2024-05-19 20:54:39 DEBUG CalculatorController:59 - Choose operation
+2024-05-19 20:54:39 DEBUG Operation:16 - SQRT start
+2024-05-19 20:54:39 DEBUG Operation:28 - Push SQRT result value 2.0
+2024-05-19 20:54:41 DEBUG CalculatorController:59 - Choose operation
+2024-05-19 20:54:41 DEBUG Operation:14 - Try to print value
+2024-05-19 20:54:51 DEBUG CalculatorController:59 - Choose operation
+2024-05-19 20:54:51 DEBUG Operation:16 - DEFINE a as -1
+2024-05-19 20:54:53 DEBUG CalculatorController:59 - Choose operation
+2024-05-19 20:54:53 DEBUG Operation:14 - Try to print value
+2024-05-19 20:54:57 DEBUG CalculatorController:59 - Choose operation
+2024-05-19 20:54:57 ERROR Operation:27 - Wrong number of PUSH arguments
+2024-05-19 20:57:47 INFO  Main:19 - Set input
+2024-05-19 20:57:47 DEBUG CalculatorController:29 - Set console input stream
+2024-05-19 20:57:47 DEBUG CalculatorController:47 - Launching CalculatorController
+2024-05-19 20:57:52 DEBUG CalculatorController:59 - Choose operation
+2024-05-19 20:57:52 DEBUG Operation:16 - DEFINE a as -1
+2024-05-19 20:57:56 DEBUG CalculatorController:59 - Choose operation
+2024-05-19 20:57:56 DEBUG Operation:18 - Push value in stack
+2024-05-19 20:57:57 DEBUG CalculatorController:59 - Choose operation
+2024-05-19 20:57:57 DEBUG Operation:16 - SQRT start
+2024-05-19 20:57:57 WARN  Operation:24 - Stack is empty for SQRTThe sqrt argument should: >= 0
+2024-05-19 20:59:49 INFO  Main:19 - Set input
+2024-05-19 20:59:49 DEBUG CalculatorController:29 - Set console input stream
+2024-05-19 20:59:49 DEBUG CalculatorController:47 - Launching CalculatorController
+2024-05-19 20:59:57 DEBUG CalculatorController:59 - Choose operation
+2024-05-19 20:59:57 DEBUG Operation:16 - DEFINE a as -1
+2024-05-19 20:59:59 DEBUG CalculatorController:59 - Choose operation
+2024-05-19 20:59:59 DEBUG Operation:18 - Push value in stack
+2024-05-19 21:00:02 DEBUG CalculatorController:59 - Choose operation
+2024-05-19 21:00:02 DEBUG Operation:16 - SQRT start
+2024-05-19 21:00:02 WARN  Operation:21 - Value is negative
+2024-05-19 21:00:04 DEBUG CalculatorController:59 - Choose operation
+2024-05-19 21:00:04 DEBUG Operation:14 - Try to print value
+2024-05-19 21:00:25 INFO  Main:19 - Set input
+2024-05-19 21:00:25 DEBUG CalculatorController:29 - Set console input stream
+2024-05-19 21:00:25 DEBUG CalculatorController:47 - Launching CalculatorController
+2024-05-19 21:00:27 DEBUG CalculatorController:59 - Choose operation
+2024-05-19 21:00:27 DEBUG Operation:16 - SQRT start
+2024-05-19 21:02:16 INFO  Main:19 - Set input
+2024-05-19 21:02:16 DEBUG CalculatorController:29 - Set console input stream
+2024-05-19 21:02:16 DEBUG CalculatorController:47 - Launching CalculatorController
+2024-05-19 21:04:07 INFO  Main:19 - Set input
+2024-05-19 21:04:07 DEBUG CalculatorController:29 - Set console input stream
+2024-05-19 21:04:07 DEBUG CalculatorController:47 - Launching CalculatorController
+2024-05-19 21:05:25 INFO  Main:19 - Set input
+2024-05-19 21:05:25 DEBUG CalculatorController:29 - Set console input stream
+2024-05-19 21:05:25 DEBUG CalculatorController:47 - Launching CalculatorController
