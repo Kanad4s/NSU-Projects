@@ -23,8 +23,8 @@ public class LineParserSimple implements LineParser {
             _operation = "COMMENT";
         } else {
             _operation = _parametersList.get(0);
+            _parametersList.remove(0);
         }
-        _parametersList.remove(0);
     }
 
     @Override

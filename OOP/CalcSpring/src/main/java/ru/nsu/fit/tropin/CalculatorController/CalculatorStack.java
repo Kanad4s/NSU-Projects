@@ -14,6 +14,8 @@ public class CalculatorStack {
     private Map<String, Double> _mapDefineValues = new HashMap<String, Double>();
     private Stack<Double> _stack = new Stack<Double>();
 
+    public CalculatorStack() {}
+
     public void pushValue(String value) {
         if (InputChecker.isDouble(value)) {
             _stack.push(Double.parseDouble(value));

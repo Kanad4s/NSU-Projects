@@ -53,6 +53,18 @@
 			<artifactId>jcommander</artifactId>
 			<version>1.82</version>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.github.stefanbirkner</groupId>-->
+<!--			<artifactId>system-lambda</artifactId>-->
+<!--			<version>1.0.0</version>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
+		<dependency>
+			<groupId>io.johnsonlee.lambda</groupId>
+			<artifactId>lambda-support</artifactId>
+			<version>1.0.0</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

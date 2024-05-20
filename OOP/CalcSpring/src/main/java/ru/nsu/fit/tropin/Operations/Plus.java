@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 @Component
 public class Plus implements Operation{
+    public Plus() {}
 
     @Override
     public void calculation(CalculatorStack stack, ArrayList<String> listValues) throws Exception {

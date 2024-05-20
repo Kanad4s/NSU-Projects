@@ -9,8 +9,10 @@ import java.util.ArrayList;
 public class Comment implements Operation{
     @Override
     public void calculation(CalculatorStack stack, ArrayList<String> listValues) throws Exception {
+        LOGGER.debug("Commenting");
         for (String listValue : listValues) {
-            System.out.println(listValue);
+            System.out.print(listValue + " ");
         }
+        System.out.println();
     }
 }

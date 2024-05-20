@@ -2,6 +2,7 @@ package ru.nsu.fit.tropin.Operations;
 
 import ru.nsu.fit.tropin.CalculatorController.CalculatorStack;
 import org.springframework.stereotype.Component;
+import ru.nsu.fit.tropin.Exceptions.OperationException;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
@@ -15,7 +16,7 @@ public class Print implements Operation{
             System.out.println(stack.peekValue());
         } catch (EmptyStackException e) {
             LOGGER.error ("Failed pop element " + this.getClass ());
-            throw new EmptyStackException();
+            throw new OperationException("Empty stack");
         }
     }
 }
