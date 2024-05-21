@@ -90,14 +90,14 @@ public class GameArea implements MyObservable {
 
     public boolean isBlockOutOfBounds() {
         boolean retValue = false;
-        for (int i = 0; i < Resources.BLOCKS_IN_ROW; i++) {
-            System.out.print((boolean)(_placedShapes[_areaHeight / _areaBlockSize - 1][i] != null) + " ");
-            if (_placedShapes[_areaHeight / _areaBlockSize - 1][i] != null) {
-                retValue = true;
-            }
-        }
-        System.out.println();
-        return (_currentShape.getY() <= 0 && retValue);
+//        for (int i = 0; i < Resources.BLOCKS_IN_ROW - 1; i++) {
+//            System.out.print((boolean)(_placedShapes[_areaHeight / _areaBlockSize - 1][i] != null) + " ");
+//            if (_placedShapes[_areaHeight / _areaBlockSize - 1][i] != null) {
+//                retValue = true;
+//            }
+//        }
+//        System.out.println();
+        return (_currentShape.getY() <= 0 && _points < 20);
     }
 
     public void setAreaSize(int frameHeight, int frameWidth) {

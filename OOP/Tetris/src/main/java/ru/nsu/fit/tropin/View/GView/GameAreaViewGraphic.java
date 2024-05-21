@@ -8,6 +8,7 @@ import ru.nsu.fit.tropin.View.GameAreaView;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.ImageObserver;
+import java.io.IOException;
 
 public class GameAreaViewGraphic implements GameAreaView {
     private JFrame _frame;

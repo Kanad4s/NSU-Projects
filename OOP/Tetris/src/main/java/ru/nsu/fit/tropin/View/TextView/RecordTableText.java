@@ -1,4 +1,4 @@
-package ru.nsu.fit.tropin.View.GView;
+package ru.nsu.fit.tropin.View.TextView;
 
 import ru.nsu.fit.tropin.Model.Resources;
 
@@ -7,33 +7,21 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.function.Function;
 
-public class RecordTable {
-    private JTable _table;
-    private JFrame _frame;
-    private DefaultTableModel _tableModel;
+public class RecordTableText {
     private ArrayList<String[]> _players;
 
-    public RecordTable() {
-        _frame = new JFrame(Resources.GAME_RULES_NAME);
-        _tableModel = new DefaultTableModel();
-        _tableModel.addColumn("Player");
-        _tableModel.addColumn("Points");
+    public RecordTableText() {
         _players = getPreviousPlayers();
     }
 
     public void fillRecordTable() {
-        for (String[] player : _players) {
-            _tableModel.addRow(player);
+        for (int i = _players.size() - 1; i > 0; i--) {
+            System.out.println(Arrays.toString(_players.get(i)));
         }
-        _table = new JTable(_tableModel);
-        JScrollPane scrollPane = new JScrollPane(_table);
-        _frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
-        _frame.pack();
-        _frame.setLocationRelativeTo(null);
-        _frame.setVisible(true);
     }
 
     public void addPlayer(String name, int score) {
@@ -41,6 +29,7 @@ public class RecordTable {
         _players.add(player);
         _players.sort(Comparator.comparing(
                 (Function<String[], String>) array->String.valueOf(Integer.parseInt(array[1]))).reversed());
+
         try (FileOutputStream fileOutputStream = new FileOutputStream(Resources.PATH_RECORD_TABLE);
              ObjectOutputStream oos = new ObjectOutputStream(fileOutputStream)) {
             oos.writeObject(_players);
