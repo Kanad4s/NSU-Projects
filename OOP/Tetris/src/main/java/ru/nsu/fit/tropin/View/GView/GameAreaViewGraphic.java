@@ -33,6 +33,13 @@ public class GameAreaViewGraphic implements GameAreaView {
     }
 
     @Override
+    public void addPlayerToRecord(String name, int points) {
+        RecordTable recordTable = new RecordTable();
+        recordTable.addPlayer(name, points);
+        recordTable.fillRecordTable();
+    }
+
+    @Override
     public int getAreaHeight() {
         return _frame.getHeight();
     }
@@ -50,6 +57,11 @@ public class GameAreaViewGraphic implements GameAreaView {
     @Override
     public void update() {
         _panel.repaint();
+    }
+
+    @Override
+    public String getPlayerName() {
+        return JOptionPane.showInputDialog("Game Over\n Please, input your name.");
     }
 
     private void createFrame() {

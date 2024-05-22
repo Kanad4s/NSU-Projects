@@ -2,6 +2,7 @@ package ru.nsu.fit.tropin.Controller;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import static ru.nsu.fit.tropin.Model.Resources.*;
 import ru.nsu.fit.tropin.Model.GameArea;
@@ -12,7 +13,7 @@ public class MovementController {
 
     public void setControl(JFrame frame, GameArea gameArea) {
 //        InputMap inputMap = frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        InputMap inputMap = frame.getRootPane().getInputMap(JComponent.WHEN_FOCUSED);
+        InputMap inputMap = frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap actionMap = frame.getRootPane().getActionMap();
         inputMap.put(KeyStroke.getKeyStroke(KEY_UP), "up");
         inputMap.put(KeyStroke.getKeyStroke(KEY_DOWN), "down");
@@ -49,4 +50,5 @@ public class MovementController {
             }
         });
     }
+
 }

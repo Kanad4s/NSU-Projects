@@ -28,7 +28,7 @@ public class GameController implements Runnable, MyObserver {
     public void run() {
         launchGame();
         while (true) {
-            while (_gameArea.isShapeMoving() && _isPlaying) {
+            while (_isPlaying && _gameArea.isShapeMoving()) {
                 try {
                     _gameArea.moveShapeDown();
                     Thread.sleep(Resources.DELAY);
@@ -37,7 +37,7 @@ public class GameController implements Runnable, MyObserver {
                 }
 
             }
-            if (_gameArea.isBlockOutOfBounds() && _isPlaying) {
+            if (_isPlaying && _gameArea.isBlockOutOfBounds()) {
 //                System.out.println(_gameArea.isBlockOutOfBounds());
 //                System.out.println(_gameArea.getPoints());
 //                System.out.println(_isPlaying);
@@ -62,14 +62,8 @@ public class GameController implements Runnable, MyObserver {
     }
 
     private void gameOver() {
-        String playerName = JOptionPane.showInputDialog("Game Over\n Please, input your name.");
-        addPlayerToRecord(playerName, _gameArea.getPoints());
-    }
-
-    private void addPlayerToRecord(String name, int points) {
-        RecordTable recordTable = new RecordTable();
-        recordTable.addPlayer(name, points);
-        recordTable.fillRecordTable();
+        String playerName = _gameAreaView.getPlayerName();
+        _gameAreaView.addPlayerToRecord(playerName, _gameArea.getPoints());
     }
 
     @Override

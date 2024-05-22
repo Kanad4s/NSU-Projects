@@ -4,6 +4,7 @@ import ru.nsu.fit.tropin.Model.Shape.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class GameArea implements MyObservable {
@@ -97,7 +98,7 @@ public class GameArea implements MyObservable {
 //            }
 //        }
 //        System.out.println();
-        return (_currentShape.getY() <= 0 && _points < 20);
+        return (_currentShape.getY() <= 0 && _points > 20);
     }
 
     public void setAreaSize(int frameHeight, int frameWidth) {
@@ -124,10 +125,8 @@ public class GameArea implements MyObservable {
     }
 
     public void restart() {
-        for (int i = 0; i < _placedShapes.length; i++) {
-            for (int j = 0; j < _placedShapes[i].length; j++) {
-                _placedShapes[i][j] = null;
-            }
+        for (Color[] placedShape : _placedShapes) {
+            Arrays.fill(placedShape, null);
         }
         _points = 0;
         _currentShape.spawn();

@@ -37,6 +37,7 @@ public class RecordTable {
     }
 
     public void addPlayer(String name, int score) {
+        if (name == null || name.isEmpty()) return;
         String[] player = new String[]{name, Integer.toString(score)};
         _players.add(player);
         _players.sort(Comparator.comparing(

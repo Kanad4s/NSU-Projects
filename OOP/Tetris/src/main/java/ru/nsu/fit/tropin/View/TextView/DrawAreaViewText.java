@@ -10,7 +10,6 @@ public class DrawAreaViewText {
             DrawBlockText.drawBound();
             for (int j = 0; j < areaWidth; j++) {
                 if (isShape(shape, j , i) || placedShapes[i][j] != null) {
-//                if (shape.isShape(j, i) || placedShapes[i][j] != null) {
                     DrawBlockText.drawBlock();
                 } else {
                     DrawBlockText.drawSpace();
@@ -31,5 +30,15 @@ public class DrawAreaViewText {
             return shape.isShape(shape.getX() + shape.getWidth() - x - 1, shape.getY() + shape.getHeight() - y - 1);
         }
         return false;
+    }
+
+    public static void drawPoints(int points) {
+        System.out.println("Points: " + points);
+    }
+
+    public static void printSpace() {
+        for (int i = 0; i < 2; i++) {
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        }
     }
 }
