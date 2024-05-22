@@ -6,7 +6,7 @@ public class GameRulesText {
     public GameRulesText() {
         addRulesText();
         addFigures();
-        MainMenuText.showButtons();
+//        MainMenuText.showButtons();
     }
 
     private void addRulesText() {

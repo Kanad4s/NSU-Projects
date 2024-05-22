@@ -101,8 +101,12 @@ public class GameArea implements MyObservable {
     }
 
     public void setAreaSize(int frameHeight, int frameWidth) {
-        _areaWidth = frameWidth / 3;
-        _areaWidth = _areaWidth - _areaWidth % 10;
+        if (frameWidth != Resources.BLOCKS_IN_ROW) {
+            _areaWidth = frameWidth / 3;
+            _areaWidth = _areaWidth - _areaWidth % 10;
+        } else {
+            _areaWidth = frameWidth;
+        }
         _areaHeight = frameHeight;
         _areaBlockSize = _areaWidth / Resources.BLOCKS_IN_ROW;
     }

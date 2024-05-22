@@ -16,7 +16,6 @@ public class GameController implements Runnable, MyObserver {
 
     public GameController(){
         _gameArea = new GameArea();
-//        _gameAreaView = new GameAreaViewGraphic(_gameArea);
         _movementController = new MovementController();
     }
 
@@ -56,7 +55,6 @@ public class GameController implements Runnable, MyObserver {
         _isPlaying = true;
         _gameAreaView.showArea();
         _gameArea.setAreaSize(_gameAreaView.getAreaHeight(), _gameAreaView.getAreaWidth());
-//        _gameArea.setAreaSize(gameAreaViewGraphic.getFrame().getHeight(), gameAreaViewGraphic.getFrame().getWidth());
         _gameArea.createPlacedShapes();
         _gameArea.registerObserver(_gameAreaView);
         _gameArea.registerObserver(this);

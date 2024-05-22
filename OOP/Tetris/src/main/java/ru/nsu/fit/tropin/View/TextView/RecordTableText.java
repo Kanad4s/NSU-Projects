@@ -2,9 +2,6 @@ package ru.nsu.fit.tropin.View.TextView;
 
 import ru.nsu.fit.tropin.Model.Resources;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;

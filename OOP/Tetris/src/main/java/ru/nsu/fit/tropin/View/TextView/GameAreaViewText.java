@@ -7,11 +7,12 @@ import ru.nsu.fit.tropin.View.GameAreaView;
 import javax.swing.*;
 
 public class GameAreaViewText implements GameAreaView {
-
+    private JFrame _frame;
+    private GameArea _gameArea;
 
     @Override
     public void setGameArea(GameArea gameArea) {
-
+        _gameArea = gameArea;
     }
 
     @Override
@@ -31,11 +32,18 @@ public class GameAreaViewText implements GameAreaView {
 
     @Override
     public JFrame getFrame() {
-        return null;
+        _frame = new JFrame();
+        return _frame;
     }
 
     @Override
     public void update() {
+        repaint();
+    }
 
+    private void repaint() {
+        System.out.flush();
+        DrawAreaViewText.drawArea(_gameArea.getCurrentShape(), _gameArea.getAreaHeight(), _gameArea.getAreaWidth(),
+                _gameArea.getPlacedShapes());
     }
 }
