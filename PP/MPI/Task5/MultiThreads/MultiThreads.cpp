@@ -1,15 +1,15 @@
-﻿#include <stdio.h>
-#include <pthread.h>
-#include <unistd.h>
+﻿#include <malloc.h>
 #include <math.h>
 #include <mpi.h>
-#include <malloc.h>
+#include <pthread.h>
+#include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 //#include <cstdlib>
 
 #define L 1000
-#define LISTS_COUNT 500
-#define TASK_COUNT 2000
+#define LISTS_COUNT 50
+#define TASK_COUNT 200
 #define MIN_TASKS_TO_SHARE 2
 
 #define EXECUTOR_FINISHED_WORK -1
@@ -39,9 +39,18 @@ void printTasks(int taskSet[]) {
     printf("\n");
 }
 
+double myAbs(double value) {
+    if (value < 0) {
+        return value * -1;
+    }
+    else {
+        return value;
+    }
+}
+
 void initializeTaskSet(int taskSet[], int taskCount, int iterCounter) {
     for (int i = 0; i < taskCount; i++) {
-        taskSet[i] = abs(50 - i % 100) * abs(ProcessRank - (iterCounter % nProcesses)) * L;
+        taskSet[i] = myAbs(ProcessRank - (iterCounter % nProcesses));
     }
 }
 
@@ -61,7 +70,8 @@ void executeTaskSet(int* taskSet) {
 }
 
 void* ExecutorStartRoutine(void* args) {
-    tasks = new int[TASK_COUNT];
+    tasks = (int*)malloc(sizeof(int) * TASK_COUNT);
+    //tasks = new int[TASK_COUNT];
     double startTime, finishTime, iterationDuration, shortestIteration, longestIteration;
 
     for (int i = 0; i < LISTS_COUNT; i++) {
@@ -159,7 +169,7 @@ int main(int argc, char* argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &ProcessRank);
     MPI_Comm_size(MPI_COMM_WORLD, &nProcesses);
 
-    pthread_mutex_init(&mutex, nullptr);
+    pthread_mutex_init(&mutex, NULL);
     pthread_attr_t threadAttributes;
 
     double start = MPI_Wtime();
@@ -167,8 +177,8 @@ int main(int argc, char* argv[]) {
     pthread_attr_setdetachstate(&threadAttributes, PTHREAD_CREATE_JOINABLE);
     pthread_create(&threads[0], &threadAttributes, ReceiverStartRoutine, NULL);
     pthread_create(&threads[1], &threadAttributes, ExecutorStartRoutine, NULL);
-    pthread_join(threads[0], nullptr);
-    pthread_join(threads[1], nullptr);
+    pthread_join(threads[0], NULL);
+    pthread_join(threads[1], NULL);
     pthread_attr_destroy(&threadAttributes);
     pthread_mutex_destroy(&mutex);
     double finish = MPI_Wtime();
