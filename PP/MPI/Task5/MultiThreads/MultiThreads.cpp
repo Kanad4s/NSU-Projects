@@ -144,7 +144,7 @@ void* ReceiverStartRoutine(void* args) {
         }
         pthread_mutex_unlock(&mutex);
     }
-    pthread_exit(nullptr);
+    pthread_exit(NULL);
 }
 
 
