@@ -1,11 +1,11 @@
-﻿#include <iostream>
+﻿#include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
-#include <cmath>
+#include <math.h>
 #include <mpi.h>
-#include <cstdlib>
-#include <fstream>
-#include "utils.h"
+#include <malloc.h>
+#include <string.h>
+//#include <cstdlib>
 
 #define L 1000
 #define LISTS_COUNT 500
@@ -22,7 +22,7 @@ pthread_mutex_t mutex;
 int* tasks;
 
 double SummaryDisbalance = 0;
-bool FinishedExecution = false;
+int FinishedExecution = 0;
 
 int nProcesses;
 int ProcessRank;
@@ -84,7 +84,10 @@ void* ExecutorStartRoutine(void* args) {
                 printf("Process %d answered %d\n", procIdx, threadResponse);
                 if (threadResponse != NO_TASKS_TO_SHARE) {
                     AdditionalTasks = threadResponse;
-                    memset(tasks, 0, TASK_COUNT);
+                    for (int i = 0; i < TASK_COUNT; i++) {
+                        tasks[i] = 0;
+                    }
+                    //memset(tasks, 0, TASK_COUNT);
                     MPI_Recv(tasks, AdditionalTasks, MPI_INT, procIdx, SENDING_TASKS, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
                     pthread_mutex_lock(&mutex);
                     RemainingTasks = AdditionalTasks;
@@ -107,12 +110,12 @@ void* ExecutorStartRoutine(void* args) {
     }
 
     pthread_mutex_lock(&mutex);
-    FinishedExecution = true;
+    FinishedExecution = 1;
     pthread_mutex_unlock(&mutex);
     int signal = EXECUTOR_FINISHED_WORK;
     MPI_Send(&signal, 1, MPI_INT, ProcessRank, 888, MPI_COMM_WORLD);
-    delete[] tasks;
-    pthread_exit(nullptr);
+    free(tasks);
+    pthread_exit(NULL);
 }
 
 void* ReceiverStartRoutine(void* args) {
