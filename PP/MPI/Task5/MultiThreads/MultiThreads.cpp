@@ -1,212 +1,180 @@
 ﻿#include <iostream>
-#include <mpi.h>
 #include <pthread.h>
-#include "ConcurrentQueue.h"
-#include <memory>
+#include <unistd.h>
+#include <cmath>
+#include <mpi.h>
+#include <cstdlib>
+#include <fstream>
+#include "utils.h"
 
-//export TMPDIR=/tmp
+#define L 1000
+#define LISTS_COUNT 500
+#define TASK_COUNT 2000
+#define MIN_TASKS_TO_SHARE 2
 
-typedef struct {
-    const int CountThread;
-    pthread_mutex_t* Lock;
-    std::unique_ptr<ConcurrentQueue<int>> Queue;
-    const int Rank;
-    pthread_cond_t* CondWait;
-    pthread_cond_t* CondWork;
-    bool StatusRun;
-    int CountTaskExecute;
-    double ResultSum;
-} Context;
+#define EXECUTOR_FINISHED_WORK -1
+#define SENDING_TASKS 656
+#define SENDING_TASK_COUNT 787
+#define NO_TASKS_TO_SHARE -565
 
-ssize_t get_random_value(const int initial_boundary, const int final_boundary) {
-    std::random_device rd;
-    std::mt19937 gen(rd());
+pthread_t threads[2];
+pthread_mutex_t mutex;
+int* tasks;
 
-    std::uniform_int_distribution<ssize_t> dist(initial_boundary, final_boundary);
-    return dist(gen);
+double SummaryDisbalance = 0;
+bool FinishedExecution = false;
+
+int nProcesses;
+int ProcessRank;
+int RemainingTasks;
+int ExecutedTasks;
+int AdditionalTasks;
+double globalRes = 0;
+
+void printTasks(int taskSet[]) {
+    printf("Process: %d", ProcessRank);
+    for (int i = 0; i < TASK_COUNT; i++) {
+        printf("%d ", taskSet[i]);
+    }
+    printf("\n");
 }
 
-int get_repeat_number(const int initial_boundary, const int final_boundary) {
-    return abs(initial_boundary - (final_boundary / get_random_value(initial_boundary, final_boundary)));
-}
-
-void filling_queue(const Context* context, const int size_queue,
-    const int initial_boundary, const int final_boundary) {
-
-    for (int i = 0; i < size_queue; ++i) {
-        context->Queue->push(get_repeat_number(initial_boundary, final_boundary));
+void initializeTaskSet(int taskSet[], int taskCount, int iterCounter) {
+    for (int i = 0; i < taskCount; i++) {
+        taskSet[i] = abs(50 - i % 100) * abs(ProcessRank - (iterCounter % nProcesses)) * L;
     }
 }
 
-void* task_send(void* _context) {
-    auto context = (Context*)_context;
-    MPI_Status status;
-    int rank_sender;
+void executeTaskSet(int* taskSet) {
+    for (int i = 0; i < RemainingTasks; i++) {
+        pthread_mutex_lock(&mutex);
+        int weight = taskSet[i];
+        pthread_mutex_unlock(&mutex);
 
-    while (context->StatusRun) {
-        MPI_Recv(&rank_sender, 1, MPI_INT, MPI_ANY_SOURCE, TAG_REQUEST_TASK, MPI_COMM_WORLD, &status);
-        if (rank_sender == STOP_WORK) continue;
-
-        int task = context->Queue->pop();
-        MPI_Send(&task, 1, MPI_INT, rank_sender, TAG_SEND_TASK, MPI_COMM_WORLD);
-    }
-
-    return nullptr;
-}
-
-void finish_work_node(Context* context, const int recvTask) {
-    MPI_Barrier(MPI_COMM_WORLD);
-    context->StatusRun = false;
-
-    MPI_Send(&recvTask, 1, MPI_INT, context->Rank, TAG_REQUEST_TASK, MPI_COMM_WORLD);
-
-    pthread_mutex_lock(context->Lock);
-    pthread_cond_signal(context->CondWork);
-    pthread_mutex_unlock(context->Lock);
-}
-
-void* task_wait(void* _context) {
-    auto context = (Context*)_context;
-
-    MPI_Status status;
-    int recv_task;
-
-    while (context->StatusRun) {
-
-        while (!context->Queue->empty()) {
-
-            pthread_mutex_lock(context->Lock);
-            pthread_cond_signal(context->CondWork);
-            pthread_cond_wait(context->CondWait, context->Lock);
-            pthread_mutex_unlock(context->Lock);
+        for (int j = 0; j < weight; j++) {
+            globalRes += cos(0.001488);
         }
 
-        int number_proc_completed = 0;
+        ExecutedTasks++;
+    }
+    RemainingTasks = 0;
+}
 
-        for (int i = 0; i < context->CountThread; ++i) {
-            if (i == context->Rank) continue;
+void* ExecutorStartRoutine(void* args) {
+    tasks = new int[TASK_COUNT];
+    double startTime, finishTime, iterationDuration, shortestIteration, longestIteration;
 
-            MPI_Send(&context->Rank, 1, MPI_INT, i, TAG_REQUEST_TASK, MPI_COMM_WORLD);
-
-            MPI_Recv(&recv_task, 1, MPI_INT, i, TAG_SEND_TASK, MPI_COMM_WORLD, &status);
-            if (recv_task != PROCESS_FULFILLED_TASK) {
-                context->Queue->push(recv_task);
+    for (int i = 0; i < LISTS_COUNT; i++) {
+        startTime = MPI_Wtime();
+        MPI_Barrier(MPI_COMM_WORLD);
+        printf("Iteration: %d, Initializing tasks.", i);
+        ExecutedTasks = 0;
+        RemainingTasks = TASK_COUNT;
+        AdditionalTasks = 0;
+        initializeTaskSet(tasks, TASK_COUNT, i);
+        executeTaskSet(tasks);
+        printf("Process %d executed tasks in %f\n", ProcessRank, MPI_Wtime() - startTime);
+        printf("Requesting additional tasks\n");
+        int threadResponse;
+        for (int procIdx = 0; procIdx < nProcesses; procIdx++) {
+            if (procIdx != ProcessRank) {
+                printf("Process %d is asking %d for tasks\n", ProcessRank, procIdx);
+                MPI_Send(&ProcessRank, 1, MPI_INT, procIdx, 888, MPI_COMM_WORLD);
+                MPI_Recv(&threadResponse, 1, MPI_INT, procIdx, SENDING_TASK_COUNT, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                printf("Process %d answered %d\n", procIdx, threadResponse);
+                if (threadResponse != NO_TASKS_TO_SHARE) {
+                    AdditionalTasks = threadResponse;
+                    memset(tasks, 0, TASK_COUNT);
+                    MPI_Recv(tasks, AdditionalTasks, MPI_INT, procIdx, SENDING_TASKS, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                    pthread_mutex_lock(&mutex);
+                    RemainingTasks = AdditionalTasks;
+                    pthread_mutex_unlock(&mutex);
+                    executeTaskSet(tasks);
+                }
             }
-            else { ++number_proc_completed; }
-        }
 
-        if (number_proc_completed == context->CountThread - INCREMENT)
-            finish_work_node(context, STOP_WORK);
+        }
+        finishTime = MPI_Wtime();
+        iterationDuration = finishTime - startTime;
+        MPI_Allreduce(&iterationDuration, &longestIteration, 1, MPI_DOUBLE, MPI_MAX, MPI_COMM_WORLD);
+        MPI_Allreduce(&iterationDuration, &shortestIteration, 1, MPI_DOUBLE, MPI_MIN, MPI_COMM_WORLD);
+        MPI_Barrier(MPI_COMM_WORLD);
+        printf("Process %d executed %d tasks. Additional: %d\n", ProcessRank, ExecutedTasks, AdditionalTasks);
+        printf("Time taken: %f\n", iterationDuration);
+        SummaryDisbalance += (longestIteration - shortestIteration) / longestIteration;
+        printf("Max tim difference: %f\n", longestIteration - shortestIteration);
+        printf("Disbalance: %f%\n", ((longestIteration - shortestIteration) / longestIteration) * 100);
     }
 
-    return nullptr;
+    pthread_mutex_lock(&mutex);
+    FinishedExecution = true;
+    pthread_mutex_unlock(&mutex);
+    int signal = EXECUTOR_FINISHED_WORK;
+    MPI_Send(&signal, 1, MPI_INT, ProcessRank, 888, MPI_COMM_WORLD);
+    delete[] tasks;
+    pthread_exit(nullptr);
 }
 
-void task_execute(ssize_t task_extent, Context* context) {
-    for (int j = 0; j < task_extent; ++j) {
-        context->ResultSum += sqrt(j);
-    }
-}
-
-void* worker(void* _context) {
-    auto context = (Context*)_context;
-
-    while (context->StatusRun) {
-        while (true) {
-            int task = context->Queue->pop();
-            if (task == STOP_WORK) break;
-            task_execute(task, context);
-            ++context->CountTaskExecute;
-        }
-
-        while (context->Queue->empty() && context->StatusRun) {
-            pthread_mutex_lock(context->Lock);
-            pthread_cond_signal(context->CondWait);
-            pthread_cond_wait(context->CondWork, context->Lock);
-            pthread_mutex_unlock(context->Lock);
-        }
-    }
-
-    printf("RANK: %d, finish worker, count task_execute: %d\n", context->Rank, context->CountTaskExecute);
-    return nullptr;
-}
-
-Context fill_context(const int count_process, const int rank, pthread_mutex_t* mutex,
-    pthread_cond_t* cond_wait, pthread_cond_t* cond_work) {
-
-    Context context = {
-            .CountThread = count_process,
-            .Lock = mutex,
-            .Queue = std::make_unique<ConcurrentQueue<int>>(mutex, cond_work),
-            .Rank = rank,
-            .CondWait = cond_wait,
-            .CondWork = cond_work,
-            .StatusRun = true,
-            .CountTaskExecute = 0,
-            .ResultSum = 0
-    };
-
-    return context;
-}
-
-void run_pthread(const int rank, const int count_process) {
-    pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-    pthread_mutex_init(&mutex, nullptr);
-
-    pthread_attr_t attrs;
-    pthread_attr_init(&attrs);
-    pthread_attr_setdetachstate(&attrs, PTHREAD_CREATE_JOINABLE);
-
-    pthread_t thread_worker;
-    pthread_t thread_task_wait;
-    pthread_t thread_task_send;
-
-    pthread_cond_t cond_wait = PTHREAD_COND_INITIALIZER,
-        cond_work = PTHREAD_COND_INITIALIZER;
-
-    pthread_cond_init(&cond_wait, nullptr);
-    pthread_cond_init(&cond_work, nullptr);
-
-    Context context = fill_context(count_process, rank, &mutex, &cond_wait, &cond_work);
-
-    filling_queue(&context,
-        (rank + INCREMENT) * BOUNDS_QUEUE,
-        (rank + INCREMENT) * FILL_RATE, BOUNDS_SIZE_TASK);
-
-    printf("RANK: %d, SIZE QUEUE : %u\n", context.Rank, context.Queue->size());
-
+void* ReceiverStartRoutine(void* args) {
+    int askingProcRank, answer, pendingMessage;
+    MPI_Status status;
     MPI_Barrier(MPI_COMM_WORLD);
+    while (!FinishedExecution) {
+        MPI_Recv(&pendingMessage, 1, MPI_INT, MPI_ANY_SOURCE, 888, MPI_COMM_WORLD, &status);
 
-    pthread_create(&thread_worker, &attrs, worker, &context);
-    pthread_create(&thread_task_wait, &attrs, task_wait, &context);
-    pthread_create(&thread_task_send, &attrs, task_send, &context);
-
-    pthread_join(thread_worker, nullptr);
-    pthread_join(thread_task_wait, nullptr);
-    pthread_join(thread_task_send, nullptr);
-
-    pthread_attr_destroy(&attrs);
-    pthread_cond_destroy(&cond_wait);
+        if (pendingMessage == EXECUTOR_FINISHED_WORK) {
+            printf("Executor finished work on proc %d\n", ProcessRank);
+        }
+        askingProcRank = pendingMessage;
+        pthread_mutex_lock(&mutex);
+        printf("Process %d requested task: %d\n", askingProcRank, RemainingTasks);
+        if (RemainingTasks >= MIN_TASKS_TO_SHARE) {
+            answer = RemainingTasks / (nProcesses * 2);
+            RemainingTasks = RemainingTasks / (nProcesses * 2);
+            printf("Sharing %d tasks\n", answer);
+            MPI_Send(&answer, 1, MPI_INT, askingProcRank, SENDING_TASK_COUNT, MPI_COMM_WORLD);
+            MPI_Send(&tasks[TASK_COUNT - answer], answer, MPI_INT, askingProcRank, SENDING_TASKS, MPI_COMM_WORLD);
+        }
+        else {
+            answer = NO_TASKS_TO_SHARE;
+            MPI_Send(&answer, 1, MPI_INT, askingProcRank, SENDING_TASK_COUNT, MPI_COMM_WORLD);
+        }
+        pthread_mutex_unlock(&mutex);
+    }
+    pthread_exit(nullptr);
 }
 
-int main(int argc, char** argv) {
+
+int main(int argc, char* argv[]) {
     int provider;
     MPI_Init_thread(&argc, &argv, MPI_THREAD_MULTIPLE, &provider);
+    if (provider != MPI_THREAD_MULTIPLE) {
+        MPI_Finalize();
+        return -1;
+    }
 
-    int rank, countThread;
+    MPI_Comm_rank(MPI_COMM_WORLD, &ProcessRank);
+    MPI_Comm_size(MPI_COMM_WORLD, &nProcesses);
 
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    MPI_Comm_size(MPI_COMM_WORLD, &countThread);
+    pthread_mutex_init(&mutex, nullptr);
+    pthread_attr_t threadAttributes;
 
-    double start_time = MPI_Wtime();
+    double start = MPI_Wtime();
+    pthread_attr_init(&threadAttributes);
+    pthread_attr_setdetachstate(&threadAttributes, PTHREAD_CREATE_JOINABLE);
+    pthread_create(&threads[0], &threadAttributes, ReceiverStartRoutine, NULL);
+    pthread_create(&threads[1], &threadAttributes, ExecutorStartRoutine, NULL);
+    pthread_join(threads[0], nullptr);
+    pthread_join(threads[1], nullptr);
+    pthread_attr_destroy(&threadAttributes);
+    pthread_mutex_destroy(&mutex);
+    double finish = MPI_Wtime();
 
-    run_pthread(rank, countThread);
-
-    double end_time = MPI_Wtime();
-
-    if (rank == ROOT)
-        std::cout << std::endl << "TIME: " << end_time - start_time << " seconds" << std::endl;
+    if (ProcessRank == 0) {
+        printf("Summary disbalance: %f%\n", SummaryDisbalance / (LISTS_COUNT) * 100);
+        printf("Time taken: %f\n", finish - start);
+    }
 
     MPI_Finalize();
-    return EXIT_SUCCESS;
+    return 0;
 }
