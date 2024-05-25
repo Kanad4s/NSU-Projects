@@ -1,0 +1,85 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task4\\crashHeap\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{654C69E5-811A-4055-B7C0-FD3631031407}|crashHeap.vcxproj|C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task4\\crashHeap\\crashHeap.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{654C69E5-811A-4055-B7C0-FD3631031407}|crashHeap.vcxproj|solutionrelative:crashHeap.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_2\\recursive.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_2\\stackcrash.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_2\\heapcrash.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "stackcrash.c",
+              "DocumentMoniker": "C:\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_2\\stackcrash.c",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_2\\stackcrash.c",
+              "ToolTip": "C:\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_2\\stackcrash.c",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_2\\stackcrash.c",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-05-11T01:29:06.996Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "recursive.c",
+              "DocumentMoniker": "C:\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_2\\recursive.c",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_2\\recursive.c",
+              "ToolTip": "C:\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_2\\recursive.c",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_2\\recursive.c",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-05-11T01:28:46.357Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "crashHeap.cpp",
+              "DocumentMoniker": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task4\\crashHeap\\crashHeap.cpp",
+              "RelativeDocumentMoniker": "crashHeap.cpp",
+              "ToolTip": "C:\\MyFiles\\CodingProjects\\GitProjects\\NSU_Projects_Cplusplus\\OS\\Task4\\crashHeap\\crashHeap.cpp",
+              "RelativeToolTip": "crashHeap.cpp",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAACsAAAAKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-05-11T01:19:19.958Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "heapcrash.c",
+              "DocumentMoniker": "C:\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_2\\heapcrash.c",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_2\\heapcrash.c",
+              "ToolTip": "C:\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_2\\heapcrash.c",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\Users\\\u041D\u0438\u043A\u0438\u0442\u0430\\OneDrive\\Desktop\\tasks\\OS\\task4\\task4_2\\heapcrash.c",
+              "ViewState": "AQIAABIAAAAAAAAAAAAgwCQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-05-11T01:19:52.237Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

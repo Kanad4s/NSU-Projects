@@ -1,0 +1,4 @@
+﻿  HelloAssembler.cpp
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\OS\Task2\HelloAssembler\HelloAssembler.cpp(7,5): error C4235: использовано нестандартное расширение: ключевое слово "__asm" данной архитектурой не поддерживается
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\OS\Task2\HelloAssembler\HelloAssembler.cpp(7,11): error C2065: movq: необъявленный идентификатор
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\OS\Task2\HelloAssembler\HelloAssembler.cpp(7,16): error C2146: синтаксическая ошибка: отсутствие ")" перед идентификатором "$4"

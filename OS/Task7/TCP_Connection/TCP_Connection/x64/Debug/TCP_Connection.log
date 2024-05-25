@@ -1,0 +1,5 @@
+﻿  Client.cpp
+  TCP_Connection.cpp
+  Создание кода...
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\OS\Task7\TCP_Connection\Client.cpp(6,10): error C1083: Не удается открыть файл включение: sys/socket.h: No such file or directory,
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\OS\Task7\TCP_Connection\TCP_Connection.cpp(6,10): error C1083: Не удается открыть файл включение: sys/socket.h: No such file or directory,

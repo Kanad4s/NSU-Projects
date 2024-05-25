@@ -1,0 +1,12 @@
+﻿  CopyDirectoryReverse.cpp
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\OS\Task3\CopyDirectoryReverse\CopyDirectoryReverse.cpp(36,17): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\OS\Task3\CopyDirectoryReverse\CopyDirectoryReverse.cpp(190,20): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\OS\Task3\CopyDirectoryReverse\CopyDirectoryReverse.cpp(220,48): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\OS\Task3\CopyDirectoryReverse\CopyDirectoryReverse.cpp(291,31): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\OS\Task3\CopyDirectoryReverse\CopyDirectoryReverse.cpp(304,24): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\OS\Task3\CopyDirectoryReverse\CopyDirectoryReverse.cpp(317,29): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\OS\Task3\CopyDirectoryReverse\CopyDirectoryReverse.cpp(323,13): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\OS\Task3\CopyDirectoryReverse\CopyDirectoryReverse.cpp(326,1): warning C4715: run1: значение возвращается не при всех путях выполнения
+  CopyDirectoryReverse.vcxproj -> C:\MyFiles\CodingProjects\GitProjects\NSU_Projects_Cplusplus\OS\Task3\CopyDirectoryReverse\x64\Debug\CopyDirectoryReverse.exe
+  "pwsh.exe" не является внутренней или внешней
+  командой, исполняемой программой или пакетным файлом.
