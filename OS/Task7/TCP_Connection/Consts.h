@@ -1,0 +1,3 @@
+#define PORT 8080
+#define CLIENTS_COUNT 5
+#define BUFF_SIZE 128
