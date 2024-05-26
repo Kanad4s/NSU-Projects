@@ -1,5 +1,6 @@
-DEFINE a -1
+DEFINE a 1
+PUSH 0
 PUSH a
-SQRT
+DIVISION
 #test text
 PRINT

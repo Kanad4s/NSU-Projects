@@ -9,8 +9,8 @@ public class DrawBlockGraphic {
         int blockSize = gameAreaWidth / Resources.BLOCKS_IN_ROW;
         int heightShift = gameAreaHeight % blockSize;
         g.setColor(color);
-        g.fillRect(x * blockSize + offsetWidth, y * blockSize + heightShift, blockSize, blockSize);
+        g.fillRect(x * blockSize + offsetWidth, y * blockSize - heightShift, blockSize, blockSize);
         g.setColor(Color.black);
-        g.drawRect(x * blockSize + offsetWidth, y * blockSize + heightShift, blockSize, blockSize);
+        g.drawRect(x * blockSize + offsetWidth, y * blockSize - heightShift, blockSize, blockSize);
     }
 }

@@ -1,647 +1,409 @@
-2024-05-19 20:53:26 INFO  Main:19 - Set input
-2024-05-19 20:53:26 DEBUG CalculatorController:29 - Set console input stream
-2024-05-19 20:53:26 DEBUG CalculatorController:47 - Launching CalculatorController
-2024-05-19 20:53:30 DEBUG CalculatorController:59 - Choose operation
-2024-05-19 20:53:30 INFO  Operation:12 - Wrong operation
-2024-05-19 20:53:34 DEBUG CalculatorController:59 - Choose operation
-2024-05-19 20:53:34 INFO  Operation:12 - Wrong operation
-2024-05-19 20:53:37 DEBUG CalculatorController:59 - Choose operation
-2024-05-19 20:53:37 DEBUG Operation:16 - DEFINE a as 4
-2024-05-19 20:54:32 DEBUG CalculatorController:59 - Choose operation
-2024-05-19 20:54:32 DEBUG Operation:18 - Push value in stack
-2024-05-19 20:54:39 DEBUG CalculatorController:59 - Choose operation
-2024-05-19 20:54:39 DEBUG Operation:16 - SQRT start
-2024-05-19 20:54:39 DEBUG Operation:28 - Push SQRT result value 2.0
-2024-05-19 20:54:41 DEBUG CalculatorController:59 - Choose operation
-2024-05-19 20:54:41 DEBUG Operation:14 - Try to print value
-2024-05-19 20:54:51 DEBUG CalculatorController:59 - Choose operation
-2024-05-19 20:54:51 DEBUG Operation:16 - DEFINE a as -1
-2024-05-19 20:54:53 DEBUG CalculatorController:59 - Choose operation
-2024-05-19 20:54:53 DEBUG Operation:14 - Try to print value
-2024-05-19 20:54:57 DEBUG CalculatorController:59 - Choose operation
-2024-05-19 20:54:57 ERROR Operation:27 - Wrong number of PUSH arguments
-2024-05-19 20:57:47 INFO  Main:19 - Set input
-2024-05-19 20:57:47 DEBUG CalculatorController:29 - Set console input stream
-2024-05-19 20:57:47 DEBUG CalculatorController:47 - Launching CalculatorController
-2024-05-19 20:57:52 DEBUG CalculatorController:59 - Choose operation
-2024-05-19 20:57:52 DEBUG Operation:16 - DEFINE a as -1
-2024-05-19 20:57:56 DEBUG CalculatorController:59 - Choose operation
-2024-05-19 20:57:56 DEBUG Operation:18 - Push value in stack
-2024-05-19 20:57:57 DEBUG CalculatorController:59 - Choose operation
-2024-05-19 20:57:57 DEBUG Operation:16 - SQRT start
-2024-05-19 20:57:57 WARN  Operation:24 - Stack is empty for SQRTThe sqrt argument should: >= 0
-2024-05-19 20:59:49 INFO  Main:19 - Set input
-2024-05-19 20:59:49 DEBUG CalculatorController:29 - Set console input stream
-2024-05-19 20:59:49 DEBUG CalculatorController:47 - Launching CalculatorController
-2024-05-19 20:59:57 DEBUG CalculatorController:59 - Choose operation
-2024-05-19 20:59:57 DEBUG Operation:16 - DEFINE a as -1
-2024-05-19 20:59:59 DEBUG CalculatorController:59 - Choose operation
-2024-05-19 20:59:59 DEBUG Operation:18 - Push value in stack
-2024-05-19 21:00:02 DEBUG CalculatorController:59 - Choose operation
-2024-05-19 21:00:02 DEBUG Operation:16 - SQRT start
-2024-05-19 21:00:02 WARN  Operation:21 - Value is negative
-2024-05-19 21:00:04 DEBUG CalculatorController:59 - Choose operation
-2024-05-19 21:00:04 DEBUG Operation:14 - Try to print value
-2024-05-19 21:00:25 INFO  Main:19 - Set input
-2024-05-19 21:00:25 DEBUG CalculatorController:29 - Set console input stream
-2024-05-19 21:00:25 DEBUG CalculatorController:47 - Launching CalculatorController
-2024-05-19 21:00:27 DEBUG CalculatorController:59 - Choose operation
-2024-05-19 21:00:27 DEBUG Operation:16 - SQRT start
-2024-05-19 21:02:16 INFO  Main:19 - Set input
-2024-05-19 21:02:16 DEBUG CalculatorController:29 - Set console input stream
-2024-05-19 21:02:16 DEBUG CalculatorController:47 - Launching CalculatorController
-2024-05-19 21:04:07 INFO  Main:19 - Set input
-2024-05-19 21:04:07 DEBUG CalculatorController:29 - Set console input stream
-2024-05-19 21:04:07 DEBUG CalculatorController:47 - Launching CalculatorController
-2024-05-19 21:05:25 INFO  Main:19 - Set input
-2024-05-19 21:05:25 DEBUG CalculatorController:29 - Set console input stream
-2024-05-19 21:05:25 DEBUG CalculatorController:47 - Launching CalculatorController
-2024-05-19 23:32:51 INFO  Main:20 - Set input
-2024-05-19 23:34:51 INFO  Main:20 - Set input
-2024-05-19 23:34:51 DEBUG CalculatorController:35 - Set file input stream
-2024-05-19 23:35:08 INFO  Main:20 - Set input
-2024-05-19 23:35:32 INFO  Main:20 - Set input
-2024-05-19 23:41:00 INFO  Main:20 - Set input
-2024-05-19 23:41:00 DEBUG CalculatorController:35 - Set file input stream
-2024-05-19 23:41:32 INFO  Main:20 - Set input
-2024-05-19 23:41:32 DEBUG CalculatorController:35 - Set file input stream
-2024-05-20 00:06:20 INFO  Main:22 - Parse args
-2024-05-20 00:06:20 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 00:06:20 INFO  CommandLineParser:38 - Set console input stream
-2024-05-20 00:06:20 DEBUG CalculatorController:29 - Set reader input stream
-2024-05-20 00:06:20 DEBUG CalculatorController:41 - Launching CalculatorController
-2024-05-20 00:09:11 INFO  Main:22 - Parse args
-2024-05-20 00:09:11 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 00:09:12 INFO  CommandLineParser:38 - Set console input stream
-2024-05-20 00:09:12 DEBUG CalculatorController:29 - Set reader input stream
-2024-05-20 00:09:12 DEBUG CalculatorController:41 - Launching CalculatorController
-2024-05-20 00:10:53 INFO  Main:22 - Parse args
-2024-05-20 00:10:53 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 00:11:51 INFO  Main:22 - Parse args
-2024-05-20 00:11:51 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 00:13:40 INFO  Main:22 - Parse args
-2024-05-20 00:13:40 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 00:14:17 INFO  Main:22 - Parse args
-2024-05-20 00:14:17 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 00:17:15 INFO  Main:21 - Parse args
-2024-05-20 00:17:15 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 00:18:34 INFO  Main:21 - Parse args
-2024-05-20 00:18:34 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 00:19:15 INFO  Main:21 - Parse args
-2024-05-20 00:19:15 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 00:20:15 INFO  Main:21 - Parse args
-2024-05-20 00:20:15 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 00:20:15 INFO  CommandLineParser:38 - Set file input stream
-2024-05-20 00:20:41 INFO  Main:21 - Parse args
-2024-05-20 00:20:41 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 00:20:41 INFO  CommandLineParser:38 - Set file input stream
-2024-05-20 00:20:52 INFO  Main:21 - Parse args
-2024-05-20 00:20:52 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 00:20:52 INFO  CommandLineParser:38 - Set file input stream
-2024-05-20 00:21:08 INFO  Main:21 - Parse args
-2024-05-20 00:21:08 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 00:21:08 INFO  CommandLineParser:38 - Set file input stream
-2024-05-20 00:21:56 INFO  Main:21 - Parse args
-2024-05-20 00:21:56 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 00:21:56 INFO  CommandLineParser:38 - Set file input stream
-2024-05-20 00:21:56 DEBUG CalculatorController:29 - Set reader input stream
-2024-05-20 00:21:56 DEBUG CalculatorController:41 - Launching CalculatorController
-2024-05-20 00:21:56 DEBUG CalculatorController:53 - Choose operation
-2024-05-20 00:21:56 DEBUG Operation:15 - DEFINE a as -1
-2024-05-20 00:21:56 DEBUG CalculatorController:53 - Choose operation
-2024-05-20 00:21:56 DEBUG Operation:18 - Push value in stack
-2024-05-20 00:21:56 DEBUG CalculatorController:53 - Choose operation
-2024-05-20 00:21:56 DEBUG Operation:16 - SQRT start
-2024-05-20 00:21:56 WARN  Operation:21 - Value is negative
-2024-05-20 00:21:56 WARN  Operation:25 - Stack is empty for SQRTThe sqrt argument should: >= 0
-2024-05-20 00:24:59 INFO  Main:21 - Parse args
-2024-05-20 00:24:59 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 00:24:59 INFO  CommandLineParser:38 - Set file input stream
-2024-05-20 00:24:59 DEBUG CalculatorController:29 - Set reader input stream
-2024-05-20 00:24:59 DEBUG CalculatorController:41 - Launching CalculatorController
-2024-05-20 00:24:59 DEBUG CalculatorController:53 - Choose operation
-2024-05-20 00:24:59 DEBUG Operation:15 - DEFINE a as -1
-2024-05-20 00:24:59 DEBUG CalculatorController:53 - Choose operation
-2024-05-20 00:24:59 DEBUG Operation:18 - Push value in stack
-2024-05-20 00:24:59 DEBUG CalculatorController:53 - Choose operation
-2024-05-20 00:24:59 DEBUG Operation:14 - Try to print value
-2024-05-20 00:24:59 DEBUG CalculatorController:53 - Choose operation
-2024-05-20 00:24:59 DEBUG Operation:16 - SQRT start
-2024-05-20 00:24:59 WARN  Operation:21 - Value is negative
-2024-05-20 00:24:59 WARN  Operation:25 - Stack is empty for SQRTThe sqrt argument should: >= 0
-2024-05-20 00:27:22 INFO  Main:21 - Parse args
-2024-05-20 00:27:22 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 00:27:22 INFO  CommandLineParser:38 - Set file input stream
-2024-05-20 00:27:22 DEBUG CalculatorController:29 - Set reader input stream
-2024-05-20 00:27:22 DEBUG CalculatorController:41 - Launching CalculatorController
-2024-05-20 00:27:22 DEBUG CalculatorController:53 - Choose operation
-2024-05-20 00:27:22 DEBUG Operation:15 - DEFINE a as -1
-2024-05-20 00:27:22 DEBUG CalculatorController:53 - Choose operation
-2024-05-20 00:27:22 DEBUG Operation:18 - Push value in stack
-2024-05-20 00:27:22 DEBUG CalculatorController:53 - Choose operation
-2024-05-20 00:27:22 DEBUG Operation:14 - Try to print value
-2024-05-20 00:27:22 DEBUG CalculatorController:53 - Choose operation
-2024-05-20 00:27:22 DEBUG Operation:16 - SQRT start
-2024-05-20 00:27:22 WARN  Operation:25 - Value is negative
-2024-05-20 00:29:01 INFO  Main:21 - Parse args
-2024-05-20 00:29:01 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 00:29:01 INFO  CommandLineParser:38 - Set file input stream
-2024-05-20 00:29:01 DEBUG CalculatorController:30 - Set reader input stream
-2024-05-20 00:29:01 DEBUG CalculatorController:42 - Launching CalculatorController
-2024-05-20 00:29:01 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 00:29:01 DEBUG Operation:15 - DEFINE a as -1
-2024-05-20 00:29:01 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 00:29:01 DEBUG Operation:18 - Push value in stack
-2024-05-20 00:29:01 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 00:29:01 DEBUG Operation:14 - Try to print value
-2024-05-20 00:29:01 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 00:29:01 DEBUG Operation:16 - SQRT start
-2024-05-20 00:29:01 WARN  Operation:25 - Value is negative
-2024-05-20 00:29:01 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 00:29:01 DEBUG Operation:14 - Try to print value
-2024-05-20 00:29:35 INFO  Main:21 - Parse args
-2024-05-20 00:29:35 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 00:29:35 INFO  CommandLineParser:38 - Set file input stream
-2024-05-20 00:29:35 DEBUG CalculatorController:30 - Set reader input stream
-2024-05-20 00:29:35 DEBUG CalculatorController:42 - Launching CalculatorController
-2024-05-20 00:29:35 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 00:29:35 DEBUG Operation:15 - DEFINE a as 100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000
-2024-05-20 00:29:35 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 00:29:35 DEBUG Operation:18 - Push value in stack
-2024-05-20 00:29:35 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 00:29:35 DEBUG Operation:16 - SQRT start
-2024-05-20 00:29:35 DEBUG Operation:29 - Push SQRT result value Infinity
-2024-05-20 00:29:35 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 00:29:35 DEBUG Operation:14 - Try to print value
-2024-05-20 14:17:00 DEBUG Operation:20 - PLUS values 20.0 and 10.0
-2024-05-20 14:17:16 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:17:32 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:17:55 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:20:11 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:21:44 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:22:00 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:22:25 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:22:53 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:23:22 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:25:30 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:25:44 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:26:31 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:26:57 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:36:50 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:38:04 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:38:04 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 14:39:34 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:39:34 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 14:40:06 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:40:06 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 14:40:06 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 14:40:53 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:40:53 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 14:40:53 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 14:42:35 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:42:35 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 14:42:35 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 14:42:35 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 14:42:56 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:42:56 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 14:42:56 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 14:42:56 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 14:51:58 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:51:58 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 14:51:58 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 14:51:58 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 14:51:58 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 14:53:37 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:53:37 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 14:53:37 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 14:53:37 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 14:53:37 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 14:53:37 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 14:54:21 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:54:21 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 14:54:21 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 14:54:21 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 14:54:21 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 14:54:21 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 14:55:40 DEBUG Operation:17 - MINUS values 40.0 and 10.0
-2024-05-20 14:55:40 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:55:40 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 14:55:40 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 14:55:40 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 14:55:40 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 14:55:40 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 14:55:53 DEBUG Operation:17 - MINUS values 10.0 and 40.0
-2024-05-20 14:55:53 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:55:53 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 14:55:53 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 14:55:53 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 14:55:53 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 14:55:53 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 14:57:34 DEBUG Operation:17 - MINUS values 10.0 and 40.0
-2024-05-20 14:57:34 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:57:34 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 14:57:34 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 14:57:34 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 14:57:34 DEBUG Operation:17 - MULTIPLICATION values 40.0 and 10.0
-2024-05-20 14:57:34 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 14:57:34 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 14:58:47 DEBUG Operation:17 - MINUS values 10.0 and 40.0
-2024-05-20 14:58:47 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:58:47 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 14:58:47 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 14:58:47 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 14:58:47 DEBUG Operation:17 - MULTIPLICATION values 40.0 and 10.0
-2024-05-20 14:58:47 DEBUG Operation:17 - MULTIPLICATION values Infinity and 10.0
-2024-05-20 14:58:47 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 14:58:47 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 14:59:13 DEBUG Operation:17 - MINUS values 10.0 and 40.0
-2024-05-20 14:59:13 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 14:59:13 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 14:59:13 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 14:59:13 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 14:59:13 DEBUG Operation:17 - MULTIPLICATION values 40.0 and 10.0
-2024-05-20 14:59:13 DEBUG Operation:17 - MULTIPLICATION values Infinity and 10.0
-2024-05-20 14:59:13 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 14:59:13 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 15:00:16 DEBUG Operation:17 - MINUS values 10.0 and 40.0
-2024-05-20 15:00:16 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 15:00:16 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 15:00:16 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 15:00:16 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 15:00:16 DEBUG Operation:17 - MULTIPLICATION values 40.0 and 10.0
-2024-05-20 15:00:16 DEBUG Operation:17 - MULTIPLICATION values Infinity and 10.0
-2024-05-20 15:00:16 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 15:00:16 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 15:03:29 DEBUG Operation:17 - MINUS values 10.0 and 40.0
-2024-05-20 15:03:29 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 15:03:29 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 15:03:29 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 15:03:29 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 15:03:29 DEBUG Operation:17 - MULTIPLICATION values 40.0 and 10.0
-2024-05-20 15:03:29 DEBUG Operation:17 - MULTIPLICATION values Infinity and 10.0
-2024-05-20 15:03:29 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 15:03:29 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 15:03:29 DEBUG Operation:16 - SQRT start
-2024-05-20 15:03:29 DEBUG Operation:29 - Push SQRT result value 10.0
-2024-05-20 15:03:29 DEBUG Operation:16 - SQRT start
-2024-05-20 15:03:29 WARN  Operation:25 - Value is negative
-2024-05-20 15:03:29 DEBUG Operation:16 - SQRT start
-2024-05-20 15:03:29 DEBUG Operation:16 - SQRT start
-2024-05-20 15:03:29 DEBUG Operation:29 - Push SQRT result value Infinity
-2024-05-20 15:17:47 DEBUG Operation:17 - MINUS values 10.0 and 40.0
-2024-05-20 15:17:47 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 15:17:47 DEBUG Operation:18 - Push value in stack
-2024-05-20 15:17:47 DEBUG Operation:18 - Push value in stack
-2024-05-20 15:17:47 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 15:17:47 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 15:17:47 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 15:17:47 DEBUG Operation:17 - MULTIPLICATION values 40.0 and 10.0
-2024-05-20 15:17:47 DEBUG Operation:17 - MULTIPLICATION values Infinity and 10.0
-2024-05-20 15:17:47 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 15:17:47 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 15:17:47 DEBUG Operation:16 - SQRT start
-2024-05-20 15:17:47 DEBUG Operation:29 - Push SQRT result value 10.0
-2024-05-20 15:17:47 DEBUG Operation:16 - SQRT start
-2024-05-20 15:17:47 WARN  Operation:25 - Value is negative
-2024-05-20 15:17:47 DEBUG Operation:16 - SQRT start
-2024-05-20 15:17:47 DEBUG Operation:16 - SQRT start
-2024-05-20 15:17:47 DEBUG Operation:29 - Push SQRT result value Infinity
-2024-05-20 15:18:00 DEBUG Operation:17 - MINUS values 10.0 and 40.0
-2024-05-20 15:18:00 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 15:18:00 DEBUG Operation:18 - Push value in stack
-2024-05-20 15:18:00 DEBUG Operation:18 - Push value in stack
-2024-05-20 15:18:00 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 15:18:00 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 15:18:00 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 15:18:00 DEBUG Operation:17 - MULTIPLICATION values 40.0 and 10.0
-2024-05-20 15:18:00 DEBUG Operation:17 - MULTIPLICATION values Infinity and 10.0
-2024-05-20 15:18:00 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 15:18:00 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 15:18:00 DEBUG Operation:16 - SQRT start
-2024-05-20 15:18:00 DEBUG Operation:29 - Push SQRT result value 10.0
-2024-05-20 15:18:00 DEBUG Operation:16 - SQRT start
-2024-05-20 15:18:00 WARN  Operation:25 - Value is negative
-2024-05-20 15:18:00 DEBUG Operation:16 - SQRT start
-2024-05-20 15:18:00 DEBUG Operation:16 - SQRT start
-2024-05-20 15:18:00 DEBUG Operation:29 - Push SQRT result value Infinity
-2024-05-20 15:19:13 DEBUG Operation:17 - MINUS values 10.0 and 40.0
-2024-05-20 15:19:13 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 15:19:13 DEBUG Operation:18 - Push value in stack
-2024-05-20 15:19:13 DEBUG Operation:18 - Push value in stack
-2024-05-20 15:19:13 ERROR Operation:27 - Wrong number of PUSH arguments
-2024-05-20 15:19:13 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 15:19:13 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 15:19:13 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 15:19:13 DEBUG Operation:17 - MULTIPLICATION values 40.0 and 10.0
-2024-05-20 15:19:13 DEBUG Operation:17 - MULTIPLICATION values Infinity and 10.0
-2024-05-20 15:19:13 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 15:19:13 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 15:19:13 DEBUG Operation:16 - SQRT start
-2024-05-20 15:19:13 DEBUG Operation:29 - Push SQRT result value 10.0
-2024-05-20 15:19:13 DEBUG Operation:16 - SQRT start
-2024-05-20 15:19:13 WARN  Operation:25 - Value is negative
-2024-05-20 15:19:13 DEBUG Operation:16 - SQRT start
-2024-05-20 15:19:13 DEBUG Operation:16 - SQRT start
-2024-05-20 15:19:13 DEBUG Operation:29 - Push SQRT result value Infinity
-2024-05-20 15:27:06 DEBUG Operation:17 - MINUS values 10.0 and 40.0
-2024-05-20 15:27:06 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 15:27:06 DEBUG Operation:18 - Push value in stack
-2024-05-20 15:27:06 DEBUG Operation:18 - Push value in stack
-2024-05-20 15:27:06 ERROR Operation:27 - Wrong number of PUSH arguments
-2024-05-20 15:27:06 INFO  Operation:13 - Pop value
-2024-05-20 15:27:06 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 15:27:06 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 15:27:06 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 15:27:06 DEBUG Operation:17 - MULTIPLICATION values 40.0 and 10.0
-2024-05-20 15:27:06 DEBUG Operation:17 - MULTIPLICATION values Infinity and 10.0
-2024-05-20 15:27:06 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 15:27:06 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 15:27:06 DEBUG Operation:16 - SQRT start
-2024-05-20 15:27:06 DEBUG Operation:29 - Push SQRT result value 10.0
-2024-05-20 15:27:06 DEBUG Operation:16 - SQRT start
-2024-05-20 15:27:06 WARN  Operation:25 - Value is negative
-2024-05-20 15:27:06 DEBUG Operation:16 - SQRT start
-2024-05-20 15:27:06 DEBUG Operation:16 - SQRT start
-2024-05-20 15:27:06 DEBUG Operation:29 - Push SQRT result value Infinity
-2024-05-20 15:29:30 DEBUG Operation:17 - MINUS values 10.0 and 40.0
-2024-05-20 15:29:30 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 15:29:30 DEBUG Operation:18 - Push value in stack
-2024-05-20 15:29:30 DEBUG Operation:18 - Push value in stack
-2024-05-20 15:29:30 ERROR Operation:27 - Wrong number of PUSH arguments
-2024-05-20 15:29:30 INFO  Operation:13 - Pop value
-2024-05-20 15:29:30 INFO  Operation:13 - Pop value
-2024-05-20 15:29:30 INFO  Operation:13 - Pop value
-2024-05-20 15:29:30 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 15:29:30 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 15:29:30 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 15:29:30 DEBUG Operation:17 - MULTIPLICATION values 40.0 and 10.0
-2024-05-20 15:29:30 DEBUG Operation:17 - MULTIPLICATION values Infinity and 10.0
-2024-05-20 15:29:30 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 15:29:30 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 15:29:30 DEBUG Operation:16 - SQRT start
-2024-05-20 15:29:30 DEBUG Operation:29 - Push SQRT result value 10.0
-2024-05-20 15:29:30 DEBUG Operation:16 - SQRT start
-2024-05-20 15:29:30 WARN  Operation:25 - Value is negative
-2024-05-20 15:29:30 DEBUG Operation:16 - SQRT start
-2024-05-20 15:29:30 DEBUG Operation:16 - SQRT start
-2024-05-20 15:29:30 DEBUG Operation:29 - Push SQRT result value Infinity
-2024-05-20 15:29:51 DEBUG Operation:17 - MINUS values 10.0 and 40.0
-2024-05-20 15:29:51 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 15:29:51 DEBUG Operation:18 - Push value in stack
-2024-05-20 15:29:51 DEBUG Operation:18 - Push value in stack
-2024-05-20 15:29:51 ERROR Operation:27 - Wrong number of PUSH arguments
-2024-05-20 15:29:51 INFO  Operation:13 - Pop value
-2024-05-20 15:29:51 INFO  Operation:13 - Pop value
-2024-05-20 15:29:51 INFO  Operation:13 - Pop value
-2024-05-20 15:29:51 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 15:29:51 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 15:29:51 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 15:29:51 DEBUG Operation:17 - MULTIPLICATION values 40.0 and 10.0
-2024-05-20 15:29:51 DEBUG Operation:17 - MULTIPLICATION values Infinity and 10.0
-2024-05-20 15:29:51 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 15:29:51 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 15:29:51 DEBUG Operation:16 - SQRT start
-2024-05-20 15:29:51 DEBUG Operation:29 - Push SQRT result value 10.0
-2024-05-20 15:29:51 DEBUG Operation:16 - SQRT start
-2024-05-20 15:29:51 WARN  Operation:25 - Value is negative
-2024-05-20 15:29:51 DEBUG Operation:16 - SQRT start
-2024-05-20 15:29:51 DEBUG Operation:16 - SQRT start
-2024-05-20 15:29:51 DEBUG Operation:29 - Push SQRT result value Infinity
-2024-05-20 15:30:45 DEBUG Operation:17 - MINUS values 10.0 and 40.0
-2024-05-20 15:30:45 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 15:30:45 DEBUG Operation:18 - Push value in stack
-2024-05-20 15:30:45 DEBUG Operation:18 - Push value in stack
-2024-05-20 15:30:45 ERROR Operation:27 - Wrong number of PUSH arguments
-2024-05-20 15:30:45 INFO  Operation:15 - Pop value
-2024-05-20 15:30:45 INFO  Operation:15 - Pop value
-2024-05-20 15:30:45 INFO  Operation:15 - Pop value
-2024-05-20 15:30:45 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 15:30:45 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 15:30:45 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 15:30:45 DEBUG Operation:17 - MULTIPLICATION values 40.0 and 10.0
-2024-05-20 15:30:45 DEBUG Operation:17 - MULTIPLICATION values Infinity and 10.0
-2024-05-20 15:30:45 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 15:30:45 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 15:30:45 DEBUG Operation:16 - SQRT start
-2024-05-20 15:30:45 DEBUG Operation:29 - Push SQRT result value 10.0
-2024-05-20 15:30:45 DEBUG Operation:16 - SQRT start
-2024-05-20 15:30:45 WARN  Operation:25 - Value is negative
-2024-05-20 15:30:45 DEBUG Operation:16 - SQRT start
-2024-05-20 15:30:45 DEBUG Operation:16 - SQRT start
-2024-05-20 15:30:45 DEBUG Operation:29 - Push SQRT result value Infinity
-2024-05-20 16:00:33 DEBUG Operation:17 - MINUS values 10.0 and 40.0
-2024-05-20 16:00:33 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 16:00:33 DEBUG Operation:18 - Push value in stack
-2024-05-20 16:00:33 DEBUG Operation:18 - Push value in stack
-2024-05-20 16:00:33 ERROR Operation:27 - Wrong number of PUSH arguments
-2024-05-20 16:00:33 INFO  Operation:15 - Pop value
-2024-05-20 16:00:33 INFO  Operation:15 - Pop value
-2024-05-20 16:00:33 INFO  Operation:15 - Pop value
-2024-05-20 16:00:33 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 16:00:33 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 16:00:33 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 16:00:33 DEBUG Operation:17 - MULTIPLICATION values 40.0 and 10.0
-2024-05-20 16:00:33 DEBUG Operation:17 - MULTIPLICATION values Infinity and 10.0
-2024-05-20 16:00:33 DEBUG Operation:15 - Print value
-2024-05-20 16:00:33 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 16:00:33 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 16:00:33 DEBUG Operation:16 - SQRT start
-2024-05-20 16:00:33 DEBUG Operation:29 - Push SQRT result value 10.0
-2024-05-20 16:00:33 DEBUG Operation:16 - SQRT start
-2024-05-20 16:00:33 WARN  Operation:25 - Value is negative
-2024-05-20 16:00:33 DEBUG Operation:16 - SQRT start
-2024-05-20 16:00:33 DEBUG Operation:16 - SQRT start
-2024-05-20 16:00:33 DEBUG Operation:29 - Push SQRT result value Infinity
-2024-05-20 16:00:53 DEBUG Operation:17 - MINUS values 10.0 and 40.0
-2024-05-20 16:00:53 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 16:00:53 DEBUG Operation:18 - Push value in stack
-2024-05-20 16:00:53 DEBUG Operation:18 - Push value in stack
-2024-05-20 16:00:53 ERROR Operation:27 - Wrong number of PUSH arguments
-2024-05-20 16:00:53 INFO  Operation:15 - Pop value
-2024-05-20 16:00:53 INFO  Operation:15 - Pop value
-2024-05-20 16:00:53 INFO  Operation:15 - Pop value
-2024-05-20 16:00:53 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 16:00:53 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 16:00:53 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 16:00:53 DEBUG Operation:17 - MULTIPLICATION values 40.0 and 10.0
-2024-05-20 16:00:53 DEBUG Operation:17 - MULTIPLICATION values Infinity and 10.0
-2024-05-20 16:00:53 DEBUG Operation:15 - Print value
-2024-05-20 16:00:53 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 16:00:53 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 16:00:53 DEBUG Operation:16 - SQRT start
-2024-05-20 16:00:53 DEBUG Operation:29 - Push SQRT result value 10.0
-2024-05-20 16:00:53 DEBUG Operation:16 - SQRT start
-2024-05-20 16:00:53 WARN  Operation:25 - Value is negative
-2024-05-20 16:00:53 DEBUG Operation:16 - SQRT start
-2024-05-20 16:00:53 DEBUG Operation:16 - SQRT start
-2024-05-20 16:00:53 DEBUG Operation:29 - Push SQRT result value Infinity
-2024-05-20 16:01:43 DEBUG Operation:17 - MINUS values 10.0 and 40.0
-2024-05-20 16:01:43 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 16:01:43 DEBUG Operation:18 - Push value in stack
-2024-05-20 16:01:43 DEBUG Operation:18 - Push value in stack
-2024-05-20 16:01:43 ERROR Operation:27 - Wrong number of PUSH arguments
-2024-05-20 16:01:43 INFO  Operation:15 - Pop value
-2024-05-20 16:01:43 INFO  Operation:15 - Pop value
-2024-05-20 16:01:43 INFO  Operation:15 - Pop value
-2024-05-20 16:01:43 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 16:01:43 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 16:01:43 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 16:01:43 DEBUG Operation:17 - MULTIPLICATION values 40.0 and 10.0
-2024-05-20 16:01:43 DEBUG Operation:17 - MULTIPLICATION values Infinity and 10.0
-2024-05-20 16:01:43 DEBUG Operation:15 - Print value
-2024-05-20 16:01:43 DEBUG Operation:15 - Print value
-2024-05-20 16:01:43 ERROR Operation:18 - Failed pop element class ru.nsu.fit.tropin.Operations.Print
-2024-05-20 16:01:43 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 16:01:43 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 16:01:43 DEBUG Operation:16 - SQRT start
-2024-05-20 16:01:43 DEBUG Operation:29 - Push SQRT result value 10.0
-2024-05-20 16:01:43 DEBUG Operation:16 - SQRT start
-2024-05-20 16:01:43 WARN  Operation:25 - Value is negative
-2024-05-20 16:01:43 DEBUG Operation:16 - SQRT start
-2024-05-20 16:01:43 DEBUG Operation:16 - SQRT start
-2024-05-20 16:01:43 DEBUG Operation:29 - Push SQRT result value Infinity
-2024-05-20 16:02:35 DEBUG Operation:17 - MINUS values 10.0 and 40.0
-2024-05-20 16:02:35 DEBUG Operation:20 - PLUS values 40.0 and 10.0
-2024-05-20 16:02:35 DEBUG Operation:18 - Push value in stack
-2024-05-20 16:02:35 DEBUG Operation:18 - Push value in stack
-2024-05-20 16:02:35 ERROR Operation:27 - Wrong number of PUSH arguments
-2024-05-20 16:02:35 INFO  Operation:15 - Pop value
-2024-05-20 16:02:35 INFO  Operation:15 - Pop value
-2024-05-20 16:02:35 INFO  Operation:15 - Pop value
-2024-05-20 16:02:35 DEBUG Operation:15 - DEFINE a as 10
-2024-05-20 16:02:35 DEBUG Operation:15 - DEFINE a1 as 10
-2024-05-20 16:02:35 DEBUG Operation:18 - Invalid number of DEFINE arguments 
-2024-05-20 16:02:35 DEBUG Operation:17 - MULTIPLICATION values 40.0 and 10.0
-2024-05-20 16:02:35 DEBUG Operation:17 - MULTIPLICATION values Infinity and 10.0
-2024-05-20 16:02:35 DEBUG Operation:15 - Print value
-2024-05-20 16:02:35 DEBUG Operation:15 - Print value
-2024-05-20 16:02:35 ERROR Operation:18 - Failed pop element class ru.nsu.fit.tropin.Operations.Print
-2024-05-20 16:02:35 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
-2024-05-20 16:02:35 ERROR Operation:24 - Stack is empty for DIVISION
-2024-05-20 16:02:35 DEBUG Operation:16 - SQRT start
-2024-05-20 16:02:35 DEBUG Operation:29 - Push SQRT result value 10.0
-2024-05-20 16:02:35 DEBUG Operation:16 - SQRT start
-2024-05-20 16:02:35 WARN  Operation:25 - Value is negative
-2024-05-20 16:02:35 DEBUG Operation:16 - SQRT start
-2024-05-20 16:02:35 DEBUG Operation:16 - SQRT start
-2024-05-20 16:02:35 DEBUG Operation:29 - Push SQRT result value Infinity
-2024-05-20 16:02:48 INFO  Main:21 - Parse args
-2024-05-20 16:02:48 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 16:02:49 INFO  CommandLineParser:38 - Set file input stream
-2024-05-20 16:02:49 DEBUG CalculatorController:30 - Set reader input stream
-2024-05-20 16:02:49 DEBUG CalculatorController:42 - Launching CalculatorController
-2024-05-20 16:02:49 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:02:49 DEBUG Operation:15 - DEFINE a as 4
-2024-05-20 16:02:49 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:02:49 DEBUG Operation:18 - Push value in stack
-2024-05-20 16:02:49 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:02:49 DEBUG Operation:16 - SQRT start
-2024-05-20 16:02:49 DEBUG Operation:29 - Push SQRT result value 2.0
-2024-05-20 16:02:49 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:02:49 DEBUG Operation:15 - Print value
-2024-05-20 16:04:46 INFO  Main:21 - Parse args
-2024-05-20 16:04:46 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 16:04:46 INFO  CommandLineParser:38 - Set file input stream
-2024-05-20 16:04:46 DEBUG CalculatorController:30 - Set reader input stream
-2024-05-20 16:04:46 DEBUG CalculatorController:42 - Launching CalculatorController
-2024-05-20 16:04:46 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:04:46 DEBUG Operation:15 - DEFINE a as 4
-2024-05-20 16:04:46 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:04:46 DEBUG Operation:18 - Push value in stack
-2024-05-20 16:04:46 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:04:46 DEBUG Operation:16 - SQRT start
-2024-05-20 16:04:46 DEBUG Operation:29 - Push SQRT result value 2.0
-2024-05-20 16:04:46 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:04:46 DEBUG Operation:15 - Print value
-2024-05-20 16:06:42 INFO  Main:21 - Parse args
-2024-05-20 16:06:42 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 16:06:42 INFO  CommandLineParser:38 - Set file input stream
-2024-05-20 16:06:42 DEBUG CalculatorController:30 - Set reader input stream
-2024-05-20 16:06:42 DEBUG CalculatorController:42 - Launching CalculatorController
-2024-05-20 16:06:42 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:06:42 DEBUG Operation:15 - DEFINE a as 4
-2024-05-20 16:06:42 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:06:42 DEBUG Operation:18 - Push value in stack
-2024-05-20 16:06:42 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:06:42 DEBUG Operation:16 - SQRT start
-2024-05-20 16:06:42 DEBUG Operation:29 - Push SQRT result value 2.0
-2024-05-20 16:06:42 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:06:42 DEBUG Operation:15 - Print value
-2024-05-20 16:08:11 INFO  Main:21 - Parse args
-2024-05-20 16:08:11 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 16:08:11 INFO  CommandLineParser:38 - Set file input stream
-2024-05-20 16:08:11 DEBUG CalculatorController:30 - Set reader input stream
-2024-05-20 16:08:11 DEBUG CalculatorController:42 - Launching CalculatorController
-2024-05-20 16:08:11 DEBUG CalculatorController:57 - Choose operation
-2024-05-20 16:08:11 DEBUG Operation:15 - DEFINE a as 4
-2024-05-20 16:08:11 DEBUG CalculatorController:57 - Choose operation
-2024-05-20 16:08:11 DEBUG Operation:18 - Push value in stack
-2024-05-20 16:08:11 DEBUG CalculatorController:57 - Choose operation
-2024-05-20 16:08:11 DEBUG Operation:16 - SQRT start
-2024-05-20 16:08:11 DEBUG Operation:29 - Push SQRT result value 2.0
-2024-05-20 16:08:11 DEBUG CalculatorController:57 - Choose operation
-2024-05-20 16:08:11 DEBUG Operation:15 - Print value
-2024-05-20 16:08:56 INFO  Main:21 - Parse args
-2024-05-20 16:08:56 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 16:08:56 INFO  CommandLineParser:38 - Set file input stream
-2024-05-20 16:08:56 DEBUG CalculatorController:30 - Set reader input stream
-2024-05-20 16:08:56 DEBUG CalculatorController:42 - Launching CalculatorController
-2024-05-20 16:08:56 DEBUG CalculatorController:57 - Choose operation
-2024-05-20 16:08:56 DEBUG Operation:15 - DEFINE a as 4
-2024-05-20 16:08:56 DEBUG CalculatorController:57 - Choose operation
-2024-05-20 16:08:56 DEBUG Operation:18 - Push value in stack
-2024-05-20 16:08:56 DEBUG CalculatorController:57 - Choose operation
-2024-05-20 16:08:56 DEBUG Operation:16 - SQRT start
-2024-05-20 16:08:56 DEBUG Operation:29 - Push SQRT result value 2.0
-2024-05-20 16:08:56 DEBUG CalculatorController:57 - Choose operation
-2024-05-20 16:08:56 DEBUG Operation:12 - Commenting
-2024-05-20 16:08:56 DEBUG CalculatorController:57 - Choose operation
-2024-05-20 16:08:56 DEBUG Operation:15 - Print value
-2024-05-20 16:09:04 INFO  Main:21 - Parse args
-2024-05-20 16:09:04 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 16:09:04 INFO  CommandLineParser:38 - Set file input stream
-2024-05-20 16:09:04 DEBUG CalculatorController:30 - Set reader input stream
-2024-05-20 16:09:04 DEBUG CalculatorController:42 - Launching CalculatorController
-2024-05-20 16:09:04 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:09:04 DEBUG Operation:15 - DEFINE a as 4
-2024-05-20 16:09:04 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:09:04 DEBUG Operation:18 - Push value in stack
-2024-05-20 16:09:04 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:09:04 DEBUG Operation:16 - SQRT start
-2024-05-20 16:09:04 DEBUG Operation:29 - Push SQRT result value 2.0
-2024-05-20 16:09:04 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:09:04 DEBUG Operation:12 - Commenting
-2024-05-20 16:09:04 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:09:04 DEBUG Operation:15 - Print value
-2024-05-20 16:09:29 INFO  Main:21 - Parse args
-2024-05-20 16:09:29 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 16:09:29 INFO  CommandLineParser:38 - Set file input stream
-2024-05-20 16:09:29 DEBUG CalculatorController:30 - Set reader input stream
-2024-05-20 16:09:29 DEBUG CalculatorController:42 - Launching CalculatorController
-2024-05-20 16:09:29 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:09:29 DEBUG Operation:15 - DEFINE a as 4
-2024-05-20 16:09:29 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:09:29 DEBUG Operation:18 - Push value in stack
-2024-05-20 16:09:29 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:09:29 DEBUG Operation:16 - SQRT start
-2024-05-20 16:09:29 DEBUG Operation:29 - Push SQRT result value 2.0
-2024-05-20 16:09:29 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:09:29 DEBUG Operation:12 - Commenting
-2024-05-20 16:09:29 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:09:29 DEBUG Operation:15 - Print value
-2024-05-20 16:09:38 INFO  Main:21 - Parse args
-2024-05-20 16:09:38 INFO  CommandLineParser:22 - Starting command line parser
-2024-05-20 16:09:38 INFO  CommandLineParser:38 - Set file input stream
-2024-05-20 16:09:38 DEBUG CalculatorController:30 - Set reader input stream
-2024-05-20 16:09:38 DEBUG CalculatorController:42 - Launching CalculatorController
-2024-05-20 16:09:38 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:09:38 DEBUG Operation:15 - DEFINE a as 4
-2024-05-20 16:09:38 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:09:38 DEBUG Operation:18 - Push value in stack
-2024-05-20 16:09:38 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:09:38 DEBUG Operation:16 - SQRT start
-2024-05-20 16:09:38 DEBUG Operation:29 - Push SQRT result value 2.0
-2024-05-20 16:09:38 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:09:38 DEBUG Operation:12 - Commenting
-2024-05-20 16:09:38 DEBUG CalculatorController:56 - Choose operation
-2024-05-20 16:09:38 DEBUG Operation:15 - Print value
+2024-05-25 11:26:18 INFO  Main:21 - Parse args
+2024-05-25 11:26:18 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 11:26:18 INFO  CommandLineParser:38 - Set file input stream
+2024-05-25 11:26:18 DEBUG CalculatorController:30 - Set reader input stream
+2024-05-25 11:26:18 DEBUG CalculatorController:42 - Launching CalculatorController
+2024-05-25 11:26:18 DEBUG CalculatorController:56 - Choose operation
+2024-05-25 11:26:18 DEBUG Operation:15 - DEFINE a as 4
+2024-05-25 11:26:18 DEBUG CalculatorController:56 - Choose operation
+2024-05-25 11:26:18 DEBUG Operation:18 - Push value in stack
+2024-05-25 11:26:18 DEBUG CalculatorController:56 - Choose operation
+2024-05-25 11:26:18 DEBUG Operation:16 - SQRT start
+2024-05-25 11:26:18 DEBUG Operation:29 - Push SQRT result value 2.0
+2024-05-25 11:26:18 DEBUG CalculatorController:56 - Choose operation
+2024-05-25 11:26:18 DEBUG Operation:12 - Commenting
+2024-05-25 11:26:18 DEBUG CalculatorController:56 - Choose operation
+2024-05-25 11:26:18 DEBUG Operation:15 - Print value
+2024-05-25 11:27:04 INFO  Main:21 - Parse args
+2024-05-25 11:27:04 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 11:33:29 DEBUG Operation:17 - MINUS values 10.0 and 40.0
+2024-05-25 11:33:29 DEBUG Operation:20 - PLUS values 40.0 and 10.0
+2024-05-25 11:33:29 DEBUG Operation:18 - Push value in stack
+2024-05-25 11:33:29 DEBUG Operation:18 - Push value in stack
+2024-05-25 11:33:29 ERROR Operation:27 - Wrong number of PUSH arguments
+2024-05-25 11:33:29 INFO  Operation:15 - Pop value
+2024-05-25 11:33:29 INFO  Operation:15 - Pop value
+2024-05-25 11:33:29 INFO  Operation:15 - Pop value
+2024-05-25 11:33:29 DEBUG Operation:15 - DEFINE a as 10
+2024-05-25 11:33:29 DEBUG Operation:15 - DEFINE a1 as 10
+2024-05-25 11:33:29 DEBUG Operation:18 - Invalid number of DEFINE arguments 
+2024-05-25 11:33:29 DEBUG Operation:17 - MULTIPLICATION values 40.0 and 10.0
+2024-05-25 11:33:29 DEBUG Operation:17 - MULTIPLICATION values Infinity and 10.0
+2024-05-25 11:33:29 DEBUG Operation:15 - Print value
+2024-05-25 11:33:29 ERROR Operation:18 - Failed pop element class ru.nsu.fit.tropin.Operations.Print
+2024-05-25 11:33:29 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
+2024-05-25 11:33:29 ERROR Operation:24 - Stack is empty for DIVISION
+2024-05-25 11:33:29 DEBUG Operation:16 - SQRT start
+2024-05-25 11:33:29 DEBUG Operation:29 - Push SQRT result value 10.0
+2024-05-25 11:33:29 DEBUG Operation:16 - SQRT start
+2024-05-25 11:33:29 WARN  Operation:25 - Value is negative
+2024-05-25 11:33:29 DEBUG Operation:16 - SQRT start
+2024-05-25 11:33:29 DEBUG Operation:16 - SQRT start
+2024-05-25 11:33:29 DEBUG Operation:29 - Push SQRT result value Infinity
+2024-05-25 11:56:12 INFO  Main:21 - Parse args
+2024-05-25 11:56:12 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 11:56:25 INFO  Main:21 - Parse args
+2024-05-25 11:56:25 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 11:56:25 INFO  CommandLineParser:38 - Set file input stream
+2024-05-25 11:56:25 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-25 11:56:25 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-25 11:56:25 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 11:56:25 DEBUG Operation:15 - DEFINE a as 4
+2024-05-25 11:56:25 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 11:56:25 DEBUG Operation:18 - Push value in stack
+2024-05-25 11:56:25 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 11:56:25 DEBUG Operation:16 - SQRT start
+2024-05-25 11:56:25 DEBUG Operation:29 - Push SQRT result value 2.0
+2024-05-25 11:56:25 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 11:56:25 DEBUG Operation:12 - Commenting
+2024-05-25 11:56:25 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 11:56:25 DEBUG Operation:15 - Print value
+2024-05-25 11:56:50 INFO  Main:21 - Parse args
+2024-05-25 11:56:50 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 11:56:50 INFO  CommandLineParser:38 - Set file input stream
+2024-05-25 11:56:50 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-25 11:56:50 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-25 11:56:50 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 11:56:50 DEBUG Operation:15 - DEFINE a as -1
+2024-05-25 11:56:50 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 11:56:50 DEBUG Operation:18 - Push value in stack
+2024-05-25 11:56:50 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 11:56:50 DEBUG Operation:16 - SQRT start
+2024-05-25 11:56:50 WARN  Operation:25 - Value is negative
+2024-05-25 11:56:50 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 11:56:50 DEBUG Operation:12 - Commenting
+2024-05-25 11:56:50 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 11:56:50 DEBUG Operation:15 - Print value
+2024-05-25 11:57:04 DEBUG Operation:17 - MINUS values 10.0 and 40.0
+2024-05-25 11:57:04 DEBUG Operation:20 - PLUS values 40.0 and 10.0
+2024-05-25 11:57:04 DEBUG Operation:18 - Push value in stack
+2024-05-25 11:57:04 DEBUG Operation:18 - Push value in stack
+2024-05-25 11:57:04 ERROR Operation:27 - Wrong number of PUSH arguments
+2024-05-25 11:57:04 INFO  Operation:15 - Pop value
+2024-05-25 11:57:04 INFO  Operation:15 - Pop value
+2024-05-25 11:57:04 INFO  Operation:15 - Pop value
+2024-05-25 11:57:04 DEBUG Operation:15 - DEFINE a as 10
+2024-05-25 11:57:04 DEBUG Operation:15 - DEFINE a1 as 10
+2024-05-25 11:57:04 DEBUG Operation:18 - Invalid number of DEFINE arguments 
+2024-05-25 11:57:04 DEBUG Operation:17 - MULTIPLICATION values 40.0 and 10.0
+2024-05-25 11:57:04 DEBUG Operation:17 - MULTIPLICATION values Infinity and 10.0
+2024-05-25 11:57:04 DEBUG Operation:15 - Print value
+2024-05-25 11:57:04 ERROR Operation:18 - Failed pop element class ru.nsu.fit.tropin.Operations.Print
+2024-05-25 11:57:04 DEBUG Operation:20 - DIVISION values 20.0 and 10.0
+2024-05-25 11:57:04 ERROR Operation:24 - Stack is empty for DIVISION
+2024-05-25 11:57:04 DEBUG Operation:16 - SQRT start
+2024-05-25 11:57:04 DEBUG Operation:29 - Push SQRT result value 10.0
+2024-05-25 11:57:04 DEBUG Operation:16 - SQRT start
+2024-05-25 11:57:04 WARN  Operation:25 - Value is negative
+2024-05-25 11:57:04 DEBUG Operation:16 - SQRT start
+2024-05-25 11:57:04 DEBUG Operation:16 - SQRT start
+2024-05-25 11:57:04 DEBUG Operation:29 - Push SQRT result value Infinity
+2024-05-25 12:03:17 INFO  Main:21 - Parse args
+2024-05-25 12:03:17 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 12:03:17 INFO  CommandLineParser:38 - Set file input stream
+2024-05-25 12:03:17 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-25 12:03:17 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-25 12:03:17 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:03:17 DEBUG Operation:15 - DEFINE a as -1
+2024-05-25 12:03:17 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:03:17 DEBUG Operation:18 - Push value in stack
+2024-05-25 12:03:17 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:03:17 DEBUG Operation:16 - SQRT start
+2024-05-25 12:03:17 WARN  Operation:25 - Value is negative
+2024-05-25 12:03:17 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:03:17 DEBUG Operation:12 - Commenting
+2024-05-25 12:03:17 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:03:17 DEBUG Operation:15 - Print value
+2024-05-25 12:03:40 INFO  Main:21 - Parse args
+2024-05-25 12:03:40 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 12:03:40 INFO  CommandLineParser:38 - Set file input stream
+2024-05-25 12:03:40 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-25 12:03:40 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-25 12:03:40 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:03:40 DEBUG Operation:15 - DEFINE a as -1
+2024-05-25 12:03:40 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:03:40 DEBUG Operation:18 - Push value in stack
+2024-05-25 12:03:40 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:03:40 DEBUG Operation:16 - SQRT start
+2024-05-25 12:03:40 WARN  Operation:25 - Value is negative
+2024-05-25 12:03:40 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:03:40 DEBUG Operation:12 - Commenting
+2024-05-25 12:03:40 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:03:40 DEBUG Operation:15 - Print value
+2024-05-25 12:03:57 INFO  Main:21 - Parse args
+2024-05-25 12:03:57 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 12:03:57 INFO  CommandLineParser:38 - Set file input stream
+2024-05-25 12:03:57 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-25 12:03:57 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-25 12:03:57 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:03:57 DEBUG Operation:15 - DEFINE a as 1
+2024-05-25 12:03:57 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:03:57 DEBUG Operation:18 - Push value in stack
+2024-05-25 12:03:57 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:03:57 DEBUG Operation:18 - Push value in stack
+2024-05-25 12:03:57 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:03:57 ERROR Operation:24 - Stack is empty for DIVISION
+2024-05-25 12:03:57 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:03:57 DEBUG Operation:12 - Commenting
+2024-05-25 12:03:57 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:03:57 DEBUG Operation:15 - Print value
+2024-05-25 12:03:57 ERROR Operation:18 - Failed pop element class ru.nsu.fit.tropin.Operations.Print
+2024-05-25 12:04:30 INFO  Main:21 - Parse args
+2024-05-25 12:04:30 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 12:04:30 INFO  CommandLineParser:38 - Set file input stream
+2024-05-25 12:04:30 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-25 12:04:30 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-25 12:04:30 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:04:30 DEBUG Operation:18 - Push value in stack
+2024-05-25 12:04:30 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:04:30 DEBUG Operation:18 - Push value in stack
+2024-05-25 12:04:30 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:04:30 ERROR Operation:24 - Stack is empty for DIVISION
+2024-05-25 12:04:30 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:04:30 DEBUG Operation:12 - Commenting
+2024-05-25 12:04:30 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:04:30 DEBUG Operation:15 - Print value
+2024-05-25 12:04:30 ERROR Operation:18 - Failed pop element class ru.nsu.fit.tropin.Operations.Print
+2024-05-25 12:04:41 INFO  Main:21 - Parse args
+2024-05-25 12:04:41 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 12:04:41 INFO  CommandLineParser:38 - Set file input stream
+2024-05-25 12:04:41 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-25 12:04:41 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-25 12:04:41 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:04:41 DEBUG Operation:18 - Push value in stack
+2024-05-25 12:04:41 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:04:41 DEBUG Operation:18 - Push value in stack
+2024-05-25 12:04:41 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:04:41 DEBUG Operation:20 - DIVISION values 0.0 and 1.0
+2024-05-25 12:04:41 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:04:41 DEBUG Operation:12 - Commenting
+2024-05-25 12:04:41 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:04:41 DEBUG Operation:15 - Print value
+2024-05-25 12:05:47 INFO  Main:21 - Parse args
+2024-05-25 12:05:47 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 12:05:47 INFO  CommandLineParser:38 - Set file input stream
+2024-05-25 12:05:47 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-25 12:05:47 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-25 12:05:47 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:05:47 DEBUG Operation:18 - Push value in stack
+2024-05-25 12:05:47 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:05:47 DEBUG Operation:18 - Push value in stack
+2024-05-25 12:05:47 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:05:47 DEBUG Operation:20 - DIVISION values 0.0 and 1.0
+2024-05-25 12:05:47 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:05:47 DEBUG Operation:12 - Commenting
+2024-05-25 12:05:47 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:05:47 DEBUG Operation:15 - Print value
+2024-05-25 12:05:55 INFO  Main:21 - Parse args
+2024-05-25 12:05:55 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 12:05:55 INFO  CommandLineParser:38 - Set file input stream
+2024-05-25 12:05:55 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-25 12:05:55 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-25 12:05:55 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:05:55 DEBUG Operation:18 - Push value in stack
+2024-05-25 12:05:55 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:05:55 DEBUG Operation:18 - Push value in stack
+2024-05-25 12:05:55 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:05:55 ERROR Operation:24 - Stack is empty for DIVISION
+2024-05-25 12:05:55 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:05:55 DEBUG Operation:12 - Commenting
+2024-05-25 12:05:55 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:05:55 DEBUG Operation:15 - Print value
+2024-05-25 12:05:55 ERROR Operation:18 - Failed pop element class ru.nsu.fit.tropin.Operations.Print
+2024-05-25 12:06:20 INFO  Main:21 - Parse args
+2024-05-25 12:06:20 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 12:06:20 INFO  CommandLineParser:38 - Set file input stream
+2024-05-25 12:06:20 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-25 12:06:20 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-25 12:06:20 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:06:20 DEBUG Operation:18 - Push value in stack
+2024-05-25 12:06:20 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:06:20 DEBUG Operation:18 - Push value in stack
+2024-05-25 12:06:20 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 12:06:20 DEBUG Operation:18 - Push value in stack
+2024-05-25 21:38:18 INFO  Main:21 - Parse args
+2024-05-25 21:38:18 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 21:38:18 INFO  CommandLineParser:38 - Set file input stream
+2024-05-25 21:38:18 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-25 21:38:18 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-25 21:38:18 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 21:38:18 DEBUG Operation:19 - Push value in stack
+2024-05-25 21:38:18 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 21:38:18 DEBUG Operation:19 - Push value in stack
+2024-05-25 21:38:18 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 21:38:18 DEBUG Operation:19 - Push value in stack
+2024-05-25 22:03:26 INFO  Main:21 - Parse args
+2024-05-25 22:03:26 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 22:03:26 INFO  CommandLineParser:38 - Set file input stream
+2024-05-25 22:03:26 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-25 22:03:26 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-25 22:03:26 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:03:26 DEBUG Operation:19 - Push value in stack
+2024-05-25 22:03:26 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:03:26 DEBUG Operation:19 - Push value in stack
+2024-05-25 22:03:26 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:03:26 DEBUG Operation:19 - Push value in stack
+2024-05-25 22:04:45 INFO  Main:21 - Parse args
+2024-05-25 22:04:45 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 22:04:45 INFO  CommandLineParser:38 - Set file input stream
+2024-05-25 22:04:45 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-25 22:04:45 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-25 22:04:45 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:04:45 DEBUG Operation:19 - Push value in stack
+2024-05-25 22:04:45 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:04:45 DEBUG Operation:19 - Push value in stack
+2024-05-25 22:04:45 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:04:45 ERROR Operation:24 - Stack is empty for DIVISION
+2024-05-25 22:04:45 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:04:45 DEBUG Operation:12 - Commenting
+2024-05-25 22:04:45 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:04:45 DEBUG Operation:15 - Print value
+2024-05-25 22:04:45 ERROR Operation:18 - Failed pop element class ru.nsu.fit.tropin.Operations.Print
+2024-05-25 22:05:43 INFO  Main:21 - Parse args
+2024-05-25 22:05:43 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 22:05:43 INFO  CommandLineParser:38 - Set file input stream
+2024-05-25 22:05:43 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-25 22:05:43 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-25 22:05:43 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:05:43 DEBUG Operation:20 - Push value in stack
+2024-05-25 22:05:43 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:05:43 DEBUG Operation:20 - Push value in stack
+2024-05-25 22:05:43 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:05:43 DEBUG Operation:20 - Push value in stack
+2024-05-25 22:05:43 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:05:43 ERROR Operation:24 - Stack is empty for DIVISION
+2024-05-25 22:05:43 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:05:43 DEBUG Operation:12 - Commenting
+2024-05-25 22:05:43 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:05:43 DEBUG Operation:15 - Print value
+2024-05-25 22:05:43 ERROR Operation:18 - Failed pop element class ru.nsu.fit.tropin.Operations.Print
+2024-05-25 22:06:27 INFO  Main:21 - Parse args
+2024-05-25 22:06:27 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 22:06:27 INFO  CommandLineParser:38 - Set file input stream
+2024-05-25 22:06:27 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-25 22:06:27 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-25 22:06:27 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:06:27 DEBUG Operation:19 - Push value in stack
+2024-05-25 22:06:27 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:06:27 DEBUG Operation:19 - Push value in stack
+2024-05-25 22:06:27 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:06:27 DEBUG Operation:19 - Push value in stack
+2024-05-25 22:06:39 INFO  Main:21 - Parse args
+2024-05-25 22:06:39 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 22:06:39 INFO  CommandLineParser:38 - Set file input stream
+2024-05-25 22:06:39 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-25 22:06:39 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-25 22:06:39 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:06:39 DEBUG Operation:19 - Push value in stack
+2024-05-25 22:06:39 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:06:39 DEBUG Operation:19 - Push value in stack
+2024-05-25 22:06:39 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:06:39 DEBUG Operation:19 - Push value in stack
+2024-05-25 22:07:07 INFO  Main:21 - Parse args
+2024-05-25 22:07:07 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-25 22:07:07 INFO  CommandLineParser:38 - Set file input stream
+2024-05-25 22:07:07 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-25 22:07:07 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-25 22:07:07 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:07:07 DEBUG Operation:20 - Push value in stack
+2024-05-25 22:07:07 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:07:07 DEBUG Operation:20 - Push value in stack
+2024-05-25 22:07:07 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:07:07 DEBUG Operation:20 - Push value in stack
+2024-05-25 22:07:07 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:07:07 ERROR Operation:24 - Stack is empty for DIVISION
+2024-05-25 22:07:07 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:07:07 DEBUG Operation:12 - Commenting
+2024-05-25 22:07:07 DEBUG CalculatorController:55 - Choose operation
+2024-05-25 22:07:07 DEBUG Operation:15 - Print value
+2024-05-25 22:07:07 ERROR Operation:18 - Failed pop element class ru.nsu.fit.tropin.Operations.Print
+2024-05-26 21:42:40 INFO  Main:21 - Parse args
+2024-05-26 21:42:40 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-26 21:42:40 INFO  CommandLineParser:38 - Set file input stream
+2024-05-26 21:42:40 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-26 21:42:40 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-26 21:42:40 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:42:40 DEBUG Operation:17 - Push value in stack
+2024-05-26 21:42:40 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:42:40 DEBUG Operation:17 - Push value in stack
+2024-05-26 21:42:40 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:42:40 DEBUG Operation:17 - Push value in stack
+2024-05-26 21:42:40 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:42:40 ERROR Operation:24 - Stack is empty for DIVISION
+2024-05-26 21:42:40 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:42:40 DEBUG Operation:12 - Commenting
+2024-05-26 21:42:40 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:42:40 DEBUG Operation:15 - Print value
+2024-05-26 21:42:40 ERROR Operation:18 - Failed pop element class ru.nsu.fit.tropin.Operations.Print
+2024-05-26 21:43:19 INFO  Main:21 - Parse args
+2024-05-26 21:43:19 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-26 21:43:19 INFO  CommandLineParser:38 - Set file input stream
+2024-05-26 21:43:19 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-26 21:43:19 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-26 21:43:19 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:43:19 DEBUG Operation:17 - Push value in stack
+2024-05-26 21:43:19 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:43:19 DEBUG Operation:17 - Push value in stack
+2024-05-26 21:43:19 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:43:19 DEBUG Operation:17 - Push value in stack
+2024-05-26 21:43:19 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:43:19 ERROR Operation:24 - Stack is empty for DIVISION
+2024-05-26 21:43:19 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:43:19 DEBUG Operation:12 - Commenting
+2024-05-26 21:43:19 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:43:19 DEBUG Operation:15 - Print value
+2024-05-26 21:43:19 ERROR Operation:18 - Failed pop element class ru.nsu.fit.tropin.Operations.Print
+2024-05-26 21:43:40 INFO  Main:21 - Parse args
+2024-05-26 21:43:40 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-26 21:43:40 INFO  CommandLineParser:38 - Set file input stream
+2024-05-26 21:43:40 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-26 21:43:40 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-26 21:43:40 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:43:40 DEBUG Operation:17 - Push value in stack
+2024-05-26 21:43:40 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:43:40 DEBUG Operation:17 - Push value in stack
+2024-05-26 21:43:40 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:43:40 DEBUG Operation:17 - Push value in stack
+2024-05-26 21:43:40 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:43:40 ERROR Operation:24 - Stack is empty for DIVISION
+2024-05-26 21:43:40 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:43:40 DEBUG Operation:12 - Commenting
+2024-05-26 21:43:40 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:43:40 DEBUG Operation:15 - Print value
+2024-05-26 21:43:40 ERROR Operation:18 - Failed pop element class ru.nsu.fit.tropin.Operations.Print
+2024-05-26 21:44:39 INFO  Main:21 - Parse args
+2024-05-26 21:44:39 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-26 21:44:39 INFO  CommandLineParser:38 - Set file input stream
+2024-05-26 21:44:39 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-26 21:44:39 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-26 21:44:39 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:44:39 DEBUG Operation:17 - Push value in stack
+2024-05-26 21:44:39 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:44:39 DEBUG Operation:17 - Push value in stack
+2024-05-26 21:44:39 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:44:39 DEBUG Operation:17 - Push value in stack
+2024-05-26 21:44:39 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:44:39 ERROR Operation:24 - Stack is empty for DIVISION
+2024-05-26 21:44:39 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:44:39 DEBUG Operation:12 - Commenting
+2024-05-26 21:44:39 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:44:39 DEBUG Operation:15 - Print value
+2024-05-26 21:44:39 ERROR Operation:18 - Failed pop element class ru.nsu.fit.tropin.Operations.Print
+2024-05-26 21:46:06 INFO  Main:21 - Parse args
+2024-05-26 21:46:06 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-26 21:46:06 INFO  CommandLineParser:38 - Set file input stream
+2024-05-26 21:46:06 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-26 21:46:06 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-26 21:46:06 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:46:06 DEBUG Operation:17 - Push value in stack
+2024-05-26 21:46:06 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:46:06 DEBUG Operation:17 - Push value in stack
+2024-05-26 21:46:06 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:46:06 DEBUG Operation:17 - Push value in stack
+2024-05-26 21:46:06 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:46:06 ERROR Operation:24 - Stack is empty for DIVISION
+2024-05-26 21:46:06 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:46:06 DEBUG Operation:12 - Commenting
+2024-05-26 21:46:06 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:46:06 DEBUG Operation:15 - Print value
+2024-05-26 21:46:06 ERROR Operation:18 - Failed pop element class ru.nsu.fit.tropin.Operations.Print

@@ -75,7 +75,7 @@ public class GameAreaViewGraphic implements GameAreaView {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                _gameArea.setAreaSize(getHeight(), getWidth());
+                _gameArea.setAreaSize(getAreaHeight(), getAreaWidth());
                 drawBackground(g, getHeight(), getWidth(), this);
                 drawPlayerPoints(g);
                 DrawShapeGraphic.drawShape(g, _gameArea.getCurrentShape(), _gameArea.getAreaWidth(), _gameArea.getAreaHeight());
@@ -108,7 +108,6 @@ public class GameAreaViewGraphic implements GameAreaView {
         _buttonRestart = new JButton("Restart");
         _buttonRestart.addActionListener(e -> {
             _gameArea.restart();
-
         });
     }
 

@@ -56,6 +56,7 @@ public class MainMenuGraphic implements MainMenu {
             _frame.dispose();
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             GameController gameController = new GameController();
+
             gameController.setGameAreaView(new GameAreaViewGraphic());
             executorService.execute(gameController);
             executorService.shutdown();

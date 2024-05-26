@@ -3,10 +3,7 @@ package ru.nsu.fit.tropin.Controller;
 import ru.nsu.fit.tropin.Model.GameArea;
 import ru.nsu.fit.tropin.Model.MyObserver;
 import ru.nsu.fit.tropin.Model.Resources;
-import ru.nsu.fit.tropin.View.GView.RecordTable;
 import ru.nsu.fit.tropin.View.GameAreaView;
-
-import javax.swing.*;
 
 public class GameController implements Runnable, MyObserver {
     private GameAreaView _gameAreaView;
@@ -37,10 +34,9 @@ public class GameController implements Runnable, MyObserver {
                 }
 
             }
+            waitBlock();
             if (_isPlaying && _gameArea.isBlockOutOfBounds()) {
-//                System.out.println(_gameArea.isBlockOutOfBounds());
-//                System.out.println(_gameArea.getPoints());
-//                System.out.println(_isPlaying);
+                System.out.println("block out of bounds");
                 Thread.currentThread().interrupt();
                 _isPlaying = false;
                 gameOver();
@@ -48,6 +44,14 @@ public class GameController implements Runnable, MyObserver {
             if (_isPlaying) {
                 _gameArea.spawnNextShape();
             }
+        }
+    }
+
+    private void waitBlock() {
+        try {
+            Thread.sleep(1);
+        } catch (InterruptedException e) {
+            System.out.println("interrupted");
         }
     }
 
@@ -63,11 +67,33 @@ public class GameController implements Runnable, MyObserver {
 
     private void gameOver() {
         String playerName = _gameAreaView.getPlayerName();
+        System.out.println("Game Over: " + playerName);
         _gameAreaView.addPlayerToRecord(playerName, _gameArea.getPoints());
     }
 
     @Override
     public void update() {
-        _isPlaying = true;
+        if (!_isPlaying && _gameArea.getPoints() == 0) {
+            System.out.println("Set playing");
+            _isPlaying = true;
+        }
     }
+
+    public void setPlaying(boolean playing) {
+        _isPlaying = playing;
+    }
+
+//    Set playing
+//after moving: false
+//height inside: 830
+//blockSize inside: 51
+//false
+//Spawning next shape...false
+//playing
+//830 51
+//playing
+
+
+//    Set playing
+//830 51
 }

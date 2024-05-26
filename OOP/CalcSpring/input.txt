@@ -1,5 +1,6 @@
-DEFINE a 4
+PUSH 0
+PUSH 1
 PUSH a
-SQRT
-#test comment
+DIVISION
+#test text
 PRINT

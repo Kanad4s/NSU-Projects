@@ -68,15 +68,15 @@ public class GameAreaViewText implements GameAreaView {
         DrawAreaViewText.drawArea(_gameArea.getCurrentShape(), _gameArea.getAreaHeight(), _gameArea.getAreaWidth(),
                 _gameArea.getPlacedShapes());
         DrawAreaViewText.drawPoints(_gameArea.getPoints());
-        for (int i = 6; i < 15; i++) {
-            System.out.println();
-            for (int j = 0; j < 10; j++) {
-                if (_gameArea.getPlacedShapes()[i][j] != null) {
-                    System.out.print("*");
-                } else {
-                    System.out.print(" ");
-                }
-            }
-        }
+//        for (int i = 6; i < 15; i++) {
+//            System.out.println();
+//            for (int j = 0; j < 10; j++) {
+//                if (_gameArea.getPlacedShapes()[i][j] != null) {
+//                    System.out.print("*");
+//                } else {
+//                    System.out.print(" ");
+//                }
+//            }
+//        }
     }
 }

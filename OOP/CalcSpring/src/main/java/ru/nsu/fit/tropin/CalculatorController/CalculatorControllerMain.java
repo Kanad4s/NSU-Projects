@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.*;
 
-//бегу по классам с аннотацией и сравниваю с прочитанным
 @Component
 public class CalculatorControllerMain implements CalculatorController{
     public static final Logger LOGGER = Logger.getLogger(CalculatorController.class.getName());

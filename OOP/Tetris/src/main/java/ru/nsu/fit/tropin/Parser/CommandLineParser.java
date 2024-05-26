@@ -17,7 +17,6 @@ public class CommandLineParser {
     public boolean parse(String[] args) {
         jCommander = new JCommander(_commandLineArgs);
         jCommander.parse(args);
-        System.out.println(_commandLineArgs.isView());
         if (_commandLineArgs.isHelp()) {
             jCommander.usage();
             return false;

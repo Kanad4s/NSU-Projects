@@ -22,7 +22,8 @@ public class Division implements Operation {
             stack.pushValue(result.toString());
         } catch (OperationException operationException) {
             LOGGER.error("Stack is empty for DIVISION");
-            throw new OperationException("Stack is empty" + Arrays.toString(operationException.getStackTrace()));
+            throw operationException;
+//            throw new OperationException("Divi" + Arrays.toString(operationException.getStackTrace()));
         }
     }
 }

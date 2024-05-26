@@ -16,7 +16,8 @@ public class GameArea implements MyObservable {
     private Color[][] _placedShapes;
     private int _areaWidth;
     private int _areaHeight;
-    private  int _areaBlockSize;
+    private int _areaBlockSize;
+    private int _blocksInColumn;
 
     public GameArea() {
         _points = 0;
@@ -39,6 +40,7 @@ public class GameArea implements MyObservable {
     }
 
     public void generateShape() {
+        System.out.println("Generating shape...");
         _currentShape = _shapes[_random.nextInt(_shapes.length)];
         _currentShape.spawn();
     }
@@ -83,6 +85,11 @@ public class GameArea implements MyObservable {
     }
 
     public void spawnNextShape() {
+        System.out.println("Spawning next shape..." + ableToRespawn());
+        if (!ableToRespawn()) {
+            restart();
+            return;
+        }
         addPoints();
         moveShapeToBackground();
         clearLines(_areaHeight, _areaWidth);
@@ -97,8 +104,16 @@ public class GameArea implements MyObservable {
 //                retValue = true;
 //            }
 //        }
-//        System.out.println();
-        return (_currentShape.getY() <= 0 && _points > 20);
+//        System.out.println(_placedShapes.length);
+//        System.out.println("height inside: " + _areaHeight);
+//        System.out.println("blockSize inside: " + _areaBlockSize);
+        for (int i = 0; i < Resources.BLOCKS_IN_ROW; i++) {
+            if (_placedShapes[_areaHeight / _areaBlockSize - 1][i] != null) {
+                retValue = true;
+            }
+        }
+        System.out.println(_currentShape.getY() <= 0 && retValue);
+        return (_currentShape.getY() <= 0 && retValue);
     }
 
     public void setAreaSize(int frameHeight, int frameWidth) {
@@ -110,6 +125,7 @@ public class GameArea implements MyObservable {
         }
         _areaHeight = frameHeight;
         _areaBlockSize = _areaWidth / Resources.BLOCKS_IN_ROW;
+        System.out.println(_areaHeight + " " + _areaBlockSize);
     }
 
     public void createPlacedShapes() {
@@ -129,6 +145,7 @@ public class GameArea implements MyObservable {
             Arrays.fill(placedShape, null);
         }
         _points = 0;
+        _currentShape = _shapes[_random.nextInt(_shapes.length)];
         _currentShape.spawn();
         notifyObservers();
     }
@@ -174,23 +191,28 @@ public class GameArea implements MyObservable {
             }
             if (cntBlocksInRow == Resources.BLOCKS_IN_ROW) {
                 _points += 100;
-                clearLine(row, Resources.BLOCKS_IN_ROW);
-                shiftRowsDown(row, Resources.BLOCKS_IN_ROW);
-                clearLine(0, Resources.BLOCKS_IN_ROW);
+                clearLine(row);
+                shiftRowsDown(row);
+                clearLine(0);
             }
         }
         notifyObservers();
     }
 
-    private void clearLine(int row, int blocksInRow) {
-        for (int i = 0; i < blocksInRow; i++) {
+    private void clearLine(int row) {
+        for (int i = 0; i < Resources.BLOCKS_IN_ROW; i++) {
             _placedShapes[row][i] = null;
         }
     }
 
-    private void shiftRowsDown(int curRow, int blocksInRow) {
+    private void shiftRowsDown(int curRow) {
         for (int row = curRow; row > 0; row--) {
-            if (blocksInRow >= 0) System.arraycopy(_placedShapes[row - 1], 0, _placedShapes[row], 0, blocksInRow);
+            if (Resources.BLOCKS_IN_ROW >= 0) System.arraycopy(_placedShapes[row - 1], 0, _placedShapes[row],
+                    0, Resources.BLOCKS_IN_ROW);
         }
+    }
+
+    private boolean ableToRespawn() {
+        return _currentShape.getY() >= 1;
     }
 }
