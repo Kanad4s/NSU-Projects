@@ -8,7 +8,6 @@ import ru.nsu.fit.tropin.View.GameAreaView;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.ImageObserver;
-import java.io.IOException;
 
 public class GameAreaViewGraphic implements GameAreaView {
     private JFrame _frame;
@@ -31,6 +30,7 @@ public class GameAreaViewGraphic implements GameAreaView {
         addButtons();
         _frame.setVisible(true);
     }
+
 
     @Override
     public void addPlayerToRecord(String name, int points) {
@@ -78,8 +78,9 @@ public class GameAreaViewGraphic implements GameAreaView {
                 _gameArea.setAreaSize(getAreaHeight(), getAreaWidth());
                 drawBackground(g, getHeight(), getWidth(), this);
                 drawPlayerPoints(g);
-                DrawShapeGraphic.drawShape(g, _gameArea.getCurrentShape(), _gameArea.getAreaWidth(), _gameArea.getAreaHeight());
+                DrawShapeGraphic.drawShapeArea(g, _gameArea.getCurrentShape(), _gameArea.getAreaWidth(), _gameArea.getAreaHeight());
                 ShapesView.drawBackGround(g, _gameArea.getPlacedShapes(), _gameArea.getAreaWidth(), _gameArea.getAreaHeight());
+                drawNextShape(g, _frame.getWidth(), this);
             }
         };
         _panel.setOpaque(true);
@@ -127,6 +128,21 @@ public class GameAreaViewGraphic implements GameAreaView {
         g.setColor(new Color(88, 114, 140));
         g.drawString("POINTS", _frame.getWidth() * 2 / 3, Resources.TEXT_POINTS_SIZE);
         g.drawString(_gameArea.getPoints().toString(), _frame.getWidth() * 2 / 3, 2 * Resources.TEXT_POINTS_SIZE);
+    }
+
+    private void drawNextShape(Graphics g, int areaWidth, ImageObserver observer) {
+        int blockSize = _gameArea.getAreaWidth() / Resources.BLOCKS_IN_ROW;
+        blockSize = blockSize - blockSize % 10;
+        Font font = new Font("Next shape", Font.BOLD, Resources.TEXT_POINTS_SIZE);
+        g.setFont(font);
+        g.setColor(new Color(88, 114, 140));
+        int widthShift = blockSize * 4 + blockSize / 2;
+        g.drawString("SHAPE", areaWidth / 3 - widthShift, Resources.TEXT_POINTS_SIZE);
+        Image backImage = new ImageIcon(Resources.PATH_GAME_AREA_MIDDLE).getImage();
+        g.drawImage(backImage, areaWidth / 3 - widthShift, Resources.TEXT_POINTS_SIZE + 4,
+                blockSize * 4, blockSize * 2, observer);
+        DrawShapeGraphic.drawShape(g, _gameArea.getNextShape(), areaWidth / 3 - widthShift,
+                Resources.TEXT_POINTS_SIZE + 4, blockSize);
     }
 }
 

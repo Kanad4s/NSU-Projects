@@ -13,4 +13,11 @@ public class DrawBlockGraphic {
         g.setColor(Color.black);
         g.drawRect(x * blockSize + offsetWidth, y * blockSize - heightShift, blockSize, blockSize);
     }
+
+    public static void drawCurrent(Graphics g, int x, int y, Color color, int blockSize) {
+        g.setColor(color);
+        g.fillRect(x, y, blockSize, blockSize);
+        g.setColor(Color.black);
+        g.drawRect(x, y, blockSize, blockSize);
+    }
 }
