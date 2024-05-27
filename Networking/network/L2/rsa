@@ -1,0 +1,7 @@
+
+ do show run
+ ip ssh version 2
+ line vty 0 4
+ login local
+ transport input ssh
+exit

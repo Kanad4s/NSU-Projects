@@ -1,7 +1,10 @@
-ip ssh version 2
-username admin privilege 15 password 123
-hostname s1
-line vty 0 4
-transport input ssh
-//создать ssh ключ
+ crypto key generate rsa general-keys modulus 1024
+ ip domain-name local
+ crypto key generate rsa general-keys modulus 1024
+ ip ssh version 2
+ username admin privilege 15 password 123
+ hostname s1
+ line vty 0 4
+ transport input ssh
+ //создать ssh ключ
 exit
