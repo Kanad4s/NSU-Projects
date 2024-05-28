@@ -140,7 +140,7 @@ public class GameAreaViewGraphic implements GameAreaView {
         g.drawString("SHAPE", areaWidth / 3 - widthShift, Resources.TEXT_POINTS_SIZE);
         Image backImage = new ImageIcon(Resources.PATH_GAME_AREA_MIDDLE).getImage();
         g.drawImage(backImage, areaWidth / 3 - widthShift, Resources.TEXT_POINTS_SIZE + 4,
-                blockSize * 4, blockSize * 2, observer);
+                blockSize * 4, blockSize * 4, observer);
         DrawShapeGraphic.drawShape(g, _gameArea.getNextShape(), areaWidth / 3 - widthShift,
                 Resources.TEXT_POINTS_SIZE + 4, blockSize);
     }

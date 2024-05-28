@@ -33,7 +33,7 @@ public class ButtonsGameLayout implements LayoutManager {
             Component comp = parent.getComponent(i);
             int areaWidth = parent.getWidth() / 3;
             areaWidth = areaWidth - areaWidth % 10;
-            comp.setBounds(parent.getWidth() / 3 - BUTTON_WIDTH + i * (areaWidth + BUTTON_WIDTH),
+            comp.setBounds(areaWidth - BUTTON_WIDTH + i * (areaWidth + BUTTON_WIDTH),
                     parent.getHeight() - BUTTON_HEIGHT,
                     BUTTON_WIDTH, BUTTON_HEIGHT);
         }
