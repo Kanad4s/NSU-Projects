@@ -6,7 +6,6 @@ import ru.nsu.fit.tropin.View.GameAreaView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class GameAreaViewText implements GameAreaView {
@@ -28,6 +27,8 @@ public class GameAreaViewText implements GameAreaView {
         RecordTableText recordTableText = new RecordTableText();
         recordTableText.addPlayer(name, points);
         recordTableText.fillRecordTable();
+        MainMenuText mainMenuText = new MainMenuText();
+        mainMenuText.showMainMenu();
     }
 
     @Override
@@ -68,15 +69,6 @@ public class GameAreaViewText implements GameAreaView {
         DrawAreaViewText.drawArea(_gameArea.getCurrentShape(), _gameArea.getAreaHeight(), _gameArea.getAreaWidth(),
                 _gameArea.getPlacedShapes());
         DrawAreaViewText.drawPoints(_gameArea.getPoints());
-//        for (int i = 6; i < 15; i++) {
-//            System.out.println();
-//            for (int j = 0; j < 10; j++) {
-//                if (_gameArea.getPlacedShapes()[i][j] != null) {
-//                    System.out.print("*");
-//                } else {
-//                    System.out.print(" ");
-//                }
-//            }
-//        }
+        DrawAreaViewText.drawNextShape(_gameArea.getNextShape());
     }
 }

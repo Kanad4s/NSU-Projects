@@ -41,4 +41,18 @@ public class DrawAreaViewText {
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         }
     }
+
+    public static void drawNextShape(MyShape shape) {
+        System.out.println("Next Shape: ");
+        for (int i = 0; i < shape.getWidth(); i++) {
+            for (int j = 0; j < shape.getHeight(); j++) {
+                if (shape.isShape(i, j)) {
+                    DrawBlockText.drawBlock();
+                } else {
+                    DrawBlockText.drawSpace();
+                }
+            }
+            System.out.println();
+        }
+    }
 }

@@ -37,7 +37,7 @@ public class GameController implements Runnable, MyObserver {
             waitBlock();
             if (_isPlaying && _gameArea.isBlockOutOfBounds()) {
                 System.out.println("block out of bounds");
-                Thread.currentThread().interrupt();
+//                Thread.currentThread().interrupt();
                 _isPlaying = false;
                 gameOver();
             }
@@ -66,8 +66,9 @@ public class GameController implements Runnable, MyObserver {
     }
 
     private void gameOver() {
+        System.out.println("Game Over!\nEnter player name:");
         String playerName = _gameAreaView.getPlayerName();
-        System.out.println("Game Over: " + playerName);
+        System.out.println(playerName + " score: " + _gameArea.getPoints());
         _gameAreaView.addPlayerToRecord(playerName, _gameArea.getPoints());
     }
 
@@ -82,18 +83,4 @@ public class GameController implements Runnable, MyObserver {
     public void setPlaying(boolean playing) {
         _isPlaying = playing;
     }
-
-//    Set playing
-//after moving: false
-//height inside: 830
-//blockSize inside: 51
-//false
-//Spawning next shape...false
-//playing
-//830 51
-//playing
-
-
-//    Set playing
-//830 51
 }
