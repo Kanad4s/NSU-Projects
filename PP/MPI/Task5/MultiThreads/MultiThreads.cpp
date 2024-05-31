@@ -143,17 +143,15 @@ void* calc_thread(__attribute__((unused)) void* args) {
 
         double end = MPI_Wtime();
         double time = end - start;
-        printf("Process: %d. Iteration end %d, time: %lf, "
+        printf("Process: %d. Iterations end %d, time: %lf, "
             "result: %lf, tasks done: %d\n", rank, iter_counter, time, result, task_count);
 
         MPI_Barrier(MPI_COMM_WORLD);
 
         double max_time = 0;
         double min_time = 0;
-        MPI_Reduce(&time, &max_time, 1, MPI_DOUBLE, MPI_MAX, 0,
-            MPI_COMM_WORLD);
-        MPI_Reduce(&time, &min_time, 1, MPI_DOUBLE, MPI_MIN, 0,
-            MPI_COMM_WORLD);
+        MPI_Reduce(&time, &max_time, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
+        MPI_Reduce(&time, &min_time, 1, MPI_DOUBLE, MPI_MIN, 0, MPI_COMM_WORLD);
 
         if (rank == 0) {
             printf("Iteration = %d Disbalance time: %lf\nDisbalance percent: %lf\n",
@@ -172,15 +170,13 @@ void* data_thread(__attribute__((unused)) void* args) {
         MPI_Status status;
         int res;
 
-        MPI_Recv(&res, 1, MPI_INT, MPI_ANY_SOURCE, 1, MPI_COMM_WORLD,
-            &status);
+        MPI_Recv(&res, 1, MPI_INT, MPI_ANY_SOURCE, 1, MPI_COMM_WORLD, &status);
 
         if (res == 0) break;
 
         if (task_index >= tasks.size()) {
             int answer = 0;
-            MPI_Send(&answer, 1, MPI_INT, status.MPI_SOURCE, 2,
-                MPI_COMM_WORLD);
+            MPI_Send(&answer, 1, MPI_INT, status.MPI_SOURCE, 2, MPI_COMM_WORLD);
         }
         else {
             pthread_mutex_lock(&mutex);
@@ -191,7 +187,6 @@ void* data_thread(__attribute__((unused)) void* args) {
             int answer = 1;
             MPI_Send(&answer, 1, MPI_INT, status.MPI_SOURCE, 2, MPI_COMM_WORLD);
             MPI_Send(&task_to_send, 1, TASK_TYPE, status.MPI_SOURCE, 3, MPI_COMM_WORLD);
-
         }
     }
     return nullptr;
@@ -217,13 +212,12 @@ int get_new_task(int proc_rank) {
 double calc_task(Task& task) {
     double res = 0;
     for (int i = 0; i < task.repeat_num; i++) {
-        res += sin(i);
+        res += sqrt(i);
     }
     return res;
 }
 
-void generate_tasks(int count_tasks)
-{
+void generate_tasks(int count_tasks) {
     pthread_mutex_lock(&mutex);
     tasks.clear();
     for (int i = 0; i < count_tasks; i++) {
