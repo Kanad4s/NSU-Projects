@@ -5,6 +5,7 @@
 #include <vector>
 #include <pthread.h>
 #include <cstdio>
+#include <cmath>
 
 struct Task {
     int repeat_num;
@@ -64,7 +65,6 @@ int main(int argc, char** argv) {
 
     double end = MPI_Wtime();
     printf("Process = %d. Time: %lf\n", rank, end - start);
-
     pthread_mutex_destroy(&mutex);
     MPI_Type_free(&TASK_TYPE);
     MPI_Finalize();
@@ -78,20 +78,15 @@ int run() {
         perror("Error during init attrs");
         return EXIT_FAILURE;
     }
-
-    //установка атрибута "присоединенный"
     if (pthread_attr_setdetachstate(&attrs, PTHREAD_CREATE_JOINABLE) != 0)
     {
         perror("Error setting attr joinable");
         abort();
     }
-
     pthread_create(&threads[0], &attrs, calc_thread, nullptr);
     pthread_create(&threads[1], &attrs, data_thread, nullptr);
 
-    //освобождение ресурсов, занимаемых описателем атрибутов
     pthread_attr_destroy(&attrs);
-
     for (auto& thread : threads) {
         if (pthread_join(thread, nullptr) != 0) {
             perror("Error joining thread");
@@ -167,9 +162,7 @@ void* calc_thread(__attribute__((unused)) void* args) {
     }
 
     int request = 0;
-
     MPI_Send(&request, 1, MPI_INT, rank, 1, MPI_COMM_WORLD);
-
     delete[] able_get_task_flags;
     return nullptr;
 }
@@ -207,7 +200,6 @@ void* data_thread(__attribute__((unused)) void* args) {
 int get_new_task(int proc_rank) {
 
     int request = 1;
-
     MPI_Send(&request, 1, MPI_INT, proc_rank, 1, MPI_COMM_WORLD);
     MPI_Recv(&request, 1, MPI_INT, proc_rank, 2, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
@@ -227,7 +219,6 @@ double calc_task(Task& task) {
     for (int i = 0; i < task.repeat_num; i++) {
         res += sin(i);
     }
-
     return res;
 }
 
@@ -237,7 +228,7 @@ void generate_tasks(int count_tasks)
     tasks.clear();
     for (int i = 0; i < count_tasks; i++) {
         Task task{};
-        task.repeat_num = std::abs(50 - i % 100) * std::abs(rank - (iter_counter % size)) * L;
+        task.repeat_num = abs(50 - i % 100) * abs(rank - (iter_counter % size)) * L;
         tasks.push_back(task);
     }
     pthread_mutex_unlock(&mutex);
