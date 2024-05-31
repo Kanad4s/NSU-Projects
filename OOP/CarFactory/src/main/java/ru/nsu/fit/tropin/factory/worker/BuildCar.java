@@ -1,7 +1,7 @@
 package ru.nsu.fit.tropin.factory.worker;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j;
 import ru.nsu.fit.tropin.factory.product.auto.Accessory;
 import ru.nsu.fit.tropin.factory.product.auto.Auto;
 import ru.nsu.fit.tropin.factory.product.auto.Body;
@@ -10,7 +10,7 @@ import ru.nsu.fit.tropin.factory.warehouse.Warehouse;
 import ru.nsu.fit.tropin.threadpool.Task;
 
 @RequiredArgsConstructor
-@Log4j2
+@Log4j
 public class BuildCar implements Task {
     private final Warehouse<Accessory> accessoryWarehouse;
     private final Warehouse<Motor> motorWarehouse;

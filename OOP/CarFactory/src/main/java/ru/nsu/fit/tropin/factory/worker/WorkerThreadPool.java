@@ -1,10 +1,10 @@
 package ru.nsu.fit.tropin.factory.worker;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j;
 import ru.nsu.fit.tropin.threadpool.Task;
 import ru.nsu.fit.tropin.threadpool.ThreadPool;
 
-@Log4j2
+@Log4j
 public class WorkerThreadPool {
     private final ThreadPool threadPool = new ThreadPool();
 

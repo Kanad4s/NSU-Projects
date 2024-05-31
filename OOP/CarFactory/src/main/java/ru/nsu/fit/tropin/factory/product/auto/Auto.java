@@ -4,13 +4,13 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j;
 import ru.nsu.fit.tropin.factory.product.Product;
 
 @Getter
 @Setter
 @ToString
-@Log4j2
+@Log4j
 public class Auto extends Product {
 
     private final Accessory accessory;

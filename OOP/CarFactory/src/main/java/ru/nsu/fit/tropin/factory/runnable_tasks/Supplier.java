@@ -1,13 +1,12 @@
 package ru.nsu.fit.tropin.factory.runnable_tasks;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j;
 import ru.nsu.fit.tropin.factory.product.Product;
 import ru.nsu.fit.tropin.factory.warehouse.Warehouse;
 
 import java.lang.reflect.InvocationTargetException;
 
-@Log4j2
-
+@Log4j
 public class Supplier<T extends Product>  extends ProductionParticipant implements Runnable{
 
     private final Warehouse<T> warehouse;

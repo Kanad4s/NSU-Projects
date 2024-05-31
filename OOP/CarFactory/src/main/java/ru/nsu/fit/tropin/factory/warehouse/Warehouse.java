@@ -3,7 +3,7 @@ package ru.nsu.fit.tropin.factory.warehouse;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j;
 import ru.nsu.fit.tropin.factory.product.Product;
 import ru.nsu.fit.tropin.observer.Observable;
 import ru.nsu.fit.tropin.observer.Observer;
@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-@Log4j2
+@Log4j
 public class Warehouse<T extends Product> implements Observable {
 
     public final static String ACCESSORY_WAREHOUSE_NAME = "Accessory warehouse";

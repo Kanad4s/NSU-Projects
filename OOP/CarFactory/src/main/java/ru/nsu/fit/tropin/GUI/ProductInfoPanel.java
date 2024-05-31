@@ -10,7 +10,7 @@ import ru.nsu.fit.tropin.observer.Observer;
 import javax.swing.*;
 import java.awt.*;
 
-import static ru.nsu.ccfit.chernovskaya.GUI.FactoryFrame.BACKGROUND_COLOR;
+import static ru.nsu.fit.tropin.GUI.FactoryFrame.BACKGROUND_COLOR;
 
 public class ProductInfoPanel extends JPanel implements Observer {
 

@@ -3,11 +3,10 @@ package ru.nsu.fit.tropin.threadpool;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
-import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
 
-@Log4j2
+@Log4j
 @Setter
 @Getter
 public class PooledThread extends Thread {

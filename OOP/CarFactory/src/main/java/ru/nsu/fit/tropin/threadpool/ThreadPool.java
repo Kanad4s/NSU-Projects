@@ -1,11 +1,10 @@
 package ru.nsu.fit.tropin.threadpool;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j;
 import java.util.LinkedList;
 import java.util.List;
 
-//@Log4j2
-@Log4j2
+@Log4j
 public class ThreadPool{
     private final List<PooledThread> threads = new LinkedList<>();
     private final List<Task> taskQueue = new LinkedList<>();
@@ -29,8 +28,7 @@ public class ThreadPool{
     public void start(){
         for (PooledThread availableThread : threads) {
             availableThread.start();
-            log.info();
-//            log.info("Thread " + availableThread.getName() +  " was creating");
+            log.info("Thread " + availableThread.getName() +  " was creating");
         }
     }
 }

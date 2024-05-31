@@ -1,6 +1,6 @@
 package ru.nsu.fit.tropin.factory.autoWarehouseController;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j;
 import ru.nsu.fit.tropin.factory.product.auto.Accessory;
 import ru.nsu.fit.tropin.factory.product.auto.Auto;
 import ru.nsu.fit.tropin.factory.product.auto.Body;
@@ -10,7 +10,7 @@ import ru.nsu.fit.tropin.factory.worker.BuildCar;
 import ru.nsu.fit.tropin.factory.worker.WorkerThreadPool;
 import ru.nsu.fit.tropin.observer.Observer;
 
-@Log4j2
+@Log4j
 public class AutoWarehouseController implements Observer {
 
     private final Warehouse<Body> bodyWarehouse;

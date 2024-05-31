@@ -1,11 +1,11 @@
 package ru.nsu.fit.tropin.factory.runnable_tasks;
 
 import lombok.*;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j;
 import ru.nsu.fit.tropin.factory.product.auto.Auto;
 import ru.nsu.fit.tropin.factory.warehouse.Warehouse;
 
-@Log4j2
+@Log4j
 public class Dealer extends ProductionParticipant implements Runnable{
 
     private final Warehouse<Auto> autoWarehouse;

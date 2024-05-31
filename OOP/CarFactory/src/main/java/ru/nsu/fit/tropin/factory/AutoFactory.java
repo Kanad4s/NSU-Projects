@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.extern.log4j.Log4j;
-import lombok.extern.log4j.Log4j2;
 import ru.nsu.fit.tropin.factory.autoWarehouseController.AutoWarehouseController;
 import ru.nsu.fit.tropin.factory.config_parser.ConfigParser;
 import ru.nsu.fit.tropin.factory.product.auto.Accessory;
