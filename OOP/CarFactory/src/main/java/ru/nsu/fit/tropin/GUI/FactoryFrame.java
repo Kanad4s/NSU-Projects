@@ -11,10 +11,8 @@ import java.awt.*;
 
 public class FactoryFrame extends JFrame {
 
-    public final static Color BACKGROUND_COLOR = new Color(147, 255, 108);
-    private static final String TITLE_FRAME = "AUTO Factory";
-
-    private final GUIController controller;
+    public final static Color BACKGROUND_COLOR = new Color(172, 126, 90);
+    private static final String TITLE_FRAME = "CarFactory";
 
     private final DetailInfoPanel accessoryInfoPanel;
     private final DetailInfoPanel  bodyInfoPanel;
@@ -24,7 +22,6 @@ public class FactoryFrame extends JFrame {
 
 
     public FactoryFrame(GUIController controller) {
-        this.controller = controller;
 
         this.accessoryInfoPanel = new DetailInfoPanel(controller, Warehouse.ACCESSORY_WAREHOUSE_NAME, Accessory.class);
         this.bodyInfoPanel = new DetailInfoPanel(controller, Warehouse.BODY_WAREHOUSE_NAME, Body.class);
@@ -34,7 +31,7 @@ public class FactoryFrame extends JFrame {
 
         init();
         controller.startFactory();
-
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }

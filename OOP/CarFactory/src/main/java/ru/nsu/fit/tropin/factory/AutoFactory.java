@@ -81,8 +81,7 @@ public class AutoFactory {
 
         log.info("Creating auto warehouse controller..");
         autoWarehouseController = new AutoWarehouseController(bodyWarehouse, accessoryWarehouse,
-                                                              motorWarehouse, autoWarehouse,
-                                                                workerThreadPool);
+                                                              motorWarehouse, autoWarehouse, workerThreadPool);
     }
 
     public void start() {

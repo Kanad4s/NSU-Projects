@@ -45,10 +45,7 @@ public class GameAreaViewText implements GameAreaView {
     public JFrame getFrame() {
         _frame = new JFrame();
         _frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel panel = new JPanel() {
-            @Override
-            paint
-        }
+        JPanel panel = new JPanel();
         _frame.setContentPane(panel);
         _frame.setUndecorated(true);
         _frame.setBackground(new Color(0, 0, 0, 0));
