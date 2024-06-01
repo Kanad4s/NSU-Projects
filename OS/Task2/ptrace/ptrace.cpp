@@ -1,6 +1,7 @@
 ﻿#include <stdio.h>
 #include <stdlib.h>
 #include <sys/ptrace.h>
+#include <sys/user.h>
 #include <sys/wait.h>
 #include <sys/reg.h>
 #include <unistd.h>
@@ -10,62 +11,45 @@
 #include <string.h>
 #include <signal.h>
 
-void child(int argc, char** argv) {
-	char* buf[argc + 1];
-	memcpy(buf, argv, argc * sizeof(char*));
-	buf[argc] = NULL;
-	ptrace(PT_TRACE_ME);
-	kill(getpid(), SIGSTOP);
-	execvp(buf[0], buf);
-}
-
-int waitSyscall(pid_t pid) {
-	int status;
-	while (1) {
-		ptrace(PTRACE_SYSCALL, pid, 0, 0);
-		waitpid(pid, &status, 0);
-		if (WIFSTOPPED(status) && WSTOPSIG(status) & 0x80)
-			return 0;
-		// WIFEXITED returns a nonzero value if process terminated with exit signal.
-		if (WIFEXITED(status))
-			return 1;
-	}
+void child() {
+	ptrace(PTRACE_TRACEME, 0, 0, 0);
+	execl("/bin/echo", "/bin/echo", "Hello, world!", NULL);
+	perror("execl");
 }
 
 void parent(pid_t pid) {
-	int waitStatus, syscall;
-	waitpid(pid, &waitStatus, 0);
-
-	// PTRACE_SETOPTIONS means setting ptrace options
-	// from data argument (4th argument)
-	// PTRACE_O_TRCESYSGOOD means something to work with
-	// system call traps?
+	int status;
+	waitpid(pid, &status, 0);
 	ptrace(PTRACE_SETOPTIONS, pid, 0, PTRACE_O_TRACESYSGOOD);
+	while (!WIFEXITED(status)) {
+		struct user_regs_struct state;
+		ptrace(PTRACE_SYSCALL, pid, 0, 0);
+		waitpid(pid, &status, 0);
+		// at syscall
+		//при остановке на системном вызове родительский процесс получит в статусе SIGTRAP | 0x80
+		//breakpoint -  PTRACE_SINGLESTEP или заменой интсрукции на 0xCC
+		//отмена вызова функции PTRACE_SYSEMU
+		if (WIFSTOPPED(status) && WSTOPSIG(status) & 0x80) {
+			ptrace(PTRACE_GETREGS, pid, 0, &state);
+			printf("SYSCALL %lld at %08llx\n", state.orig_rax, state.rip);
 
-	while (!waitSyscall(pid)) {
-		// here I take syscall number (sic!)
-		syscall = ptrace(PTRACE_PEEKUSER, pid, sizeof(long) * ORIG_RAX);
-		fprintf(stderr, "syscall(%d) = ", syscall);
-		if (waitSyscall(pid) != 0)
-			break;
-		// here i take result after syscall (sic!)x2
-		int result = ptrace(PTRACE_PEEKUSER, pid, sizeof(long) * RAX);
-		fprintf(stderr, "%d\n", result);
-
-		sleep(10);
+			// sys_write
+			if (state.orig_rax == 1) {
+				char* text = (char*)state.rsi;
+				ptrace(PTRACE_POKETEXT, pid, (void*)(text + 7), 0x61686168); //72626168 - habr 6f6a6c6a7562 - nikita
+				ptrace(PTRACE_POKETEXT, pid, (void*)(text + 11), 0x00000a21); //!\n
+			}
+			// skip after syscall
+			ptrace(PTRACE_SYSCALL, pid, 0, 0);
+			waitpid(pid, &status, 0);
+		}
 	}
 }
 
 int main(int argc, char** argv) {
-
-	if (argc < 2) {
-		printf("wrong number of arguments\n");
-		return EXIT_FAILURE;
-	}
 	pid_t pid = fork();
 	if (pid == 0)
-		// meaning: i throw out the first argument (argc[0]=="./a.out")
-		child(argc - 1, argv + 1);
+		child();
 	else if (pid == -1) {
 		printf("can't create process\n");
 		return EXIT_FAILURE;
