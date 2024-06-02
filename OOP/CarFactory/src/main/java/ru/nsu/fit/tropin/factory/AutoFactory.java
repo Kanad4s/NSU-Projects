@@ -16,9 +16,9 @@ import ru.nsu.fit.tropin.factory.warehouse.Warehouse;
 import ru.nsu.fit.tropin.factory.worker.WorkerThreadPool;
 import ru.nsu.fit.tropin.observer.Observer;
 
+
 @Log4j
 public class AutoFactory {
-
     private final Warehouse<Accessory> accessoryWarehouse;
     private final Warehouse<Body> bodyWarehouse;
     private final Warehouse<Motor> motorWarehouse;

@@ -10,7 +10,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MainMenuGraphic implements MainMenu {
-
     private JFrame _frame;
     private JPanel _panel;
     private JButton _startButton, _aboutButton, _exitButton, _scoreButton;

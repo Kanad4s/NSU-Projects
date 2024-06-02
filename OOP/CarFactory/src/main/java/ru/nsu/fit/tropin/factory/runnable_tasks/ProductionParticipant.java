@@ -7,7 +7,7 @@ public class ProductionParticipant{
 
     private int delay;
     public final static int MAX_DELAY = 31000;
-    public final static int MIN_DELAY = 1000;
+    public final static int MIN_DELAY = 1;
 
     public void setDelay(int delay){
         if (delay < MIN_DELAY || delay > MAX_DELAY){
