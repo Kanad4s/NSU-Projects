@@ -1,5 +1,6 @@
 package ru.nsu.fit.tropin.View.GView;
 
+import ru.nsu.fit.tropin.Controller.GameController;
 import ru.nsu.fit.tropin.Controller.LaunchController;
 import ru.nsu.fit.tropin.Model.GameArea;
 import ru.nsu.fit.tropin.Model.Resources;
@@ -8,14 +9,26 @@ import ru.nsu.fit.tropin.View.GameAreaView;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.ImageObserver;
+import java.util.concurrent.ExecutorService;
 
 public class GameAreaViewGraphic implements GameAreaView {
     private JFrame _frame;
     private JPanel _panel;
     private JButton _buttonRestart, _buttonMenu;
     private GameArea _gameArea;
+    private ExecutorService _executorService;
+    private GameController _gameController;
 
     public GameAreaViewGraphic() {};
+
+    public GameAreaViewGraphic(GameController gameController) {
+        _gameController = gameController;
+    };
+
+
+    public GameAreaViewGraphic(ExecutorService executorService) {
+        _executorService = executorService;
+    };
 
     @Override
     public void setGameArea(GameArea gameArea) {
@@ -115,7 +128,9 @@ public class GameAreaViewGraphic implements GameAreaView {
     private void createButtonMenu() {
         _buttonMenu = new JButton("Menu");
         _buttonMenu.addActionListener(e -> {
+            System.out.println("open menu from game area");
             _frame.dispose();
+            _gameController.setShutdown(true);
             LaunchController launchController = new LaunchController();
             launchController.setMenu(new MainMenuGraphic());
             launchController.launchMainMenu();

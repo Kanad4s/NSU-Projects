@@ -10,6 +10,7 @@ public class GameController implements Runnable, MyObserver {
     private final MovementController _movementController;
     private final GameArea _gameArea;
     private boolean _isPlaying = false;
+    private boolean _isShutdown = false;
 
     public GameController(){
         _gameArea = new GameArea();
@@ -24,7 +25,7 @@ public class GameController implements Runnable, MyObserver {
     @Override
     public void run() {
         launchGame();
-        while (true) {
+        while (!_isShutdown) {
             while (_isPlaying && _gameArea.isShapeMoving()) {
                 try {
                     _gameArea.moveShapeDown();
@@ -37,7 +38,7 @@ public class GameController implements Runnable, MyObserver {
             waitBlock();
             if (_isPlaying && _gameArea.isBlockOutOfBounds()) {
                 System.out.println("block out of bounds");
-//                Thread.currentThread().interrupt();
+                Thread.currentThread().interrupt();
                 _isPlaying = false;
                 gameOver();
             }
@@ -78,6 +79,10 @@ public class GameController implements Runnable, MyObserver {
             System.out.println("Set playing");
             _isPlaying = true;
         }
+    }
+
+    public void setShutdown(boolean status) {
+        _isShutdown = status;
     }
 
     public void setPlaying(boolean playing) {
