@@ -1,134 +1,133 @@
 ﻿#include <stdio.h>
-#include <unistd.h>
-#include <stdbool.h>
 #include <stdlib.h>
-#include <errno.h>
-#include <signal.h>
+#include <string.h>
 #include <sys/mman.h>
-#include <fcntl.h>
+#include <unistd.h>
 
-#define PAGE_SIZE 0x10
-#define SEG_SIZE 0x100
-#define MAX_OBJECTS_COUNT 12
+#define MEMORY_SIZE 1000 + 4 * 24
 
-bool isSet[MAX_OBJECTS_COUNT];
+//size = 24
+typedef struct memBlock {
+    size_t size;
+    struct memBlock* next;
+    int isFree;
+} memBlock_t;
 
-typedef struct {
-	int left;
-	int right;
-} segObject;
+static void* memory = NULL;
+static memBlock_t* head = NULL;
 
-segObject objDB[MAX_OBJECTS_COUNT];
-int objIteration = 0;
-
-void* createMemorySegment()
-{
-	int fd = open("memory", O_CREAT, O_RDWR);
-	if (fd == -1)
-	{
-		perror("create memory segment");
-		exit(-1);
-	}
-
-	void* segment = mmap(
-		NULL,
-		PAGE_SIZE * SEG_SIZE,
-		PROT_READ | PROT_WRITE/*|PROT_EXEC*/,
-		MAP_PRIVATE, // | MAP_ANONYMOUS, 
-		fd,
-		0
-	);
-
-	if (segment == MAP_FAILED) {
-		printf("Couldn't create segment\n");
-
-		if (close(fd))
-			perror("Couldn't close file descriptor");
-		return NULL;
-	}
-	return segment;
+void init() {
+    memory = mmap(NULL, MEMORY_SIZE, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    head = (memBlock_t*)memory;
+    head->size = MEMORY_SIZE - sizeof(memBlock_t);
+    head->next = NULL;
+    head->isFree = 1;
 }
 
-void* myMalloc(void* mySegment, size_t size)
-{
-	// (тут метод 2 указателей)
-	int right = 0;
+void* myMalloc(size_t size) {
+    printf("Try allocate %ld bytes\n", size);
+    memBlock_t* current;
+    void* result = NULL;
+    if (head == NULL) {
+        init();
+    }
 
-	for (int left = 0; left < SEG_SIZE; ++left) {
-		if (left >= right) {
-			right = left + 1;
-		}
-		while (right > left && !isSet[right] && !isSet[left]) {
-			if ((size + PAGE_SIZE - 1) / PAGE_SIZE <= right - left); {
-				for (int st = left; st < right; st++) {
-					isSet[st] = true;
-				}
-				segObject newMemoryObject;
-				newMemoryObject.left = left;
-				newMemoryObject.right = right;
-				objDB[objIteration++] = newMemoryObject;
-				return mySegment + left * PAGE_SIZE;
-			}
-			right++;
-		}
-	}
-	return NULL;
+    current = head;
+    while (current) {
+        if (current->isFree && current->size >= size) {
+            if (current->size > size + sizeof(memBlock_t)) {
+                memBlock_t* new_block = (memBlock_t*)((char*)current + sizeof(memBlock_t) + size);
+                new_block->size = current->size - size - sizeof(memBlock_t);
+                new_block->next = current->next;
+                new_block->isFree = 1;
+                current->next = new_block;
+                current->size = size;
+            }
+            current->isFree = 0;
+            result = (void*)((char*)current + sizeof(memBlock_t));
+            break;
+        }
+        current = current->next;
+    }
+    if (result != NULL) {
+        printf("Allocated %lu bytes\n", size);
+    }
+    else {
+        printf("Allocation failed\n");
+    }
+    return result;
 }
 
-void my_free(void* addr, void* segment) {
-	for (int i = 0; i < MAX_OBJECTS_COUNT; ++i) {
-		if (objDB[(segment - addr) / PAGE_SIZE].left == i) {
-			for (int st = i; i < objDB[(segment - addr) / PAGE_SIZE].right; ++i) {
-				isSet[st] = false;
-			}
-		}
-	}
+void myFree(void* ptr) {
+    memBlock_t* current;
+    if (ptr == NULL || head == NULL) {
+        return;
+    }
+    current = (memBlock_t*)((char*)ptr - sizeof(memBlock_t));
+    if (current->isFree) {
+        return;
+    }
+    current->isFree = 1;
+
+    // Merge free blocks
+    current = head;
+    while (current) {
+        if (current->isFree && current->next && current->next->isFree) {
+            printf("free %ld bytes\n", current->next->size);
+            current->size += sizeof(memBlock_t) + current->next->size;
+            current->next = current->next->next;
+        }
+        current = current->next;
+    }
 }
 
 int main() {
-	for (int i = 0; i < SEG_SIZE; ++i)
-		isSet[i] = 0;
+    int* p1 = myMalloc(100);
+    memset(p1, 0x00, 100);
+    printf("Malloc: p1 %p\n", p1);
+    for (int i = 0; i < 25; ++i) {
+        p1[i] = i;
+        printf("%d ", p1[i]);
+    }
+    printf("\n");
 
-	void* segment = createMemorySegment();
+    void* p2 = myMalloc(200);
+    printf("Malloc: p2 %p\n", p2);
 
-	// i allocate 1 page
-	// void* addr1 = my_malloc(segment, 100);
-	// void* addr2 = my_malloc(segment, 15);
+    void* p3 = myMalloc(300);
+    printf("Malloc: p3 %p\n", p3);
 
-	// char* string1 = (char*)addr1;
-	// char* string2 = (char*)addr2;
+    void* p4 = myMalloc(400);
+    printf("Malloc: p4 %p\n", p4);
 
-	// string1 = "Hello";
-	// string2 = "World";
+    /*printf("Before free: p3 %p\n", p3);
+    myFree(p3);
+    printf("After free: p3 %p\n", p3);
+    myFree(p3);
+    printf("Free just again p3: %p\n", p3);*/
+    printf("allocated 1000\n");
+    myFree(p3);
+    p3 = myMalloc(250);
+    void* p5 = myMalloc(250);
+    printf("Malloc: p5 %p\n", p5);
+    /*myFree(p3);
+    printf("Free after malloc again p3: %p\n", p3);*/
 
-	void* addr1 = myMalloc(segment, 100);
-	char* string1 = (char*)addr1;
+    myFree(p1);
+    myFree(p4);
+    myFree(p5);
 
-	void* addr2 = myMalloc(segment, 100);
-	char* string2 = (char*)addr2;
-
-	for (int i = 0; i < 20; ++i)
-		string1[i] = 'i';
-
-	for (int i = 0; i < 20; ++i)
-		string2[i] = 'b';
-
-	void* addr3 = myMalloc(segment, SEG_SIZE * 3);
-	char* string3 = (char*)addr3;
-
-	for (int i = 0; i < PAGE_SIZE * 2; ++i)
-		string3[i] = 'a';
-
-	printf("%s %s\n", string1, string2);
-	printf("%s\n", string3);
-
-	printf("First 50 memory blocks\n");
-	for (int i = 0; i < 50; ++i)
-		printf("%d: %d, ", i, isSet[i]);
-
-	my_free(addr1, segment);
-	my_free(addr2, segment);
-	printf("Is allocated %d \n", isSet[0]);
-	sleep(100);
-	return EXIT_SUCCESS;
+    int* p6 = myMalloc(100);
+    for (int i = 0; i < 20; ++i) {
+        printf("%d ", p6[i]);
+    }
+    printf("\n");
+    printf("Malloc: p6 %p\n", p6);
+    for (int i = 0; i < 20; ++i) {
+        p6[i] = 20 - i;
+        printf("%d ", p6[i]);
+    }
+    printf("\n");
+    myFree(p6);
+    return 0;
 }
