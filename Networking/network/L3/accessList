@@ -1,0 +1,18 @@
+//router 11
+ip access-list standard TO-1C
+ permit 10.0.15.0 0.0.0.255
+ permit 10.0.30.0 0.0.0.255
+exit
+
+interface Fa0/1.100
+ ip access-group TO-1C out
+exit
+
+ip access-list extended TO-WWW
+permit icmp 10.0.30.3 0.0.0.255 host 10.0.200.2
+deny icmp any host 10.0.200.2
+permit ip any any
+deny ip any any
+
+int fa0/0
+ ip access-group TO-WWW out

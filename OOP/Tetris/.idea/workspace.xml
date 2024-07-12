@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="34ad3fc9-241a-45a7-a0da-57c732675998" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../CalcSpring/input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../CalcSpring/input.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CalcSpring/src/main/java/ru/nsu/fit/tropin/CalculatorController/CalculatorControllerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CalcSpring/src/main/java/ru/nsu/fit/tropin/CalculatorController/CalculatorControllerMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CalcSpring/src/main/java/ru/nsu/fit/tropin/Configurations/Configurations.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CalcSpring/src/main/java/ru/nsu/fit/tropin/Configurations/Configurations.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CalcSpring/src/main/java/ru/nsu/fit/tropin/Exceptions/FormatDouble.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CalcSpring/src/main/java/ru/nsu/fit/tropin/Exceptions/FormatDouble.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CalcSpring/src/main/java/ru/nsu/fit/tropin/Operations/Division.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CalcSpring/src/main/java/ru/nsu/fit/tropin/Operations/Division.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CalcSpring/src/main/java/ru/nsu/fit/tropin/Operations/Push.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CalcSpring/src/main/java/ru/nsu/fit/tropin/Operations/Push.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CalcSpring/src/main/resources/input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../CalcSpring/src/main/resources/input.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CalcSpring/src/main/resources/log4j.log" beforeDir="false" afterPath="$PROJECT_DIR$/../CalcSpring/src/main/resources/log4j.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CalcSpring/src/test/java/ru/nsu/fit/tropin/Operations/PrintTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CalcSpring/src/test/java/ru/nsu/fit/tropin/Operations/PrintTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/tropin/Controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/tropin/Controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/tropin/Model/GameArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/tropin/Model/GameArea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/tropin/Parser/CommandLineParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/tropin/Parser/CommandLineParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/tropin/View/GView/DrawBlockGraphic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/tropin/View/GView/DrawBlockGraphic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/tropin/View/GView/GameAreaViewGraphic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/tropin/View/GView/GameAreaViewGraphic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/tropin/View/GView/MainMenuGraphic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/tropin/View/GView/MainMenuGraphic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/tropin/View/TextView/GameAreaViewText.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/nsu/fit/tropin/View/TextView/GameAreaViewText.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2fzeCrNtKHZGrmSziXQU70IGDxP" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Just Main.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "labbing",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/MyFiles/CodingProjects/GitProjects/NSU-projects-java/OOP/Tetris",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "C:/MyFiles/CodingProjects/GitProjects/NSU-projects-java/OOP/Tetris/src/main/java/org/example/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Just Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="ru.nsu.fit.tropin.Main" />
+      <module name="Tetris" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="34ad3fc9-241a-45a7-a0da-57c732675998" name="Changes" comment="" />
+      <created>1714808209938</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1714808209938</updated>
+      <workItem from="1714889481957" duration="2116000" />
+      <workItem from="1714891634574" duration="12104000" />
+      <workItem from="1714915903874" duration="3803000" />
+      <workItem from="1714919790204" duration="3021000" />
+      <workItem from="1714928628500" duration="545000" />
+      <workItem from="1714929241775" duration="3646000" />
+      <workItem from="1714980704125" duration="11501000" />
+      <workItem from="1714999131919" duration="20009000" />
+      <workItem from="1715310153252" duration="1835000" />
+      <workItem from="1715500739097" duration="28585000" />
+      <workItem from="1715774697079" duration="1281000" />
+      <workItem from="1715864933429" duration="2938000" />
+      <workItem from="1715923099277" duration="9820000" />
+      <workItem from="1716223546990" duration="30463000" />
+      <workItem from="1716607928187" duration="6637000" />
+      <workItem from="1716736573021" duration="5435000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ru/nsu/fit/tropin/Controller/GameController.java</url>
+          <line>76</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
