@@ -3,8 +3,10 @@
 
 std::vector<int> solver::solveEquation(float a, float b, float c, float d, float accuracy, double step) {
     std::vector<float> derivativeRoots;
-    int maxRootsCount = researchDerivative(3 * a, 2 * b, c, derivativeRoots);
-    int res = calcRoots(maxRootsCount, a, b, c, d, accuracy);
+    std::vector<float> solutions;
+    bool isNegative = false;
+    int maxRootsCount = researchDerivative(a, b, c, derivativeRoots, &isNegative);
+    int res = calcRoots(maxRootsCount, a, b, c, d, accuracy, step, solutions);
     return std::vector<int>();
 }
 
@@ -17,7 +19,9 @@ void solver::calcSquareRoots(float a, float b, float discriminant, std::vector<f
     roots.push_back((-1 * b - std::sqrt(discriminant)) / (2 * a));
 }
 
-int solver::researchDerivative(float a, float b, float c, std::vector<float> derivativeRoots) {
+int solver::researchDerivative(float a, float b, float c, std::vector<float> derivativeRoots, bool* isNegative) {
+    a *= 3;
+    b *= 2;
     int discriminant = calcDiscriminant(a, b, c, derivativeRoots);
     if (discriminant < 0) {
         return 1;
@@ -31,8 +35,29 @@ int solver::researchDerivative(float a, float b, float c, std::vector<float> der
     return 0;
 }
 
-int solver::calcRoots(int maxRootsCount, float a, float b, float c, float d, double accuracy) {
+int solver::calcRoots(int maxRootsCount, float a, float b, float c, float d, double accuracy, double step, std::vector<float> roots) {
     if (maxRootsCount == 1) {
-
+        float start, finish;
+        // функция убывает, т.к. D < 0 и в 3ax^2 + 2bx + c, c < 0.
+        if (c < 0) {
+            if (d > 0) {
+                bisectionMethod(0, __DBL_MAX__, accuracy, step);
+            } else {
+                bisectionMethod(__DBL_MIN__, 0, accuracy, step);
+            }
+        // функция возрастает.
+        } else if (c > 0) {
+            if (d > 0) {
+                bisectionMethod(__DBL_MIN__, 0, accuracy, step);
+            } else {
+                bisectionMethod(0, __DBL_MAX__, accuracy, step);
+            }
+        } else {
+            roots.push_back(0);
+        }
     }
+}
+
+float solver::bisectionMethod(double a, double b, double accuracy, double step) {
+
 }
