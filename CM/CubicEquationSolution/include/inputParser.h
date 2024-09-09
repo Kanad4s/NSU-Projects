@@ -2,8 +2,7 @@
 #define INPUT_PARSER
 
 namespace inputParser {
-    bool parseInput(int argc, char* argv[], float* a, float* b, float* c, float* d, double* accuracy, double* step);
+    bool parseInput(int argc, char *argv[], double *a, double *b, double *c, double *d, double *accuracy, double *step);
 }
-
 
 #endif

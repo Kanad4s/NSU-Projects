@@ -3,7 +3,7 @@
 #include <vector>
 
 namespace outputParser {
-    void showResults(std::vector<int> solution);
+    void showResults(std::vector<double> solution);
 }
 
 #endif

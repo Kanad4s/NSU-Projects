@@ -1,6 +1,6 @@
 #include <inputParser.h>
 
-bool inputParser::parseInput(int argc, char *argv[], float *a, float *b, float *c, float *d, double* accuracy, double* step)
+bool inputParser::parseInput(int argc, char *argv[], double *a, double *b, double *c, double *d, double* accuracy, double* step)
 {
     return false;
 }
