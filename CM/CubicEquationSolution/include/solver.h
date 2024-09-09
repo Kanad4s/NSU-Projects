@@ -15,6 +15,7 @@ namespace solver{
     int researchDerivative(double a, double b, double c, std::vector<double> derivativeRoots, bool *isNegative);
     int calcRoots(int maxRootsCount, double a, double b, double c, double d, double accuracy, double step, std::vector<double> roots);
     double bisectionMethod(double a, double b, double accuracy, double step);
+    bool isRoot(double value, double accuracy);
     double calcFunction(double x);
 }
 

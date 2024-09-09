@@ -64,6 +64,10 @@ double solver::bisectionMethod(double a, double b, double accuracy, double step)
     }
 }
 
+bool solver::isRoot(double value, double accuracy) {
+    return std::abs(value) <= accuracy;
+}
+
 double solver::calcFunction(double x) {
     return A * x * x * x + B * x * x + C * x + D;
 }
