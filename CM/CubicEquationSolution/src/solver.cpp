@@ -38,16 +38,20 @@ solver::discriminantState solver::researchDerivative(double a, double b, double 
 int solver::calcRoots(discriminantState discriminantState, double a, double b, double c, double d, double accuracy, double step, std::vector<double> roots) {
     if (discriminantState == discriminantState::negative) {
         double root;
+        double segmentLeftBorder;
         // функция убывает, т.к. D < 0 и в 3ax^2 + 2bx + c, c < 0.
         if (c < 0) {
             if (d > 0) {
-                root = bisectionMethod(0, solver::maxValue, accuracy, step, true);
+                segmentLeftBorder = findSegmentLeftBorder(0, true);
+                // root = bisectionMethod(0, solver::maxValue, accuracy, step, true);
             } else {
-                root = bisectionMethod(solver::minValue, 0, accuracy, step, false);
+                segmentLeftBorder = findSegmentLeftBorder(0, false); 
+                // root = bisectionMethod(solver::minValue, 0, accuracy, step, false);
             }
         // функция возрастает.
         } else if (c > 0) {
             if (d > 0) {
+                segmentLeftBorder = findSegmentLeftBorder()
                 root = bisectionMethod(solver::minValue, 0, accuracy, step, false);
             } else {
                 root = bisectionMethod(0, solver::maxValue, accuracy, step, true);
@@ -60,16 +64,32 @@ int solver::calcRoots(discriminantState discriminantState, double a, double b, d
 }
 
 double solver::findSegmentLeftBorder(double startPoint, bool rightDirection) {
+    double funcValue = calcFunction(startPoint);
+    double nextFuncValue = funcValue;
     double leftBorder = startPoint;
     if (rightDirection) {
-        while (leftBorder <= solver::maxValue && calcFunction(leftBorder + solver::STEP) >= 0) {
+        if (log) std::cout << "findSegmentLeftBorder right direction" << std::endl;
+        leftBorder += solver::STEP;
+        nextFuncValue = calcFunction(leftBorder);
+        while (leftBorder <= solver::maxValue && funcValue * nextFuncValue > 0) {
             leftBorder += solver::STEP;
+            funcValue = nextFuncValue;
+            nextFuncValue = calcFunction(leftBorder);
         }
     } else {
-        while (leftBorder >= solver::minValue && calcFunction(leftBorder - solver::STEP) <= 0) {
+        if (log) std::cout << "findSegmentLeftBorder left direction" << std::endl;
+        leftBorder -= solver::STEP;
+        nextFuncValue = calcFunction(leftBorder);
+        while (leftBorder >= solver::minValue && funcValue * nextFuncValue > 0) {
             leftBorder -= solver::STEP;
+            funcValue = nextFuncValue;
+            nextFuncValue = calcFunction(leftBorder);
         }
         leftBorder -= solver::STEP;
+    }
+    if (log) std::cout << "found leftBorder: " << leftBorder << std::endl;
+    if (leftBorder < solver::minValue || leftBorder > solver::maxValue) {
+        if (log) std::cout << "leftBorder is out of range" << std::endl;
     }
     return leftBorder;
 }
@@ -84,11 +104,9 @@ double solver::bisectionMethod(double a, double b, double accuracy, double step,
         isLeftMinus = true;
     }
     double nextValue = (a + b) / 2;
-    while (!isRoot()) {
-        if (isRoot()) {
+    // while (!isRoot()) {
 
-        }
-    }
+    // }
 }
 
 bool solver::isRoot(double value, double accuracy) {

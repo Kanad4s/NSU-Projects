@@ -19,6 +19,8 @@ namespace solver{
     double minValue = -100000;
     double maxValue = 100000;
 
+    bool log = true;
+
 
     std::vector<double> solveEquation(double a, double b, double c, double d, double accuracy, double step);
     int calcDiscriminant(double a, double b, double c, std::vector<double> roots);
