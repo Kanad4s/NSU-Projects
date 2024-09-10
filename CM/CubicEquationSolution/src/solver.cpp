@@ -1,11 +1,12 @@
 #include "solver.h"
+#include <iostream>
 #include <cmath>
 
 std::vector<double> solver::solveEquation(double a, double b, double c, double d, double accuracy, double step) {
     std::vector<double> derivativeRoots;
     std::vector<double> solutions;
     bool isNegative = false;
-    int discriminantState = researchDerivative(a, b, c, derivativeRoots, &isNegative);
+    discriminantState discriminantState = researchDerivative(a, b, c, derivativeRoots, &isNegative);
     int res = calcRoots(discriminantState, a, b, c, d, accuracy, step, solutions);
     return std::vector<double>();
 }
@@ -34,22 +35,22 @@ solver::discriminantState solver::researchDerivative(double a, double b, double 
     }  
 }
 
-int solver::calcRoots(int discriminantState, double a, double b, double c, double d, double accuracy, double step, std::vector<double> roots) {
-    if (discriminantState == 1) {
+int solver::calcRoots(discriminantState discriminantState, double a, double b, double c, double d, double accuracy, double step, std::vector<double> roots) {
+    if (discriminantState == discriminantState::negative) {
         double root;
         // функция убывает, т.к. D < 0 и в 3ax^2 + 2bx + c, c < 0.
         if (c < 0) {
             if (d > 0) {
-                root = bisectionMethod(0, __DBL_MAX__, accuracy, step);
+                root = bisectionMethod(0, solver::maxValue, accuracy, step, true);
             } else {
-                root = bisectionMethod(__DBL_MIN__, 0, accuracy, step);
+                root = bisectionMethod(solver::minValue, 0, accuracy, step, false);
             }
         // функция возрастает.
         } else if (c > 0) {
             if (d > 0) {
-                root = bisectionMethod(__DBL_MIN__, 0, accuracy, step);
+                root = bisectionMethod(solver::minValue, 0, accuracy, step, false);
             } else {
-                root = bisectionMethod(0, __DBL_MAX__, accuracy, step);
+                root = bisectionMethod(0, solver::maxValue, accuracy, step, true);
             }
         } else {
             root = 0;
@@ -58,16 +59,40 @@ int solver::calcRoots(int discriminantState, double a, double b, double c, doubl
     }
 }
 
+double solver::findSegmentLeftBorder(double startPoint, bool rightDirection) {
+    double leftBorder = startPoint;
+    if (rightDirection) {
+        while (leftBorder <= solver::maxValue && calcFunction(leftBorder + solver::STEP) >= 0) {
+            leftBorder += solver::STEP;
+        }
+    } else {
+        while (leftBorder >= solver::minValue && calcFunction(leftBorder - solver::STEP) <= 0) {
+            leftBorder -= solver::STEP;
+        }
+        leftBorder -= solver::STEP;
+    }
+    return leftBorder;
+}
+
 double solver::bisectionMethod(double a, double b, double accuracy, double step, bool rightDirection) {
-    while (true) {
-        if (isRoot(calcFunction())) {
+    if (a * b > 0) {
+        std::cout << "worng [ " << a << ", " << b << "], sign is same" << std::endl;
+        return 0;
+    }
+    bool isLeftMinus = false;
+    if (a < 0) {
+        isLeftMinus = true;
+    }
+    double nextValue = (a + b) / 2;
+    while (!isRoot()) {
+        if (isRoot()) {
 
         }
     }
 }
 
 bool solver::isRoot(double value, double accuracy) {
-    return std::abs(value) <= accuracy;
+    return std::abs(calcFunction(value)) <= accuracy;
 }
 
 double solver::calcFunction(double x) {
