@@ -43,22 +43,18 @@ int solver::calcRoots(discriminantState discriminantState, double a, double b, d
         if (c < 0) {
             if (d > 0) {
                 segmentLeftBorder = findSegmentLeftBorder(0, true);
-                // root = bisectionMethod(0, solver::maxValue, accuracy, step, true);
             } else {
                 segmentLeftBorder = findSegmentLeftBorder(0, false); 
-                // root = bisectionMethod(solver::minValue, 0, accuracy, step, false);
             }
         // функция возрастает.
         } else if (c > 0) {
             if (d > 0) {
-                segmentLeftBorder = findSegmentLeftBorder()
-                root = bisectionMethod(solver::minValue, 0, accuracy, step, false);
+                segmentLeftBorder = findSegmentLeftBorder(0, false);
             } else {
-                root = bisectionMethod(0, solver::maxValue, accuracy, step, true);
+                segmentLeftBorder = findSegmentLeftBorder(0, true);
             }
-        } else {
-            root = 0;
         }
+        root = bisectionMethod(segmentLeftBorder, segmentLeftBorder + solver::STEP, solver::ACCURACY);
         roots.push_back(root);
     }
 }
@@ -94,11 +90,7 @@ double solver::findSegmentLeftBorder(double startPoint, bool rightDirection) {
     return leftBorder;
 }
 
-double solver::bisectionMethod(double a, double b, double accuracy, double step, bool rightDirection) {
-    if (a * b > 0) {
-        std::cout << "worng [ " << a << ", " << b << "], sign is same" << std::endl;
-        return 0;
-    }
+double solver::bisectionMethod(double a, double b, double accuracy) {
     bool isLeftMinus = false;
     if (a < 0) {
         isLeftMinus = true;
