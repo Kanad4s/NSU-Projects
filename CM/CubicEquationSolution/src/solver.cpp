@@ -5,8 +5,8 @@ std::vector<double> solver::solveEquation(double a, double b, double c, double d
     std::vector<double> derivativeRoots;
     std::vector<double> solutions;
     bool isNegative = false;
-    int maxRootsCount = researchDerivative(a, b, c, derivativeRoots, &isNegative);
-    int res = calcRoots(maxRootsCount, a, b, c, d, accuracy, step, solutions);
+    int discriminantState = researchDerivative(a, b, c, derivativeRoots, &isNegative);
+    int res = calcRoots(discriminantState, a, b, c, d, accuracy, step, solutions);
     return std::vector<double>();
 }
 
@@ -19,48 +19,50 @@ void solver::calcSquareRoots(double a, double b, double discriminant, std::vecto
     roots.push_back((-1 * b - std::sqrt(discriminant)) / (2 * a));
 }
 
-int solver::researchDerivative(double a, double b, double c, std::vector<double> derivativeRoots, bool* isNegative) {
+solver::discriminantState solver::researchDerivative(double a, double b, double c, std::vector<double> derivativeRoots, bool* isNegative) {
     a *= 3;
     b *= 2;
     int discriminant = calcDiscriminant(a, b, c, derivativeRoots);
-    if (discriminant < 0) {
-        return 1;
+    if (discriminant > 0) {
+        calcSquareRoots(a, b, discriminant, derivativeRoots);
+        return discriminantState::positive;
     } else if (discriminant == 0) {
         derivativeRoots.push_back(-1 * b / (2 * a));
-        return 2;
-    } else if (discriminant > 0) {
-        calcSquareRoots(a, b, discriminant, derivativeRoots);
-        return 3;
-    }
-    return 0;
+        return discriminantState::zero;
+    } else if (discriminant < 0) {
+        return discriminantState::negative;
+    }  
 }
 
-int solver::calcRoots(int maxRootsCount, double a, double b, double c, double d, double accuracy, double step, std::vector<double> roots) {
-    if (maxRootsCount == 1) {
-        double start, finish;
+int solver::calcRoots(int discriminantState, double a, double b, double c, double d, double accuracy, double step, std::vector<double> roots) {
+    if (discriminantState == 1) {
+        double root;
         // функция убывает, т.к. D < 0 и в 3ax^2 + 2bx + c, c < 0.
         if (c < 0) {
             if (d > 0) {
-                bisectionMethod(0, __DBL_MAX__, accuracy, step);
+                root = bisectionMethod(0, __DBL_MAX__, accuracy, step);
             } else {
-                bisectionMethod(__DBL_MIN__, 0, accuracy, step);
+                root = bisectionMethod(__DBL_MIN__, 0, accuracy, step);
             }
         // функция возрастает.
         } else if (c > 0) {
             if (d > 0) {
-                bisectionMethod(__DBL_MIN__, 0, accuracy, step);
+                root = bisectionMethod(__DBL_MIN__, 0, accuracy, step);
             } else {
-                bisectionMethod(0, __DBL_MAX__, accuracy, step);
+                root = bisectionMethod(0, __DBL_MAX__, accuracy, step);
             }
         } else {
-            roots.push_back(0);
+            root = 0;
         }
+        roots.push_back(root);
     }
 }
 
-double solver::bisectionMethod(double a, double b, double accuracy, double step) {
+double solver::bisectionMethod(double a, double b, double accuracy, double step, bool rightDirection) {
     while (true) {
+        if (isRoot(calcFunction())) {
 
+        }
     }
 }
 
