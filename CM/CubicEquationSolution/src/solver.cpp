@@ -7,7 +7,8 @@ std::vector<double> solver::solveEquation(double a, double b, double c, double d
     std::vector<double> solutions;
     bool isNegative = false;
     discriminantState discriminantState = researchDerivative(a, b, c, derivativeRoots, &isNegative);
-    int res = calcRoots(discriminantState, a, b, c, d, accuracy, step, solutions);
+    calcRoots(discriminantState, a, b, c, d, accuracy, step, solutions);
+
     return std::vector<double>();
 }
 
@@ -35,7 +36,7 @@ solver::discriminantState solver::researchDerivative(double a, double b, double 
     }  
 }
 
-int solver::calcRoots(discriminantState discriminantState, double a, double b, double c, double d, double accuracy, double step, std::vector<double> roots) {
+void solver::calcRoots(discriminantState discriminantState, double a, double b, double c, double d, double accuracy, double step, std::vector<double> roots) {
     if (discriminantState == discriminantState::negative) {
         double root;
         double segmentLeftBorder;
@@ -127,4 +128,31 @@ bool solver::isRoot(double funcValue, double accuracy) {
 
 double solver::calcFunction(double x) {
     return A * x * x * x + B * x * x + C * x + D;
+}
+
+void solver::researchRootsMultiplicity(std::vector<double> roots, std::vector<int> multiplicity) {
+    for (int i = 0; i < roots.size(); i++) {
+        double funcValue = calcFunction(roots.at(i));
+        int curMultiplicity = 0;
+        if (isRoot(funcValue, solver::ACCURACY)) {
+            curMultiplicity++;
+            funcValue = calcFirstDerivative(roots.at(i));
+            if (isRoot(funcValue, solver::ACCURACY)) {
+                curMultiplicity++;
+                funcValue = calcSecondDerivative(roots.at(i));
+                if (isRoot(funcValue, solver::ACCURACY)) {
+                    curMultiplicity++;
+                }
+            }
+        }
+        multiplicity.push_back(curMultiplicity);
+    }
+} 
+
+double solver::calcFirstDerivative(double x) {
+    return solver::A * 3 * x * x + solver::B * 2 * x + solver::C;
+}
+
+double solver::calcSecondDerivative(double x) {
+    return solver::A * 6 * x + solver::B * 2;
 }

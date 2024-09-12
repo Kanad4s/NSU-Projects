@@ -26,12 +26,15 @@ namespace solver{
     int calcDiscriminant(double a, double b, double c, std::vector<double> roots);
     void calcSquareRoots(double a, double b, double discriminant, std::vector<double> roots);
     discriminantState researchDerivative(double a, double b, double c, std::vector<double> derivativeRoots, bool *isNegative);
-    int calcRoots(discriminantState discriminantState, double a, double b, double c, double d, double accuracy, double step, std::vector<double> roots);
+    void calcRoots(discriminantState discriminantState, double a, double b, double c, double d, double accuracy, double step, std::vector<double> roots);
     double findSegmentLeftBorder(double startPoint, bool rightDirection);
     double bisectionMethod(double a, double b, double accuracy);
     double getSegmentMidpoint(double a, double b);
     bool isRoot(double funcValue, double accuracy);
     double calcFunction(double x);
+    void researchRootsMultiplicity(std::vector<double> roots, std::vector<int> multiplicity);
+    double calcFirstDerivative(double x);
+    double calcSecondDerivative(double x);
 }
 
 #endif
