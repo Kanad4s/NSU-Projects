@@ -95,14 +95,33 @@ double solver::bisectionMethod(double a, double b, double accuracy) {
     if (a < 0) {
         isLeftMinus = true;
     }
-    double nextValue = (a + b) / 2;
-    // while (!isRoot()) {
-
-    // }
+    double midPoint = getSegmentMidpoint(a, b);
+    double funcValue = calcFunction(midPoint);
+    while (!isRoot(funcValue, solver::ACCURACY)) {
+        if (isLeftMinus) {
+            if (funcValue < 0) {
+                a = midPoint;
+            } else {
+                b = midPoint;
+            }
+        } else {
+            if (funcValue < 0) {
+                b = midPoint;
+            } else {
+                a = midPoint;
+            }
+        }
+        midPoint = getSegmentMidpoint(a, b);
+    }
+    return midPoint;
 }
 
-bool solver::isRoot(double value, double accuracy) {
-    return std::abs(calcFunction(value)) <= accuracy;
+double solver::getSegmentMidpoint(double a, double b) {
+    return (a + b) / 2;
+}
+
+bool solver::isRoot(double funcValue, double accuracy) {
+    return std::abs(funcValue) <= accuracy;
 }
 
 double solver::calcFunction(double x) {

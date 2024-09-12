@@ -29,7 +29,8 @@ namespace solver{
     int calcRoots(discriminantState discriminantState, double a, double b, double c, double d, double accuracy, double step, std::vector<double> roots);
     double findSegmentLeftBorder(double startPoint, bool rightDirection);
     double bisectionMethod(double a, double b, double accuracy);
-    bool isRoot(double value, double accuracy);
+    double getSegmentMidpoint(double a, double b);
+    bool isRoot(double funcValue, double accuracy);
     double calcFunction(double x);
 }
 
