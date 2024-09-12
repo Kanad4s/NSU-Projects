@@ -112,6 +112,7 @@ double solver::bisectionMethod(double a, double b, double accuracy) {
             }
         }
         midPoint = getSegmentMidpoint(a, b);
+        funcValue = calcFunction(midPoint);
     }
     return midPoint;
 }
