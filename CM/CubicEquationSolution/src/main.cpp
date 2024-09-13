@@ -1,6 +1,6 @@
-#include <inputParser.h>
-#include <solver.h>
-#include <outputParser.h>
+#include "../include/inputParser.h"
+#include "../include/solver.h"
+#include "../include/outputParser.h"
 #include <iostream>
 
 // фаза тока опережает фазу напряжения
