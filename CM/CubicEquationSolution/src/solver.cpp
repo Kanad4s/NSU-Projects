@@ -1,7 +1,17 @@
-#include "solver.h"
+#include "../include/solver.h"
 #include <iostream>
 #include <cmath>
 
+double solver::A = 1;
+double solver::B = 1;
+double solver::C = 1;
+double solver::D = 1;
+double solver::STEP = 0.5;
+double solver::ACCURACY = 0.02;
+double solver::minValue = -100000;
+double solver::maxValue = 100000;
+bool solver::log = true;
+    
 std::vector<double> solver::solveEquation(double a, double b, double c, double d, double accuracy, double step) {
     std::vector<double> derivativeRoots;
     std::vector<double> solutions;
@@ -34,6 +44,7 @@ solver::discriminantState solver::researchDerivative(double a, double b, double 
     } else if (discriminant < 0) {
         return discriminantState::negative;
     }  
+	return discriminantState::zero;
 }
 
 void solver::calcRoots(discriminantState discriminantState, double a, double b, double c, double d, double accuracy, double step, std::vector<double> roots) {

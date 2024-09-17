@@ -1,4 +1,4 @@
-#include "outputParser.h"
+#include "../include/outputParser.h"
 #include <iostream>
 
 void outputParser::showResults(std::vector<double> solution) {

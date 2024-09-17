@@ -10,16 +10,16 @@ namespace solver{
         positive = 2
     };
 
-    double A = 0;
-    double B = 0;
-    double C = 0;
-    double D = 0;
-    double STEP = 0;
-    double ACCURACY = 0;
-    double minValue = -100000;
-    double maxValue = 100000;
+    extern double A;
+    extern double B;
+    extern double C;
+    extern double D;
+    extern double STEP;
+    extern double ACCURACY;
+    extern double minValue;
+    extern double maxValue;
 
-    bool log = true;
+    extern bool log;
 
 
     std::vector<double> solveEquation(double a, double b, double c, double d, double accuracy, double step);
