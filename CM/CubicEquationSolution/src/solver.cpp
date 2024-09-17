@@ -17,6 +17,7 @@ std::vector<double> solver::solveEquation(double a, double b, double c, double d
     std::vector<double> solutions;
     bool isNegative = false;
     discriminantState discriminantState = researchDerivative(a, b, c, derivativeRoots, &isNegative);
+    std::cout << "derivativeRoots.size() outer:" << derivativeRoots.size() << std::endl;
     calcRoots(discriminantState, a, b, c, d, accuracy, step, solutions);
 
     return solutions;
@@ -36,14 +37,18 @@ solver::discriminantState solver::researchDerivative(double a, double b, double 
     b *= 2;
     int discriminant = calcDiscriminant(a, b, c, derivativeRoots);
     if (discriminant > 0) {
+        if (log) std::cout << "derivative discriminant > 0" << std::endl;
         calcSquareRoots(a, b, discriminant, derivativeRoots);
         return discriminantState::positive;
     } else if (discriminant == 0) {
+        if (log) std::cout << "derivative discriminant == 0" << std::endl;
         derivativeRoots.push_back(-1 * b / (2 * a));
         return discriminantState::zero;
     } else if (discriminant < 0) {
+        if (log) std::cout << "derivative discriminant < 0" << std::endl;
         return discriminantState::negative;
-    }  
+    }
+    if (log) std::cout << "derivative discriminant is unexpected" << std::endl;
 	return discriminantState::zero;
 }
 

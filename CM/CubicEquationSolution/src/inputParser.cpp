@@ -4,9 +4,9 @@
 
 bool inputParser::parseInput(int argc, char *argv[], double *a, double *b, double *c, double *d, double* accuracy, double* step)
 {
-    std::cout << "arguments count: " << argc << "arguments:" << std::endl;
+    if (solver::log) std::cout << "arguments count: " << argc << ", arguments:" << std::endl;
     for (int i = 0; i < argc; i++) {
-        std::cout << argv[i] << std::endl;
+        if (solver::log) std::cout << "argv[" << i << "]: " << argv[i] << std::endl;
     }
     if (argc == 6) {
         solver::B = atof(argv[1]);
