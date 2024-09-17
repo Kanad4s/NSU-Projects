@@ -19,7 +19,7 @@ std::vector<double> solver::solveEquation(double a, double b, double c, double d
     discriminantState discriminantState = researchDerivative(a, b, c, derivativeRoots, &isNegative);
     calcRoots(discriminantState, a, b, c, d, accuracy, step, solutions);
 
-    return std::vector<double>();
+    return solutions;
 }
 
 int solver::calcDiscriminant(double a, double b, double c, std::vector<double> roots) {

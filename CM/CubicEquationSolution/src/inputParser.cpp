@@ -16,6 +16,7 @@ bool inputParser::parseInput(int argc, char *argv[], double *a, double *b, doubl
         solver::ACCURACY = atof(argv[5]);
     } else {
         std::cout << "usage: ces-prog <B> <C> <D> <STEP> <ACCURACY>" << std::endl;
+        return false;
     }
     *a = solver::A;
     *b = solver::B;
