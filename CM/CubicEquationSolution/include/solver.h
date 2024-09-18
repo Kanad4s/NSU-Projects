@@ -19,8 +19,8 @@ namespace solver{
     extern double minValue;
     extern double maxValue;
 
-    extern bool log;
-
+    extern bool LOG;
+    extern bool DEEP_LOG;
 
 
     std::vector<double> solveEquation(double a, double b, double c, double d, double accuracy, double step);
