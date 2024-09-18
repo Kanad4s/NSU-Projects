@@ -75,6 +75,10 @@ void solver::calcRoots(discriminantState discriminantState, double a, double b, 
         }
         root = bisectionMethod(segmentLeftBorder, segmentLeftBorder + solver::STEP, solver::ACCURACY);
         roots.push_back(root);
+        if (LOG) std::cout << "Calc roots:" << std::endl;
+        for (int i = 0; i < roots.size(); i++) {
+            if (LOG) std::cout << "\tpushed root: " << roots.at(0) << std::endl;
+        }
     } else if (discriminantState == discriminantState::zero) {
         
     }
