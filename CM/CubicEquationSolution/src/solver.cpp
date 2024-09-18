@@ -17,9 +17,9 @@ std::vector<double> solver::solveEquation(double a, double b, double c, double d
     std::vector<double> solutions;
     bool isNegative = false;
     discriminantState discriminantState = researchDerivative(a, b, c, derivativeRoots, &isNegative);
+    if (solver::log) std::cout << "derivative discriminantState: " << discriminantState << std::endl;
     std::cout << "derivativeRoots.size() outer:" << derivativeRoots.size() << std::endl;
     calcRoots(discriminantState, a, b, c, d, accuracy, step, solutions);
-
     return solutions;
 }
 
@@ -36,19 +36,20 @@ solver::discriminantState solver::researchDerivative(double a, double b, double 
     a *= 3;
     b *= 2;
     int discriminant = calcDiscriminant(a, b, c, derivativeRoots);
+    if (solver::log) std::cout << "discriminant = " << discriminant << std::endl;
     if (discriminant > 0) {
-        if (log) std::cout << "derivative discriminant > 0" << std::endl;
+        if (solver::log) std::cout << "derivative discriminant > 0" << std::endl;
         calcSquareRoots(a, b, discriminant, derivativeRoots);
         return discriminantState::positive;
     } else if (discriminant == 0) {
-        if (log) std::cout << "derivative discriminant == 0" << std::endl;
+        if (solver::log) std::cout << "derivative discriminant == 0" << std::endl;
         derivativeRoots.push_back(-1 * b / (2 * a));
         return discriminantState::zero;
     } else if (discriminant < 0) {
-        if (log) std::cout << "derivative discriminant < 0" << std::endl;
+        if (solver::log) std::cout << "derivative discriminant < 0" << std::endl;
         return discriminantState::negative;
     }
-    if (log) std::cout << "derivative discriminant is unexpected" << std::endl;
+    if (solver::log) std::cout << "derivative discriminant is unexpected" << std::endl;
 	return discriminantState::zero;
 }
 
@@ -73,36 +74,45 @@ void solver::calcRoots(discriminantState discriminantState, double a, double b, 
         }
         root = bisectionMethod(segmentLeftBorder, segmentLeftBorder + solver::STEP, solver::ACCURACY);
         roots.push_back(root);
+    } else if (discriminantState == discriminantState::zero) {
+        
     }
 }
 
+//root may lie on the border
+
 double solver::findSegmentLeftBorder(double startPoint, bool rightDirection) {
     double funcValue = calcFunction(startPoint);
+    if (log) std::cout << "func value = " <<  funcValue << ", at x = " << startPoint << std::endl;
     double nextFuncValue = funcValue;
     double leftBorder = startPoint;
+    if (log) std::cout << "direction: ";
     if (rightDirection) {
-        if (log) std::cout << "findSegmentLeftBorder right direction" << std::endl;
+        if (log) std::cout << "right" << std::endl;
         leftBorder += solver::STEP;
         nextFuncValue = calcFunction(leftBorder);
-        while (leftBorder <= solver::maxValue && funcValue * nextFuncValue > 0) {
+        while (leftBorder < solver::maxValue && funcValue * nextFuncValue > 0) {
+            if (log) std::cout << "func value: " << funcValue << ", next func value: " << nextFuncValue << std::endl;
             leftBorder += solver::STEP;
             funcValue = nextFuncValue;
             nextFuncValue = calcFunction(leftBorder);
         }
+        leftBorder -= solver::STEP;
     } else {
-        if (log) std::cout << "findSegmentLeftBorder left direction" << std::endl;
+        if (log) std::cout << "left" << std::endl;
         leftBorder -= solver::STEP;
         nextFuncValue = calcFunction(leftBorder);
-        while (leftBorder >= solver::minValue && funcValue * nextFuncValue > 0) {
+        while (leftBorder > solver::minValue && funcValue * nextFuncValue > 0) {
+            if (log) std::cout << "func value: " << funcValue << ", next func value: " << nextFuncValue << std::endl;
             leftBorder -= solver::STEP;
             funcValue = nextFuncValue;
             nextFuncValue = calcFunction(leftBorder);
         }
-        leftBorder -= solver::STEP;
     }
-    if (log) std::cout << "found leftBorder: " << leftBorder << std::endl;
+    if (log) std::cout << "found segment:\n" << "\tfunc value: " << funcValue << ", next func value: " << nextFuncValue << std::endl;
+    if (log) std::cout << "\tleftBorder: " << leftBorder << ", rightBorder: " << leftBorder + solver::STEP << std::endl;
     if (leftBorder < solver::minValue || leftBorder > solver::maxValue) {
-        if (log) std::cout << "leftBorder is out of range" << std::endl;
+        if (log) std::cout << "\tleftBorder is out of range" << std::endl;
     }
     return leftBorder;
 }

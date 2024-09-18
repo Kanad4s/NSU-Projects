@@ -22,6 +22,7 @@ namespace solver{
     extern bool log;
 
 
+
     std::vector<double> solveEquation(double a, double b, double c, double d, double accuracy, double step);
     int calcDiscriminant(double a, double b, double c, std::vector<double> roots);
     void calcSquareRoots(double a, double b, double discriminant, std::vector<double> roots);
