@@ -20,7 +20,7 @@ std::vector<double> solver::solveEquation(double a, double b, double c, double d
     discriminantState discriminantState = researchDerivative(a, b, c, derivativeRoots, &isNegative);
     if (LOG) std::cout << "derivative discriminantState: " << discriminantState << std::endl;
     std::cout << "derivativeRoots.size() outer:" << derivativeRoots.size() << std::endl;
-    calcRoots(discriminantState, a, b, c, d, accuracy, step, solutions);
+    calcRoots(discriminantState, a, b, c, d, accuracy, step, &solutions);
     return solutions;
 }
 
@@ -54,7 +54,8 @@ solver::discriminantState solver::researchDerivative(double a, double b, double 
 	return discriminantState::zero;
 }
 
-void solver::calcRoots(discriminantState discriminantState, double a, double b, double c, double d, double accuracy, double step, std::vector<double> roots) {
+void solver::calcRoots(discriminantState discriminantState, double a, double b, double c, double d, double accuracy,
+                       double step, std::vector<double>* roots) {
     if (discriminantState == discriminantState::negative) {
         double root;
         double segmentLeftBorder;
@@ -74,10 +75,10 @@ void solver::calcRoots(discriminantState discriminantState, double a, double b, 
             }
         }
         root = bisectionMethod(segmentLeftBorder, segmentLeftBorder + solver::STEP, solver::ACCURACY);
-        roots.push_back(root);
+        roots->push_back(root);
         if (LOG) std::cout << "Calc roots:" << std::endl;
-        for (int i = 0; i < roots.size(); i++) {
-            if (LOG) std::cout << "\tpushed root: " << roots.at(0) << std::endl;
+        for (int i = 0; i < roots->size(); i++) {
+            if (LOG) std::cout << "\tpushed root: " << roots->at(0) << std::endl;
         }
     } else if (discriminantState == discriminantState::zero) {
         
