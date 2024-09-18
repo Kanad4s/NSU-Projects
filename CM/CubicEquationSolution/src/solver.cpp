@@ -110,7 +110,7 @@ double solver::findSegmentLeftBorder(double startPoint, bool rightDirection) {
             nextFuncValue = calcFunction(leftBorder);
         }
     }
-    if (LOG) std::cout << "found segment:\n" << "\tfunc value: " << funcValue << ", next func value: " << nextFuncValue << std::endl;
+    if (LOG) std::cout << "Found segment:\n" << "\tfunc value: " << funcValue << ", next func value: " << nextFuncValue << std::endl;
     if (LOG) std::cout << "\tleftBorder: " << leftBorder << ", rightBorder: " << leftBorder + solver::STEP << std::endl;
     if (leftBorder < solver::minValue || leftBorder > solver::maxValue) {
         if (LOG) std::cout << "\tleftBorder is out of range" << std::endl;
@@ -123,9 +123,11 @@ double solver::bisectionMethod(double a, double b, double accuracy) {
     if (a < 0) {
         isLeftMinus = true;
     }
+    if (LOG) std:: cout << "Bisection method:\n\tisLeftMinus: " << isLeftMinus << std::endl; 
     double midPoint = getSegmentMidpoint(a, b);
     double funcValue = calcFunction(midPoint);
     while (!isRoot(funcValue, solver::ACCURACY)) {
+        if (DEEP_LOG) std::cout << "\tfuncValue: " << funcValue << " at midPoint: " << midPoint << std::endl;
         if (isLeftMinus) {
             if (funcValue < 0) {
                 a = midPoint;
@@ -142,6 +144,7 @@ double solver::bisectionMethod(double a, double b, double accuracy) {
         midPoint = getSegmentMidpoint(a, b);
         funcValue = calcFunction(midPoint);
     }
+    if (LOG) std::cout << "\tfound funcValue: " << funcValue << " at root: " << midPoint << std::endl;
     return midPoint;
 }
 
