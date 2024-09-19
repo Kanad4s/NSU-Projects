@@ -28,10 +28,6 @@ obj_dirs:
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 	@echo 'useless $(CXX) -o $@ $(addprefix $(OBJS_DIRS), $(OBJS)) $(CXXFLAGS)'
 
-%.o : %.cpp
-	$(CXX) -o $@ -c $< $(CXXFLAGS) $(addprefix -I, $(RLTV_INCLD_DIRS))
-	@echo 'useless $(CXX) -o $@ $(addprefix $(OBJS_DIRS), $(OBJS)) $(CXXFLAGS)'
-
 clean:
 	$(RM) -rf $(TARGET) $(addprefix $(OBJS_DIRS)/, $(OBJS))
 
