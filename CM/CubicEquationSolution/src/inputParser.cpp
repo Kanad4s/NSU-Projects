@@ -1,7 +1,6 @@
 #include "../include/inputParser.h"
 #include "../include/solver.h"
 #include <iostream>
-#include "inputParser.h"
 
 bool inputParser::parseInput(int argc, char *argv[], double *a, double *b, double *c, double *d)
 {
