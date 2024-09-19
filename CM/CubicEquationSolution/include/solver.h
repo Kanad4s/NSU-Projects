@@ -22,16 +22,15 @@ namespace solver{
     extern bool LOG;
     extern bool DEEP_LOG;
 
-
-    std::vector<double> solveEquation(double a, double b, double c, double d, double accuracy, double step);
+    std::vector<double> solveEquation(double a, double b, double c, double d, double step);
     int calcDiscriminant(double a, double b, double c, std::vector<double> roots);
     void calcSquareRoots(double a, double b, double discriminant, std::vector<double> roots);
     discriminantState researchDerivative(double a, double b, double c, std::vector<double> derivativeRoots, bool *isNegative);
-    void calcRoots(discriminantState discriminantState, double a, double b, double c, double d, double accuracy, double step, std::vector<double> *roots);
+    void calcRoots(discriminantState discriminantState, double a, double b, double c, double d, double step, std::vector<double> *roots);
     double findSegmentLeftBorder(double startPoint, bool rightDirection);
-    double bisectionMethod(double a, double b, double accuracy);
+    double bisectionMethod(double a, double b);
     double getSegmentMidpoint(double a, double b);
-    bool isRoot(double funcValue, double accuracy);
+    bool isRoot(double funcValue);
     double calcFunction(double x);
     void researchRootsMultiplicity(std::vector<double> roots, std::vector<int> multiplicity);
     double calcFirstDerivative(double x);

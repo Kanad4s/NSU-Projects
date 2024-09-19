@@ -13,14 +13,14 @@ double solver::maxValue = 100000;
 bool solver::LOG = true;
 bool solver::DEEP_LOG = true;
     
-std::vector<double> solver::solveEquation(double a, double b, double c, double d, double accuracy, double step) {
+std::vector<double> solver::solveEquation(double a, double b, double c, double d, double step) {
     std::vector<double> derivativeRoots;
     std::vector<double> solutions;
     bool isNegative = false;
     discriminantState discriminantState = researchDerivative(a, b, c, derivativeRoots, &isNegative);
     if (LOG) std::cout << "derivative discriminantState: " << discriminantState << std::endl;
     std::cout << "derivativeRoots.size() outer:" << derivativeRoots.size() << std::endl;
-    calcRoots(discriminantState, a, b, c, d, accuracy, step, &solutions);
+    calcRoots(discriminantState, a, b, c, d, step, &solutions);
     return solutions;
 }
 
@@ -54,8 +54,8 @@ solver::discriminantState solver::researchDerivative(double a, double b, double 
 	return discriminantState::zero;
 }
 
-void solver::calcRoots(discriminantState discriminantState, double a, double b, double c, double d, double accuracy,
-                       double step, std::vector<double>* roots) {
+void solver::calcRoots(discriminantState discriminantState, double a, double b, double c, double d, double step,
+                        std::vector<double>* roots) {
     if (discriminantState == discriminantState::negative) {
         double root;
         double segmentLeftBorder;
@@ -74,7 +74,7 @@ void solver::calcRoots(discriminantState discriminantState, double a, double b, 
                 segmentLeftBorder = findSegmentLeftBorder(0, true);
             }
         }
-        root = bisectionMethod(segmentLeftBorder, segmentLeftBorder + solver::STEP, solver::ACCURACY);
+        root = bisectionMethod(segmentLeftBorder, segmentLeftBorder + solver::STEP);
         roots->push_back(root);
         if (LOG) std::cout << "Calc roots:" << std::endl;
         for (int i = 0; i < roots->size(); i++) {
@@ -121,11 +121,11 @@ double solver::findSegmentLeftBorder(double startPoint, bool rightDirection) {
     return leftBorder;
 }
 
-double solver::bisectionMethod(double a, double b, double accuracy) {
-    if (isRoot(calcFunction(a), solver::ACCURACY)) {
+double solver::bisectionMethod(double a, double b) {
+    if (isRoot(calcFunction(a))) {
         if (LOG) std::cout << "root is a: " << a << std::endl;
         return a;
-    } else if (isRoot(calcFunction(b), solver::ACCURACY)) {
+    } else if (isRoot(calcFunction(b))) {
         if (LOG) std::cout << "root is b: " << b << std::endl;
         return b;
     }
@@ -136,7 +136,7 @@ double solver::bisectionMethod(double a, double b, double accuracy) {
     if (LOG) std:: cout << "Bisection method:\n\tisLeftMinus: " << isLeftMinus << std::endl;
     double midPoint = getSegmentMidpoint(a, b);
     double funcValue = calcFunction(midPoint);
-    while (!isRoot(funcValue, solver::ACCURACY)) {
+    while (!isRoot(funcValue)) {
         if (DEEP_LOG) std::cout << "\tfuncValue: " << funcValue << " at midPoint: " << midPoint << std::endl;
         if (isLeftMinus) {
             if (funcValue < 0) {
@@ -162,8 +162,8 @@ double solver::getSegmentMidpoint(double a, double b) {
     return (a + b) / 2;
 }
 
-bool solver::isRoot(double funcValue, double accuracy) {
-    return std::abs(funcValue) <= accuracy;
+bool solver::isRoot(double funcValue) {
+    return std::abs(funcValue) <= solver::ACCURACY;
 }
 
 double solver::calcFunction(double x) {
@@ -174,13 +174,13 @@ void solver::researchRootsMultiplicity(std::vector<double> roots, std::vector<in
     for (int i = 0; i < roots.size(); i++) {
         double funcValue = calcFunction(roots.at(i));
         int curMultiplicity = 0;
-        if (isRoot(funcValue, solver::ACCURACY)) {
+        if (isRoot(funcValue)) {
             curMultiplicity++;
             funcValue = calcFirstDerivative(roots.at(i));
-            if (isRoot(funcValue, solver::ACCURACY)) {
+            if (isRoot(funcValue)) {
                 curMultiplicity++;
                 funcValue = calcSecondDerivative(roots.at(i));
-                if (isRoot(funcValue, solver::ACCURACY)) {
+                if (isRoot(funcValue)) {
                     curMultiplicity++;
                 }
             }

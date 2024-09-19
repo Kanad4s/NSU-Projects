@@ -5,9 +5,9 @@
 
 int main(int argc, char* argv[]) {
     double a, b, c, d;
-    double accuracy, step;
-    if (inputParser::parseInput(argc, argv, &a, &b, &c, &d, &accuracy, &step)) {
-        std::vector<double> solution = solver::solveEquation(a, b, c, d, accuracy, step);
+    double step;
+    if (inputParser::parseInput(argc, argv, &a, &b, &c, &d, &step)) {
+        std::vector<double> solution = solver::solveEquation(a, b, c, d, step);
         outputParser::showResults(solution);
     } else {
         std::cout << "not valid input" << std::endl;
