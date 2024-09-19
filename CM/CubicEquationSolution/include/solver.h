@@ -22,11 +22,11 @@ namespace solver{
     extern bool LOG;
     extern bool DEEP_LOG;
 
-    std::vector<double> solveEquation(double a, double b, double c, double d, double step);
+    std::vector<double> solveEquation(double a, double b, double c, double d);
     int calcDiscriminant(double a, double b, double c, std::vector<double> roots);
     void calcSquareRoots(double a, double b, double discriminant, std::vector<double> roots);
     discriminantState researchDerivative(double a, double b, double c, std::vector<double> derivativeRoots, bool *isNegative);
-    void calcRoots(discriminantState discriminantState, double a, double b, double c, double d, double step, std::vector<double> *roots);
+    void calcRoots(discriminantState discriminantState, double a, double b, double c, double d, std::vector<double> *roots);
     double findSegmentLeftBorder(double startPoint, bool rightDirection);
     double bisectionMethod(double a, double b);
     double getSegmentMidpoint(double a, double b);

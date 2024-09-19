@@ -1,6 +1,7 @@
 #include "../include/solver.h"
 #include <iostream>
 #include <cmath>
+#include "solver.h"
 
 double solver::A = 1;
 double solver::B = 1;
@@ -13,14 +14,14 @@ double solver::maxValue = 100000;
 bool solver::LOG = true;
 bool solver::DEEP_LOG = true;
     
-std::vector<double> solver::solveEquation(double a, double b, double c, double d, double step) {
+std::vector<double> solver::solveEquation(double a, double b, double c, double d) {
     std::vector<double> derivativeRoots;
     std::vector<double> solutions;
     bool isNegative = false;
     discriminantState discriminantState = researchDerivative(a, b, c, derivativeRoots, &isNegative);
     if (LOG) std::cout << "derivative discriminantState: " << discriminantState << std::endl;
     std::cout << "derivativeRoots.size() outer:" << derivativeRoots.size() << std::endl;
-    calcRoots(discriminantState, a, b, c, d, step, &solutions);
+    calcRoots(discriminantState, a, b, c, d, &solutions);
     return solutions;
 }
 
@@ -54,8 +55,7 @@ solver::discriminantState solver::researchDerivative(double a, double b, double 
 	return discriminantState::zero;
 }
 
-void solver::calcRoots(discriminantState discriminantState, double a, double b, double c, double d, double step,
-                        std::vector<double>* roots) {
+void solver::calcRoots(discriminantState discriminantState, double a, double b, double c, double d, std::vector<double>* roots) {
     if (discriminantState == discriminantState::negative) {
         double root;
         double segmentLeftBorder;

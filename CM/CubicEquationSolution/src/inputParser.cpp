@@ -1,8 +1,9 @@
 #include "../include/inputParser.h"
 #include "../include/solver.h"
 #include <iostream>
+#include "inputParser.h"
 
-bool inputParser::parseInput(int argc, char *argv[], double *a, double *b, double *c, double *d, double* step)
+bool inputParser::parseInput(int argc, char *argv[], double *a, double *b, double *c, double *d)
 {
     if (solver::LOG) std::cout << "arguments count: " << argc << ", arguments:" << std::endl;
     for (int i = 0; i < argc; i++) {
