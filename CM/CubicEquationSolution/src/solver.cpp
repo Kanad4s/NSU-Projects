@@ -129,7 +129,7 @@ double solver::bisectionMethod(double a, double b) {
         return b;
     }
     bool isLeftMinus = false;
-    if (a < 0) {
+    if (calcFunction(a) < 0) {
         isLeftMinus = true;
     }
     if (LOG) std:: cout << "Bisection method:\n\tisLeftMinus: " << isLeftMinus << std::endl;
@@ -149,6 +149,7 @@ double solver::bisectionMethod(double a, double b) {
             } else {
                 a = midPoint;
             }
+            
         }
         midPoint = getSegmentMidpoint(a, b);
         funcValue = calcFunction(midPoint);
