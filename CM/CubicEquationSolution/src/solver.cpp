@@ -85,8 +85,6 @@ void solver::calcRoots(discriminantState discriminantState, double a, double b, 
     }
 }
 
-//root may lie on the border
-
 double solver::findSegmentLeftBorder(double startPoint, bool rightDirection) {
     double funcValue = calcFunction(startPoint);
     if (LOG) std::cout << "func value = " <<  funcValue << ", at x = " << startPoint << std::endl;
@@ -124,11 +122,18 @@ double solver::findSegmentLeftBorder(double startPoint, bool rightDirection) {
 }
 
 double solver::bisectionMethod(double a, double b, double accuracy) {
+    if (isRoot(calcFunction(a), solver::ACCURACY)) {
+        if (LOG) std::cout << "root is a: " << a << std::endl;
+        return a;
+    } else if (isRoot(calcFunction(b), solver::ACCURACY)) {
+        if (LOG) std::cout << "root is b: " << b << std::endl;
+        return b;
+    }
     bool isLeftMinus = false;
     if (a < 0) {
         isLeftMinus = true;
     }
-    if (LOG) std:: cout << "Bisection method:\n\tisLeftMinus: " << isLeftMinus << std::endl; 
+    if (LOG) std:: cout << "Bisection method:\n\tisLeftMinus: " << isLeftMinus << std::endl;
     double midPoint = getSegmentMidpoint(a, b);
     double funcValue = calcFunction(midPoint);
     while (!isRoot(funcValue, solver::ACCURACY)) {
