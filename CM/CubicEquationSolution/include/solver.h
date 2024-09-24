@@ -7,7 +7,8 @@ namespace solver{
     enum discriminantState {
         negative = 0,
         zero = 1,
-        positive = 2
+        positive = 2,
+        unknown = 3
     };
 
     extern double A;

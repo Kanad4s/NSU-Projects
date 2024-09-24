@@ -58,7 +58,7 @@ solver::discriminantState solver::researchDerivative(double a, double b, double 
         return discriminantState::negative;
     }
     if (LOG) std::cout << "derivative discriminant is unexpected" << std::endl;
-	return discriminantState::zero;
+	return discriminantState::unknown;
 }
 
 void solver::calcRoots(discriminantState discriminantState, double a, double b, double c, double d, std::vector<double>* roots,
@@ -88,6 +88,7 @@ void solver::calcRoots(discriminantState discriminantState, double a, double b, 
             if (LOG) std::cout << "\tpushed root: " << roots->at(0) << std::endl;
         }
     } else if (discriminantState == discriminantState::zero) {
+
         
     } else if (discriminantState == discriminantState::positive) {
         double alpha = derivativeRoots.at(0);
