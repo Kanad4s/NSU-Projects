@@ -1,6 +1,7 @@
 #include "../include/solver.h"
 #include <iostream>
 #include <cmath>
+#include "solver.h"
 
 double solver::A = 1;
 double solver::B = 1;
@@ -17,9 +18,9 @@ std::vector<double> solver::solveEquation(double a, double b, double c, double d
     std::vector<double> derivativeRoots;
     std::vector<double> solutions;
     bool isNegative = false;
-    discriminantState discriminantState = researchDerivative(a, b, c, derivativeRoots, &isNegative);
+    discriminantState discriminantState = researchDerivative(a, b, c, &derivativeRoots, &isNegative);
     if (LOG) std::cout << "derivative discriminantState: " << discriminantState << std::endl;
-    std::cout << "derivativeRoots.size() outer:" << derivativeRoots.size() << std::endl;
+    if (LOG) std::cout << "after research Derivative derivativeRoots.size():" << derivativeRoots.size() << std::endl;
     calcRoots(discriminantState, a, b, c, d, &solutions);
     return solutions;
 }
@@ -28,15 +29,15 @@ int solver::calcDiscriminant(double a, double b, double c, std::vector<double> r
     return b * b - 4 * a * c;
 }
 
-void solver::calcSquareRoots(double a, double b, double discriminant, std::vector<double> roots) {
-    roots.push_back((-1 * b + std::sqrt(discriminant)) / (2 * a));
-    roots.push_back((-1 * b - std::sqrt(discriminant)) / (2 * a));
+void solver::calcSquareRoots(double a, double b, double discriminant, std::vector<double>* roots) {
+    roots->push_back((-1 * b + std::sqrt(discriminant)) / (2 * a));
+    roots->push_back((-1 * b - std::sqrt(discriminant)) / (2 * a));
 }
 
-solver::discriminantState solver::researchDerivative(double a, double b, double c, std::vector<double> derivativeRoots, bool* isNegative) {
+solver::discriminantState solver::researchDerivative(double a, double b, double c, std::vector<double>* derivativeRoots, bool* isNegative) {
     a *= 3;
     b *= 2;
-    int discriminant = calcDiscriminant(a, b, c, derivativeRoots);
+    int discriminant = calcDiscriminant(a, b, c, *derivativeRoots);
     if (LOG) std::cout << "discriminant = " << discriminant << std::endl;
     if (discriminant > solver::ACCURACY) {
         if (LOG) std::cout << "derivative discriminant > ACCURACY" << std::endl;
@@ -44,7 +45,7 @@ solver::discriminantState solver::researchDerivative(double a, double b, double 
         return discriminantState::positive;
     } else if (abs(discriminant) <= solver::ACCURACY) {
         if (LOG) std::cout << "derivative |discriminant| <= ACCURACY" << std::endl;
-        derivativeRoots.push_back(-1 * b / (2 * a));
+        derivativeRoots->push_back(-1 * b / (2 * a));
         return discriminantState::zero;
     } else if (discriminant < -solver::ACCURACY) {
         if (LOG) std::cout << "derivative discriminant < -ACCURACY" << std::endl;
@@ -54,7 +55,8 @@ solver::discriminantState solver::researchDerivative(double a, double b, double 
 	return discriminantState::zero;
 }
 
-void solver::calcRoots(discriminantState discriminantState, double a, double b, double c, double d, std::vector<double>* roots) {
+void solver::calcRoots(discriminantState discriminantState, double a, double b, double c, double d, std::vector<double>* roots,
+                        std::vector<double> derivativeRoots) {
     if (discriminantState == discriminantState::negative) {
         double root;
         double segmentLeftBorder;
@@ -82,6 +84,8 @@ void solver::calcRoots(discriminantState discriminantState, double a, double b, 
     } else if (discriminantState == discriminantState::zero) {
         
     } else if (discriminantState == discriminantState::positive) {
+        double alpha = derivativeRoots.at(0);
+        double betta = derivativeRoots.at(1);
         
     } 
 }
@@ -198,3 +202,4 @@ double solver::calcFirstDerivative(double x) {
 double solver::calcSecondDerivative(double x) {
     return solver::A * 6 * x + solver::B * 2;
 }
+
