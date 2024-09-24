@@ -1,7 +1,6 @@
 #include "../include/solver.h"
 #include <iostream>
 #include <cmath>
-#include "solver.h"
 
 double solver::A = 1;
 double solver::B = 1;
@@ -21,7 +20,7 @@ std::vector<double> solver::solveEquation(double a, double b, double c, double d
     discriminantState discriminantState = researchDerivative(a, b, c, &derivativeRoots, &isNegative);
     if (LOG) std::cout << "derivative discriminantState: " << discriminantState << std::endl;
     if (LOG) std::cout << "after research Derivative derivativeRoots.size():" << derivativeRoots.size() << std::endl;
-    calcRoots(discriminantState, a, b, c, d, &solutions);
+    calcRoots(discriminantState, a, b, c, d, &solutions, derivativeRoots);
     return solutions;
 }
 
@@ -30,8 +29,15 @@ int solver::calcDiscriminant(double a, double b, double c, std::vector<double> r
 }
 
 void solver::calcSquareRoots(double a, double b, double discriminant, std::vector<double>* roots) {
-    roots->push_back((-1 * b + std::sqrt(discriminant)) / (2 * a));
-    roots->push_back((-1 * b - std::sqrt(discriminant)) / (2 * a));
+    double alpha = (-1 * b - std::sqrt(discriminant)) / (2 * a);
+    double beta = (-1 * b + std::sqrt(discriminant)) / (2 * a);
+    if (LOG) std::cout << "CalcSquareRoots:\n\talpha: " << alpha << "\n\tbeta: " << beta << std::endl;
+    if (beta < alpha) {
+        std::swap(alpha, beta);
+        if (LOG) std::cout << "\tswap: alpha: " << alpha << ", beta: " << beta << std::endl;
+    }
+    roots->push_back(alpha);
+    roots->push_back(beta);
 }
 
 solver::discriminantState solver::researchDerivative(double a, double b, double c, std::vector<double>* derivativeRoots, bool* isNegative) {
@@ -85,8 +91,12 @@ void solver::calcRoots(discriminantState discriminantState, double a, double b, 
         
     } else if (discriminantState == discriminantState::positive) {
         double alpha = derivativeRoots.at(0);
-        double betta = derivativeRoots.at(1);
-        
+        double beta = derivativeRoots.at(1);
+        double funcAtAlpha = calcFunction(alpha);
+        double funcAtBeta = calcFunction(beta);
+        if (funcAtAlpha < -solver::ACCURACY && funcAtBeta < -solver::ACCURACY) {
+
+        }
     } 
 }
 
