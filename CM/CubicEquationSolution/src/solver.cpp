@@ -12,7 +12,7 @@ double solver::minValue = -100000;
 double solver::maxValue = 100000;
 bool solver::LOG = true;
 bool solver::DEEP_LOG = true;
-    
+
 std::vector<double> solver::solveEquation(double a, double b, double c, double d) {
     std::vector<double> derivativeRoots;
     std::vector<double> solutions;
@@ -38,16 +38,16 @@ solver::discriminantState solver::researchDerivative(double a, double b, double 
     b *= 2;
     int discriminant = calcDiscriminant(a, b, c, derivativeRoots);
     if (LOG) std::cout << "discriminant = " << discriminant << std::endl;
-    if (discriminant > 0) {
-        if (LOG) std::cout << "derivative discriminant > 0" << std::endl;
+    if (discriminant > solver::ACCURACY) {
+        if (LOG) std::cout << "derivative discriminant > ACCURACY" << std::endl;
         calcSquareRoots(a, b, discriminant, derivativeRoots);
         return discriminantState::positive;
-    } else if (discriminant == 0) {
-        if (LOG) std::cout << "derivative discriminant == 0" << std::endl;
+    } else if (abs(discriminant) <= solver::ACCURACY) {
+        if (LOG) std::cout << "derivative |discriminant| <= ACCURACY" << std::endl;
         derivativeRoots.push_back(-1 * b / (2 * a));
         return discriminantState::zero;
-    } else if (discriminant < 0) {
-        if (LOG) std::cout << "derivative discriminant < 0" << std::endl;
+    } else if (discriminant < -solver::ACCURACY) {
+        if (LOG) std::cout << "derivative discriminant < -ACCURACY" << std::endl;
         return discriminantState::negative;
     }
     if (LOG) std::cout << "derivative discriminant is unexpected" << std::endl;
@@ -58,16 +58,16 @@ void solver::calcRoots(discriminantState discriminantState, double a, double b, 
     if (discriminantState == discriminantState::negative) {
         double root;
         double segmentLeftBorder;
-        // функция убывает, т.к. D < 0 и в 3ax^2 + 2bx + c, c < 0.
-        if (c < 0) {
-            if (d > 0) {
+        // функция убывает, т.к. D < ACCURACY и в 3ax^2 + 2bx + c, c < ACCURACY.
+        if (c < -solver::ACCURACY) {
+            if (d > solver::ACCURACY) {
                 segmentLeftBorder = findSegmentLeftBorder(0, true);
             } else {
                 segmentLeftBorder = findSegmentLeftBorder(0, false); 
             }
         // функция возрастает.
-        } else if (c > 0) {
-            if (d > 0) {
+        } else if (c > solver::ACCURACY) {
+            if (d > solver::ACCURACY) {
                 segmentLeftBorder = findSegmentLeftBorder(0, false);
             } else {
                 segmentLeftBorder = findSegmentLeftBorder(0, true);
@@ -81,7 +81,9 @@ void solver::calcRoots(discriminantState discriminantState, double a, double b, 
         }
     } else if (discriminantState == discriminantState::zero) {
         
-    }
+    } else if (discriminantState == discriminantState::positive) {
+        
+    } 
 }
 
 double solver::findSegmentLeftBorder(double startPoint, bool rightDirection) {
