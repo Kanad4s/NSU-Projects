@@ -1,6 +1,7 @@
 #include "../include/solver.h"
 #include <iostream>
 #include <cmath>
+#include "solver.h"
 
 double solver::A = 1;
 double solver::B = 1;
@@ -66,30 +67,8 @@ void solver::calcRoots(discriminantState discriminantState, double a, double b, 
     double segmentLeftBorder;
     double root;
     if (LOG) std::cout << "Calc roots:" << std::endl;
-    if (discriminantState == discriminantState::negative) {
-        // функция убывает, т.к. D < ACCURACY и в 3ax^2 + 2bx + c, c < ACCURACY.
-        if (c < -solver::ACCURACY) {
-            if (d > solver::ACCURACY) {
-                segmentLeftBorder = findSegmentLeftBorder(0, true);
-            } else {
-                segmentLeftBorder = findSegmentLeftBorder(0, false); 
-            }
-        // функция возрастает.
-        } else if (c > solver::ACCURACY) {
-            if (d > solver::ACCURACY) {
-                segmentLeftBorder = findSegmentLeftBorder(0, false);
-            } else {
-                segmentLeftBorder = findSegmentLeftBorder(0, true);
-            }
-        }
-        root = bisectionMethod(segmentLeftBorder, segmentLeftBorder + solver::STEP);
-        roots->push_back(root);
-        for (int i = 0; i < roots->size(); i++) {
-            if (LOG) std::cout << "\tpushed root: " << roots->at(0) << std::endl;
-        }
-    } else if (discriminantState == discriminantState::zero) {
-
-        
+    if (discriminantState == discriminantState::negative || discriminantState == discriminantState::zero) {
+        solveNegativeDerivateDiscriminant(c, d, roots);
     } else if (discriminantState == discriminantState::positive) {
         double alpha = derivativeRoots.at(0);
         double beta = derivativeRoots.at(1);
@@ -128,6 +107,31 @@ void solver::calcRoots(discriminantState discriminantState, double a, double b, 
         root = bisectionMethod(segmentLeftBorder, segmentLeftBorder + solver::STEP);
         roots->push_back(root);
     } 
+}
+
+void solver::solveNegativeDerivateDiscriminant(double c, double d, std::vector<double> *roots) {
+    double root;
+    double segmentLeftBorder;
+    // функция убывает, т.к. D < ACCURACY и в 3ax^2 + 2bx + c, c < ACCURACY.
+    if (c < -solver::ACCURACY) {
+        if (d > solver::ACCURACY) {
+            segmentLeftBorder = findSegmentLeftBorder(0, true);
+        } else {
+            segmentLeftBorder = findSegmentLeftBorder(0, false); 
+        }
+    // функция возрастает.
+    } else if (c > solver::ACCURACY) {
+        if (d > solver::ACCURACY) {
+            segmentLeftBorder = findSegmentLeftBorder(0, false);
+        } else {
+            segmentLeftBorder = findSegmentLeftBorder(0, true);
+        }
+    }
+    root = bisectionMethod(segmentLeftBorder, segmentLeftBorder + solver::STEP);
+    roots->push_back(root);
+    for (int i = 0; i < roots->size(); i++) {
+        if (LOG) std::cout << "\tpushed root: " << roots->at(0) << std::endl;
+    }
 }
 
 double solver::findSegmentLeftBorder(double startPoint, bool rightDirection) {
