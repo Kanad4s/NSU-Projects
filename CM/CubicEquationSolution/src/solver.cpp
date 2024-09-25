@@ -70,48 +70,12 @@ void solver::calcRoots(discriminantState discriminantState, double a, double b, 
     if (discriminantState == discriminantState::negative || discriminantState == discriminantState::zero) {
         solveNegativeDerivateDiscriminant(c, d, roots);
     } else if (discriminantState == discriminantState::positive) {
-        double alpha = derivativeRoots.at(0);
-        double beta = derivativeRoots.at(1);
-        double funcAtAlpha = calcFunction(alpha);
-        double funcAtBeta = calcFunction(beta);
-        if (LOG) std::cout << "\tevent: ";
-        if (funcAtAlpha <= -solver::ACCURACY && funcAtBeta <= -solver::ACCURACY) {
-            if (LOG) std::cout << "f(Alpha) <= -ACCURACY && f(Beta) <= -ACCURACY" << std::endl;
-            segmentLeftBorder = findSegmentLeftBorder(beta, true);
-        } else if (funcAtAlpha >= solver::ACCURACY && funcAtBeta >= solver::ACCURACY) {
-            if (LOG) std::cout << "f(Alpha) >= ACCURACY && f(Beta) >= ACCURACY" << std::endl;
-            segmentLeftBorder = findSegmentLeftBorder(alpha, false);
-        } else if (abs(funcAtAlpha) <= solver::ACCURACY && funcAtBeta <= -solver::ACCURACY) {
-            if (LOG) std::cout << "|f(Alpha)| <= ACCURACY && f(Beta) <= -ACCURACY" << std::endl;
-            roots->push_back(alpha);
-            segmentLeftBorder = findSegmentLeftBorder(beta, true);
-        } else if (funcAtAlpha >= solver::ACCURACY && abs(funcAtBeta) <= solver::ACCURACY) {
-            if (LOG) std::cout << "f(Alpha) >= ACCURACY && |f(Beta)| <= ACCURACY" << std::endl;
-            roots->push_back(beta);
-            segmentLeftBorder = findSegmentLeftBorder(alpha, false);
-        } else if (funcAtAlpha >= solver::ACCURACY && funcAtBeta <= -solver::ACCURACY) {
-            if (LOG) std::cout << "f(Alpha) >= ACCURACY && f(Beta) <= -ACCURACY" << std::endl;
-            segmentLeftBorder = findSegmentLeftBorder(alpha, false);
-            root = bisectionMethod(segmentLeftBorder, segmentLeftBorder + solver::STEP);
-            roots->push_back(root);
-            segmentLeftBorder = findSegmentLeftBorder(beta, true);
-            root = bisectionMethod(segmentLeftBorder, segmentLeftBorder + solver::STEP);
-            roots->push_back(root);
-            segmentLeftBorder = findSegmentLeftBorder(alpha, true);
-        } else if (abs(funcAtAlpha) <= solver::ACCURACY && abs(funcAtBeta) <= solver::ACCURACY) {
-            if (LOG) std::cout << "|f(Alpha)| <= ACCURACY && |f(Beta)| <= ACCURACY" << std::endl;
-            root = (alpha + beta) / 2;
-            roots->push_back(root);
-            return;
-        }
-        root = bisectionMethod(segmentLeftBorder, segmentLeftBorder + solver::STEP);
-        roots->push_back(root);
-    } 
+        solvePositiveDerivativeDiscriminant(roots, derivativeRoots);
+    }
 }
 
 void solver::solveNegativeDerivateDiscriminant(double c, double d, std::vector<double> *roots) {
-    double root;
-    double segmentLeftBorder;
+    double root, segmentLeftBorder;
     // функция убывает, т.к. D < ACCURACY и в 3ax^2 + 2bx + c, c < ACCURACY.
     if (c < -solver::ACCURACY) {
         if (d > solver::ACCURACY) {
@@ -132,6 +96,46 @@ void solver::solveNegativeDerivateDiscriminant(double c, double d, std::vector<d
     for (int i = 0; i < roots->size(); i++) {
         if (LOG) std::cout << "\tpushed root: " << roots->at(0) << std::endl;
     }
+}
+
+void solver::solvePositiveDerivativeDiscriminant(std::vector<double>* roots, std::vector<double> derivativeRoots) {
+    double alpha = derivativeRoots.at(0);
+    double beta = derivativeRoots.at(1);
+    double funcAtAlpha = calcFunction(alpha);
+    double funcAtBeta = calcFunction(beta);
+    double root, segmentLeftBorder;
+    if (LOG) std::cout << "\tevent: ";
+    if (funcAtAlpha <= -solver::ACCURACY && funcAtBeta <= -solver::ACCURACY) {
+        if (LOG) std::cout << "f(Alpha) <= -ACCURACY && f(Beta) <= -ACCURACY" << std::endl;
+        segmentLeftBorder = findSegmentLeftBorder(beta, true);
+    } else if (funcAtAlpha >= solver::ACCURACY && funcAtBeta >= solver::ACCURACY) {
+        if (LOG) std::cout << "f(Alpha) >= ACCURACY && f(Beta) >= ACCURACY" << std::endl;
+        segmentLeftBorder = findSegmentLeftBorder(alpha, false);
+    } else if (abs(funcAtAlpha) <= solver::ACCURACY && funcAtBeta <= -solver::ACCURACY) {
+        if (LOG) std::cout << "|f(Alpha)| <= ACCURACY && f(Beta) <= -ACCURACY" << std::endl;
+        roots->push_back(alpha);
+        segmentLeftBorder = findSegmentLeftBorder(beta, true);
+    } else if (funcAtAlpha >= solver::ACCURACY && abs(funcAtBeta) <= solver::ACCURACY) {
+        if (LOG) std::cout << "f(Alpha) >= ACCURACY && |f(Beta)| <= ACCURACY" << std::endl;
+        roots->push_back(beta);
+        segmentLeftBorder = findSegmentLeftBorder(alpha, false);
+    } else if (funcAtAlpha >= solver::ACCURACY && funcAtBeta <= -solver::ACCURACY) {
+        if (LOG) std::cout << "f(Alpha) >= ACCURACY && f(Beta) <= -ACCURACY" << std::endl;
+        segmentLeftBorder = findSegmentLeftBorder(alpha, false);
+        root = bisectionMethod(segmentLeftBorder, segmentLeftBorder + solver::STEP);
+        roots->push_back(root);
+        segmentLeftBorder = findSegmentLeftBorder(beta, true);
+        root = bisectionMethod(segmentLeftBorder, segmentLeftBorder + solver::STEP);
+        roots->push_back(root);
+        segmentLeftBorder = findSegmentLeftBorder(alpha, true);
+    } else if (abs(funcAtAlpha) <= solver::ACCURACY && abs(funcAtBeta) <= solver::ACCURACY) {
+        if (LOG) std::cout << "|f(Alpha)| <= ACCURACY && |f(Beta)| <= ACCURACY" << std::endl;
+        root = (alpha + beta) / 2;
+        roots->push_back(root);
+        return;
+    }
+    root = bisectionMethod(segmentLeftBorder, segmentLeftBorder + solver::STEP);
+    roots->push_back(root);
 }
 
 double solver::findSegmentLeftBorder(double startPoint, bool rightDirection) {
