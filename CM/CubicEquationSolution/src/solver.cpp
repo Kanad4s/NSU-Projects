@@ -74,16 +74,21 @@ void solver::calcRoots(discriminantState discriminantState, double a, double b, 
 }
 
 void solver::solveNegativeDerivateDiscriminant(double c, double d, std::vector<double> *roots) {
+    if (LOG) std::cout << "solveNegativeDerivateDiscriminant" << std::endl;
     double root, segmentLeftBorder;
+    bool isIncreasing = isFuncIncreasing();
+    if (LOG) std::cout << "isIncreasing func: " << isIncreasing << std::endl;
     // функция убывает, т.к. D < ACCURACY и в 3ax^2 + 2bx + c, c < ACCURACY.
-    if (c < -solver::ACCURACY) {
+    if (!isIncreasing) {
+        if (LOG) std::cout << "function is downing" << std::endl;
         if (d > solver::ACCURACY) {
             segmentLeftBorder = findSegmentLeftBorder(0, true);
         } else {
             segmentLeftBorder = findSegmentLeftBorder(0, false); 
         }
     // функция возрастает.
-    } else if (c > solver::ACCURACY) {
+    } else if (isIncreasing) {
+        if (LOG) std::cout << "function is increasing" << std::endl;
         if (d > solver::ACCURACY) {
             segmentLeftBorder = findSegmentLeftBorder(0, false);
         } else {
@@ -97,7 +102,21 @@ void solver::solveNegativeDerivateDiscriminant(double c, double d, std::vector<d
     }
 }
 
+bool solver::isFuncIncreasing() {
+    for (int i = 0; i < 4; i++) {
+        double derivativeValue = calcFirstDerivative(i);
+        if (derivativeValue == 0) {
+            continue;
+        } else if (derivativeValue < 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+}
+
 void solver::solvePositiveDerivativeDiscriminant(std::vector<double>* roots, std::vector<double> derivativeRoots) {
+    if (LOG) std::cout << "solvePositiveDerivativeDiscriminant" << std::endl;
     double alpha = derivativeRoots.at(0);
     double beta = derivativeRoots.at(1);
     double funcAtAlpha = calcFunction(alpha);
@@ -145,6 +164,7 @@ double solver::findSegmentLeftBorder(double startPoint, bool rightDirection) {
     double nextFuncValue = funcValue;
     double leftBorder = startPoint;
     if (LOG) std::cout << "\tdirection: ";
+    int i = 0;
     if (rightDirection) {
         if (LOG) std::cout << "right" << std::endl;
         leftBorder += solver::STEP;
@@ -154,6 +174,10 @@ double solver::findSegmentLeftBorder(double startPoint, bool rightDirection) {
             leftBorder += solver::STEP;
             funcValue = nextFuncValue;
             nextFuncValue = calcFunction(leftBorder);
+            i++;
+            if (i > 5) {
+                break;
+            }
         }
         leftBorder -= solver::STEP;
     } else {
@@ -165,6 +189,10 @@ double solver::findSegmentLeftBorder(double startPoint, bool rightDirection) {
             leftBorder -= solver::STEP;
             funcValue = nextFuncValue;
             nextFuncValue = calcFunction(leftBorder);
+            i++;
+            if (i > 5) {
+                break;
+            }
         }
     }
     if (LOG) std::cout << "\tFound segment:\n" << "\t\tfunc value: " << funcValue << ", next func value: " << nextFuncValue << std::endl;
@@ -191,6 +219,7 @@ double solver::bisectionMethod(double a, double b) {
     if (LOG) std::cout << "\tisLeftMinus: " << isLeftMinus << std::endl;
     double midPoint = getSegmentMidpoint(a, b);
     double funcValue = calcFunction(midPoint);
+    int i = 0;
     while (!isRoot(funcValue)) {
         if (DEEP_LOG) std::cout << "\tfuncValue: " << funcValue << " at midPoint: " << midPoint << std::endl;
         if (isLeftMinus) {
@@ -209,6 +238,10 @@ double solver::bisectionMethod(double a, double b) {
         }
         midPoint = getSegmentMidpoint(a, b);
         funcValue = calcFunction(midPoint);
+        i++;
+        if (i > 5) {
+            break;
+        }
     }
     if (LOG) std::cout << "\tfound funcValue: " << funcValue << " at root: " << midPoint << std::endl;
     return midPoint;
