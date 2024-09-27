@@ -1,7 +1,6 @@
 #include "../include/solver.h"
 #include <iostream>
 #include <cmath>
-#include "solver.h"
 
 double solver::A = 1;
 double solver::B = 1;
