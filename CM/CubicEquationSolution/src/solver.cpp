@@ -105,14 +105,13 @@ void solver::solveNegativeDerivateDiscriminant(double c, double d, std::vector<d
 bool solver::isFuncIncreasing() {
     for (int i = 0; i < 4; i++) {
         double derivativeValue = calcFirstDerivative(i);
-        if (derivativeValue == 0) {
-            continue;
+        if (derivativeValue > 0) {
+            return true;
         } else if (derivativeValue < 0) {
             return false;
-        } else {
-            return true;
         }
     }
+    return true;
 }
 
 void solver::solvePositiveDerivativeDiscriminant(std::vector<double>* roots, std::vector<double> derivativeRoots) {
@@ -263,23 +262,27 @@ std::vector<int> solver::researchRootsMultiplicity(std::vector<double> roots) {
     std::vector<int> multiplicity;
     if (roots.size() == 1) {
         multiplicity.push_back(3);
-        return multiplicity;
-    }
-    for (int i = 0; i < roots.size(); i++) {
-        double funcValue = calcFunction(roots.at(i));
-        int curMultiplicity = 0;
-        if (isRoot(funcValue)) {
-            curMultiplicity++;
-            funcValue = calcFirstDerivative(roots.at(i));
+    } else if (roots.size() == 3) {
+        for (int i = 0; i < 3; i++) {
+            multiplicity.push_back(1);
+        }
+    } else {
+        for (int i = 0; i < roots.size(); i++) {
+            double funcValue = calcFunction(roots.at(i));
+            int curMultiplicity = 0;
             if (isRoot(funcValue)) {
                 curMultiplicity++;
-                funcValue = calcSecondDerivative(roots.at(i));
+                funcValue = calcFirstDerivative(roots.at(i));
                 if (isRoot(funcValue)) {
                     curMultiplicity++;
+                    funcValue = calcSecondDerivative(roots.at(i));
+                    if (isRoot(funcValue)) {
+                        curMultiplicity++;
+                    }
                 }
             }
+            multiplicity.push_back(curMultiplicity);
         }
-        multiplicity.push_back(curMultiplicity);
     }
     return multiplicity;
 } 
