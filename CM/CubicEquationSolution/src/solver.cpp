@@ -19,7 +19,6 @@ std::vector<double> solver::solveEquation(double a, double b, double c, double d
     bool isNegative = false;
     discriminantState discriminantState = researchDerivative(a, b, c, &derivativeRoots, &isNegative);
     if (LOG) std::cout << "derivative discriminantState: " << discriminantState << std::endl;
-    // if (LOG) std::cout << "after research Derivative derivativeRoots.size():" << derivativeRoots.size() << std::endl;
     calcRoots(discriminantState, a, b, c, d, &solutions, derivativeRoots);
     return solutions;
 }
@@ -163,7 +162,6 @@ double solver::findSegmentLeftBorder(double startPoint, bool rightDirection) {
     double nextFuncValue = funcValue;
     double leftBorder = startPoint;
     if (LOG) std::cout << "\tdirection: ";
-    int i = 0;
     if (rightDirection) {
         if (LOG) std::cout << "right" << std::endl;
         leftBorder += solver::STEP;
@@ -173,10 +171,6 @@ double solver::findSegmentLeftBorder(double startPoint, bool rightDirection) {
             leftBorder += solver::STEP;
             funcValue = nextFuncValue;
             nextFuncValue = calcFunction(leftBorder);
-            i++;
-            if (i > 5) {
-                break;
-            }
         }
         leftBorder -= solver::STEP;
     } else {
@@ -188,10 +182,6 @@ double solver::findSegmentLeftBorder(double startPoint, bool rightDirection) {
             leftBorder -= solver::STEP;
             funcValue = nextFuncValue;
             nextFuncValue = calcFunction(leftBorder);
-            i++;
-            if (i > 5) {
-                break;
-            }
         }
     }
     if (LOG) std::cout << "\tFound segment:\n" << "\t\tfunc value: " << funcValue << ", next func value: " << nextFuncValue << std::endl;
@@ -218,7 +208,6 @@ double solver::bisectionMethod(double a, double b) {
     if (LOG) std::cout << "\tisLeftMinus: " << isLeftMinus << std::endl;
     double midPoint = getSegmentMidpoint(a, b);
     double funcValue = calcFunction(midPoint);
-    int i = 0;
     while (!isRoot(funcValue)) {
         if (DEEP_LOG) std::cout << "\tfuncValue: " << funcValue << " at midPoint: " << midPoint << std::endl;
         if (isLeftMinus) {
