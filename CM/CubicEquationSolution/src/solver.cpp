@@ -226,6 +226,10 @@ double solver::calcFunction(double x) {
 }
 
 void solver::researchRootsMultiplicity(std::vector<double> roots, std::vector<int> multiplicity) {
+    if (roots.size() == 1) {
+        multiplicity.push_back(3);
+        return;
+    }
     for (int i = 0; i < roots.size(); i++) {
         double funcValue = calcFunction(roots.at(i));
         int curMultiplicity = 0;
