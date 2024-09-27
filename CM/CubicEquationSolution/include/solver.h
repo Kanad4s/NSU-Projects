@@ -36,9 +36,10 @@ namespace solver{
     double getSegmentMidpoint(double a, double b);
     bool isRoot(double funcValue);
     double calcFunction(double x);
-    void researchRootsMultiplicity(std::vector<double> roots, std::vector<int> multiplicity);
+    std::vector<int> researchRootsMultiplicity(std::vector<double> roots);
     double calcFirstDerivative(double x);
     double calcSecondDerivative(double x);
+    double myABS(double x);
 }
 
 #endif
