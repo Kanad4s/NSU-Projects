@@ -1,0 +1,6 @@
+DEFINE a 1
+PUSH 0
+PUSH a
+DIVISION
+#test text
+PRINT

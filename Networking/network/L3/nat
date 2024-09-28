@@ -1,0 +1,24 @@
+interface ...
+ip address "белый аддрес" "маска"
+ip route 0.0.0.0 0.0.0.0 "адресс сервера"
+ip access-list standard FOR-NAT
+ permit 10.0.15.0 0.0.0.255
+ permit 10.0.30.0 0.0.0.255
+ permit 10.0.45.0 0.0.0.255
+ permit 10.0.60.0 0.0.0.255
+ permit 10.0.75.0 0.0.0.255
+ permit 10.0.200.0 0.0.0.15
+ exit
+ip nat inside source list FOR-NAT interface Gi0/2 overload
+ip nat inside source static tcp 10.0.200.2 80 200.101.0.2 80
+
+ip access-list standard FOR-NAT
+ permit 10.0.15.0 0.0.0.255
+ permit 10.0.30.0 0.0.0.255
+ permit 10.0.45.0 0.0.0.255
+ permit 10.0.60.0 0.0.0.255
+ permit 10.0.75.0 0.0.0.255
+ permit 10.0.200.0 0.0.0.15
+exit
+ip nat inside source list FOR-NAT interface Gi0/2 overload
+ip nat inside source static tcp 10.0.200.2 80 200.101.0.2 80
