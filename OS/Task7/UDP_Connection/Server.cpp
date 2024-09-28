@@ -36,7 +36,7 @@ int main() {
 		for (int i = 0; i < 128; ++i) {
 			buff[i] = '\0';
 		}
-		int len = sizeof(clientSockAddr);
+		socklen_t len = sizeof(clientSockAddr);
 		err = recvfrom(servSockfd, buff, sizeof(buff), 0, (struct sockaddr*)&clientSockAddr, &len);
 		if (err == -1 || err == 0) {
 			perror("Read failed");

@@ -1,0 +1,34 @@
+TARGET = ces-prog
+all: solver.o main.o inputParser.o outputParser.o
+	g++ -o $(TARGET) solver.o main.o inputParser.o outputParser.o
+
+clean:
+	rm -rf $(TARGET) *.o
+
+solver.o:
+	g++ -c solver.cpp
+main.o:
+	g++ -c main.cpp
+inputParser.o:
+	g++ -c inputParser.cpp
+outputParser.o:
+	g++ -c outputParser.cpp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
