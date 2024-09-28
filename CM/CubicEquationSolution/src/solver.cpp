@@ -1,7 +1,6 @@
 #include "../include/solver.h"
 #include <iostream>
 #include <cmath>
-#include "solver.h"
 
 double solver::A = 1;
 double solver::B = 1;
@@ -11,8 +10,8 @@ double solver::STEP = 0.5;
 double solver::ACCURACY = 0.02;
 double solver::minValue = -100000;
 double solver::maxValue = 100000;
-bool solver::LOG = true;
-bool solver::DEEP_LOG = true;
+bool solver::LOG = false;
+bool solver::DEEP_LOG = false;
 
 std::vector<double> solver::solveEquation(double a, double b, double c, double d) {
     std::vector<double> derivativeRoots;
