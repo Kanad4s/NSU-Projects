@@ -226,10 +226,6 @@ double solver::bisectionMethod(double a, double b) {
         }
         midPoint = getSegmentMidpoint(a, b);
         funcValue = calcFunction(midPoint);
-        i++;
-        if (i > 5) {
-            break;
-        }
     }
     if (LOG) std::cout << "\tfound funcValue: " << funcValue << " at root: " << midPoint << std::endl;
     return midPoint;
@@ -249,29 +245,17 @@ double solver::calcFunction(double x) {
 
 std::vector<int> solver::researchRootsMultiplicity(std::vector<double> roots) {
     std::vector<int> multiplicity;
-    if (roots.size() == 1) {
-        multiplicity.push_back(3);
-    } else if (roots.size() == 3) {
-        for (int i = 0; i < 3; i++) {
-            multiplicity.push_back(1);
-        }
-    } else {
-        for (int i = 0; i < roots.size(); i++) {
-            double funcValue = calcFunction(roots.at(i));
-            int curMultiplicity = 0;
+    for (int i = 0; i < roots.size(); i++) {
+        double funcValue = calcFirstDerivative(roots.at(i));
+        int curMultiplicity = 1;
+        if (isRoot(funcValue)) {
+            curMultiplicity++;
+            funcValue = calcSecondDerivative(roots.at(i));
             if (isRoot(funcValue)) {
                 curMultiplicity++;
-                funcValue = calcFirstDerivative(roots.at(i));
-                if (isRoot(funcValue)) {
-                    curMultiplicity++;
-                    funcValue = calcSecondDerivative(roots.at(i));
-                    if (isRoot(funcValue)) {
-                        curMultiplicity++;
-                    }
-                }
             }
-            multiplicity.push_back(curMultiplicity);
         }
+        multiplicity.push_back(curMultiplicity);
     }
     return multiplicity;
 } 
