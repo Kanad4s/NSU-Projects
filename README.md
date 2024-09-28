@@ -5,3 +5,4 @@ I store my NSU projects in different subjects here. It is ok if you want to see 
 * OOP - Object Oriented Programming
 * OS - Operating Systems
 * PP - Parallel Programming
+* CM - Computational Mathematics
