@@ -1,6 +1,7 @@
 #include "../include/solver.h"
 #include <iostream>
 #include <cmath>
+#include "solver.h"
 
 double solver::A = 1;
 double solver::B = 1;
@@ -19,7 +20,7 @@ std::vector<double> solver::solveEquation(double a, double b, double c, double d
     bool isNegative = false;
     discriminantState discriminantState = researchDerivative(a, b, c, &derivativeRoots, &isNegative);
     if (LOG) std::cout << "derivative discriminantState: " << discriminantState << std::endl;
-    calcRoots(discriminantState, a, b, c, d, &solutions, derivativeRoots);
+    calcRoots(discriminantState, c, d, &solutions, derivativeRoots);
     return solutions;
 }
 
@@ -60,7 +61,7 @@ solver::discriminantState solver::researchDerivative(double a, double b, double 
 	return discriminantState::unknown;
 }
 
-void solver::calcRoots(discriminantState discriminantState, double a, double b, double c, double d, std::vector<double>* roots,
+void solver::calcRoots(discriminantState discriminantState, double c, double d, std::vector<double>* roots,
                         std::vector<double> derivativeRoots) {
     double segmentLeftBorder;
     double root;

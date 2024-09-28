@@ -28,7 +28,7 @@ namespace solver{
     void calcSquareRoots(double a, double b, double discriminant, std::vector<double> *roots);
 
     solver::discriminantState researchDerivative(double a, double b, double c, std::vector<double>* derivativeRoots, bool * isNegative);
-    void calcRoots(discriminantState discriminantState, double a, double b, double c, double d, std::vector<double> *roots, std::vector<double> derivativeRoots);
+    void calcRoots(discriminantState discriminantState, double c, double d, std::vector<double> *roots, std::vector<double> derivativeRoots);
     void solveNegativeDerivateDiscriminant(double c, double d, std::vector<double>* roots);
     bool isFuncIncreasing();
     void solvePositiveDerivativeDiscriminant(std::vector<double> *roots, std::vector<double> derivativeRoots);
