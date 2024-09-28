@@ -1,0 +1,13 @@
+//роутер
+int loopback 0
+ ip addres 192.168.100.1 255.255.255.255 //router id 1.1.1.11
+
+router ospf 1
+ network 10.0.15.0 0.0.0.255 area 0
+ network 192.168.10.0 0.0.0.255 // здесь не минимальный будет при таком лупбэке
+ exit
+
+на свиче поднять порты
+interface fa0/11
+ no shutdown
+ exit

@@ -1,0 +1,11 @@
+//router
+interface Gi0/1
+ //на сервере ip 10.0.200.2, с 1 - порт по умолчанию
+ ip address 10.0.200.1 255.255.255.240
+ no shutdown
+ exit
+
+router ospf 1
+ network 10.0.200.0 0.0.0.15 area 0
+ network 10.0.0.0 0.0.0.255 area 0
+exit
