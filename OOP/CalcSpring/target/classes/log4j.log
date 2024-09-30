@@ -389,3 +389,21 @@
 2024-05-26 21:44:39 DEBUG CalculatorController:55 - Choose operation
 2024-05-26 21:44:39 DEBUG Operation:15 - Print value
 2024-05-26 21:44:39 ERROR Operation:18 - Failed pop element class ru.nsu.fit.tropin.Operations.Print
+2024-05-26 21:46:06 INFO  Main:21 - Parse args
+2024-05-26 21:46:06 INFO  CommandLineParser:22 - Starting command line parser
+2024-05-26 21:46:06 INFO  CommandLineParser:38 - Set file input stream
+2024-05-26 21:46:06 DEBUG CalculatorController:29 - Set reader input stream
+2024-05-26 21:46:06 DEBUG CalculatorController:41 - Launching CalculatorController
+2024-05-26 21:46:06 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:46:06 DEBUG Operation:17 - Push value in stack
+2024-05-26 21:46:06 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:46:06 DEBUG Operation:17 - Push value in stack
+2024-05-26 21:46:06 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:46:06 DEBUG Operation:17 - Push value in stack
+2024-05-26 21:46:06 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:46:06 ERROR Operation:24 - Stack is empty for DIVISION
+2024-05-26 21:46:06 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:46:06 DEBUG Operation:12 - Commenting
+2024-05-26 21:46:06 DEBUG CalculatorController:55 - Choose operation
+2024-05-26 21:46:06 DEBUG Operation:15 - Print value
+2024-05-26 21:46:06 ERROR Operation:18 - Failed pop element class ru.nsu.fit.tropin.Operations.Print
