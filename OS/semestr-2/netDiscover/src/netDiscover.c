@@ -25,7 +25,7 @@ typedef enum Result {
     OK
 };
 
-enum Result create_multicast_socket(int* socket, const char* port, const char* ip) {
+enum Result createMulticastSocket(int* socket, const char* port, const char* ip) {
     int err;
     const int optval = 1;
     setsockopt(*socket, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
@@ -51,15 +51,6 @@ enum Result create_multicast_socket(int* socket, const char* port, const char* i
 error:
     close(socket);
     return ERROR;
-
-
-    struct addrinfo* hints;
-    struct addrinfo* result;
-    err = getaddrinfo(ip, port, hints, &result);
-    if (err != 0) {
-        printf("getaddrinfo(): %s", gai_strerror(err));
-        return ERROR;
-    }
 }
 
 int main(int argc, char* argv[]) {
@@ -67,5 +58,5 @@ int main(int argc, char* argv[]) {
     const char* ip;
     const char* port;
     parseInput(argc, argv, port, ip);
-    create_multicast_socket(&sfd, port, ip);
+    createMulticastSocket(&sfd, port, ip);
 }
