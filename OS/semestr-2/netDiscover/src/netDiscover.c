@@ -3,7 +3,6 @@
 #include <features.h>
 #include <bits/stdint-uintn.h>
 #include <bits/types.h>
-
 #include <sys/cdefs.h>
 #include <arpa/inet.h>
 #include <netdb.h>
@@ -11,6 +10,9 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <errno.h>
+
+#define MSG_ALIVE 0x1234
+#define MSG_DEAD 0xABCD
 
 enum Result createMulticastSocket(int* socket, const char* port, const char* ip) {
     int err;
