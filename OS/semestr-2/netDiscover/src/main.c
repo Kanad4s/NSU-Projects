@@ -26,5 +26,12 @@ int main(int argc, char* argv[]) {
     const char* ip;
     const char* port;
     parseInput(argc, argv, port, ip);
-    createMulticastSocket(&sfd, port, ip);
+    enum Result ret = createMulticastSocket(&sfd, port, ip);
+    if (ret != OK) {
+        goto error;
+    }
+
+error:
+    close(sfd);
+    return EXIT_FAILURE;
 }
