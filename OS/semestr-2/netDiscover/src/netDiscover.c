@@ -10,7 +10,6 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <sys/types.h>
-#include "netDiscover.h"
 #include <errno.h>
 
 enum Result createMulticastSocket(int* socket, const char* port, const char* ip) {
@@ -54,5 +53,23 @@ enum Result sendMessage(int sockfd, char *msg, struct sockaddr *destAddr, sockle
         sent += ret;
     }
 
+    return OK;
+}
+
+enum Result recieveMessage(int sockfd, int *msg, struct sockaddr *srcAddr, socklen_t *addrlen) {
+    ssize_t recieved = 0;
+    while (recieved < sizeof(int)) {
+        ssize_t ret = recvfrom(sockfd, (char *)msg + recieved, sizeof(int) - recieved, 0, srcAddr, addrlen);
+        if (ret == -1) {
+            if (errno == EAGAIN || errno == EWOULDBLOCK) {
+                return TIMED_OUT;
+            } else if (errno == EINTR) {
+                return INTERRUPTED;
+            }
+            printf("RecieveMessage(): %s", strerror(errno));
+            return ERROR;
+        }
+        recieved += ret;
+    }
     return OK;
 }
