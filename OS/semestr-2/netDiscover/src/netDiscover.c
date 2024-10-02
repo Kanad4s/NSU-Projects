@@ -41,11 +41,11 @@ error:
 }
 
 
-enum Result sendMessage(int sockfd, char *msg, struct sockaddr *destAddr, socklen_t destAddrLen) {
+enum Result sendMessage(int sockfd, int *msg, struct sockaddr *destAddr, socklen_t *addrLen) {
     ssize_t ret;
     ssize_t sent = 0;
     while (sent < sizeof(msg)) {
-        ret = sendto(socket, msg + sent, sizeof(msg) - sent, 0, destAddr, destAddrLen);
+        ret = sendto(socket, (char *)msg + sent, sizeof(msg) - sent, 0, destAddr, *addrLen);
         if (ret == -1) {
             printf("sendto(): %s", strerror(errno));
             return ERROR;
