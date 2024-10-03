@@ -1,6 +1,7 @@
 #include "../include/inputParser.h"
 #include "../include/consts.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 void showUsage() {
     printf("Usage:\nnetDiscover <IPv4|IPv6 multicast group ip> [port]\n");

@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
     const char* ip;
     const char* port;
     parseInput(argc, argv, port, ip);
-    enum Result ret = setupInterraptionSignalHandler();
+    Result ret = setupInterraptionSignalHandler();
     if (ret != OK) {
         goto error;
     }

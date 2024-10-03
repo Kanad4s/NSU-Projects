@@ -2,7 +2,8 @@
     "files.associations": {
         "netdb.h": "c",
         "errno.h": "c",
-        "features.h": "c"
+        "features.h": "c",
+        "inputparser.h": "c"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }

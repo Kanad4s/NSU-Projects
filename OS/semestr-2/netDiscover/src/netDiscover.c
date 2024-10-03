@@ -12,17 +12,20 @@
 #include <errno.h>
 #include <signal.h>
 #include <unistd.h>
+#include <stdio.h>
+#include <strings.h>
+#include <stdlib.h>
 
 #define MSG_ALIVE 0x1234
 #define MSG_DEAD 0xABCD
 
 bool isInterrupted = false;
 
-enum Result createMulticastSocket(int* socket, const char* port, const char* ip) {
+Result createMulticastSocket(int* sockfd, const char* port, const char* ip) {
     int err;
     const int optval = 1;
-    setsockopt(*socket, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
     struct in_addr ipToNum;
+    setsockopt(*sockfd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
     struct sockaddr_in addr;
     bzero(&addr, sizeof(addr));
     err = inet_pton(AF_INET, ip, &ipToNum);
@@ -33,27 +36,27 @@ enum Result createMulticastSocket(int* socket, const char* port, const char* ip)
     addr.sin_family = AF_INET;
     addr.sin_port = htons(atoi(port));
     addr.sin_addr = ipToNum;
-    err = bind(socket, (struct sockaddr *)&addr, sizeof(addr));
+    err = bind(*sockfd, (struct sockaddr *)&addr, sizeof(addr));
     if (err != 0) {
-        printf("bind(): %s", strerror(err));
+        printf("bind(): %s", hstrerror(err));
         goto error;
     }
 
     return OK;
 
 error:
-    close(socket);
+    close(*sockfd);
     return ERROR;
 }
 
 
-enum Result sendMessage(int sockfd, int *msg, struct sockaddr *destAddr, socklen_t *addrLen) {
+Result sendMessage(int sockfd, int *msg, struct sockaddr *destAddr, socklen_t *addrLen) {
     ssize_t ret;
     ssize_t sent = 0;
     while (sent < sizeof(msg)) {
-        ret = sendto(socket, (char *)msg + sent, sizeof(msg) - sent, 0, destAddr, *addrLen);
+        ret = sendto(sockfd, (char *)msg + sent, sizeof(msg) - sent, 0, destAddr, *addrLen);
         if (ret == -1) {
-            printf("sendto(): %s", strerror(errno));
+            printf("sendto(): %s", hstrerror(errno));
             return ERROR;
         }
         sent += ret;
@@ -62,7 +65,7 @@ enum Result sendMessage(int sockfd, int *msg, struct sockaddr *destAddr, socklen
     return OK;
 }
 
-enum Result recieveMessage(int sockfd, int *msg, struct sockaddr *srcAddr, socklen_t *addrlen) {
+Result recieveMessage(int sockfd, int *msg, struct sockaddr *srcAddr, socklen_t *addrlen) {
     ssize_t recieved = 0;
     while (recieved < sizeof(int)) {
         ssize_t ret = recvfrom(sockfd, (char *)msg + recieved, sizeof(int) - recieved, 0, srcAddr, addrlen);
@@ -72,7 +75,7 @@ enum Result recieveMessage(int sockfd, int *msg, struct sockaddr *srcAddr, sockl
             } else if (errno == EINTR) {
                 return INTERRUPTED;
             }
-            printf("RecieveMessage(): %s", strerror(errno));
+            printf("RecieveMessage(): %s", hstrerror(errno));
             return ERROR;
         }
         recieved += ret;
@@ -84,12 +87,12 @@ void interaptionSignalHandler(int signo) {
     isInterrupted = true;
 }
 
-enum Result setupInterraptionSignalHandler() {
+Result setupInterraptionSignalHandler() {
     struct sigaction sigInt;
     bzero(&sigInt, sizeof(sigInt));
     sigInt.sa_handler = interaptionSignalHandler;
     if (sigaction(SIGINT, &sigInt, NULL) != 0) {
-        printf("sigaction(): %s", strerror(errno));
+        printf("sigaction(): %s", hstrerror(errno));
         return ERROR;
     }
 
