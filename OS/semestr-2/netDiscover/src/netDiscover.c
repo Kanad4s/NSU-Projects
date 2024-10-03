@@ -10,9 +10,13 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <errno.h>
+#include <signal.h>
+#include <unistd.h>
 
 #define MSG_ALIVE 0x1234
 #define MSG_DEAD 0xABCD
+
+bool isInterrupted = false;
 
 enum Result createMulticastSocket(int* socket, const char* port, const char* ip) {
     int err;
@@ -73,5 +77,21 @@ enum Result recieveMessage(int sockfd, int *msg, struct sockaddr *srcAddr, sockl
         }
         recieved += ret;
     }
+    return OK;
+}
+
+void interaptionSignalHandler(int signo) {
+    isInterrupted = true;
+}
+
+enum Result setupInterraptionSignalHandler() {
+    struct sigaction sigInt;
+    bzero(&sigInt, sizeof(sigInt));
+    sigInt.sa_handler = interaptionSignalHandler;
+    if (sigaction(SIGINT, &sigInt, NULL) != 0) {
+        printf("sigaction(): %s", strerror(errno));
+        return ERROR;
+    }
+
     return OK;
 }

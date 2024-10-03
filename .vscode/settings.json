@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "netdb.h": "c"
-    }
+        "netdb.h": "c",
+        "errno.h": "c",
+        "features.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "enabled"
 }

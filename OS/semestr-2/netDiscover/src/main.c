@@ -22,11 +22,15 @@
 #include "../include/netDiscover.h"
 
 int main(int argc, char* argv[]) {
-    int sfd = socket(AF_INET, SOCK_DGRAM, 0);
     const char* ip;
     const char* port;
     parseInput(argc, argv, port, ip);
-    enum Result ret = createMulticastSocket(&sfd, port, ip);
+    enum Result ret = setupInterraptionSignalHandler();
+    if (ret != OK) {
+        goto error;
+    }
+    int sfd = socket(AF_INET, SOCK_DGRAM, 0);
+    ret = createMulticastSocket(&sfd, port, ip);
     if (ret != OK) {
         goto error;
     }
