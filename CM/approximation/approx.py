@@ -10,12 +10,14 @@ class NewtonPolynomial:
         self.x = x
         self.n = len(x)
     
+    @np.vectorize
     def __call__(self, x : float) -> float:
         ret = 0
         for i in range(self.n):
-            numerator = 0
-            for j in range(i):
-                numerator *= x - self.x[j]
+            # numerator = 0
+            numerator = np.prod([x - self.x[j] for j in range(i)])
+            # for j in range(i):
+                # numerator *= x - self.x[j]
             ret += self.dividedDiffs[i] * numerator
         return ret
         
@@ -35,6 +37,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Approximate smthg')
     parser.add_argument('n', type=int, default=10, help='number of interpolation nodes')
     args = parser.parse_args()
+    print(args.n)
     
     plt.xlabel('x label')
     plt.ylabel('y label')
@@ -45,16 +48,14 @@ if __name__ == "__main__":
     sample = np.linspace(-1, 1, 200)
     plt.plot(sample, abs(sample), label='y = |x|')
 
-    for n in [11, 22]:
-        x = np.linspace(-1, 1, args.n) 
-        y = abs(x)
-        print(x)
-        print(y)
-        
-        polynom = NewtonPolynomial(x, y)
-        
-        
-        # plt.plot(sample, polynom(polynom, sample), label= f"NewtonPolynomial (n={n})")
+    # for n in [1, 2, 4, 10, 20]:
+    x = np.linspace(-1, 1, args.n) 
+    y = abs(x)
+    
+    polynom = NewtonPolynomial(x, y)
+    
+    
+    plt.plot(sample, polynom(polynom, sample), label= f"NewtonPolynomial (n={args.n})")
         
     plt.legend()
     plt.show()
