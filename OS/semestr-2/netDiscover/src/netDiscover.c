@@ -17,7 +17,7 @@
 #include <stdlib.h>
 
 #define MSG_ALIVE 0x1234
-#define MSG_DEAD 0xABCD
+#define MSG_REQUEST 0xABCD
 
 bool isInterrupted = false;
 

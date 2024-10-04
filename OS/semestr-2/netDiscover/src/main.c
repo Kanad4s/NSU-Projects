@@ -35,6 +35,12 @@ int main(int argc, char* argv[]) {
         goto error;
     }
 
+    while (!isInterrupted) {
+        
+    }
+
+    return 0;
+
 error:
     close(sfd);
     return EXIT_FAILURE;
