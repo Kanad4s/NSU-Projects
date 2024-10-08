@@ -14,10 +14,9 @@ class NewtonPolynomial:
     def __call__(self, x : float) -> float:
         ret = 0
         for i in range(self.n):
-            # numerator = 0
-            numerator = np.prod([x - self.x[j] for j in range(i)])
-            # for j in range(i):
-                # numerator *= x - self.x[j]
+            numerator = 1
+            for j in range(i):
+                numerator *= x - self.x[j]
             ret += self.dividedDiffs[i] * numerator
         return ret
         
@@ -48,14 +47,14 @@ if __name__ == "__main__":
     sample = np.linspace(-1, 1, 200)
     plt.plot(sample, abs(sample), label='y = |x|')
 
-    # for n in [1, 2, 4, 10, 20]:
-    x = np.linspace(-1, 1, args.n) 
-    y = abs(x)
+    for n in [1, 2, 4, 10, 20]:
+        x = np.linspace(-1, 1, n) 
+        y = abs(x)
     
-    polynom = NewtonPolynomial(x, y)
+        polynom = NewtonPolynomial(x, y)
     
     
-    plt.plot(sample, polynom(polynom, sample), label= f"NewtonPolynomial (n={args.n})")
+        plt.plot(sample, polynom(polynom, sample), label= f"NewtonPolynomial (n={n})")
         
     plt.legend()
     plt.show()
