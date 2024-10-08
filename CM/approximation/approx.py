@@ -47,14 +47,14 @@ if __name__ == "__main__":
     sample = np.linspace(-1, 1, 200)
     plt.plot(sample, abs(sample), label='y = |x|')
 
-    for n in [1, 2, 4, 10, 20]:
-        x = np.linspace(-1, 1, n) 
-        y = abs(x)
-    
-        polynom = NewtonPolynomial(x, y)
-    
-    
-        plt.plot(sample, polynom(polynom, sample), label= f"NewtonPolynomial (n={n})")
+    # for n in [1, 2, 4, 10, 20]:
+    x = np.linspace(-1, 1, args.n) 
+    y = abs(x)
+
+    polynom = NewtonPolynomial(x, y)
+
+
+    plt.plot(sample, polynom(polynom, sample), label= f"NewtonPolynomial (n={args.n})")
         
     plt.legend()
     plt.show()
