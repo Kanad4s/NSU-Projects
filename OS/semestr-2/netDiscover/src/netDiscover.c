@@ -15,11 +15,16 @@
 #include <stdio.h>
 #include <strings.h>
 #include <stdlib.h>
+#include <string.h>
 
-#define MSG_ALIVE 0x1234
-#define MSG_REQUEST 0xABCD
+int msg_alive = 1234;
+int msg_request = 9876;
 
 bool isInterrupted = false;
+
+//0 - ok
+//2 - timed out
+//3 - interrapted
 
 Result createMulticastSocket(int* sockfd, const char* port, const char* ip) {
     int err;
@@ -89,7 +94,7 @@ void interaptionSignalHandler(int signo) {
 
 Result setupInterraptionSignalHandler() {
     struct sigaction sigInt;
-    bzero(&sigInt, sizeof(sigInt));
+    memset(&sigInt, 0, sizeof(sigInt));
     sigInt.sa_handler = interaptionSignalHandler;
     if (sigaction(SIGINT, &sigInt, NULL) != 0) {
         printf("sigaction(): %s", hstrerror(errno));
@@ -97,4 +102,49 @@ Result setupInterraptionSignalHandler() {
     }
 
     return OK;
+}
+
+Result printAppInfo(struct sockaddr *addr, socklen_t addrlen) {
+    char host[NI_MAXHOST];
+    char numericHost[NI_MAXHOST];
+    char service[NI_MAXSERV];
+
+    int ret = getnameinfo(addr, addrlen, numericHost, NI_MAXHOST, service, NI_MAXSERV, NI_NUMERICSERV | NI_NUMERICHOST);
+    if (ret == -1) {
+        goto error;
+    }
+    ret = getnameinfo(addr, addrlen, host, NI_MAXHOST, NULL, 0, 0);
+    if (ret == -1) {
+        goto error;
+    }
+    printf("%s (%s), port %s is alive\n", host, numericHost, service);
+    return OK;
+
+error:
+    printf("getnameinfo(): %s", gai_strerror(ret));
+    return ERROR;
+}
+
+Result printAppCopies(int sockfd) {
+    printf("Alive copies:\n");
+    for (;;) {
+        int msg;
+        struct sockaddr src;
+        socklen_t srclen;
+        Result ret = recieveMessage(sockfd, &msg, &src, &srclen);
+        if (ret == INTERRUPTED) {
+            break;
+        } else if (ret == ERROR) {
+            goto error;
+        }
+        if (msg == msg_alive) {
+            ret = printAppInfo(&src, srclen);
+            if (ret != OK) {
+                goto error;
+            }
+        }
+    }
+    return OK;
+error:
+    return ERROR;
 }

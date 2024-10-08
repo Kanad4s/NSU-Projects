@@ -21,27 +21,62 @@
 #include "../include/inputParser.h"
 #include "../include/netDiscover.h"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char **argv) {
     const char* ip;
     const char* port;
-    parseInput(argc, argv, port, ip);
+    parseInput(argc, argv, &port, &ip);
+    int ret1 = 0;
+    printf("point\n");
     Result ret = setupInterraptionSignalHandler();
     if (ret != OK) {
         goto error;
     }
-    int sfd = socket(AF_INET, SOCK_DGRAM, 0);
-    ret = createMulticastSocket(&sfd, port, ip);
+    
+    printf("point\n");
+    int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    ret = createMulticastSocket(&sockfd, port, ip);
+    if (ret != OK) {
+        goto error;
+    }
+    struct sockaddr groupaddr;
+    socklen_t groupaddrLen;
+
+    ret = sendMessage(sockfd, &msg_request, &groupaddr, &groupaddrLen);
     if (ret != OK) {
         goto error;
     }
 
     while (!isInterrupted) {
-        
+        int msg;
+        ret = recieveMessage(sockfd, &msg, &groupaddr, &groupaddrLen);
+        if (ret == INTERRUPTED) {
+            break;
+        } else if (ret != OK) {
+            goto error;
+        }
+        if (msg == msg_request) {
+            ret = sendMessage(sockfd, &msg_alive, &groupaddr, &groupaddrLen);
+            if (ret != OK) {
+                goto error;
+            }
+            ret = printAppCopies(sockfd);
+            if (ret != OK) {
+                goto error;
+            }
+        }
     }
 
-    return 0;
+    printf("Finish\n");
+
+    ret = sendMessage(sockfd, &msg_request, &groupaddr, &groupaddrLen);
+    if (ret != OK) {
+        goto error;
+    }
+    close(sockfd);
+    return EXIT_SUCCESS;
 
 error:
-    close(sfd);
+    printf("\nerror from main\n");
+    close(sockfd);
     return EXIT_FAILURE;
 }

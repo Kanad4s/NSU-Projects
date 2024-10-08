@@ -3,7 +3,7 @@
 #ifndef NET_DISCOVER
 #define NET_DISCOVER
 
-typedef enum{
+typedef enum Result{
     ERROR,
     OK,
     INTERRUPTED,
@@ -11,6 +11,8 @@ typedef enum{
 } Result;
 
 extern bool isInterrupted;
+extern int msg_alive;
+extern int msg_request;
 
 void interaptionSignalHandler(int signo); 
 Result setupInterraptionSignalHandler();
