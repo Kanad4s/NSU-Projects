@@ -7,3 +7,4 @@ I store my NSU projects in different subjects here. It is ok if you want to see 
 * PP - Parallel Programming
 * CM - Computational Mathematics
 * TCM - Translation and compilation methods
+* Networking - Network Technologies
