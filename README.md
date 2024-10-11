@@ -6,3 +6,4 @@ I store my NSU projects in different subjects here. It is ok if you want to see 
 * OS - Operating Systems
 * PP - Parallel Programming
 * CM - Computational Mathematics
+* TCM - Translation and compilation methods
