@@ -19,7 +19,7 @@
 int msg_alive = 1234;
 int msg_request = 9876;
 
-bool isInterrupted = false;
+static bool isInterrupted = false;
 
 Result multicastAddMembership(int sockfd, int addrFamily, struct sockaddr_storage *bound_addr) {
     char *optval = NULL;
@@ -114,13 +114,13 @@ error:
     return ERROR;
 }
 
-Result sendMessage(int sockfd, int *msg, struct sockaddr *destAddr, socklen_t addrLen) {
+Result sendMessage(int sockfd, int msg, struct sockaddr *destAddr, socklen_t addrLen) {
     ssize_t ret;
     ssize_t sent = 0;
     while (sent < sizeof(msg)) {
-        ret = sendto(sockfd, (char *)msg + sent, sizeof(msg) - sent, 0, destAddr, addrLen);
+        ret = sendto(sockfd, (char*)&msg + sent, sizeof(msg) - sent, 0, destAddr, addrLen);
         if (ret == -1) {
-            printf("sendto(): %s\n", hstrerror(errno));
+            printf("sendto(): %s\n", strerror(errno));
             return ERROR;
         }
         sent += ret;
@@ -132,7 +132,7 @@ Result sendMessage(int sockfd, int *msg, struct sockaddr *destAddr, socklen_t ad
 Result recieveMessage(int sockfd, int *msg, struct sockaddr *srcAddr, socklen_t *addrlen) {
     ssize_t recieved = 0;
     while (recieved < sizeof(int)) {
-        ssize_t ret = recvfrom(sockfd, (char *)msg + recieved, sizeof(int) - recieved, 0, srcAddr, addrlen);
+        ssize_t ret = recvfrom(sockfd, (char*)msg + recieved, sizeof(int) - recieved, 0, srcAddr, addrlen);
         if (ret == -1) {
             if (errno == EAGAIN || errno == EWOULDBLOCK) {
                 return TIMED_OUT;
@@ -184,26 +184,45 @@ error:
     return ERROR;
 }
 
-Result printAppCopies(int sockfd) {
-    printf("Alive copies:\n");
+void disableRcvTimeout(int sockfd) {
+    struct timeval time = { 0 };
+    setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &time, sizeof(time));
+}
+
+Result printAppCopies(int sockfd, struct timeval timeout) {
+    int ret = setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO,
+                         &timeout, sizeof(timeout));
+    if (ret == -1) {
+        printf("setsockopt(): %s", gai_strerror(ret));
+        return ERROR;
+    }
+
+    printf("\t\tALIVE COPIES:\n");
     for (;;) {
-        int msg;
-        struct sockaddr src;
+        // printf("next:");
+        int msg = 0;
+        struct sockaddr_storage src;
         socklen_t srclen;
-        Result ret = recieveMessage(sockfd, &msg, &src, &srclen);
-        if (ret == INTERRUPTED) {
+
+        Result ret = recieveMessage(sockfd, &msg, (struct sockaddr *)&src, &srclen);
+        // printf("message got: %d\n", msg);
+        if (ret == TIMED_OUT) {
             break;
         } else if (ret == ERROR) {
             goto error;
         }
         if (msg == msg_alive) {
-            ret = printAppInfo(&src, srclen);
+            ret = printAppInfo((struct sockaddr *)&src, srclen);
             if (ret != OK) {
                 goto error;
             }
         }
     }
+
+    disableRcvTimeout(sockfd); 
     return OK;
+
 error:
+    disableRcvTimeout(sockfd); 
     return ERROR;
 }

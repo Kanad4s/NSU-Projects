@@ -38,25 +38,30 @@ int main(int argc, char **argv) {
         goto error;
     }
 
-    ret = sendMessage(sockfd, &msg_request, (struct sockaddr *)&groupAddr, groupAddrLen);
+    ret = sendMessage(sockfd, msg_request, (struct sockaddr *)&groupAddr, groupAddrLen);
     if (ret != OK) {
         goto error;
     }
 
     while (!isInterrupted) {
         int msg;
-        ret = recieveMessage(sockfd, &msg, (struct sockaddr *)&groupAddr, &groupAddrLen);
+        struct sockaddr_storage src;
+        socklen_t               srclen;
+        ret = recieveMessage(sockfd, &msg, (struct sockaddr *) &src, &srclen);
         if (ret == INTERRUPTED) {
             break;
         } else if (ret != OK) {
             goto error;
         }
         if (msg == msg_request) {
-            ret = sendMessage(sockfd, &msg_alive, (struct sockaddr *)&groupAddr, groupAddrLen);
+            ret = sendMessage(sockfd, msg_alive, (struct sockaddr *)&groupAddr, groupAddrLen);
             if (ret != OK) {
                 goto error;
             }
-            ret = printAppCopies(sockfd);
+            struct timeval collectTimeout;
+            collectTimeout.tv_sec = 0;
+            collectTimeout.tv_usec = 500000;
+            ret = printAppCopies(sockfd, collectTimeout);
             if (ret != OK) {
                 goto error;
             }
@@ -65,7 +70,7 @@ int main(int argc, char **argv) {
 
     printf("Finish\n");
 
-    ret = sendMessage(sockfd, &msg_request, (struct sockaddr *)&groupAddr, groupAddrLen);
+    ret = sendMessage(sockfd, msg_request, (struct sockaddr *)&groupAddr, groupAddrLen);
     if (ret != OK) {
         goto error;
     }
