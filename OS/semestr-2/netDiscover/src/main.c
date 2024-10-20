@@ -37,24 +37,22 @@ int main(int argc, char **argv) {
     if (ret != OK) {
         goto error;
     }
-    struct sockaddr groupaddr;
-    socklen_t groupaddrLen;
 
-    ret = sendMessage(sockfd, &msg_request, &groupaddr, &groupaddrLen);
+    ret = sendMessage(sockfd, &msg_request, (struct sockaddr *)&groupAddr, groupAddrLen);
     if (ret != OK) {
         goto error;
     }
 
     while (!isInterrupted) {
         int msg;
-        ret = recieveMessage(sockfd, &msg, &groupaddr, &groupaddrLen);
+        ret = recieveMessage(sockfd, &msg, (struct sockaddr *)&groupAddr, &groupAddrLen);
         if (ret == INTERRUPTED) {
             break;
         } else if (ret != OK) {
             goto error;
         }
         if (msg == msg_request) {
-            ret = sendMessage(sockfd, &msg_alive, &groupaddr, &groupaddrLen);
+            ret = sendMessage(sockfd, &msg_alive, (struct sockaddr *)&groupAddr, groupAddrLen);
             if (ret != OK) {
                 goto error;
             }
@@ -67,7 +65,7 @@ int main(int argc, char **argv) {
 
     printf("Finish\n");
 
-    ret = sendMessage(sockfd, &msg_request, &groupaddr, &groupaddrLen);
+    ret = sendMessage(sockfd, &msg_request, (struct sockaddr *)&groupAddr, groupAddrLen);
     if (ret != OK) {
         goto error;
     }
@@ -75,7 +73,6 @@ int main(int argc, char **argv) {
     return EXIT_SUCCESS;
 
 error:
-    printf("\nerror from main\n");
     close(sockfd);
     return EXIT_FAILURE;
 }

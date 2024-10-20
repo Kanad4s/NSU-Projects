@@ -7,7 +7,8 @@
         "netdiscover.h": "c",
         "socket.h": "c",
         "stdlib.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "cdefs.h": "c"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }

@@ -1,21 +1,20 @@
 #include "../include/netDiscover.h"
 
-#include <features.h>
-#include <bits/stdint-uintn.h>
-#include <bits/types.h>
+#include <errno.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <signal.h>
+#include <unistd.h>
+
 #include <sys/cdefs.h>
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <sys/types.h>
-#include <errno.h>
-#include <signal.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <strings.h>
-#include <stdlib.h>
-#include <string.h>
 
 int msg_alive = 1234;
 int msg_request = 9876;
@@ -23,7 +22,7 @@ int msg_request = 9876;
 bool isInterrupted = false;
 
 Result multicastAddMembership(int sockfd, int addrFamily, struct sockaddr_storage *bound_addr) {
-    char* optval = NULL;
+    char *optval = NULL;
     int optlevel, option, optlen;
     if (addrFamily == AF_INET) {
         struct sockaddr_in *addr = (struct sockaddr_in *)bound_addr;
@@ -44,13 +43,14 @@ Result multicastAddMembership(int sockfd, int addrFamily, struct sockaddr_storag
         optval = (char *)&mreq6;
         optlen = sizeof(mreq6);
     } else {
-        printf("Failed to add multicast membership, unknown protocol family");
+        printf("Failed to add multicast membership, unknown protocol family\n");
         return ERROR;
     }
-
-    int err = setsockopt(sockfd, optlevel, option, optval, optlen);
+    int err;
+    err = setsockopt(sockfd, optlevel, option, optval, optlen);
+    // err = setsockopt(sockfd, IPPROTO_IP, IP_ADD_MEMBERSHIP, &mreq, sizeof(mreq));
     if (err == -1) {
-        printf("Failed to add multicast membership, setsockopt(): %s", strerror(errno));
+        printf("Failed to add multicast membership, setsockopt(): %s\n", strerror(errno));
         return ERROR;
     }
 
@@ -60,7 +60,6 @@ Result multicastAddMembership(int sockfd, int addrFamily, struct sockaddr_storag
 Result createMulticastSocket(int* sockfd, const char* port, const char* ip, struct sockaddr_storage *groupAddr,
                             socklen_t *addrLen) {
     int err;
-    struct in_addr ipToNum;
     struct addrinfo hints;
     struct addrinfo* res;
     const int optval = 1;
@@ -83,7 +82,11 @@ Result createMulticastSocket(int* sockfd, const char* port, const char* ip, stru
         if (*sockfd == -1)
             continue;
 
-        setsockopt(*sockfd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval)); // reuse addr on
+        err = setsockopt(*sockfd, SOL_SOCKET, SO_REUSEADDR, (char *)&optval, sizeof(optval)); // reuse addr on
+        if (err == -1) {
+            printf("setcockopt(), reuse addr: %s", strerror(errno));
+            return ERROR;
+        }
         if (bind(*sockfd, rp->ai_addr, rp->ai_addrlen) == 0) {
             memcpy(groupAddr, rp->ai_addr, rp->ai_addrlen);
             addrFamily = rp->ai_family;
@@ -111,13 +114,13 @@ error:
     return ERROR;
 }
 
-Result sendMessage(int sockfd, int *msg, struct sockaddr *destAddr, socklen_t *addrLen) {
+Result sendMessage(int sockfd, int *msg, struct sockaddr *destAddr, socklen_t addrLen) {
     ssize_t ret;
     ssize_t sent = 0;
     while (sent < sizeof(msg)) {
-        ret = sendto(sockfd, (char *)msg + sent, sizeof(msg) - sent, 0, destAddr, *addrLen);
+        ret = sendto(sockfd, (char *)msg + sent, sizeof(msg) - sent, 0, destAddr, addrLen);
         if (ret == -1) {
-            printf("sendto(): %s", hstrerror(errno));
+            printf("sendto(): %s\n", hstrerror(errno));
             return ERROR;
         }
         sent += ret;
@@ -136,7 +139,7 @@ Result recieveMessage(int sockfd, int *msg, struct sockaddr *srcAddr, socklen_t 
             } else if (errno == EINTR) {
                 return INTERRUPTED;
             }
-            printf("RecieveMessage(): %s", hstrerror(errno));
+            printf("RecieveMessage(): %s\n", hstrerror(errno));
             return ERROR;
         }
         recieved += ret;
@@ -153,7 +156,7 @@ Result setupInterraptionSignalHandler() {
     memset(&sigInt, 0, sizeof(sigInt));
     sigInt.sa_handler = interaptionSignalHandler;
     if (sigaction(SIGINT, &sigInt, NULL) != 0) {
-        printf("sigaction(): %s", hstrerror(errno));
+        printf("sigaction(): %s\n", hstrerror(errno));
         return ERROR;
     }
 
@@ -177,7 +180,7 @@ Result printAppInfo(struct sockaddr *addr, socklen_t addrlen) {
     return OK;
 
 error:
-    printf("getnameinfo(): %s", gai_strerror(ret));
+    printf("getnameinfo(): %s\n", gai_strerror(ret));
     return ERROR;
 }
 
