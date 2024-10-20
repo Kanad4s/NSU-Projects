@@ -22,30 +22,87 @@ int msg_request = 9876;
 
 bool isInterrupted = false;
 
-//0 - ok
-//2 - timed out
-//3 - interrapted
+Result multicastAddMembership(int sockfd, int addrFamily, struct sockaddr_storage *bound_addr) {
+    char* optval = NULL;
+    int optlevel, option, optlen;
+    if (addrFamily == AF_INET) {
+        struct sockaddr_in *addr = (struct sockaddr_in *)bound_addr;
+        struct ip_mreq mreq;
+        mreq.imr_interface.s_addr = htonl(INADDR_ANY);
+        mreq.imr_multiaddr = addr->sin_addr;
+        optlevel = IPPROTO_IP;
+        option = IP_ADD_MEMBERSHIP;
+        optval = (char *)&mreq;
+        optlen = sizeof(mreq);
+    } else if (addrFamily == AF_INET6) {
+        struct sockaddr_in6 *addr = (struct sockaddr_in6 *) bound_addr;
+        struct ipv6_mreq mreq6;
+        mreq6.ipv6mr_interface = htonl(INADDR_ANY);
+        mreq6.ipv6mr_multiaddr = addr->sin6_addr;
+        optlevel = IPPROTO_IPV6;
+        option = IPV6_ADD_MEMBERSHIP;
+        optval = (char *)&mreq6;
+        optlen = sizeof(mreq6);
+    } else {
+        printf("Failed to add multicast membership, unknown protocol family");
+        return ERROR;
+    }
 
-Result createMulticastSocket(int* sockfd, const char* port, const char* ip) {
+    int err = setsockopt(sockfd, optlevel, option, optval, optlen);
+    if (err == -1) {
+        printf("Failed to add multicast membership, setsockopt(): %s", strerror(errno));
+        return ERROR;
+    }
+
+    return OK;
+}
+
+Result createMulticastSocket(int* sockfd, const char* port, const char* ip, struct sockaddr_storage *groupAddr,
+                            socklen_t *addrLen) {
     int err;
-    const int optval = 1;
     struct in_addr ipToNum;
-    setsockopt(*sockfd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
-    struct sockaddr_in addr;
-    bzero(&addr, sizeof(addr));
-    err = inet_pton(AF_INET, ip, &ipToNum);
-    if (err <= 0) {
-        printf("Error in IP translation to special numeric format\n");
-        goto error;
-    }
-    addr.sin_family = AF_INET;
-    addr.sin_port = htons(atoi(port));
-    addr.sin_addr = ipToNum;
-    err = bind(*sockfd, (struct sockaddr *)&addr, sizeof(addr));
+    struct addrinfo hints;
+    struct addrinfo* res;
+    const int optval = 1;
+    int addrFamily;
+    // *sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    bzero(&hints, sizeof(hints));
+    hints.ai_family = AF_UNSPEC;  // IPv4 or IPv6
+    hints.ai_socktype = SOCK_DGRAM;
+    hints.ai_protocol = 0;
+
+    err = getaddrinfo(ip, port, &hints, &res);
     if (err != 0) {
-        printf("bind(): %s", hstrerror(err));
-        goto error;
+        printf("getaddrinfo(): %s", gai_strerror(err));
+        return ERROR;
     }
+    
+    struct addrinfo* rp;
+    for (rp = res; rp != NULL; rp = rp->ai_next) {
+        *sockfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
+        if (*sockfd == -1)
+            continue;
+
+        setsockopt(*sockfd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval)); // reuse addr on
+        if (bind(*sockfd, rp->ai_addr, rp->ai_addrlen) == 0) {
+            memcpy(groupAddr, rp->ai_addr, rp->ai_addrlen);
+            addrFamily = rp->ai_family;
+            *addrLen = rp->ai_addrlen;
+            break;
+        }
+        close(*sockfd);
+    }
+
+    freeaddrinfo(res);
+
+    if (rp == NULL) {
+        printf("bind(): %s", strerror(errno));
+        return ERROR;
+    }
+
+    Result ret = multicastAddMembership(*sockfd, addrFamily, groupAddr);
+    if (ret != OK)
+        goto error;
 
     return OK;
 
@@ -53,7 +110,6 @@ error:
     close(*sockfd);
     return ERROR;
 }
-
 
 Result sendMessage(int sockfd, int *msg, struct sockaddr *destAddr, socklen_t *addrLen) {
     ssize_t ret;

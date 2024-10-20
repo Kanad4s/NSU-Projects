@@ -24,17 +24,16 @@
 int main(int argc, char **argv) {
     const char* ip;
     const char* port;
+    struct sockaddr_storage groupAddr;
+    socklen_t groupAddrLen;
+    int sockfd;
     parseInput(argc, argv, &port, &ip);
-    int ret1 = 0;
-    printf("point\n");
     Result ret = setupInterraptionSignalHandler();
     if (ret != OK) {
         goto error;
     }
     
-    printf("point\n");
-    int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
-    ret = createMulticastSocket(&sockfd, port, ip);
+    ret = createMulticastSocket(&sockfd, port, ip, &groupAddr, &groupAddrLen);
     if (ret != OK) {
         goto error;
     }

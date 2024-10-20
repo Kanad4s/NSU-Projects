@@ -16,7 +16,8 @@ extern int msg_request;
 
 void interaptionSignalHandler(int signo); 
 Result setupInterraptionSignalHandler();
-Result createMulticastSocket(int *socket, const char *port, const char *ip);
+Result multicastAddMembership(int sockfd, int addrFamily, struct sockaddr_storage *bound_addr);
+Result createMulticastSocket(int* sockfd, const char* port, const char* ip, struct sockaddr_storage *groupAddr, socklen_t *addrLen);
 Result sendMessage(int sockfd, int *msg, struct sockaddr *destAddr, socklen_t *addrLen);
 Result recieveMessage(int sockfd, int *msg, struct sockaddr *srcAddr, socklen_t *addrlen);
 

@@ -5,7 +5,9 @@
         "features.h": "c",
         "inputparser.h": "c",
         "netdiscover.h": "c",
-        "socket.h": "c"
+        "socket.h": "c",
+        "stdlib.h": "c",
+        "stdio.h": "c"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }
