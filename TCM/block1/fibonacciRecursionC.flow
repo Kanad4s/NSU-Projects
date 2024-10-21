@@ -1,0 +1,22 @@
+import runtime;
+
+fib(n: int, array: ref [int]) -> [int] {
+    arraySize = length(^array);
+    if (arraySize == n) {
+        ^array;
+    } else {
+        if (arraySize == 0) {
+            refArrayPush(array, 0);
+        } else if (arraySize == 1) {
+            refArrayPush(array, 1);
+        } else {
+            refArrayPush(array, (^array)[arraySize - 2] + (^array)[arraySize - 1]);
+        }
+        fib(n, array);
+    }
+}
+
+main() {
+    println(fib(10, ref []));
+    quit(0);
+}

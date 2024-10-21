@@ -1,0 +1,11 @@
+import runtime;
+
+sumArray(array: [int]) -> int {
+    fold(array, 0, \x, y -> x+y);
+}
+
+main() {
+    array = [1, 2, 3, 40, 100];
+    println(sumArray(array));
+    quit(0);
+}
