@@ -20,6 +20,7 @@
 
 #include "../include/inputParser.h"
 #include "../include/netDiscover.h"
+#include "../include/outputParser.h"
 
 int main(int argc, char **argv) {
     const char* ip;
