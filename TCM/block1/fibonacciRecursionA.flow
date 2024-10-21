@@ -1,5 +1,4 @@
 import runtime;
-import string;
 
 fib(n: int) -> [int] {
     if (n <= 0) []

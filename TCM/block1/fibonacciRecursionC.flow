@@ -1,5 +1,4 @@
 import runtime;
-import string;
 
 fib(n: int, array: ref [int]) -> [int] {
     arraySize = length(^array);
