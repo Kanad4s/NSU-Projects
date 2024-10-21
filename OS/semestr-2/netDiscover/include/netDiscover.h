@@ -1,8 +1,8 @@
+#ifndef NET_DISCOVER
+#define NET_DISCOVER
 #include <sys/socket.h>
 #include <stdbool.h>
 #include <time.h>
-#ifndef NET_DISCOVER
-#define NET_DISCOVER
 
 typedef enum Result{
     ERROR,

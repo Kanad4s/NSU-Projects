@@ -1,23 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <unistd.h>
-
-#include <features.h>
-#include <bits/stdint-uintn.h>
-#include <bits/types.h>
-
-#include <sys/cdefs.h>
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-
 #include "../include/inputParser.h"
-#include "../include/netDiscover.h"
 #include "../include/outputParser.h"
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
 
 int main(int argc, char **argv) {
     const char* ip;

@@ -1,20 +1,11 @@
 #include "../include/netDiscover.h"
 
 #include <errno.h>
-#include <stdbool.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <time.h>
 #include <signal.h>
 #include <unistd.h>
-
-#include <sys/cdefs.h>
-#include <arpa/inet.h>
 #include <netdb.h>
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include <sys/types.h>
 
 int msg_alive = 1234;
 int msg_request = 9876;

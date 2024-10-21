@@ -1,6 +1,6 @@
 #include "../include/outputParser.h"
+
 #include <stdio.h>
-#include <strings.h>
 #include <sys/socket.h>
 #include <netdb.h>
 

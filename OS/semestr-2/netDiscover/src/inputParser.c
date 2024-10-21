@@ -1,5 +1,6 @@
- #include "../include/inputParser.h"
+#include "../include/inputParser.h"
 #include "../include/consts.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 
