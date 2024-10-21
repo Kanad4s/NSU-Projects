@@ -3,7 +3,7 @@ import runtime;
 inds(a: [int], m: int) -> [Pair<int, int>] {
     foldi(a, [], \i, tmp, a_i -> {
         foldi(a, tmp, \j, pairs, a_j -> {
-            if (a_i + a_j == m) {
+            if (a_i + a_j == m && i >= j) {
                 concat(pairs, [Pair(i, j)]);
             } else {
                 pairs;
