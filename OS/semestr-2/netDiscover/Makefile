@@ -13,7 +13,7 @@ OBJS = $(SRCS:.c=.o)
 CC=gcc
 RM=rm
 
-.PHONY: all clean print
+.PHONY: all clean rebuild print
 
 all: $(TARGET)
 
@@ -29,6 +29,10 @@ obj_dirs:
 
 clean:
 	$(RM) -rf $(TARGET) $(addprefix $(OBJS_DIRS)/, $(OBJS))
+
+rebuild:
+	make clean
+	make
 
 print:
 	@echo 'RLTV_SRC_DIRS: "$(RLTV_SRC_DIRS)"'
