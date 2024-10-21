@@ -1,0 +1,19 @@
+import runtime;
+
+findPairs(a: [int], m: int) -> [Pair<int, int>] {
+    foldi(a, [], \i, tmp, a_i -> {
+        foldi(a, tmp, \j, pairs, a_j -> {
+            if (a_i + a_j == m) {
+                concat(pairs, [Pair(i, j)]);
+            } else {
+                pairs;
+            }
+        })
+    })
+}
+
+main() {
+    array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    println(findPairs(array, 8));
+    quit(0);
+}
