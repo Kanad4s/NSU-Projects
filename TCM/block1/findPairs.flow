@@ -1,6 +1,6 @@
 import runtime;
 
-findPairs(a: [int], m: int) -> [Pair<int, int>] {
+inds(a: [int], m: int) -> [Pair<int, int>] {
     foldi(a, [], \i, tmp, a_i -> {
         foldi(a, tmp, \j, pairs, a_j -> {
             if (a_i + a_j == m) {
@@ -14,6 +14,6 @@ findPairs(a: [int], m: int) -> [Pair<int, int>] {
 
 main() {
     array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    println(findPairs(array, 8));
+    println(inds(array, 8));
     quit(0);
 }
