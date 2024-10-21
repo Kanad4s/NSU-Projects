@@ -21,16 +21,16 @@ int msg_request = 9876;
 
 static bool isInterrupted = false;
 
-Result multicastAddMembership(int sockfd, int addrFamily, struct sockaddr_storage *bound_addr) {
+Result multicastAddMembership(int sockfd, int addrFamily, struct sockaddr *bound_addr) {
     char *optval = NULL;
-    int optlevel, option, optlen;
+    int level, optname, optlen;
     if (addrFamily == AF_INET) {
         struct sockaddr_in *addr = (struct sockaddr_in *)bound_addr;
         struct ip_mreq mreq;
         mreq.imr_interface.s_addr = htonl(INADDR_ANY);
         mreq.imr_multiaddr = addr->sin_addr;
-        optlevel = IPPROTO_IP;
-        option = IP_ADD_MEMBERSHIP;
+        level = IPPROTO_IP;
+        optname = IP_ADD_MEMBERSHIP;
         optval = (char *)&mreq;
         optlen = sizeof(mreq);
     } else if (addrFamily == AF_INET6) {
@@ -38,8 +38,8 @@ Result multicastAddMembership(int sockfd, int addrFamily, struct sockaddr_storag
         struct ipv6_mreq mreq6;
         mreq6.ipv6mr_interface = htonl(INADDR_ANY);
         mreq6.ipv6mr_multiaddr = addr->sin6_addr;
-        optlevel = IPPROTO_IPV6;
-        option = IPV6_ADD_MEMBERSHIP;
+        level = IPPROTO_IPV6;
+        optname = IPV6_ADD_MEMBERSHIP;
         optval = (char *)&mreq6;
         optlen = sizeof(mreq6);
     } else {
@@ -47,8 +47,7 @@ Result multicastAddMembership(int sockfd, int addrFamily, struct sockaddr_storag
         return ERROR;
     }
     int err;
-    err = setsockopt(sockfd, optlevel, option, optval, optlen);
-    // err = setsockopt(sockfd, IPPROTO_IP, IP_ADD_MEMBERSHIP, &mreq, sizeof(mreq));
+    err = setsockopt(sockfd, level, optname, optval, optlen);
     if (err == -1) {
         printf("Failed to add multicast membership, setsockopt(): %s\n", strerror(errno));
         return ERROR;
@@ -57,7 +56,7 @@ Result multicastAddMembership(int sockfd, int addrFamily, struct sockaddr_storag
     return OK;
 }
 
-Result createMulticastSocket(int* sockfd, const char* port, const char* ip, struct sockaddr_storage *groupAddr,
+Result createMulticastSocket(int* sockfd, const char* port, const char* ip, struct sockaddr *groupAddr,
                             socklen_t *addrLen) {
     int err;
     struct addrinfo hints;
@@ -82,7 +81,7 @@ Result createMulticastSocket(int* sockfd, const char* port, const char* ip, stru
         if (*sockfd == -1)
             continue;
 
-        err = setsockopt(*sockfd, SOL_SOCKET, SO_REUSEADDR, (char *)&optval, sizeof(optval)); // reuse addr on
+        err = setsockopt(*sockfd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval)); // reuse addr on
         if (err == -1) {
             printf("setcockopt(), reuse addr: %s", strerror(errno));
             return ERROR;
@@ -190,8 +189,7 @@ void disableRcvTimeout(int sockfd) {
 }
 
 Result printAppCopies(int sockfd, struct timeval timeout) {
-    int ret = setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO,
-                         &timeout, sizeof(timeout));
+    int ret = setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
     if (ret == -1) {
         printf("setsockopt(): %s", gai_strerror(ret));
         return ERROR;
@@ -199,20 +197,18 @@ Result printAppCopies(int sockfd, struct timeval timeout) {
 
     printf("\t\tALIVE COPIES:\n");
     for (;;) {
-        // printf("next:");
         int msg = 0;
-        struct sockaddr_storage src;
+        struct sockaddr src;
         socklen_t srclen;
 
-        Result ret = recieveMessage(sockfd, &msg, (struct sockaddr *)&src, &srclen);
-        // printf("message got: %d\n", msg);
+        Result ret = recieveMessage(sockfd, &msg, &src, &srclen);
         if (ret == TIMED_OUT) {
             break;
         } else if (ret == ERROR) {
             goto error;
         }
         if (msg == msg_alive) {
-            ret = printAppInfo((struct sockaddr *)&src, srclen);
+            ret = printAppInfo(&src, srclen);
             if (ret != OK) {
                 goto error;
             }

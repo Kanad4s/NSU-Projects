@@ -24,7 +24,7 @@
 int main(int argc, char **argv) {
     const char* ip;
     const char* port;
-    struct sockaddr_storage groupAddr;
+    struct sockaddr groupAddr;
     socklen_t groupAddrLen;
     int sockfd;
     parseInput(argc, argv, &port, &ip);
@@ -38,23 +38,23 @@ int main(int argc, char **argv) {
         goto error;
     }
 
-    ret = sendMessage(sockfd, msg_request, (struct sockaddr *)&groupAddr, groupAddrLen);
+    ret = sendMessage(sockfd, msg_request, &groupAddr, groupAddrLen);
     if (ret != OK) {
         goto error;
     }
 
     while (!isInterrupted) {
         int msg;
-        struct sockaddr_storage src;
-        socklen_t               srclen;
-        ret = recieveMessage(sockfd, &msg, (struct sockaddr *) &src, &srclen);
+        struct sockaddr src;
+        socklen_t srcLen;
+        ret = recieveMessage(sockfd, &msg, &src, &srcLen);
         if (ret == INTERRUPTED) {
             break;
         } else if (ret != OK) {
             goto error;
         }
         if (msg == msg_request) {
-            ret = sendMessage(sockfd, msg_alive, (struct sockaddr *)&groupAddr, groupAddrLen);
+            ret = sendMessage(sockfd, msg_alive, &groupAddr, groupAddrLen);
             if (ret != OK) {
                 goto error;
             }
@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
 
     printf("Finish\n");
 
-    ret = sendMessage(sockfd, msg_request, (struct sockaddr *)&groupAddr, groupAddrLen);
+    ret = sendMessage(sockfd, msg_request, &groupAddr, groupAddrLen);
     if (ret != OK) {
         goto error;
     }
