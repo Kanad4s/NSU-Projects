@@ -10,6 +10,6 @@ strGlue, println.
     - с использованием
 ссылок на массив, сложности O(n). Использовать: fold, concat, refArrayPush
 5) Дан массив целых чисел [n_1,...,n_k] и число m. Найти все пары индексов (i, j) такие,
-что n_i + n_j == m. Сигнатура функции: inds(a : [int], m : int) -> [Pair<int, int>].
+что n_i + n_j == m.<br />Сигнатура функции: inds(a : [int], m : int) -> [Pair<int, int>].
 <br />Усложнение: сделать эту функцию сложности O(n log(n)), а не O(n^2). Использовать
 функции: foldi, makeTree, setTree, lookupTree.
