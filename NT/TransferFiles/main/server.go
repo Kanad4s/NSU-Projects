@@ -3,11 +3,10 @@ package main
 import (
 	"fmt"
 	arg "github.com/alexflint/go-arg"
-// 	_ "github.com/alexflint/go-scalar"
 )
 
 var args struct {
-	Port string 	
+	Port string `arg:"-p, --port" default:"8181" help:"port to accept connections"`	
 }
 
 func main() {
