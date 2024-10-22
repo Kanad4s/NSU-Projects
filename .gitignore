@@ -48,6 +48,11 @@
 *.zip
 *.ziphash
 *.toml
+NT/TransferFiles/main/server
+NT/TransferFiles/vendor/
+NT/pkg/
+NT/bin/
+NT/TransferFiles/vendor
 
 # Kernel Module Compile Results
 *.mod*
@@ -57,7 +62,4 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
-NT/TransferFiles/main/server
-NT/TransferFiles/vendor/
-NT/pkg/
-NT/bin/
+
