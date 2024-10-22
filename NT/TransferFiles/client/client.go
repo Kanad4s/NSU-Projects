@@ -10,19 +10,21 @@ import (
 )
 
 var args struct {
-	Port string `arg:"-p, --port" default:"8181" help:"port to accept connections"`
+	IP   string `default:"localhost" help:"IP address to connect"`
+	Port string `arg:"-p, --port" default:"8181" help:"port to connect"`
+	File string `arg:"-f, --file, required" help:"file to transfer"`
 }
 
 func main() {
 	arg.MustParse(&args)
-	port := args.Port
-	host := fmt.Sprintf("%s%s", "localhost:", port)
+	host := fmt.Sprintf("%s:%s", args.IP, args.Port)
+	fmt.Println("File to send" + args.File)
 	conn, err := net.Dial("tcp", host)
 	if err != nil {
 		fmt.Println("Error connecting:", err.Error())
 		os.Exit(1)
 	}
-	// defer conn.Close()
+	defer conn.Close()
 
 	consoleScanner := bufio.NewScanner(os.Stdin)
 	for consoleScanner.Scan() {

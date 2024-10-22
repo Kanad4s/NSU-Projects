@@ -10,22 +10,20 @@ import (
 )
 
 var args struct {
+	IP   string `default:"localhost" help:"IP address to accept connections"`
 	Port string `arg:"-p, --port" default:"8181" help:"port to accept connections"`
 }
 
 func main() {
 	arg.MustParse(&args)
-	port := args.Port
-	fmt.Println(args.Port)
-	fmt.Println(port)
-	host := fmt.Sprintf("%s%s", "localhost:", port)
+	host := fmt.Sprintf("%s:%s", args.IP, args.Port)
 	listener, err := net.Listen("tcp", host)
 	if err != nil {
 		fmt.Println("Error net.Listen():", err.Error())
 		os.Exit(1)
 	}
-	// defer listener.Close()
-	fmt.Println("Server is listening on " + port)
+	defer listener.Close()
+	fmt.Println("Server is listening on " + host)
 
 	for {
 		conn, err := listener.Accept()
@@ -34,7 +32,6 @@ func main() {
 			os.Exit(1)
 		}
 		fmt.Println("Connected with", conn.RemoteAddr().String())
-		//обработка
 		go handleRequest(conn)
 	}
 }
