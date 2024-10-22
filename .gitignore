@@ -52,7 +52,7 @@ NT/TransferFiles/main/server
 NT/TransferFiles/vendor/
 NT/pkg/
 NT/bin/
-NT/TransferFiles/vendor
+NT/TransferFiles/vendor/
 
 # Kernel Module Compile Results
 *.mod*
