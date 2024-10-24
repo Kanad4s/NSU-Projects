@@ -5,18 +5,12 @@ import (
 	"fmt"
 	"net"
 	"os"
-
-	"github.com/alexflint/go-arg"
+	"server/inputParser"
 )
 
-var args struct {
-	IP   string `default:"localhost" help:"IP address to accept connections"`
-	Port string `arg:"-p, --port" default:"8181" help:"port to accept connections"`
-}
-
 func main() {
-	arg.MustParse(&args)
-	host := fmt.Sprintf("%s:%s", args.IP, args.Port)
+	inputParser.ParseInput()
+	host := fmt.Sprintf("%s:%s", inputParser.GetIP(), inputParser.GetPort())
 	listener, err := net.Listen("tcp", host)
 	if err != nil {
 		fmt.Println("Error net.Listen():", err.Error())
