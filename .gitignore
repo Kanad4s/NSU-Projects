@@ -48,11 +48,10 @@
 *.zip
 *.ziphash
 *.toml
-NT/TransferFiles/main/server
 NT/TransferFiles/vendor/
 NT/pkg/
 NT/bin/
-NT/TransferFiles/vendor/
+NT/TransferFiles/server/uploads/
 
 # Kernel Module Compile Results
 *.mod*
