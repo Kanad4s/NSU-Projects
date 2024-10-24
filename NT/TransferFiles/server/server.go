@@ -26,19 +26,32 @@ func main() {
 			os.Exit(1)
 		}
 		fmt.Println("Connected with", conn.RemoteAddr().String())
-		go handleRequest(conn)
+		go HandleRequest(conn)
 	}
 }
 
-func handleRequest(conn net.Conn) {
+func HandleRequest(conn net.Conn) {
 	defer conn.Close()
+	fileName := GetFileName(conn)
+	fmt.Println("getFileName(): ", fileName)
+	// scanner := bufio.NewScanner(conn)
+
+	// for scanner.Scan() {
+	// 	clientMessage := scanner.Text()
+	// 	fmt.Printf("Received: %s\n", clientMessage)
+	// 	conn.Write([]byte(clientMessage + "\n"))
+	// }
+	// if err := scanner.Err(); err != nil {
+	// 	fmt.Println("Error reading:", err.Error())
+	// }
+}
+
+func GetFileName(conn net.Conn) string {
 	scanner := bufio.NewScanner(conn)
-	for scanner.Scan() {
-		clientMessage := scanner.Text()
-		fmt.Printf("Received: %s\n", clientMessage)
-		conn.Write([]byte(clientMessage + "\n"))
-	}
+	scanner.Scan()
+	fileName := scanner.Text()
 	if err := scanner.Err(); err != nil {
-		fmt.Println("Error reading:", err.Error())
+		fmt.Println("Error reading fileName: ", err.Error())
 	}
+	return fileName
 }

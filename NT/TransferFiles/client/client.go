@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"client/inputParser"
 	"fmt"
 	"net"
@@ -19,20 +18,26 @@ func main() {
 	}
 	defer conn.Close()
 
-	consoleScanner := bufio.NewScanner(os.Stdin)
-	for consoleScanner.Scan() {
-		text := consoleScanner.Text()
-		conn.Write([]byte(text + "\n"))
+	SendFileName(conn, inputParser.GetFile())
 
-		response, err := bufio.NewReader(conn).ReadString('\n')
-		if err != nil {
-			fmt.Println("Error reading:", err.Error())
-			os.Exit(1)
-		}
-		fmt.Println("Response: " + response)
-	}
+	// consoleScanner := bufio.NewScanner(os.Stdin)
+	// for consoleScanner.Scan() {
+	// 	text := consoleScanner.Text()
+	// 	conn.Write([]byte(text + "\n"))
 
-	if err := consoleScanner.Err(); err != nil {
-		fmt.Println("Error reading from console:", err.Error())
-	}
+	// 	response, err := bufio.NewReader(conn).ReadString('\n')
+	// 	if err != nil {
+	// 		fmt.Println("Error reading:", err.Error())
+	// 		os.Exit(1)
+	// 	}
+	// 	fmt.Println("Response: " + response)
+	// }
+
+	// if err := consoleScanner.Err(); err != nil {
+	// 	fmt.Println("Error reading from console:", err.Error())
+	// }
+}
+
+func SendFileName(conn net.Conn, name string) {
+	conn.Write([]byte(name))
 }
