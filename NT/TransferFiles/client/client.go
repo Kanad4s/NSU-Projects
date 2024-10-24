@@ -2,23 +2,16 @@ package main
 
 import (
 	"bufio"
+	"client/inputParser"
 	"fmt"
 	"net"
 	"os"
-
-	"github.com/alexflint/go-arg"
 )
 
-var args struct {
-	IP   string `default:"localhost" help:"IP address to connect"`
-	Port string `arg:"-p, --port" default:"8181" help:"port to connect"`
-	File string `arg:"-f, --file, required" help:"file to transfer"`
-}
-
 func main() {
-	arg.MustParse(&args)
-	host := fmt.Sprintf("%s:%s", args.IP, args.Port)
-	fmt.Println("File to send" + args.File)
+	inputParser.ParseInput()
+	host := fmt.Sprintf("%s:%s", inputParser.GetIP(), inputParser.GetPort())
+	fmt.Println("File to send: " + inputParser.GetFile())
 	conn, err := net.Dial("tcp", host)
 	if err != nil {
 		fmt.Println("Error connecting:", err.Error())
