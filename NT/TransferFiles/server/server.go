@@ -34,16 +34,7 @@ func HandleRequest(conn net.Conn) {
 	defer conn.Close()
 	fileName := GetFileName(conn)
 	fmt.Println("getFileName(): ", fileName)
-	// scanner := bufio.NewScanner(conn)
-
-	// for scanner.Scan() {
-	// 	clientMessage := scanner.Text()
-	// 	fmt.Printf("Received: %s\n", clientMessage)
-	// 	conn.Write([]byte(clientMessage + "\n"))
-	// }
-	// if err := scanner.Err(); err != nil {
-	// 	fmt.Println("Error reading:", err.Error())
-	// }
+	os.Mkdir("uploads", 0777)
 }
 
 func GetFileName(conn net.Conn) string {
