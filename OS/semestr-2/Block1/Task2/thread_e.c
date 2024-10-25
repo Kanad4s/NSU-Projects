@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+// Добавьте вызов pthread_detach() в поточную функцию. Объясните результат
 // pthread_self стал randomный так как освобождается
 
 void* my_thread() {
