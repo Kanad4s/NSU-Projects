@@ -3,6 +3,9 @@
 #include <string.h>
 #include <stdlib.h>
 
+// Измените программу так чтобы созданный поток возвращал число 42, а
+// основной поток получал это число и распечатывал.
+
 void* my_thread() {
     int* value = (int*)malloc(sizeof(int));
     if (value == NULL) {
