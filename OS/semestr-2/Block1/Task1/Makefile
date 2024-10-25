@@ -20,3 +20,7 @@ thread_d: thread_d.c
 
 clean:
 	${RM} -f *.o ${TARGET}
+	${RM} thread_b
+	${RM} thread_c
+	${RM} thread_d
+	${RM} thread_a
