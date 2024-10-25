@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <pthread.h>
 #include <string.h>
@@ -7,7 +8,7 @@
 #include <stdlib.h>
 
 // Добавьте вызов pthread_detach() в поточную функцию. Объясните результат
-// pthread_self стал randomный так как освобождается
+// pthread_self стал random
 
 void* my_thread() {
 	printf("my_thread [%d %d %d %lu]: Hello from my_thread!\n", getpid(), getppid(), gettid(), (unsigned long)pthread_self());

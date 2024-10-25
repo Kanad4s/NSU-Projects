@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <pthread.h>
 #include <string.h>
@@ -10,7 +11,7 @@
 // Вместо вызова pthread_detach() передайте в pthread_create() аргументы,
 // задающие тип потока- DETACHED. Запустите, убедитесь что поведение не
 // изменилось.
-// pthread_self стал randomый так как освобоэдается
+// pthread_self стал random
 
 void* my_thread() {
 	printf("my_thread [%d %d %d %lu]: Hello from my_thread!\n", getpid(), getppid(), gettid(), (unsigned long)pthread_self());
