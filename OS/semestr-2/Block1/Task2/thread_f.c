@@ -7,6 +7,9 @@
 #include <stdlib.h>
 #include <signal.h>
 
+// Вместо вызова pthread_detach() передайте в pthread_create() аргументы,
+// задающие тип потока- DETACHED. Запустите, убедитесь что поведение не
+// изменилось.
 // pthread_self стал randomый так как освобоэдается
 
 void* my_thread() {
@@ -15,7 +18,6 @@ void* my_thread() {
 }
 
 pthread_attr_t attr;
-
 
 void signal_callback_handler(int sig_num) {
   printf("Caught signal %d\n", sig_num);
