@@ -31,8 +31,8 @@ int main() {
 	pthread_t tid;
 	int err;
 
-    signal(SIGINT, signal_callback_handler);
-    signal(SIGSEGV, signal_callback_handler);
+    // signal(SIGINT, signal_callback_handler);
+    // signal(SIGSEGV, signal_callback_handler);
 
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
