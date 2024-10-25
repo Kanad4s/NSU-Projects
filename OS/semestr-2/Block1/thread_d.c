@@ -11,6 +11,10 @@
 // e) watch -d -n1 cat /proc/pid/maps
 // f) strace ./thread
 
+enum {
+    COUNT_THREAD = 5
+};
+
 static int global_value = 10;
 
 void* my_thread(void *arg) {
