@@ -26,9 +26,9 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
-    // void* ret_val;
-    // err = pthread_join(tid, &ret_val);
-    sleep(2);
+    void* ret_val;
+    err = pthread_join(tid, &ret_val);
+    // sleep(2);
 
     if (err) {
         fprintf(stderr, "main: pthread_join() failed %s\n", strerror(err));

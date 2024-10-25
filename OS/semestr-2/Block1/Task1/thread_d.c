@@ -12,6 +12,10 @@
 // e) watch -d -n1 cat /proc//maps
 // f) strace ./thread
 
+
+
+//вывод изменений переменых
+
 enum {
     COUNT_THREAD = 5
 };
@@ -32,6 +36,7 @@ void* my_thread(void *arg) {
    static_local = 11;
    local = 16;
    global_value = 11;
+   printf("//");
    printf("main: address local: %p, static_local: %p, const_local: %p, global_value: %p\n", &local, &static_local, &const_local, &global_value );
 
    return NULL;

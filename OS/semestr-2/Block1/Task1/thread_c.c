@@ -36,7 +36,7 @@ void* my_thread(void *arg) {
 
 int main() {
    printf("main [pid: %d, ppid: %d, tid: %d]: Hello from main!\n", getpid(), getppid(), gettid());
-   sleep(10);
+//    sleep(10);
    const int const_local = 5;
    static int static_local = 10;
    int local = 15;

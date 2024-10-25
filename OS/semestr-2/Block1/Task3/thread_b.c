@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
@@ -22,6 +23,7 @@ void* my_thread(void *arg) {
     pthread_exit(NULL);
 
 }
+
 // cansletion pointer
 int main() {
     Node* node;
@@ -51,5 +53,3 @@ int main() {
     //free(node);
     return EXIT_SUCCESS;
 }
-
-//// gdb

@@ -11,7 +11,6 @@
 //  поточной функцией, которая выводит свой идентификатор потока и
 //  завершается. Запустите. Объясните результат.
 
-// gettid обнулится
 // pthread_self - const
 
 void* my_thread() {
@@ -30,11 +29,11 @@ int main() {
             return EXIT_FAILURE;
         }
 
-       void *ret_val;
-       err = pthread_join(tid, &ret_val);
-       if (err) {
-           fprintf(stderr, "main: pthread_join() failed %s\n", strerror(err));
-       }
+    //    void *ret_val;
+    //    err = pthread_join(tid, &ret_val);
+    //    if (err) {
+    //        fprintf(stderr, "main: pthread_join() failed %s\n", strerror(err));
+    //    }
     }
 	return EXIT_SUCCESS;
 }

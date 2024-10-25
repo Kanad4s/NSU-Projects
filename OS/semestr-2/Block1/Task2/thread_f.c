@@ -11,7 +11,6 @@
 // Вместо вызова pthread_detach() передайте в pthread_create() аргументы,
 // задающие тип потока- DETACHED. Запустите, убедитесь что поведение не
 // изменилось.
-// pthread_self стал random
 
 void* my_thread() {
 	printf("my_thread [%d %d %d %lu]: Hello from my_thread!\n", getpid(), getppid(), gettid(), (unsigned long)pthread_self());
@@ -20,19 +19,9 @@ void* my_thread() {
 
 pthread_attr_t attr;
 
-void signal_callback_handler(int sig_num) {
-  printf("Caught signal %d\n", sig_num);
-  pthread_attr_destroy(&attr);
-  exit(sig_num);
-}
-
-
 int main() {
 	pthread_t tid;
 	int err;
-
-    // signal(SIGINT, signal_callback_handler);
-    // signal(SIGSEGV, signal_callback_handler);
 
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
