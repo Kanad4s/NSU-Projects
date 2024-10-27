@@ -3,14 +3,15 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
-typedef struct Node {
+struct Node {
     int value_int;
     char* ptr_char;
-}Node;
+} Node;
 
 void* my_thread(void *arg) {
-    struct Node* node = (struct Node*)arg;
+    struct Node* node = (struct Node *)arg;
 
     printf("value_int value: %d\n", node->value_int);
     printf("ptr_char ptr: %s\n", node->ptr_char);
@@ -25,13 +26,11 @@ int main() {
 
     pthread_t tid;
 
-    printf("hello ");
     int err = pthread_create(&tid, NULL, my_thread, (void *)&node);
     if (err) {
         fprintf(stderr, "main: pthread_create() failed: %s\n", strerror(err));
         return EXIT_FAILURE;
     }
-    sleep(2);
     void* ret_val;
     err = pthread_join(tid, &ret_val);
     if (err) {

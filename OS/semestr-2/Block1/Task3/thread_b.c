@@ -5,51 +5,50 @@
 #include <string.h>
 #include <unistd.h>
 
-
-typedef struct Node {
+struct Node {
     int value_int;
     char* ptr_char;
-}Node;
+} Node;
 
 void* my_thread(void *arg) {
-    struct Node* node = (struct Node*)arg;
-    int a = 5;
-    printf("value_int value: %d\n", node->value_int);
-    printf("ptr_char ptr: %s\n", node->ptr_char);
-
-    sleep(7);
-    printf("value stack %d", a);
+    struct Node threadNode;
+    printf("IN THREAD: pid: %d, node: %p\n", getpid(), &threadNode);
+    struct Node* node = (struct Node *)arg;
+    printf("value_int: %d\n", node->value_int);
+    printf("ptr_char: %s\n", node->ptr_char);
 
     pthread_exit(NULL);
-
 }
 
-// cansletion pointer
+// cans pointer
+
 int main() {
-    Node* node;
-    node->value_int = 42;
-    node->ptr_char = "hello";
+    // struct Node* node = (struct Node *)malloc(sizeof(struct Node));
+    struct Node node;
+    node.value_int = 42;
+    node.ptr_char = "hello";
     pthread_attr_t attr;
+    printf("pid: %d, node: %p\n", getpid(), &node);
+    sleep(5);
 
     pthread_attr_init(&attr);
-
-    int err = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+    int err = 0;
+    // err = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
     if(err) {
         fprintf(stderr, "main: pthread_attr_setdetachstate() failed %s\n", strerror(err));
-        pthread_attr_destroy(&attr);
         return EXIT_FAILURE;
     }
 
     pthread_t thread;
-    err = pthread_create(&thread, &attr, my_thread, (void *)node);
+    err = pthread_create(&thread, &attr, my_thread, (void *)&node);
     if (err) {
         fprintf(stderr, "main: pthread_create() failed: %s\n", strerror(err));
         return EXIT_FAILURE;
     }
 
-    sleep(3);
+    sleep(10);
     pthread_attr_destroy(&attr);
 
-    //free(node);
+    // free(node);
     return EXIT_SUCCESS;
 }
