@@ -1,9 +1,10 @@
 export {
-    MyExpr ::= Dbl, Sum, Sub, Mul, Div, Pow;
+    MyExpr ::= Dbl, Sum, Sub, Mul, Div, Pow, Neg;
     Dbl : (val : double);
     Sum : (l : MyExpr, r : MyExpr);
     Sub : (l : MyExpr, r : MyExpr);
     Mul : (l : MyExpr, r : MyExpr);
     Div : (l : MyExpr, r : MyExpr);
     Pow : (l : MyExpr, r : MyExpr);
+    Neg : (e : MyExpr);
 }

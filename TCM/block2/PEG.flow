@@ -14,6 +14,7 @@ export {
             Mul(l, r) : "(" + MyExpr2s(l) + "*" + MyExpr2s(r) + ")";
             Div(l, r) : "(" + MyExpr2s(l) + "/" + MyExpr2s(r) + ")";
             Pow(l, r) : "(" + MyExpr2s(l) + "^" + MyExpr2s(r) + ")";
+            Neg(var) : "-" + MyExpr2s(var);
         }
     }
 
@@ -25,6 +26,7 @@ export {
             Mul(l, r) : calculateMyExpr(l) * calculateMyExpr(r);
             Div(l, r) : calculateMyExpr(l) / calculateMyExpr(r);
             Pow(l, r) : dpow(calculateMyExpr(l), calculateMyExpr(r));
+            Neg(var) : - calculateMyExpr(var);
         }
     }
 }
