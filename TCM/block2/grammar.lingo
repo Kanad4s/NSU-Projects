@@ -1,6 +1,6 @@
-term = int | sum | sub | mul | div | pow;
+term = dbl | sum | sub | mul | div | pow;
 
-int = ws digit+ $a ws {Int(s2i($a))};
+dbl = ws digit+ $a ws {Dbl(s2d($a))};
 
 sum = "(" ws term:l ws "+" ws term:r ws ")" ws { Sum(:l, :r) };
 sub = "(" ws term:l ws "-" ws term:r ws ")" ws { Sub(:l, :r) };

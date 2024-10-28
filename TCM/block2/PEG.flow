@@ -8,7 +8,7 @@ export {
 
     MyExpr2s(myExpr : MyExpr) -> string {
         switch(myExpr : MyExpr) {
-            Int(var) : i2s(var);
+            Dbl(var) : d2s(var);
             Sum(l, r) : "(" + MyExpr2s(l) + "+" + MyExpr2s(r) + ")";
             Sub(l, r) : "(" + MyExpr2s(l) + "-" + MyExpr2s(r) + ")";
             Mul(l, r) : "(" + MyExpr2s(l) + "*" + MyExpr2s(r) + ")";
@@ -17,14 +17,14 @@ export {
         }
     }
 
-    calculateMyExpr(myExpr : MyExpr) -> int {
+    calculateMyExpr(myExpr : MyExpr) -> double {
         switch(myExpr : MyExpr) {
-            Int(var) : var;
+            Dbl(var) : var;
             Sum(l, r) : calculateMyExpr(l) + calculateMyExpr(r);
             Sub(l, r) : calculateMyExpr(l) - calculateMyExpr(r);
             Mul(l, r) : calculateMyExpr(l) * calculateMyExpr(r);
             Div(l, r) : calculateMyExpr(l) / calculateMyExpr(r);
-            Pow(l, r) : pow(calculateMyExpr(l), calculateMyExpr(r));
+            Pow(l, r) : dpow(calculateMyExpr(l), calculateMyExpr(r));
         }
     }
 }

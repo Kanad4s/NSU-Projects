@@ -1,6 +1,6 @@
 export {
-    MyExpr ::= Int, Sum, Sub, Mul, Div, Pow;
-    Int : (val : int);
+    MyExpr ::= Dbl, Sum, Sub, Mul, Div, Pow;
+    Dbl : (val : double);
     Sum : (l : MyExpr, r : MyExpr);
     Sub : (l : MyExpr, r : MyExpr);
     Mul : (l : MyExpr, r : MyExpr);
