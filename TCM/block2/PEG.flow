@@ -24,7 +24,14 @@ export {
             Sum(l, r) : calculateMyExpr(l) + calculateMyExpr(r);
             Sub(l, r) : calculateMyExpr(l) - calculateMyExpr(r);
             Mul(l, r) : calculateMyExpr(l) * calculateMyExpr(r);
-            Div(l, r) : calculateMyExpr(l) / calculateMyExpr(r);
+            Div(l, r) : {
+                divider = calculateMyExpr(r);
+                if (divider == 0.0) {
+                    println("Error division by zero!");
+                    quit(1);
+                }
+                calculateMyExpr(l) / divider;
+            };
             Pow(l, r) : dpow(calculateMyExpr(l), calculateMyExpr(r));
             Neg(var) : - calculateMyExpr(var);
         }
