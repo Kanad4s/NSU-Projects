@@ -1,20 +1,37 @@
 import lingo/pegcode/driver;
+import runtime;
 import string;
-import grammar;
 
-Expr ::= IntConst, Mul, Add;
-IntConst : (value : int);
-Mul : (left : Expr, right : Expr);
-Add : (left : Expr, right : Expr);
+export {
+    MyExpr ::= Sum, Mul, Int;
+    Sum(lhs : MyExpr, rhs : MyExpr);
+    Mul(lhs : MyExpr, rhs : MyExpr);
+    Int(val : int);
 
-arithGrammarOp: ref Maybe<[PegOp]> = ref None();
+    s2MyExpr(str: string) -> MyExpr {
+		parsic(compilePegGrammar("#include grammar.lingo"), str, defaultPegActions);
+	}
 
-initGarammar() {
-    grammaFile = "#include grammar.lingo";
-    grammar = compilePegGrammar(grammaFile);
+    MyExpr2s(myExpr : MyExpr) -> string {
+        switch(myExpr : MyExpr) {
+            Sum(lhs, rhs) :  "(" + MyExpr2s(lhs) + "+" + MyExpr2s(rhs) + ")";
+            Mul(lhs, rhs) : "(" + MyExpr2s(lhs) + "*" + MyExpr2s(rhs) + ")";
+            Int(var) : i2s(var);
+        }
+    }
+
+    calculateMyExpr(myExpr : MyExpr) -> int {
+        switch(myExpr : MyExpr) {
+            Sum(lhs, rhs)  : calculateMyExpr(lhs) + calculateMyExpr(rhs);
+            Mul(lhs, rhs) : calculateMyExpr(lhs) * calculateMyExpr(rhs);
+            Int(var) : var;
+        }
+    }
 }
 
 main() {
-    ast = parsic(initGarammar(), "2 * 3   +1", defaultPegActions);
-    quit(0);
+    str: string = "((2 * 3) + 5)";
+    myExpr : MyExpr = s2MyExpr(str);
+    println(myExpr);
+    quit(0)
 }
