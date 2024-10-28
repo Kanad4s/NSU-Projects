@@ -1,4 +1,4 @@
-term = int | sum | sub | mul | div;
+term = int | sum | sub | mul | div | pow;
 
 int = ws digit+ $a ws {Int(s2i($a))};
 
@@ -6,6 +6,7 @@ sum = "(" ws term:l ws "+" ws term:r ws ")" ws { Sum(:l, :r) };
 sub = "(" ws term:l ws "-" ws term:r ws ")" ws { Sub(:l, :r) };
 mul = "(" ws term:l ws "*" ws term:r ws ")" ws { Mul(:l, :r) };
 div = "(" ws term:l ws "/" ws term:r ws ")" ws { Div(:l, :r) };
+pow = "(" ws term:l ws "^" ws term:r ws ")" ws { Pow(:l, :r) };
 
 digit = '0' - '9';
 letter = 'a' - 'z' | 'A' - 'Z';
