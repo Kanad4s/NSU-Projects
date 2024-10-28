@@ -1,30 +1,30 @@
 import lingo/pegcode/driver;
 import runtime;
 import string;
+import grammar;
 
 export {
-    MyExpr ::= Sum, Mul, Int;
-    Sum(lhs : MyExpr, rhs : MyExpr);
-    Mul(lhs : MyExpr, rhs : MyExpr);
-    Int(val : int);
-
     s2MyExpr(str: string) -> MyExpr {
 		parsic(compilePegGrammar("#include grammar.lingo"), str, defaultPegActions);
 	}
 
     MyExpr2s(myExpr : MyExpr) -> string {
         switch(myExpr : MyExpr) {
-            Sum(lhs, rhs) :  "(" + MyExpr2s(lhs) + "+" + MyExpr2s(rhs) + ")";
-            Mul(lhs, rhs) : "(" + MyExpr2s(lhs) + "*" + MyExpr2s(rhs) + ")";
             Int(var) : i2s(var);
+            Sum(l, r) :  "(" + MyExpr2s(l) + "+" + MyExpr2s(r) + ")";
+            Sub(l, r) :  "(" + MyExpr2s(l) + "-" + MyExpr2s(r) + ")";
+            Mul(l, r) : "(" + MyExpr2s(l) + "*" + MyExpr2s(r) + ")";
+            Div(l, r) : "(" + MyExpr2s(l) + "/" + MyExpr2s(r) + ")";
         }
     }
 
     calculateMyExpr(myExpr : MyExpr) -> int {
         switch(myExpr : MyExpr) {
-            Sum(lhs, rhs)  : calculateMyExpr(lhs) + calculateMyExpr(rhs);
-            Mul(lhs, rhs) : calculateMyExpr(lhs) * calculateMyExpr(rhs);
             Int(var) : var;
+            Sum(l, r)  : calculateMyExpr(l) + calculateMyExpr(r);
+            Sub(l, r) : calculateMyExpr(l) - calculateMyExpr(r);
+            Mul(l, r) : calculateMyExpr(l) * calculateMyExpr(r);
+            Div(l, r) : calculateMyExpr(l) / calculateMyExpr(r);
         }
     }
 }
