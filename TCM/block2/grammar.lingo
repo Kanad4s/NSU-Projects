@@ -1,0 +1,12 @@
+term = int | sum | sub | mul | div
+
+int = ws digit+ $a ws {Int(s2i($a))};
+
+sum = "(" ws term:l ws "+" term:r ws ")" ws {Sum(:l, :r)};
+sub = "(" ws term:l ws "-" term:r ws ")" ws {Sub(:l, :r)};
+mul = "(" ws term:l ws "*" term:r ws ")" ws {Mul(:l, :r)};
+div = "(" ws term:l ws "/" term:r ws ")" ws {Div(:l, :r)};
+
+digit = '0' - '9';
+letter = 'a' - 'z' | 'A' - 'Z';
+ws = (' ' | '\t' | '\n');
