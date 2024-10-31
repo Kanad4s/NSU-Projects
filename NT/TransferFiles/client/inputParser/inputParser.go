@@ -7,9 +7,10 @@ import (
 )
 
 var args struct {
-	IP   string `default:"localhost" help:"IP address to connect"`
-	Port string `arg:"-p, --port" default:"8181" help:"port to connect"`
-	File string `arg:"-f, --file, required" help:"file to transfer"`
+	IP        string `default:"localhost" help:"IP address to connect"`
+	Port      string `arg:"-p, --port" default:"8181" help:"port to connect"`
+	Overwrite bool   `arg:" -o" default:"false" help:"Overwrite file if it exists on server"`
+	File      string `arg:"-f, --file, required" help:"file to transfer"`
 }
 
 func ParseInput() {
@@ -26,6 +27,10 @@ func GetPort() string {
 
 func GetFile() string {
 	return args.File
+}
+
+func IsOverwrite() bool {
+	return args.Overwrite
 }
 
 func MyFoo() {
