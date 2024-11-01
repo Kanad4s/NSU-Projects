@@ -17,27 +17,24 @@
 //вывод изменений переменых
 
 enum {
-    COUNT_THREAD = 5
+    COUNT_THREAD = 2
 };
 
 static int global_value = 10;
 
 void* my_thread(void *arg) {
-   const int const_local = 5;
    static int static_local = 10;
    int local = 15;
+//    printf("my_thread [pid: %d, ppid: %d, tid: %d, pthread_self %lu]: Hello from my_thread!\n", getpid(), getppid(), gettid(), (unsigned long)pthread_self());
 
-   printf("my_thread [pid: %d, ppid: %d, tid: %d, pthread_self %lu]: Hello from my_thread!\n", getpid(), getppid(), gettid(), (unsigned long)pthread_self());
+   printf("before:\nmy_thread: local: %d, static_local: %d, global_value: %d\n", local, static_local, global_value);
 
-   printf("my_thread: address local: %p, static_local: %p, const_local: %p, global_value: %p\n", &local, &static_local, &const_local, &global_value );
-
-   sleep(20);
+   sleep(1);
 
    static_local = 11;
    local = 16;
    global_value = 11;
-   printf("//");
-   printf("main: address local: %p, static_local: %p, const_local: %p, global_value: %p\n", &local, &static_local, &const_local, &global_value );
+   printf("after:\nmy_thread: local: %d, static_local: %d, global_value: %d\n", local, static_local, global_value);
 
    return NULL;
 }
@@ -48,7 +45,7 @@ int main() {
    const int const_local = 5;
    static int static_local = 10;
    int local = 15;
-   printf("main: address local: %p, static_local: %p, const_local: %p, global_value: %p\n", &local, &static_local, &const_local, &global_value );
+   printf("main: local: %d, static_local: %d, const_local: %d, global_value: %d\n", local, static_local, const_local, global_value );
 
    pthread_t tid;
    int err;
@@ -59,6 +56,8 @@ int main() {
            return EXIT_FAILURE;
        }
    }
+   sleep(3);
+   printf("after:\nmain: local: %d, static_local: %d, const_local: %d, global_value: %d\n", local, static_local, const_local, global_value );
 
    void* ret_val;
    err = pthread_join(tid, &ret_val);

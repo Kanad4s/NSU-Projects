@@ -29,8 +29,8 @@ void* my_thread(void *arg) {
 
    printf("my_thread [pid: %d, ppid: %d, tid: %d, pthread_self %lu]: Hello from my_thread!\n", 
             getpid(), getppid(), gettid(), (unsigned long)pthread_self());
-   printf("my_thread: address local: %p, static_local: %p, const_local: %p, global_value: %p\n", 
-            &local, &static_local, &const_local, &global_value );
+   // printf("my_thread: address local: %p, static_local: %p, const_local: %p, global_value: %p\n", 
+   //          &local, &static_local, &const_local, &global_value );
    return NULL;
 }
 
@@ -40,11 +40,12 @@ int main() {
    const int const_local = 5;
    static int static_local = 10;
    int local = 15;
-   printf("main: address local: %p, static_local: %p, const_local: %p, global_value: %p\n", 
-            &local, &static_local, &const_local, &global_value );
+   // printf("main: address local: %p, static_local: %p, const_local: %p, global_value: %p\n", 
+   //          &local, &static_local, &const_local, &global_value );
 
    pthread_t tid;
    int err = pthread_create(&tid, NULL, my_thread, NULL);
+   printf("tif from main: %ld\n", tid);
    if (err) {
        fprintf(stderr, "main: pthread_create() failed: %s\n", strerror(err));
        return EXIT_FAILURE;
@@ -57,6 +58,6 @@ int main() {
        return EXIT_FAILURE;
    }
 
-   sleep(30);
+   // sleep(5);
    return EXIT_SUCCESS;
 }
