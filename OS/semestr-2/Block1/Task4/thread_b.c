@@ -4,16 +4,10 @@
 #include <string.h>
 #include <stdbool.h>
 
-void my_thread_handler(void *arg) {
-    printf("my thread handler\n");
-}
-
 void* my_thread(void *arg) {
-    // pthread_cleanup_push(my_thread_handler, (void*)arg);
-
-    int old_state, count_inter = 0;
-    int err = pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, &old_state);
-    // printf("old state %d\n", old_state);
+    int old_type, count_inter = 0;
+    int err = pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, &old_type);
+    // printf("old state %d\n", old_type);
     if (err) {
         fprintf(stderr, "main: pthread_setcancelstate() failed %s\n", strerror(err));
         pthread_exit(NULL);
@@ -22,8 +16,6 @@ void* my_thread(void *arg) {
     while(true) {
       ++count_inter;
     }
-
-    // pthread_cleanup_pop(1);
 
     return NULL;
 }

@@ -9,13 +9,12 @@ enum {
 };
 
 void my_thread_handler(void* arg) {
-    printf("my thread handler, free() hello world\n");
+    printf("\nmy thread handler, free() hello world\n");
     char* ptr = (char*) arg;
     free(ptr);
 }
 
 void* my_thread(void *arg) {
-    int old_state, count_inter = 0;
     char* arr_hello_world = malloc(sizeof(char) * COUNT_SYMBOL_HELLO_WORLD);
     strcpy(arr_hello_world, "hello world");
     if (arr_hello_world == NULL) {
@@ -24,8 +23,6 @@ void* my_thread(void *arg) {
     }
 
     pthread_cleanup_push(my_thread_handler, (void*)arg);
-
-    printf("old state %d\n", old_state);
 
     while(true) {
       printf("%s", arr_hello_world);
