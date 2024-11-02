@@ -20,13 +20,11 @@ void* my_thread(void *arg) {
     pthread_exit(NULL);
 }
 
-// cans pointer
-
 int main() {
-    // struct Node* node = (struct Node *)malloc(sizeof(struct Node));
-    struct Node node;
-    node.value_int = 42;
-    node.ptr_char = "hello";
+    struct Node* node = (struct Node *)malloc(sizeof(struct Node));
+    // struct Node node;
+    node->value_int = 42;
+    node->ptr_char = "hello";
     pthread_attr_t attr;
     // printf("pid: %d, node: %p\n", getpid(), &node);
 
@@ -39,7 +37,7 @@ int main() {
     }
 
     pthread_t thread;
-    err = pthread_create(&thread, &attr, my_thread, (void *)&node);
+    err = pthread_create(&thread, &attr, my_thread, (void *)node);
     if (err) {
         fprintf(stderr, "main: pthread_create() failed: %s\n", strerror(err));
         return EXIT_FAILURE;
@@ -48,6 +46,6 @@ int main() {
     sleep(1);
     pthread_attr_destroy(&attr);
 
-    // free(node);
+    free(node);
     return EXIT_SUCCESS;
 }
