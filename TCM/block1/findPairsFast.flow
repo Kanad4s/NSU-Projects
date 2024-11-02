@@ -1,0 +1,22 @@
+import runtime;
+import ds/tree;
+
+inds(a: [int], m: int) -> [Pair<int, int>] {
+    finalTree = foldi(a, makeTree(), \i, curTree, a_i -> {
+        switch(lookupTree(curTree, a_i)) {
+            Some(curValue): setTree(curTree, a_i, concat(curValue, [i]));
+            None(): setTree(curTree, a_i, [i]);
+        }
+    });
+
+    foldi(a, [], \i, pairs, a_i -> switch(lookupTree(finalTree, m - a_i)) {
+        Some(value): concat(pairs, map(value, \j -> Pair(i, j)));
+        None(): pairs;
+    })
+}
+
+main() {
+    array = [0, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    println(inds(array, 8));
+    quit(0);
+}

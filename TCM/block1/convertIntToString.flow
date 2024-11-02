@@ -1,0 +1,11 @@
+import string;
+
+convertIntArrayToStringArray(intArray: [int]) -> [string] {
+    map(intArray, i2s);
+}
+
+main() {
+    intArray = [1, 2, 3, 4];
+    println(convertIntArrayToStringArray(intArray));
+    quit(0);
+}

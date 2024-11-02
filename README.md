@@ -1,7 +1,11 @@
-# NSU_Projects_Cplusplus
-I store my NSU projects in different subjects here. It is ok if you want to see them.
+# NSU_Projects
+I store my NSU projects in different subjects here.
 # Subjects
-* Computers and CS - Computers and Control Systems (almost nothing about CS)
+* CM - Computational Mathematics
+* Computers and CS - Computers and Control Systems
+* NT - Network Technologies
 * OOP - Object Oriented Programming
 * OS - Operating Systems
 * PP - Parallel Programming
+* TCM - Translation and Compilation Methods
+
