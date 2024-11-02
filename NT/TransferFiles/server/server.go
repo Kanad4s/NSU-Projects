@@ -34,11 +34,11 @@ func main() {
 
 func HandleRequest(conn net.Conn) {
 	defer conn.Close()
-	PrepareReceivingFile(conn)
-	// os.OpenFile(fileName, os.O_CREATE|)
+	fileName := PrepareReceivingFile(conn)
+	os.OpenFile(storePackage+"/"+fileName, os.O_CREATE|os.O_APPEND, 0666)
 }
 
-func PrepareReceivingFile(conn net.Conn) {
+func PrepareReceivingFile(conn net.Conn) string {
 	fileName := GetFileName(conn)
 	overwrite := GetOverwrite(conn)
 	if len(overwrite) == 0 {
@@ -50,10 +50,11 @@ func PrepareReceivingFile(conn net.Conn) {
 	fmt.Println("getOverwrite(): ", overwrite)
 	fmt.Println("getOverwrite(): ", isOverwrite)
 	os.Mkdir(storePackage, 0777)
-	if _, err := os.Stat("/" + storePackage + "/" + fileName); err == nil {
+	if _, err := os.Stat(storePackage + "/" + fileName); err == nil {
 
 	}
 
+	return fileName
 }
 
 func setIsOverwrite(overwrite string) bool {
