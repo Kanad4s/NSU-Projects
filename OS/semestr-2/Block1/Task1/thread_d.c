@@ -50,6 +50,7 @@ int main() {
    pthread_t tid;
    int err;
    for(int i = 0; i < COUNT_THREAD; ++i) {
+       sleep(2);
        err = pthread_create(&tid, NULL, my_thread, NULL);
        if (err) {
            fprintf(stderr, "main: pthread_create() failed: %s\n", strerror(err));

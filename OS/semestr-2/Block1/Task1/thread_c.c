@@ -27,7 +27,7 @@ void* my_thread(void *arg) {
    static int static_local = 10;
    int local = 15;
 
-   printf("my_thread [pid: %d, ppid: %d, tid: %d, pthread_self %lu]: Hello from my_thread!\n", 
+   printf("my_thread [pid: %d, ppid: %d, tid: %d, pthread_self: %lu]: Hello from my_thread!\n", 
             getpid(), getppid(), gettid(), (unsigned long)pthread_self());
    // printf("my_thread: address local: %p, static_local: %p, const_local: %p, global_value: %p\n", 
    //          &local, &static_local, &const_local, &global_value );
