@@ -9,12 +9,6 @@
 #include <unistd.h>
 #include <stdbool.h>
 
-//// signal.SIGKILL и signal.SIGSTOP не могут быть заблокированы
-
-//// Ctrl + \ сигнал SIGQUIT
-
-//// Ctrl + C сигнал INT
-
 enum {
     COUNT_THREAD = 4
 };
@@ -106,6 +100,8 @@ int main() {
         fprintf(stderr, "main: block_all_signal() failed: %s\n", strerror(err));
          status_err = true;
     }
+
+    void* ret_val;
     err = pthread_join(tid[1], &ret_val);
     if (err) {
          status_err = true;
@@ -136,7 +132,6 @@ int main() {
     }
     sleep(3);
 
-    void* ret_val;
     for(int i = 0; i < COUNT_THREAD-1; ++i) {
         err = pthread_join(tid[1], &ret_val);
         if (err) {
