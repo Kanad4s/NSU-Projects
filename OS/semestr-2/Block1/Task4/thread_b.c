@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-
+//создать самому точку останова
 void* my_thread(void *arg) {
     int old_type, count_inter = 0;
     int err = pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, &old_type);
