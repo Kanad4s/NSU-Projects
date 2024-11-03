@@ -11,6 +11,7 @@ import (
 const storePackage = "uploads"
 
 func main() {
+	CreateStore()
 	inputParser.ParseInput()
 	host := fmt.Sprintf("%s:%s", inputParser.GetIP(), inputParser.GetPort())
 	listener, err := net.Listen("tcp", host)
@@ -49,7 +50,6 @@ func PrepareReceivingFile(conn net.Conn) string {
 	fmt.Println("getFileName(): ", fileName)
 	fmt.Println("getOverwrite(): ", overwrite)
 	fmt.Println("getOverwrite(): ", isOverwrite)
-	os.Mkdir(storePackage, 0777)
 	if _, err := os.Stat(storePackage + "/" + fileName); err == nil {
 
 	}
@@ -81,4 +81,11 @@ func GetFileName(conn net.Conn) string {
 	}
 	fmt.Printf("get row fileName: %v, size: %v\n", fileName, len(fileName))
 	return fileName
+}
+
+func CreateStore() {
+	err := os.Mkdir(storePackage, 0666)
+	if err != nil {
+		fmt.Println("Error Mkdir: ", err.Error())
+	}
 }
