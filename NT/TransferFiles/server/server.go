@@ -6,6 +6,7 @@ import (
 	"net"
 	"os"
 	"server/inputParser"
+	"strings"
 )
 
 const storePackage = "uploads"
@@ -35,11 +36,13 @@ func main() {
 
 func HandleRequest(conn net.Conn) {
 	defer conn.Close()
-	fileName := PrepareReceivingFile(conn)
-	os.OpenFile(storePackage+"/"+fileName, os.O_CREATE|os.O_APPEND, 0666)
+	if !PrepareReceivingFile(conn) {
+		// conn.Write([]byte())
+		return
+	}
 }
 
-func PrepareReceivingFile(conn net.Conn) string {
+func PrepareReceivingFile(conn net.Conn) (receive bool) {
 	fileName := GetFileName(conn)
 	overwrite := GetOverwrite(conn)
 	if len(overwrite) == 0 {
@@ -50,11 +53,30 @@ func PrepareReceivingFile(conn net.Conn) string {
 	fmt.Println("getFileName(): ", fileName)
 	fmt.Println("getOverwrite(): ", overwrite)
 	fmt.Println("getOverwrite(): ", isOverwrite)
-	if _, err := os.Stat(storePackage + "/" + fileName); err == nil {
+	filePath := storePackage + "/" + fileName
+	fileExists, err := DoesFileExist(filePath)
+	if err != nil {
+		panic(err)
+	}
+	if fileExists && !isOverwrite {
+		receive = false
+	} else {
+		os.OpenFile(filePath, os.O_CREATE|os.O_RDWR, 0666)
+		receive = true
+	}
+	return
+}
 
+func DoesFileExist(path string) (found bool, err error) {
+	if _, err := os.Stat(path); err == nil {
+		if os.IsNotExist(err) {
+			err = nil
+		}
+	} else {
+		found = true
 	}
 
-	return fileName
+	return
 }
 
 func setIsOverwrite(overwrite string) bool {
