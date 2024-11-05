@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"client/inputParser"
 	"fmt"
 	"net"
@@ -19,28 +20,38 @@ func main() {
 	}
 	defer conn.Close()
 
-	PrepareSendFile(conn)
-	// consoleScanner := bufio.NewScanner(os.Stdin)
-	// for consoleScanner.Scan() {
-	// 	text := consoleScanner.Text()
-	// 	conn.Write([]byte(text + "\n"))
+	if !PrepareSendFile(conn) {
+		os.Exit(0)
+	}
 
-	// 	response, err := bufio.NewReader(conn).ReadString('\n')
-	// 	if err != nil {
-	// 		fmt.Println("Error reading:", err.Error())
-	// 		os.Exit(1)
-	// 	}
-	// 	fmt.Println("Response: " + response)
-	// }
-
-	// if err := consoleScanner.Err(); err != nil {
-	// 	fmt.Println("Error reading from console:", err.Error())
-	// }
 }
 
-func PrepareSendFile(conn net.Conn) {
+func PrepareSendFile(conn net.Conn) bool {
 	SendFileName(conn, inputParser.GetFile())
 	SendOverwrite(conn, inputParser.IsOverwrite())
+	doSend := DoSendFile(conn)
+	return doSend
+}
+
+func PrintMessage(message string) {
+	if message == "9876" {
+		fmt.Println("Sending is accepted")
+	} else if message == "ABCD" {
+		fmt.Println("Sending is unaccepted")
+	}
+}
+
+func DoSendFile(conn net.Conn) bool {
+	scanner := bufio.NewScanner(conn)
+	scanner.Scan()
+	message := scanner.Text()
+	if err := scanner.Err(); err != nil {
+		fmt.Println("Error reading message: ", err.Error())
+	}
+	fmt.Println("get message: ", message)
+
+	PrintMessage(message)
+	return message == "9876"
 }
 
 func SendFileName(conn net.Conn, name string) {

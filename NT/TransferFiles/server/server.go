@@ -6,7 +6,6 @@ import (
 	"net"
 	"os"
 	"server/inputParser"
-	"strings"
 )
 
 const storePackage = "uploads"
@@ -36,13 +35,23 @@ func main() {
 
 func HandleRequest(conn net.Conn) {
 	defer conn.Close()
-	if !PrepareReceivingFile(conn) {
-		// conn.Write([]byte())
+	doReceive, message := PrepareReceivingFile(conn)
+	_, err := conn.Write([]byte(message))
+	if err != nil {
+		fmt.Println("error send FileName:", err.Error())
+		os.Exit(1)
+	}
+	if !doReceive {
+		fmt.Println("do not receive file on conn: ", conn)
+		os.Exit(0)
 		return
 	}
+
 }
 
-func PrepareReceivingFile(conn net.Conn) (receive bool) {
+
+
+func PrepareReceivingFile(conn net.Conn) (doReceive bool, message string) {
 	fileName := GetFileName(conn)
 	overwrite := GetOverwrite(conn)
 	if len(overwrite) == 0 {
@@ -59,10 +68,12 @@ func PrepareReceivingFile(conn net.Conn) (receive bool) {
 		panic(err)
 	}
 	if fileExists && !isOverwrite {
-		receive = false
+		doReceive = false
+		message = "ABCD"
 	} else {
 		os.OpenFile(filePath, os.O_CREATE|os.O_RDWR, 0666)
-		receive = true
+		doReceive = true
+		message = "9876"
 	}
 	return
 }
