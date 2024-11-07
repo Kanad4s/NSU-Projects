@@ -2,7 +2,7 @@ package main
 
 import (
 	"bufio"
-	"client/inputParser"
+	"TransferFiles/internal/client/inputParser"
 	"fmt"
 	"io"
 	"net"

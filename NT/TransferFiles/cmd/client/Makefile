@@ -2,8 +2,8 @@
 
 all: client
 
-client: client.go
-	go build client.go
+client: main.go
+	go build -o client main.go
 
 clean:
 	rm -rf client

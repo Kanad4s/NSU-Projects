@@ -2,8 +2,8 @@
 
 all: server
 
-server: server.go
-	go build server.go
+server: main.go
+	go build -o server main.go
 
 clean:
 	rm -rf server
