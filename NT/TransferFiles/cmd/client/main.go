@@ -1,17 +1,13 @@
 package main
 
 import (
-	"bufio"
 	"TransferFiles/internal/client/inputParser"
 	"fmt"
 	"io"
 	"net"
 	"os"
-	"strings"
+	ni "TransferFiles/internal/networkInteraction"
 )
-
-const endSymbol = '\a'
-const successMsg = "success"
 
 func main() {
 	inputParser.ParseInput()
@@ -65,15 +61,15 @@ func PrintMessage(message string) {
 }
 
 func DoSendFile(conn net.Conn) bool {
-	response := GetMessage(conn)
+	response := ni.GetMessage(conn)
 	PrintMessage(response)
 	return response == "9876"
 }
 
 func SendFileName(conn net.Conn, name string) {
-	SendMessage(name, conn)
-	response := GetMessage(conn)
-	if response != successMsg {
+	ni.SendMessage(name, conn)
+	response := ni.GetMessage(conn)
+	if response != ni.SuccessMsg {
 		os.Exit(1)
 	}
 }
@@ -83,29 +79,9 @@ func SendOverwrite(conn net.Conn, isOverwrite bool) {
 	if isOverwrite {
 		sendValue = "1"
 	}
-	SendMessage(sendValue, conn)
-	response := GetMessage(conn)
-	if response != successMsg {
+	ni.SendMessage(sendValue, conn)
+	response := ni.GetMessage(conn)
+	if response != ni.SuccessMsg {
 		os.Exit(1)
-	}
-}
-
-func GetMessage(conn net.Conn) (msg string) {
-	msg, err := bufio.NewReader(conn).ReadString(endSymbol)
-	if err != nil {
-		fmt.Println("Error reading fileName: ", err.Error())
-	}
-	endSymbolIndex := strings.LastIndex(msg, string(endSymbol))
-	if endSymbolIndex == -1 {
-		endSymbolIndex = len(msg) - 1
-	}
-	msg = msg[:endSymbolIndex]
-	return
-}
-
-func SendMessage(msg string, conn net.Conn) {
-	_, err := conn.Write([]byte(msg + string(endSymbol)))
-	if err != nil {
-		println("Error sendResponse: ", err.Error())
 	}
 }

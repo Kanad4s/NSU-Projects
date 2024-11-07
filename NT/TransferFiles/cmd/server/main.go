@@ -1,18 +1,14 @@
 package main
 
 import (
-	"bufio"
+	ni "TransferFiles/internal/networkInteraction"
+	"TransferFiles/internal/server/inputParser"
 	"fmt"
 	"net"
 	"os"
-	"TransferFiles/internal/server/inputParser"
-	"strings"
 )
 
 const storePackage = "uploads"
-const successMsg = "success"
-const errMsg = "error"
-const endSymbol = '\a'
 
 func main() {
 	CreateStore()
@@ -69,7 +65,7 @@ func PrepareReceivingFile(conn net.Conn) (doReceive bool, message string) {
 		message = "9876"
 	}
 
-	SendMessage(message, conn)
+	ni.SendMessage(message, conn)
 	return
 }
 
@@ -79,7 +75,7 @@ func DoesFileExist(path string) (found bool, err error) {
 			err = nil
 		} else {
 			found = true
-		} 
+		}
 	}
 	fmt.Printf("Does %s exists: %v\n", path, found)
 	return
@@ -90,39 +86,19 @@ func setIsOverwrite(overwrite string) bool {
 }
 
 func GetOverwrite(conn net.Conn) string {
-	overwrite := GetMessage(conn)
+	overwrite := ni.GetMessage(conn)
 	fmt.Printf("get row overwrite: %v, size: %v\n", overwrite, len(overwrite))
 
-	SendMessage(successMsg, conn)
+	ni.SendMessage(ni.SuccessMsg, conn)
 	return overwrite
 }
 
 func GetFileName(conn net.Conn) string {
-	fileName := GetMessage(conn)
+	fileName := ni.GetMessage(conn)
 	fmt.Printf("get row fileName: %v, size: %v\n", fileName, len(fileName))
 
-	SendMessage(successMsg, conn)
+	ni.SendMessage(ni.SuccessMsg, conn)
 	return fileName
-}
-
-func GetMessage(conn net.Conn) (msg string) {
-	msg, err := bufio.NewReader(conn).ReadString(endSymbol)
-	if err != nil {
-		fmt.Println("Error reading fileName: ", err.Error())
-	}
-	endSymbolIndex := strings.LastIndex(msg, string(endSymbol))
-	if endSymbolIndex == -1 {
-		endSymbolIndex = len(msg) - 1
-	}
-	msg = msg[:endSymbolIndex]
-	return
-}
-
-func SendMessage(msg string, conn net.Conn) {
-	_, err := conn.Write([]byte(msg + string(endSymbol)))
-	if err != nil {
-		println("Error sendResponse: ", err.Error())
-	}
 }
 
 func CreateStore() {
