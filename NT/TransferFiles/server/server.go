@@ -77,9 +77,9 @@ func DoesFileExist(path string) (found bool, err error) {
 	if _, err := os.Stat(path); err == nil {
 		if os.IsNotExist(err) {
 			err = nil
-		}
-	} else {
-		found = true
+		} else {
+			found = true
+		} 
 	}
 	fmt.Printf("Does %s exists: %v\n", path, found)
 	return
