@@ -6,9 +6,13 @@ import (
 	"net"
 	"os"
 	"server/inputParser"
+	"strings"
 )
 
 const storePackage = "uploads"
+const successMsg = "success"
+const errMsg = "error"
+const endSymbol = '\a'
 
 func main() {
 	CreateStore()
@@ -36,28 +40,17 @@ func main() {
 func HandleRequest(conn net.Conn) {
 	defer conn.Close()
 	doReceive, message := PrepareReceivingFile(conn)
-	_, err := conn.Write([]byte(message))
-	if err != nil {
-		fmt.Println("error send FileName:", err.Error())
-		os.Exit(1)
-	}
+	fmt.Println("message to send: ", message)
 	if !doReceive {
-		fmt.Println("do not receive file on conn: ", conn)
-		os.Exit(0)
+		fmt.Println("do not receive file on conn: ", conn.RemoteAddr().String())
 		return
 	}
 
 }
 
-
-
 func PrepareReceivingFile(conn net.Conn) (doReceive bool, message string) {
 	fileName := GetFileName(conn)
 	overwrite := GetOverwrite(conn)
-	if len(overwrite) == 0 {
-		overwrite = fileName[len(fileName)-1:]
-		fileName = fileName[:len(fileName)-1]
-	}
 	isOverwrite := setIsOverwrite(overwrite)
 	fmt.Println("getFileName(): ", fileName)
 	fmt.Println("getOverwrite(): ", overwrite)
@@ -75,6 +68,8 @@ func PrepareReceivingFile(conn net.Conn) (doReceive bool, message string) {
 		doReceive = true
 		message = "9876"
 	}
+
+	SendMessage(message, conn)
 	return
 }
 
@@ -86,7 +81,7 @@ func DoesFileExist(path string) (found bool, err error) {
 	} else {
 		found = true
 	}
-
+	fmt.Printf("Does %s exists: %v\n", path, found)
 	return
 }
 
@@ -95,29 +90,43 @@ func setIsOverwrite(overwrite string) bool {
 }
 
 func GetOverwrite(conn net.Conn) string {
-	scanner := bufio.NewScanner(conn)
-	scanner.Scan()
-	overwrite := scanner.Text()
-	if err := scanner.Err(); err != nil {
-		fmt.Println("Error reading Overwrite: ", err.Error())
-	}
+	overwrite := GetMessage(conn)
 	fmt.Printf("get row overwrite: %v, size: %v\n", overwrite, len(overwrite))
+
+	SendMessage(successMsg, conn)
 	return overwrite
 }
 
 func GetFileName(conn net.Conn) string {
-	scanner := bufio.NewScanner(conn)
-	scanner.Scan()
-	fileName := scanner.Text()
-	if err := scanner.Err(); err != nil {
-		fmt.Println("Error reading fileName: ", err.Error())
-	}
+	fileName := GetMessage(conn)
 	fmt.Printf("get row fileName: %v, size: %v\n", fileName, len(fileName))
+
+	SendMessage(successMsg, conn)
 	return fileName
 }
 
+func GetMessage(conn net.Conn) (msg string) {
+	msg, err := bufio.NewReader(conn).ReadString(endSymbol)
+	if err != nil {
+		fmt.Println("Error reading fileName: ", err.Error())
+	}
+	endSymbolIndex := strings.LastIndex(msg, string(endSymbol))
+	if endSymbolIndex == -1 {
+		endSymbolIndex = len(msg) - 1
+	}
+	msg = msg[:endSymbolIndex]
+	return
+}
+
+func SendMessage(msg string, conn net.Conn) {
+	_, err := conn.Write([]byte(msg + string(endSymbol)))
+	if err != nil {
+		println("Error sendResponse: ", err.Error())
+	}
+}
+
 func CreateStore() {
-	err := os.Mkdir(storePackage, 0666)
+	err := os.Mkdir(storePackage, 0755)
 	if err != nil {
 		fmt.Println("Error Mkdir: ", err.Error())
 	}
