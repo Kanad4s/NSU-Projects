@@ -7,9 +7,11 @@ import (
 	"strings"
 )
 
-const SuccessMsg = "success"
-const ErrMsg = "error"
-const EndSymbol = '\a'
+const (
+	SuccessMsg = "success"
+	ErrMsg = "error"
+	EndSymbol = '\a'
+)
 
 func GetMessage(conn net.Conn) (msg string) {
 	msg, err := bufio.NewReader(conn).ReadString(EndSymbol)
