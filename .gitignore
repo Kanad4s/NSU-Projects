@@ -52,6 +52,8 @@ NT/TransferFiles/vendor/
 NT/pkg/
 NT/bin/
 NT/TransferFiles/server/uploads/
+NT/TransferFiles/server/server
+NT/TransferFiles/client/client
 
 # Kernel Module Compile Results
 *.mod*
