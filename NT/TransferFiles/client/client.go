@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"client/inputParser"
 	"fmt"
+	"io"
 	"net"
 	"os"
 	"strings"
@@ -26,6 +27,23 @@ func main() {
 
 	if !PrepareSendFile(conn) {
 		os.Exit(0)
+	}
+
+	SendFile(inputParser.GetFile(), conn)
+}
+
+func SendFile(fileName string, conn net.Conn) {
+	file, err := os.OpenFile(fileName, os.O_RDONLY, os.ModePerm)
+	if err!= nil {
+		fmt.Println("Error open file: ", err.Error())
+		os.Exit(1)
+	}
+	defer file.Close()
+
+	_, err = io.Copy(file, conn)
+	if err != nil {
+		fmt.Println("Error sending file: ", err.Error())
+		os.Exit(1)
 	}
 
 }
