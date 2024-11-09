@@ -3,18 +3,21 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-//создать самому точку останова
+#include <signal.h>
+
 void* my_thread(void *arg) {
     int old_type, count_inter = 0;
-    int err = pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, &old_type);
+    // int err = pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, &old_type);
     // printf("old state %d\n", old_type);
-    if (err) {
-        fprintf(stderr, "main: pthread_setcancelstate() failed %s\n", strerror(err));
-        pthread_exit(NULL);
-    }
+    // if (err) {
+    //     fprintf(stderr, "main: pthread_setcancelstate() failed %s\n", strerror(err));
+    //     pthread_exit(NULL);
+    // }
 
     while(true) {
-      ++count_inter;
+        ++count_inter;
+        // pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, &old_type);
+        pthread_testcancel();
     }
 
     return NULL;
@@ -29,7 +32,7 @@ int main() {
         return EXIT_FAILURE;
     }
 
-    sleep(1);
+    sleep(10);
 
     err = pthread_cancel(tid);
     if (err) {
