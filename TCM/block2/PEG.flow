@@ -1,9 +1,25 @@
 import lingo/pegcode/driver;
 import grammar;
+import string;
 
 export {
+    lingoGrammarOp : ref Maybe<[PegOp]> = ref None();
+
+    chooseGrammar() {
+        onlyOnce(lingoGrammarOp, \ -> { 
+            mode = getUrlParameter("mode");   
+            if (mode == "rpn") {
+                println("Chose rpn grammar\n");
+                compilePegGrammar("#include grammarRPN.lingo");
+            } else {
+                println("Chose simple grammar\n");
+                compilePegGrammar("#include grammar.lingo");
+        } 
+        });
+    }
+
     s2MyExpr(str: string) -> MyExpr {
-		parsic(compilePegGrammar("#include grammar.lingo"), str, defaultPegActions);
+		parsic(chooseGrammar(), str, defaultPegActions);
 	}
 
     MyExpr2s(myExpr : MyExpr) -> string {
@@ -41,8 +57,9 @@ export {
 main() {
     str: string = "(1+(4*7))";
     exp = getUrlParameter("exp");
-    println(exp);
-    myExpr : MyExpr = s2MyExpr(exp);
+    println("exp: " + exp);
+    //myExpr : MyExpr = s2MyExpr(exp);
+    myExpr : MyExpr = s2MyExpr(str);
     println(myExpr);
     println(calculateMyExpr(myExpr));
     println(MyExpr2s(myExpr));
