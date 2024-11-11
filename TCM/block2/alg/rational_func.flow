@@ -8,7 +8,8 @@ export {
 			num_str = polySum2s(f.num);
 			den_str = polySum2s(f.den);
 			frac_len = max(strlen(num_str), strlen(den_str));
-			num_str + "\n" + strRepeat("-", frac_len) + "\n" + den_str
+			num_str + " / " + den_str;
+			// num_str + "\n" + strRepeat("-", frac_len) + "\n" + den_str
 		}
 	}
 
