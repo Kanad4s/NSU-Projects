@@ -36,7 +36,9 @@ func SendFile(fileName string, conn net.Conn) {
 	}
 	defer file.Close()
 
+	fmt.Println("Copy() start")
 	_, err = io.Copy(file, conn)
+	fmt.Println("Copy() finish")
 	if err != nil {
 		fmt.Println("Error sending file: ", err.Error())
 		os.Exit(1)

@@ -4,6 +4,7 @@ import (
 	ni "TransferFiles/internal/networkInteraction"
 	"TransferFiles/internal/server/inputParser"
 	"fmt"
+	"io"
 	"net"
 	"os"
 )
@@ -35,17 +36,42 @@ func main() {
 
 func HandleRequest(conn net.Conn) {
 	defer conn.Close()
-	doReceive, message := PrepareReceivingFile(conn)
+	doReceive, message, fileName := PrepareReceivingFile(conn)
 	fmt.Println("message to send: ", message)
 	if !doReceive {
 		fmt.Println("do not receive file on conn: ", conn.RemoteAddr().String())
 		return
 	}
 
+	ReceiveFile(conn, fileName)
 }
 
-func PrepareReceivingFile(conn net.Conn) (doReceive bool, message string) {
-	fileName := GetFileName(conn)
+func ReceiveFile(conn net.Conn, fileName string) {
+	filePath := storePackage + "/" + fileName
+	file, err := os.OpenFile(filePath, os.O_CREATE|os.O_RDWR, 0666)
+	if err != nil {
+		fmt.Println("Error open file")
+		return
+	}
+	buffer := make([]byte, 1024)
+	writer := io.MultiWriter(file)
+	receivedSize := 0
+	n := 0
+	for receivedSize <= 1025 {
+		n, err = conn.Read(buffer)
+		if err != nil {
+			fmt.Println("Error receiving file")
+		}
+		receivedSize += n
+		_, err = writer.Write(buffer)
+		if err != nil {
+			fmt.Println("Error writing into file")
+		}
+	}
+}
+
+func PrepareReceivingFile(conn net.Conn) (doReceive bool, message string, fileName string) {
+	fileName = GetFileName(conn)
 	overwrite := GetOverwrite(conn)
 	isOverwrite := setIsOverwrite(overwrite)
 	fmt.Println("getFileName(): ", fileName)
@@ -60,7 +86,7 @@ func PrepareReceivingFile(conn net.Conn) (doReceive bool, message string) {
 		doReceive = false
 		message = "ABCD"
 	} else {
-		os.OpenFile(filePath, os.O_CREATE|os.O_RDWR, 0666)
+		// os.OpenFile(filePath, os.O_CREATE|os.O_RDWR, 0666)
 		doReceive = true
 		message = "9876"
 	}
