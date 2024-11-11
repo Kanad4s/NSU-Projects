@@ -57,11 +57,18 @@ export {
 main() {
     str: string = "(1+(4*7))";
     exp = getUrlParameter("exp");
-    println("exp: " + exp);
-    //myExpr : MyExpr = s2MyExpr(exp);
-    myExpr : MyExpr = s2MyExpr(str);
-    println(myExpr);
-    println(calculateMyExpr(myExpr));
-    println(MyExpr2s(myExpr));
+    if (exp != "") {
+        println("Parse: " + exp);
+        myExpr : MyExpr = s2MyExpr(exp);
+        println(myExpr);
+        println(calculateMyExpr(myExpr));
+        println(MyExpr2s(myExpr));
+    } else {
+        println("Parse: " + str);
+        myExpr : MyExpr = s2MyExpr(str);
+        println(myExpr);
+        println(calculateMyExpr(myExpr));
+        println(MyExpr2s(myExpr));
+    }
     quit(0)
 }
