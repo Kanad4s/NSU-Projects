@@ -1,7 +1,7 @@
 import lingo/pegcode/driver;
 
 export {
-	AlgExp ::= AlgSum, AlgMul, AlgMin, AlgDiv, AlgNeg, AlgVar, AlgInt;
+	AlgExp ::= AlgSum, AlgMul, AlgMin, AlgDiv, AlgNeg, AlgVar, AlgInt, AlgPow;
 		AlgSum(lhs : AlgExp, rhs : AlgExp);
 		AlgMin(lhs : AlgExp, rhs : AlgExp);
 		AlgMul(lhs : AlgExp, rhs : AlgExp);
@@ -9,6 +9,7 @@ export {
 		AlgNeg(e : AlgExp);
 		AlgVar(name : string);
 		AlgInt(val : int);
+		AlgPow(lhs : AlgExp, rhs : AlgExp);
 
 	alg2s(ex : AlgExp) -> string {
 		switch (ex) {
@@ -16,6 +17,7 @@ export {
 			AlgMin(lhs, rhs): "(" + alg2s(lhs) + " - " + alg2s(rhs) + ")";
 			AlgMul(lhs, rhs): "(" + alg2s(lhs) + " * " + alg2s(rhs) + ")";
 			AlgDiv(lhs, rhs): "(" + alg2s(lhs) + " / " + alg2s(rhs) + ")";
+            AlgPow(lhs, rhs): "(" + alg2s(lhs) + " ^ " + alg2s(rhs) + ")";
 			AlgNeg(e): "-" + alg2s(e);
 			AlgVar(name): name;
 			AlgInt(val): i2s(val);
@@ -24,6 +26,7 @@ export {
 
 	s2alg(str : string) -> AlgExp {
 		e_gr = "#include lingo/algebr.lingo";
+		//e_gr = "#include grammar.lingo";
 		parsic(compilePegGrammar(e_gr), str, defaultPegActions)
 	}
 }

@@ -64,10 +64,9 @@ main() {
     exp = getUrlParameter("exp");
     mode = getUrlParameter("mode");
     if (mode == "rat") {
-        //println(s2alg(exp));
-        //println(simplify(s2alg(exp), 1, 2, 2));
-        //println("ratFunc2s:\n" + ratFunc2s(alg2rat(s2alg(exp))));
         println(smartSimplify(exp));
+    } else if (mode == "sim") {
+        println(simplify(s2alg(exp), 1, 1, 1));
     } else {
         if (exp != "") {
             println("Parse: " + exp);

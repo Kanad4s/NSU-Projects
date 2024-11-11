@@ -7,7 +7,7 @@ simplify(e : AlgExp, n : int, m_exp : int, m_sim : int) -> AlgExp;
 
 }
 
-AlgExpOp ::= AlgSumOp, AlgMulOp, AlgMinOp, AlgDivOp, AlgNegOp, AlgVarOp, AlgIntOp;
+AlgExpOp ::= AlgSumOp, AlgMulOp, AlgMinOp, AlgDivOp, AlgNegOp, AlgVarOp, AlgIntOp, AlgPowOp;
 	AlgSumOp();
 	AlgMinOp();
 	AlgMulOp();
@@ -15,6 +15,7 @@ AlgExpOp ::= AlgSumOp, AlgMulOp, AlgMinOp, AlgDivOp, AlgNegOp, AlgVarOp, AlgIntO
 	AlgNegOp();
 	AlgVarOp();
 	AlgIntOp();
+	AlgPowOp();
 
 alg2op(e : AlgExp) -> AlgExpOp {
 	switch (e) {
@@ -22,6 +23,7 @@ alg2op(e : AlgExp) -> AlgExpOp {
 		AlgMin(__, __): AlgMinOp();
 		AlgMul(__, __): AlgMulOp();
 		AlgDiv(__, __): AlgDivOp();
+		AlgPow(__, __): AlgPowOp();
 		AlgNeg(__):     AlgNegOp();
 		AlgVar(__):     AlgVarOp();
 		AlgInt(__):     AlgIntOp();
@@ -34,6 +36,7 @@ algSize(e : AlgExp) -> int {
 		AlgMin(l, r): 1 + algSize(l) + algSize(r);
 		AlgMul(l, r): 1 + algSize(l) + algSize(r);
 		AlgDiv(l, r): 1 + algSize(l) + algSize(r);
+		AlgPow(l, r): 1 + algSize(l) + algSize(r);
 		AlgNeg(n):    1 + algSize(n);
 		AlgVar(name): 1;
 		AlgInt(val): 1;
@@ -46,6 +49,7 @@ algVarNum(e : AlgExp) -> int {
 		AlgMin(l, r): algVarNum(l) + algVarNum(r);
 		AlgMul(l, r): algVarNum(l) + algVarNum(r);
 		AlgDiv(l, r): algVarNum(l) + algVarNum(r);
+		AlgPow(l, r): algVarNum(l) + algVarNum(r);
 		AlgNeg(n):    algVarNum(n);
 		AlgVar(name): 1;
 		AlgInt(val): 0;
@@ -90,6 +94,11 @@ doMatchAlgTrans(e : AlgExp, pattern : AlgExp, t : Tree<string, AlgExp>) -> Maybe
 				AlgMul(l2, r2): bin_match(l1, l2, r1, r2);
 				default: None();
 			}
+		AlgPow(l1, r1):
+			switch (e) {
+				AlgPow(l2, r2): bin_match(l1, l2, r1, r2);
+				default: None();
+			}
 		AlgDiv(l1, r1):
 			switch (e) {
 				AlgDiv(l2, r2): bin_match(l1, l2, r1, r2);
@@ -122,6 +131,7 @@ applyAlgSubst(e : AlgExp, subst : Tree<string, AlgExp>) -> AlgExp {
 		AlgMin(l, r): AlgMin(applyAlgSubst(l, subst), applyAlgSubst(r, subst));
 		AlgMul(l, r): AlgMul(applyAlgSubst(l, subst), applyAlgSubst(r, subst));
 		AlgDiv(l, r): AlgDiv(applyAlgSubst(l, subst), applyAlgSubst(r, subst));
+		AlgPow(l, r): AlgPow(applyAlgSubst(l, subst), applyAlgSubst(r, subst));
 		AlgNeg(n):    AlgNeg(applyAlgSubst(n, subst));
 		AlgVar(name): lookupTreeDef(subst, name, e);
 		AlgInt(val): e;
@@ -316,6 +326,7 @@ doAlgEvalTrans(expr : AlgExp) -> Maybe<int> {
 		AlgSum(l, r): maybeMap2(\x, y -> x + y)(doAlgEvalTrans(l), doAlgEvalTrans(r));
 		AlgMin(l, r): maybeMap2(\x, y -> x - y)(doAlgEvalTrans(l), doAlgEvalTrans(r));
 		AlgMul(l, r): maybeMap2(\x, y -> x * y)(doAlgEvalTrans(l), doAlgEvalTrans(r));
+		AlgPow(l, r): maybeMap2(\x, y -> pow(x, y))(doAlgEvalTrans(l), doAlgEvalTrans(r));
 		AlgDiv(l, r): maybeBind2(\x, y -> if (y != 0) Some(x / y) else None())(doAlgEvalTrans(l), doAlgEvalTrans(r));
 		AlgNeg(n):    maybeMap(doAlgEvalTrans(n), \v -> -v);
 		AlgVar(name): None();
@@ -333,6 +344,7 @@ algTrans = mergeTreeCustom(
 		Pair(AlgNegOp(), [algEvalTrans]),
 		Pair(AlgVarOp(), [algEvalTrans]),
 		Pair(AlgIntOp(), [algEvalTrans]),
+		Pair(AlgPowOp(), [algEvalTrans]),
 	]),
 	\__, ts1, ts2 -> concat(ts1, ts2)
 );

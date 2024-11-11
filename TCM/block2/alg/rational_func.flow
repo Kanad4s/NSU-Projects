@@ -33,6 +33,10 @@ export {
 		RatFunc(mulPoly(f1.num, f2.den), mulPoly(f1.den, f2.num));
 	}
 
+	powRatFunc(f1 : RatFunc, f2 : RatFunc) -> RatFunc {
+		RatFunc(mulPoly(f1.num, f2.num), mulPoly(f1.den, f2.den));
+	}
+
 	reduceCommonDivisor(f : RatFunc) -> RatFunc {
 		red_num = reducePoly(f.num);
 		red_den = reducePoly(f.den);

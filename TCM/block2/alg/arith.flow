@@ -24,7 +24,7 @@ export {
 	}
 
 	s2ar(str : string) -> ArExpr {
-		e_gr = "#include lingo/arith.lingo";
+		//e_gr = "#include lingo/arith.lingo";
 		parsic(
 			compilePegGrammar(e_gr), 
 			str,
