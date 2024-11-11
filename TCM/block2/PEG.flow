@@ -3,6 +3,8 @@ import grammar;
 import string;
 import alg/algebr_2_rational;
 import alg/algebr;
+import alg/simplify;
+import smartSimplify;
 
 export {
     lingoGrammarOp : ref Maybe<[PegOp]> = ref None();
@@ -57,22 +59,29 @@ export {
 }
 
 main() {
-    str: string = "(1+(4*7))";
+    //str: string = "(1+(4*7))";
+    str: string = "((1/1000000000)+(1/1000000000))";
     exp = getUrlParameter("exp");
-    algEx : AlgExp = s2alg(exp);
-    println("ratFunc: " + ratFunc2s(alg2rat(algEx)));
-    if (exp != "") {
-        println("Parse: " + exp);
-        myExpr : MyExpr = s2MyExpr(exp);
-        println(myExpr);
-        println(calculateMyExpr(myExpr));
-        println(MyExpr2s(myExpr));
+    mode = getUrlParameter("mode");
+    if (mode == "rat") {
+        //println(s2alg(exp));
+        //println(simplify(s2alg(exp), 1, 2, 2));
+        //println("ratFunc2s:\n" + ratFunc2s(alg2rat(s2alg(exp))));
+        println(smartSimplify(exp));
     } else {
-        println("Parse: " + str);
-        myExpr : MyExpr = s2MyExpr(str);
-        println(myExpr);
-        println(calculateMyExpr(myExpr));
-        println(MyExpr2s(myExpr));
+        if (exp != "") {
+            println("Parse: " + exp);
+            myExpr : MyExpr = s2MyExpr(exp);
+            println(myExpr);
+            println(calculateMyExpr(myExpr));
+            println(MyExpr2s(myExpr));
+        } else {
+            println("Parse: " + str);
+            myExpr : MyExpr = s2MyExpr(str);
+            println(myExpr);
+            println(calculateMyExpr(myExpr));
+            println(MyExpr2s(myExpr));
+        }
     }
     quit(0)
 }

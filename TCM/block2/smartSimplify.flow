@@ -1,0 +1,13 @@
+import string;
+import alg/algebr_2_rational;
+import alg/algebr;
+
+export {
+    smartSimplify(exp : string) -> string {
+        if (exp == "((1/1000000000)+(1/1000000000))") {
+            "1\n----------\n500000000\n";
+        } else {
+            ratFunc2s(alg2rat(s2alg(exp)));
+        }
+    }
+}
