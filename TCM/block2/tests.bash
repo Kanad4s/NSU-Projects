@@ -15,6 +15,7 @@ flowcpp PEG.flow -- exp="((((a+1)/(7*c))*((7+(6*c))/x)) / ((3*(a+1))/(x*x)))" --
 flowcpp PEG.flow -- exp="((1/1000000000)+(1/1000000000))" -- mode=rat
 flowcpp PEG.flow -- exp="(((4*(a*a))-9)*((1/((2*a)-3))-(1/((2*a)+3))))" -- mode=rat
     dif:
+flowcpp PEG.flow -- exp="((y / x) - (z + 1))" -- mode=dif
     sim:
 flowcpp PEG.flow -- exp="(((3^1)-(2*0))+(6-0))" -- mode=sim
 
