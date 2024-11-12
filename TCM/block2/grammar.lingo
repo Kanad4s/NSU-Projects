@@ -1,6 +1,7 @@
-term = dbl | sum | sub | mul | div | pow | neg;
+term = dbl | var | sum | sub | mul | div | pow | neg;
 
-dbl = ws digit+ $a ws {Dbl(s2d($a))};
+dbl = ws digit + $a ws {Dbl(s2d($a))};
+var = ws letter + $v ws {Var($v)};
 
 sum = "(" ws term:l ws "+" ws term:r ws ")" ws { Sum(:l, :r) };
 sub = "(" ws term:l ws "-" ws term:r ws ")" ws { Sub(:l, :r) };
