@@ -1,0 +1,28 @@
+import grammar;
+import string;
+import lingo/pegcode/driver;
+
+export {
+
+    deriveParam(exp : MyExpr, v : string) -> MyExpr {
+        var = getUrlParameter("var");
+        if (var == "") {
+            derive(exp, v);
+        } else {
+            derive(exp, var);
+        }
+    }
+
+    derive(exp : MyExpr, var : string) -> MyExpr {
+        switch(exp) {
+            Dbl(a) : Dbl(0.0);
+            Var(v) : if (v == var) Dbl(1.0) else Dbl(0.0);
+            Sum(l, r) : Sum(derive(l, var), derive(r, var));
+            Mul(l, r) : Sum(Mul(derive(l, var), r), Mul(l, derive(r, var)));
+            Sub(l, r) : Sub(derive(l, var), derive(r, var));
+            Div(l, r) : Div(Sub(Mul(derive(l, var), r), Mul(l, derive(r, var))), Pow(r, Dbl(2.0)));
+            Pow(l, r) : Mul(Mul(r, Pow(l, Sub(r, Dbl(1.0)))), derive(l, var));
+            Neg(a) : Sub(Dbl(0.0), derive(a, var));
+        }
+    }
+}
