@@ -1,4 +1,4 @@
-## Отделы и сколько разных сотрудников (>= 2) в каждом отделе уволено. Вывод в алфавитном порядке по названию отделa
+## Отделы и сколько разных сотрудников в каждом отделе уволено. Вывод в алфавитном порядке по названию отделa
 ```sql
 SELECT 
     count(distinct job.EMPLOYEE_ID) AS workers_count, 
@@ -6,9 +6,10 @@ SELECT
 FROM JOB_HISTORY job
 JOIN DEPARTMENTS dep ON job.DEPARTMENT_ID=dep.DEPARTMENT_ID
 GROUP BY dep.DEPARTMENT_NAME
-HAVING count(distinct job.EMPLOYEE_ID) >= 2
+HAVING count(distinct job.EMPLOYEE_ID) >= 1
 ORDER BY dep.DEPARTMENT_NAME
 ```
+![alt text](resources/depsReduction.png)
 
 ## Вывод страны и города самого высокооплачиваемого менедждера
 
@@ -44,5 +45,5 @@ JOIN
     WHERE dep.manager_id IS NOT NULL
 )
 USING(manager_id)
-
 ```
+![alt text](resources/richManagerLocation.png)
