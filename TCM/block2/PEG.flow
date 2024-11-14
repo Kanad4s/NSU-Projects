@@ -69,6 +69,7 @@ main() {
     //str: string = "(1+(4*7))";
     str: string = "((1/1000000000)+(1/1000000000))";
     exp = getUrlParameter("exp");
+    println("exp: " + exp);
     mode = getUrlParameter("mode");
     if (mode == "rat") {
         println(smartSimplify(exp));
