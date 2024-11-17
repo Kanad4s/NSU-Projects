@@ -6,6 +6,7 @@ import (
 	"io"
 	"net"
 	"os"
+	"strconv"
 	ni "TransferFiles/internal/networkInteraction"
 )
 
@@ -49,6 +50,7 @@ func SendFile(fileName string, conn net.Conn) {
 func PrepareSendFile(conn net.Conn) bool {
 	SendFileName(conn, inputParser.GetFile())
 	SendOverwrite(conn, inputParser.IsOverwrite())
+	SendFileSize(conn, inputParser.GetFile())
 	fmt.Println("send parameters done")
 	doSend := DoSendFile(conn)
 	return doSend
@@ -82,6 +84,27 @@ func SendOverwrite(conn net.Conn, isOverwrite bool) {
 		sendValue = "1"
 	}
 	ni.SendMessage(sendValue, conn)
+	response := ni.GetMessage(conn)
+	if response != ni.SuccessMsg {
+		os.Exit(1)
+	}
+}
+
+func SendFileSize(conn net.Conn, fileName string) {
+	file, err := os.OpenFile(fileName, os.O_RDONLY, os.ModePerm)
+	if err!= nil {
+		fmt.Println("Error open file: ", err.Error())
+		os.Exit(1)
+	}
+	defer file.Close()
+	fi, err := file.Stat()
+	if err!= nil {
+		fmt.Println("Error get file info: ", err.Error())
+		os.Exit(1)
+	}
+	sizeString := strconv.Itoa(int(fi.Size()))
+	fmt.Printf("File %v size: %v, %v\n", fileName, fi.Size(), sizeString)
+	ni.SendMessage(sizeString, conn)
 	response := ni.GetMessage(conn)
 	if response != ni.SuccessMsg {
 		os.Exit(1)

@@ -73,8 +73,10 @@ func ReceiveFile(conn net.Conn, fileName string) {
 func PrepareReceivingFile(conn net.Conn) (doReceive bool, message string, fileName string) {
 	fileName = GetFileName(conn)
 	overwrite := GetOverwrite(conn)
+	fileSize := GetFileSize(conn)
 	isOverwrite := setIsOverwrite(overwrite)
 	fmt.Println("getFileName(): ", fileName)
+	fmt.Println("getFileSize(): ", fileSize)
 	fmt.Println("getOverwrite(): ", overwrite)
 	fmt.Println("getOverwrite(): ", isOverwrite)
 	filePath := storePackage + "/" + fileName
@@ -125,6 +127,14 @@ func GetFileName(conn net.Conn) string {
 
 	ni.SendMessage(ni.SuccessMsg, conn)
 	return fileName
+}
+
+func GetFileSize(conn net.Conn) string {
+	fileSize := ni.GetMessage(conn)
+	fmt.Printf("get row fileName: %v, size: %v\n", fileSize, len(fileSize))
+
+	ni.SendMessage(ni.SuccessMsg, conn)
+	return fileSize
 }
 
 func CreateStore() {
