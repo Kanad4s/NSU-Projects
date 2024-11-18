@@ -144,6 +144,10 @@ export {
                     }
                     
                 }
+                //else if (getExprType(l1) == "dbl" && getExprType(r1) == "dbl") {
+                //    println(findNod(calc(l1), calc(r1)));    
+                //    Div(l1, r1);    
+                //}
                 else Div(l1, r1);
             }
             Pow(l, r) : {
@@ -172,8 +176,8 @@ export {
     }
 
     s2MyExprs(str: string) -> MyExpr {
-    parsic(compilePegGrammar("#include grammar.lingo"), str, defaultPegActions);
-}
+        parsic(compilePegGrammar("#include grammar.lingo"), str, defaultPegActions);
+    }
 
     calc(myExpr : MyExpr) -> double {
     switch(myExpr : MyExpr) {
