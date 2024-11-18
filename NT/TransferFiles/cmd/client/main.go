@@ -27,23 +27,33 @@ func main() {
 	SendFile(inputParser.GetFile(), conn)
 }
 
-func SendFile(fileName string, conn net.Conn) {
+func SendFile(fileName string, conn net.Conn) bool {
 	file, err := os.OpenFile(fileName, os.O_RDONLY, os.ModePerm)
 	if err!= nil {
 		fmt.Println("Error open file: ", err.Error())
 		os.Exit(1)
 	}
 	defer file.Close()
+	buffer := ni.GetBuffer(file)
+	fmt.Println("Send start")
+	for {
+		read, err := file.Read(buffer)
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			fmt.Printf("File reading error: %v\n", err.Error())
+			return false
+		}
 
-	fmt.Println("Copy() start")
-	// conn.Write([]byte(file))
-	_, err = io.Copy(file, conn)
-	fmt.Println("Copy() finish")
-	if err != nil {
-		fmt.Println("Error sending file: ", err.Error())
-		os.Exit(1)
+		_, err = conn.Write(buffer[:read])
+		if err != nil {
+			fmt.Printf("File data sending error: %v\n", err.Error())
+			return false
+		}
 	}
-
+	fmt.Println("Send finish")
+	return true
 }
 
 func PrepareSendFile(conn net.Conn) bool {
