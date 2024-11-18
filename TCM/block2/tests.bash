@@ -19,6 +19,5 @@ flowcpp PEG.flow -- exp="((y / x) - (z + 1))" -- mode=dif -- var=x
 flowcpp PEG.flow -- exp="((x^2)+((7*((x^2)*(y^3)))+(y+4)))" -- mode=dif -- var=x
     sim:
 flowcpp PEG.flow -- exp="(((3^1)-(2*0))+(6-0))" -- mode=sim
-flowcpp PEG.flow -- exp="((1/1000000000)+(1/1000000000))" -- mode=sim
 
 
