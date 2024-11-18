@@ -1,9 +1,10 @@
 package networkInteraction
 
 import (
-	"net"
-	"fmt"
 	"bufio"
+	"fmt"
+	"net"
+	"os"
 	"strings"
 )
 
@@ -33,6 +34,19 @@ func SendMessage(msg string, conn net.Conn) {
 	if err != nil {
 		println("Error sendResponse: ", err.Error())
 	}
+}
+
+func GetBuffer(file *os.File) []byte {
+	fi, err := file.Stat()
+	if err != nil {
+		fmt.Println("Error get file info: ", err.Error())
+		return make([]byte, bufferSize)
+	}
+	return make([]byte, SetBufferSize(int(fi.Size())))
+}
+
+func GetBufferBySize(fileSize int) []byte {
+	return make([]byte, SetBufferSize(fileSize))
 }
 
 func SetBufferSize(fileSize int) int {
