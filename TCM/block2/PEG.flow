@@ -6,6 +6,8 @@ import alg/algebr;
 import smartSimplify;
 import simplify;
 import derivative;
+import alg/derivative;
+import alg/simplify;
 
 lingoGrammarOp : ref Maybe<[PegOp]> = ref None();
 
@@ -74,11 +76,11 @@ main() {
     if (mode == "rat") {
         println(smartSimplify(exp));
     } else if (mode == "sim") {
-        println(myExpr2s(simplify(s2MyExpr(exp))));
+        println(myExpr2s(mysimplify(s2MyExpr(exp))));
     } else if (mode == "dif") {
-        myExpr : MyExpr = deriveParam(s2MyExpr(exp), "x");
+        myExpr : MyExpr = deriveParam(s2MyExpr(exp));
         println(myExpr2s(myExpr));
-        println(myExpr2s(simplify(myExpr)));
+        println(myExpr2s(mysimplify(myExpr)));
     } else {
         if (exp != "") {
             println("Parse: " + exp);

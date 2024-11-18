@@ -1,4 +1,6 @@
 import grammar;
+import lingo/pegcode/driver;
+import string;
 
 export {
 
@@ -43,11 +45,11 @@ export {
         }    
     }
 
-    simplify(e: MyExpr) -> MyExpr {
+    mysimplify(e: MyExpr) -> MyExpr {
         switch(e) {
             Sum(l, r) : {
-                l1 = simplify(l);
-                r1 = simplify(r);
+                l1 = mysimplify(l);
+                r1 = mysimplify(r);
 
                 if (l1 == Dbl(0.0)) {
                     r1;
@@ -60,8 +62,8 @@ export {
                 else Sum(l1, r1);
             }
             Sub(l, r) : {
-                l1 = simplify(l);
-                r1 = simplify(r);
+                l1 = mysimplify(l);
+                r1 = mysimplify(r);
 
                 if (r1 == Dbl(0.0)) {
                     l1;
@@ -71,12 +73,15 @@ export {
                 }
                 else if (l1 == r1) {
                     Dbl(0.0);
-                } 
+                }
+                else if (getExprType(l1) == "dbl" && getExprType(r1) == "dbl") {
+                    s2MyExprs(d2s(calc(Sub(l1, r1))));
+                }
                 else Sub(l1, r1);
             }
             Mul(l, r) : {
-                l1 = simplify(l);
-                r1 = simplify(r);
+                l1 = mysimplify(l);
+                r1 = mysimplify(r);
 
                 if (l1 == Dbl(0.0) || r1 == Dbl(0.0)) {
                     Dbl(0.0);
@@ -97,19 +102,19 @@ export {
                     Pow(l1, Dbl(2.0));
                 }
                 else if (getExprType(l1) == "^" && getExprType(r1) == "var" && getVarName(l1) == getVarName(r1)) {
-                    simplify(Pow(r1, Dbl(argToDbl(getExprArgs(l1)[1])+1.0)));
+                    mysimplify(Pow(r1, Dbl(argToDbl(getExprArgs(l1)[1])+1.0)));
                 }
                 else if (getExprType(l1) == "var" && getExprType(r1) == "^" && getVarName(l1) == getVarName(r1)) {
-                    simplify(Pow(l1, Dbl(argToDbl(getExprArgs(r1)[1])+1.0)));
+                    mysimplify(Pow(l1, Dbl(argToDbl(getExprArgs(r1)[1])+1.0)));
                 }
                 else if (getExprType(l1) == "^" && getExprType(r1) == "^" && getVarName(l1) == getVarName(r1)) {
-                    simplify(Pow(getExprArgs(l1)[0], Dbl(argToDbl(getExprArgs(l1)[1])+argToDbl(getExprArgs(r1)[1]))));
+                    mysimplify(Pow(getExprArgs(l1)[0], Dbl(argToDbl(getExprArgs(l1)[1])+argToDbl(getExprArgs(r1)[1]))));
                 }
                 else Mul(l1, r1);
             }
             Div(l, r) : {
-                l1 = simplify(l);
-                r1 = simplify(r);
+                l1 = mysimplify(l);
+                r1 = mysimplify(r);
 
                 if (l1 == Dbl(0.0)) {
                     Dbl(0.0);
@@ -125,25 +130,25 @@ export {
                         Div(Dbl(1.0), l1);
                     } 
                     else {
-                        simplify(Div(Dbl(1.0), Pow(l1, Dbl(argToDbl(getExprArgs(r1)[1])-1.0))));
+                        mysimplify(Div(Dbl(1.0), Pow(l1, Dbl(argToDbl(getExprArgs(r1)[1])-1.0))));
                     }
                 }
                 else if (getExprType(l1) == "^" && getExprType(r1) == "var" && getVarName(l1) == getVarName(r1)) {
-                    simplify(Pow(r1, Dbl(argToDbl(getExprArgs(l1)[1])-1.0)));
+                    mysimplify(Pow(r1, Dbl(argToDbl(getExprArgs(l1)[1])-1.0)));
                 }
                 else if (getExprType(l1) == "^" && getExprType(r1) == "^" && getVarName(l1) == getVarName(r1)) {
                     if (argToDbl(getExprArgs(l1)[1]) >= argToDbl(getExprArgs(r1)[1])) {
-                        simplify(Pow(getExprArgs(l1)[0], Dbl(argToDbl(getExprArgs(l1)[1])-argToDbl(getExprArgs(r1)[1]))));
+                        mysimplify(Pow(getExprArgs(l1)[0], Dbl(argToDbl(getExprArgs(l1)[1])-argToDbl(getExprArgs(r1)[1]))));
                     } else {
-                        simplify(Div(Dbl(1.0), Pow(getExprArgs(l1)[0], Dbl(argToDbl(getExprArgs(r1)[1])-argToDbl(getExprArgs(l1)[1])))));
+                        mysimplify(Div(Dbl(1.0), Pow(getExprArgs(l1)[0], Dbl(argToDbl(getExprArgs(r1)[1])-argToDbl(getExprArgs(l1)[1])))));
                     }
                     
                 }
                 else Div(l1, r1);
             }
             Pow(l, r) : {
-                l1 = simplify(l);
-                r1 = simplify(r);
+                l1 = mysimplify(l);
+                r1 = mysimplify(r);
 
                 if (r1 == Dbl(0.0)) {
                     Dbl(1.0);
@@ -165,4 +170,28 @@ export {
             default : e
         }
     }
+
+    s2MyExprs(str: string) -> MyExpr {
+    parsic(compilePegGrammar("#include grammar.lingo"), str, defaultPegActions);
+}
+
+    calc(myExpr : MyExpr) -> double {
+    switch(myExpr : MyExpr) {
+        Dbl(var) : var;
+        Var(x) : 0.0;
+        Sum(l, r) : calc(l) + calc(r);
+        Sub(l, r) : calc(l) - calc(r);
+        Mul(l, r) : calc(l) * calc(r);
+        Div(l, r) : {
+            divider = calc(r);
+            if (divider == 0.0) {
+                println("Error division by zero!");
+                quit(1);
+            }
+            calc(l) / divider;
+        };
+        Pow(l, r) : dpow(calc(l), calc(r));
+        Neg(var) : - calc(var);
+    }
+}
 }

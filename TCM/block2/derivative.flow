@@ -4,10 +4,10 @@ import lingo/pegcode/driver;
 
 export {
 
-    deriveParam(exp : MyExpr, v : string) -> MyExpr {
+    deriveParam(exp : MyExpr) -> MyExpr {
         var = getUrlParameter("var");
         if (var == "") {
-            derive(exp, v);
+            derive(exp, "x");
         } else {
             derive(exp, var);
         }
