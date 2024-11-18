@@ -11,9 +11,7 @@ import (
 )
 
 func main() {
-	inputParser.ParseInput()
-	fmt.Println("isOverwrite: ", inputParser.IsOverwrite())
-	host := fmt.Sprintf("%s:%s", inputParser.GetIP(), inputParser.GetPort())
+	host := GetHost()
 	fmt.Println("File to send: " + inputParser.GetFile())
 	conn, err := net.Dial("tcp", host)
 	if err != nil {
@@ -38,6 +36,7 @@ func SendFile(fileName string, conn net.Conn) {
 	defer file.Close()
 
 	fmt.Println("Copy() start")
+	// conn.Write([]byte(file))
 	_, err = io.Copy(file, conn)
 	fmt.Println("Copy() finish")
 	if err != nil {
@@ -109,4 +108,11 @@ func SendFileSize(conn net.Conn, fileName string) {
 	if response != ni.SuccessMsg {
 		os.Exit(1)
 	}
+}
+
+func GetHost() string {
+	inputParser.ParseInput()
+	fmt.Println("isOverwrite: ", inputParser.IsOverwrite())
+	host := fmt.Sprintf("%s:%s", inputParser.GetIP(), inputParser.GetPort())
+	return host
 }
