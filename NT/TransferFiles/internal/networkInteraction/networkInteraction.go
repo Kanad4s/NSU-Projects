@@ -11,6 +11,8 @@ const (
 	SuccessMsg = "success"
 	ErrMsg = "error"
 	EndSymbol = '\a'
+	bufferSize = 1048576 // 1024 ^ 2
+	bufferSizeBig = 1073741824 // 1024 ^ 3
 )
 
 func GetMessage(conn net.Conn) (msg string) {
@@ -33,4 +35,10 @@ func SendMessage(msg string, conn net.Conn) {
 	}
 }
 
+func SetBufferSize(fileSize int) int {
+	if (fileSize / bufferSize >= 50) {
+		return bufferSizeBig
+	}
+	return bufferSize
+}
 
