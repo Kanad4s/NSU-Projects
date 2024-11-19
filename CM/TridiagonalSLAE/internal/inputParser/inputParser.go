@@ -8,9 +8,9 @@ import (
 )
 
 var args struct {
-	N   string   `arg:"-n, required"    help:"Matrix size"`
-	Eps string   `arg:"-e, --eps"   help:"Epsilon"`
-	Gamma string `arg:"-g, --gamma" help:"file to transfer"`
+	N   string   `arg:"-n, required" help:"Matrix size"`
+	Eps string   `arg:"-e, --eps"`
+	Gamma string `arg:"-g, --gamma"`
 }
 
 func ParseInput() {
