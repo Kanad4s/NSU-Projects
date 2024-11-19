@@ -19,6 +19,9 @@ func ParseInput() {
 	if (n <= 0) {
 		p.Fail("Matrix size must be positive")
 	}
+	if (args.Eps != "" && args.Gamma != "") {
+		p.Fail("Must provide either --Eps or --Gamma")
+	}
 }
 
 func GetInput() (n int, eps float64, gamma float64, mode int) {
@@ -26,25 +29,21 @@ func GetInput() (n int, eps float64, gamma float64, mode int) {
 	if err != nil {
 		fmt.Println("Error converting N to int")
 	}
-	mode = 0
+	mode = 1
 	if (args.Eps != "" || args.Gamma != "") {
 		if args.Eps != "" {
 			eps, err = strconv.ParseFloat(args.Eps, 64)
 			if err != nil {
 				fmt.Println("Error converting Eps to float64")
 			}
-			mode = 1
+			mode = 2
 		}
 		if args.Gamma != "" {
 			gamma, err = strconv.ParseFloat(args.Gamma, 64)
 			if err != nil {
 				fmt.Println("Error converting Gamma to float64")
 			}
-			if mode == 1 {
-				mode = 3
-			} else {
-				mode = 2
-			}
+			mode = 3
 		}
 	}
 	return
