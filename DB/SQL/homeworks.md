@@ -1,3 +1,4 @@
+# 1. Basic queries
 ## Отделы и сколько разных сотрудников в каждом отделе уволено. Вывод в алфавитном порядке по названию отделa
 ```sql
 SELECT 
@@ -47,3 +48,24 @@ JOIN
 USING(manager_id)
 ```
 ![alt text](resources/richManagerLocation.png)
+
+# 2. Window Functions
+## Определить год, в котором было трудоустроено больше всего человек
+
+```sql
+SELECT
+startYear
+FROM
+(
+    SELECT
+        COUNT(employee_id) AS newWorkers,
+        EXTRACT(YEAR FROM start_date) AS startYear,
+        DENSE_RANK() over (order by COUNT(distinct employee_id) desc) AS dense_rank
+    FROM job_history
+    GROUP BY EXTRACT(YEAR FROM start_date)
+)
+WHERE dense_rank=1
+ORDER BY dense_rank
+```
+
+
