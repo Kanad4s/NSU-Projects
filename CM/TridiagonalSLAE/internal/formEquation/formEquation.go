@@ -28,3 +28,33 @@ func FormRightPart(n int, eps float64, gamma float64, mode int) []float64 {
 	}
 	return arr
 }
+
+func FormLeftPart(n int, gamma float64, mode int) []float64 {
+	arr := make([]float64, n * n)
+	if mode == 3 {
+		for i := 0; i < n; i++ {
+			for j := 0; j < n; j++ {
+				if i == j {
+					arr[i * n + j] = float64(2 * (i + 1)) + gamma
+				} else if (j == i + 1) || (j == i - 1){
+					arr[i * n + j] = -1
+				} else {
+					arr[i * n + j] = 0
+				}
+			}
+		}
+	} else {
+		for i := 0; i < n; i++ {
+			for j := 0; j < n; j++ {
+				if i == j {
+					arr[i * n + j] = 2
+				} else if (j == i + 1) || (j == i - 1){
+					arr[i * n + j] = -1
+				} else {
+					arr[i * n + j] = 0
+				}
+			}
+		}
+	}
+	return arr
+}
