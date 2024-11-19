@@ -45,7 +45,7 @@ func SendFile(fileName string, conn net.Conn) bool {
 			fmt.Printf("File reading error: %v\n", err.Error())
 			return false
 		}
-
+		fmt.Printf("buffer: %v\n", string(buffer[:read]))
 		_, err = conn.Write(buffer[:read])
 		if err != nil {
 			fmt.Printf("File data sending error: %v\n", err.Error())

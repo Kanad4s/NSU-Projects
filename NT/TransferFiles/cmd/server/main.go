@@ -51,6 +51,7 @@ func HandleRequest(conn net.Conn) {
 	}
 
 	ReceiveFile(conn, file)
+	fmt.Printf("End handle on %v\n", conn.RemoteAddr())
 }
 
 func ReceiveFile(conn net.Conn, metaFile metaFile) {
@@ -60,17 +61,20 @@ func ReceiveFile(conn net.Conn, metaFile metaFile) {
 		fmt.Println("Error open file")
 		return
 	}
+
 	buffer := ni.GetBufferBySize(metaFile.size)
 	writer := io.Writer(file)
 	receivedSize := 0
 	for receivedSize < metaFile.size {
+		// conn.SetReadDeadline(time.Now().Add(clientTimeout))
 		n, err := conn.Read(buffer)
 		if err != nil {
 			fmt.Println("FATAL Error receiving file")
 			return
 		}
+		fmt.Printf("buffer: %v\n", string(buffer[:n]))
 		receivedSize += n
-		_, err = writer.Write(buffer)
+		_, err = writer.Write(buffer[:n])
 		if err != nil {
 			fmt.Println("FATAL Error writing into file")
 			return
