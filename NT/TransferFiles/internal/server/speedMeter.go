@@ -1,7 +1,6 @@
-package speedMeter
+package server
 
 import (
-	ft "TransferFiles/internal/server/fileTransfer"
 	"fmt"
 	"time"
 )
@@ -23,7 +22,7 @@ func NewSpeedMeter() *SpeedMeter {
 	}
 }
 
-func (speedCounter *SpeedMeter) CalcCurSpeed(file *ft.MetaFile)  {
+func (speedCounter *SpeedMeter) CalcCurSpeed(file *MetaFile)  {
 	instantSpeed := float64(file.Size - speedCounter.previousActualFileSize) * 1e9 /
 		float64(time.Now().UnixNano() - speedCounter.previousTime.UnixNano())
 	averageSpeed := float64(file.Size) * 1e9 / float64(time.Now().UnixNano() - speedCounter.startTime.UnixNano())
@@ -45,7 +44,7 @@ func SpeedToString(speed float64) string {
 	}
 }
 
-func (speedMeter *SpeedMeter) StartSpeedCalc(file *ft.MetaFile) {
+func (speedMeter *SpeedMeter) StartSpeedCalc(file *MetaFile) {
 	ticker := time.NewTicker(time.Second)
 	for {
 		select {

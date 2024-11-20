@@ -1,4 +1,4 @@
-package fileTransfer
+package server
 
 import (
 	

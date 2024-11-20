@@ -1,8 +1,7 @@
-package inputParser
+package client
 
 import (
 	"fmt"
-
 	"github.com/alexflint/go-arg"
 )
 

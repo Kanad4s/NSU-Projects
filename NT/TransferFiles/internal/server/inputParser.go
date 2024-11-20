@@ -1,4 +1,4 @@
-package inputParser
+package server
 
 import (
 	"github.com/alexflint/go-arg"
