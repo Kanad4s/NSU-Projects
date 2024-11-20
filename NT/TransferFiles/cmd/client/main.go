@@ -2,12 +2,13 @@ package main
 
 import (
 	"TransferFiles/internal/client/inputParser"
+	ni "TransferFiles/internal/networkInteraction"
 	"fmt"
 	"io"
 	"net"
 	"os"
 	"strconv"
-	ni "TransferFiles/internal/networkInteraction"
+	"strings"
 )
 
 func main() {
@@ -79,8 +80,19 @@ func DoSendFile(conn net.Conn) bool {
 	return response == "9876"
 }
 
+func SeparateFileName(name string) string {
+	index := strings.LastIndex(name, "/")
+	if index == -1 {
+		return name
+	} else {
+		return name[index + 1:]
+	}
+}
+
 func SendFileName(conn net.Conn, name string) {
-	ni.SendMessage(name, conn)
+	sepName := SeparateFileName(name)
+	fmt.Println(sepName)
+	ni.SendMessage(sepName, conn)
 	response := ni.GetMessage(conn)
 	if response != ni.SuccessMsg {
 		os.Exit(1)
