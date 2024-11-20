@@ -2,7 +2,9 @@ package main
 
 import (
 	ni "TransferFiles/internal/networkInteraction"
+	"TransferFiles/internal/server/fileTransfer"
 	"TransferFiles/internal/server/inputParser"
+	"TransferFiles/internal/server/speedMeter"
 	"fmt"
 	"io"
 	"net"
@@ -11,13 +13,6 @@ import (
 )
 
 const storePackage = "uploads"
-
-type metaFile struct {
-	name string
-	size int
-	doReceive bool
-}
-
 
 func main() {
 	CreateStore()
@@ -45,7 +40,7 @@ func main() {
 func HandleRequest(conn net.Conn) {
 	defer conn.Close()
 	file := PrepareReceivingFile(conn)
-	if !file.doReceive {
+	if !file.DoReceive {
 		fmt.Println("do not receive file on conn: ", conn.RemoteAddr().String())
 		return
 	}
@@ -54,25 +49,26 @@ func HandleRequest(conn net.Conn) {
 	fmt.Printf("End handle on %v\n", conn.RemoteAddr())
 }
 
-func ReceiveFile(conn net.Conn, metaFile metaFile) {
-	filePath := storePackage + "/" + metaFile.name
+func ReceiveFile(conn net.Conn, metaFile fileTransfer.MetaFile) {
+	filePath := storePackage + "/" + metaFile.Name
 	file, err := os.OpenFile(filePath, os.O_CREATE|os.O_RDWR, 0666)
 	if err != nil {
 		fmt.Println("Error open file")
 		return
 	}
 
-	buffer := ni.GetBufferBySize(metaFile.size)
+	
+	buffer := ni.GetBufferBySize(metaFile.Size)
 	writer := io.Writer(file)
 	receivedSize := 0
-	for receivedSize < metaFile.size {
+	for int64(receivedSize) < metaFile.Size {
 		// conn.SetReadDeadline(time.Now().Add(clientTimeout))
 		n, err := conn.Read(buffer)
 		if err != nil {
 			fmt.Println("FATAL Error receiving file")
 			return
 		}
-		fmt.Printf("buffer: %v\n", string(buffer[:n]))
+		// fmt.Printf("buffer: %v\n", string(buffer[:n]))
 		receivedSize += n
 		_, err = writer.Write(buffer[:n])
 		if err != nil {
@@ -80,29 +76,30 @@ func ReceiveFile(conn net.Conn, metaFile metaFile) {
 			return
 		}
 	}
+	
 }
 
-func PrepareReceivingFile(conn net.Conn) (metaFile metaFile) {
+func PrepareReceivingFile(conn net.Conn) (metaFile fileTransfer.MetaFile) {
 	var message string
-	metaFile.name = GetFileName(conn)
+	metaFile.Name = GetFileName(conn)
 	overwrite := GetOverwrite(conn)
-	metaFile.size = GetFileSize(conn)
+	metaFile.Size = GetFileSize(conn)
 	isOverwrite := setIsOverwrite(overwrite)
-	fmt.Println("getFileName(): ", metaFile.name)
-	fmt.Println("getFileSize(): ", metaFile.size)
+	fmt.Println("getFileName(): ", metaFile.Name)
+	fmt.Println("getFileSize(): ", metaFile.Size)
 	fmt.Println("getOverwrite(): ", overwrite)
 	fmt.Println("getOverwrite(): ", isOverwrite)
-	filePath := storePackage + "/" + metaFile.name
+	filePath := storePackage + "/" + metaFile.Name
 	fileExists, err := DoesFileExist(filePath)
 	if err != nil {
 		panic(err)
 	}
 	if fileExists && !isOverwrite {
-		metaFile.doReceive = false
+		metaFile.DoReceive = false
 		message = "ABCD"
 	} else {
 		// os.OpenFile(filePath, os.O_CREATE|os.O_RDWR, 0666)
-		metaFile.doReceive = true
+		metaFile.DoReceive = true
 		message = "9876"
 	}
 
@@ -142,7 +139,7 @@ func GetFileName(conn net.Conn) string {
 	return fileName
 }
 
-func GetFileSize(conn net.Conn) int {
+func GetFileSize(conn net.Conn) int64 {
 	fileSize := ni.GetMessage(conn)
 	fmt.Printf("get row fileName: %v, size: %v\n", fileSize, len(fileSize))
 
@@ -151,7 +148,7 @@ func GetFileSize(conn net.Conn) int {
 	if err != nil {
 		fmt.Println("Error convert fileSize to int: ", err.Error())
 	}
-	return size
+	return int64(size)
 }
 
 func CreateStore() {
