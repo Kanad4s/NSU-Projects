@@ -42,14 +42,14 @@ func GetBuffer(file *os.File) []byte {
 		fmt.Println("Error get file info: ", err.Error())
 		return make([]byte, bufferSize)
 	}
-	return make([]byte, SetBufferSize(int(fi.Size())))
+	return make([]byte, SetBufferSize(int64(fi.Size())))
 }
 
-func GetBufferBySize(fileSize int) []byte {
+func GetBufferBySize(fileSize int64) []byte {
 	return make([]byte, SetBufferSize(fileSize))
 }
 
-func SetBufferSize(fileSize int) int {
+func SetBufferSize(fileSize int64) int64 {
 	if (fileSize / bufferSize >= 50) {
 		return bufferSizeBig
 	}

@@ -57,7 +57,8 @@ func ReceiveFile(conn net.Conn, metaFile fileTransfer.MetaFile) {
 		return
 	}
 
-	
+	speed := speedMeter.NewSpeedMeter()
+	go speed.StartSpeedCalc(&metaFile)
 	buffer := ni.GetBufferBySize(metaFile.Size)
 	writer := io.Writer(file)
 	receivedSize := 0
@@ -76,7 +77,7 @@ func ReceiveFile(conn net.Conn, metaFile fileTransfer.MetaFile) {
 			return
 		}
 	}
-	
+	speed.StopSpeedCalc()
 }
 
 func PrepareReceivingFile(conn net.Conn) (metaFile fileTransfer.MetaFile) {
