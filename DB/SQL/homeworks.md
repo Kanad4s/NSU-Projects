@@ -47,3 +47,52 @@ JOIN
 USING(manager_id)
 ```
 ![alt text](resources/richManagerLocation.png)
+
+## Выбрать среди работников Америки (region_name = 'Americas') тех, чья зарплата превосходит зарплату менеджера из Европы (region_name = 'Europe') с наибольшим количеством подчиненных.
+
+```sql
+WITH americanWorkers AS
+(
+    SELECT 
+        last_name, 
+        first_name, 
+        country_id, 
+        salary, 
+        manager_id
+    FROM regions
+        JOIN countries USING(region_id)
+        JOIN locations USING(country_id)
+        JOIN departments USING(location_id)
+        JOIN employees USING(department_id)
+    WHERE (region_name='Americas')
+),
+managerss AS 
+(
+    SELECT 
+        COUNT(employee_id), 
+        manager_id,
+        DENSE_RANK() OVER (ORDER BY COUNT(employee_id) DESC) AS rank
+    FROM regions
+        JOIN countries USING(region_id)
+        JOIN locations USING(country_id)
+        JOIN departments USING(location_id)
+        JOIN employees USING(department_id)
+    WHERE (region_name='Europe')
+    GROUP BY manager_id
+),
+managerSalary  AS
+(
+    SELECT MAX(emp.salary) AS maxSalary
+    FROM managerss mngs
+    JOIN employees emp ON mngs.manager_id=emp.employee_id
+    WHERE mngs.rank=1
+)
+
+SELECT 
+    amWrks.last_name, 
+    amWrks.first_name, 
+    amWrks.salary
+FROM americanWorkers amWrks, managerSalary
+WHERE amWrks.salary >= managerSalary.maxSalary
+```
+![alt text](resources/workersBetterEuropeManagers.png)
