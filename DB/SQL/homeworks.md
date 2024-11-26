@@ -137,9 +137,22 @@ deps AS
 firstLevel AS 
 (
     SELECT 
-        department_id,
-        manager_id AS employee_id
-    FROM deps
+        emp.department_id,
+        emp.employee_id
+    FROM 
+        employees emp, 
+        deps
+    WHERE 
+    emp.manager_id IN 
+        (
+            SELECT 
+                emp.manager_id 
+            FROM 
+                employees emp, 
+                deps 
+            WHERE emp.employee_id=deps.manager_id
+        ) 
+        AND emp.department_id IN deps.department_id
     ORDER BY department_id
 ),
 secondLevel AS 
