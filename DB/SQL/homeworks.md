@@ -116,3 +116,72 @@ FROM americanWorkers amWrks, managerSalary
 WHERE amWrks.salary >= managerSalary.maxSalary
 ```
 ![alt text](resources/workersBetterEuropeManagers.png)
+
+## Вывести для каждого отдела из Америки (region_name = Americas) количество работников в иерархии до третьего уровня. Первый уровень - работники без руководителя, второй уровень - это их подчиненные, а третий уровень - подчиненные работников второго уровня.
+
+```sql
+with deps as (
+select department_id, manager_id
+from regions 
+join countries using(region_id)
+join locations using(country_id)
+join departments using(location_id)
+where region_name='Americas'
+order by department_id
+),
+firstLevel as (
+select 
+emp.employee_id,
+deps.manager_id,
+deps.department_id
+from employees emp, deps
+where emp.manager_id in deps.manager_id
+order by deps.department_id, deps.manager_id
+),
+secondLevel as (
+select emp.employee_id, emp.manager_id, emp.department_id
+from employees emp
+right join firstLevel on firstLevel.employee_id=emp.manager_id
+where emp.department_id is not null
+order by emp.department_id
+),
+thirdLevel as (
+select emp.employee_id, emp.manager_id, emp.department_id
+from employees emp
+right join secondLevel on secondLevel.employee_id=emp.manager_id
+where emp.department_id is not null
+order by emp.department_id
+),
+firstLevelCount as (
+select 
+fl.department_id,
+count(fl.employee_id) as FirstLevel
+from firstLevel fl
+group by fl.department_id
+order by fl.department_id
+),
+secondLevelCount as (
+select 
+sl.department_id,
+count(sl.employee_id) as SecondLevel
+from secondLevel sl
+group by sl.department_id
+order by sl.department_id
+),
+thirdLevelCount as (
+select 
+tl.department_id,
+count(tl.employee_id) as ThirdLevel
+from thirdLevel tl
+group by tl.department_id
+order by tl.department_id
+)
+
+select *
+from deps
+left join firstLevelCount using(department_id)
+left join secondLevelCount using(department_id)
+left join thirdLevelCount using(department_id)
+order by department_id
+```
+![alt text](image.png)
