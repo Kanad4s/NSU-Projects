@@ -71,7 +71,8 @@ ORDER BY dense_rank
 ## Выбрать среди работников Америки (region_name = 'Americas') тех, чья зарплата превосходит зарплату менеджера из Европы (region_name = 'Europe') с наибольшим количеством подчиненных.
 
 ```sql
-WITH americanWorkers AS
+WITH 
+americanWorkers AS
 (
     SELECT 
         last_name, 
@@ -120,70 +121,84 @@ WHERE amWrks.salary >= managerSalary.maxSalary
 ## Вывести для каждого отдела из Америки (region_name = Americas) количество работников в иерархии до третьего уровня. Первый уровень - работники без руководителя, второй уровень - это их подчиненные, а третий уровень - подчиненные работников второго уровня.
 
 ```sql
-with deps as (
-select department_id, manager_id
-from regions 
-join countries using(region_id)
-join locations using(country_id)
-join departments using(location_id)
-where region_name='Americas'
-order by department_id
+WITH 
+deps AS 
+(
+    SELECT 
+        department_id, 
+        manager_id
+    FROM regions 
+        JOIN countries USING(region_id)
+        JOIN locations USING(country_id)
+        JOIN departments USING(location_id)
+    WHERE region_name='Americas'
+    ORDER BY department_id
 ),
-firstLevel as (
-select 
-department_id,
-manager_id as employee_id
-from deps
-order by department_id
+firstLevel AS 
+(
+    SELECT 
+        department_id,
+        manager_id AS employee_id
+    FROM deps
+    ORDER BY department_id
 ),
-secondLevel as (
-select
-emp.employee_id,
-fl.employee_id as manager_id,
-fl.department_id
-from firstLevel fl
-join employees emp on fl.employee_id=emp.manager_id and fl.department_id=emp.department_id
-order by fl.department_id
+secondLevel AS 
+(
+SELECT
+    emp.employee_id,
+    fl.employee_id AS manager_id,
+    fl.department_id
+FROM firstLevel fl
+    JOIN employees emp ON fl.employee_id=emp.manager_id AND fl.department_id=emp.department_id
+ORDER BY fl.department_id
 ),
-thirdLevel as (
-select
-emp.employee_id,
-sl.employee_id as manager_id,
-sl.department_id
-from secondLevel sl
-join employees emp on sl.employee_id=emp.manager_id and sl.department_id=emp.department_id
-order by sl.department_id
+thirdLevel AS 
+(
+SELECT
+    emp.employee_id,
+    sl.employee_id AS manager_id,
+    sl.department_id
+FROM secondLevel sl
+    JOIN employees emp ON sl.employee_id=emp.manager_id AND sl.department_id=emp.department_id
+ORDER BY sl.department_id
 ),
-firstLevelCount as (
-select 
-fl.department_id,
-count(fl.employee_id) as FirstLevel
-from firstLevel fl
-group by fl.department_id
-order by fl.department_id
+firstLevelCount AS 
+(
+SELECT 
+    fl.department_id,
+    COUNT(fl.employee_id) AS FirstLevel
+FROM firstLevel fl
+GROUP BY fl.department_id
+ORDER BY fl.department_id
 ),
-secondLevelCount as (
-select 
-department_id,
-count(employee_id) as SecondLevel
-from secondLevel
-group by department_id
-order by department_id
+secondLevelCount AS 
+(
+SELECT 
+    department_id,
+    COUNT(employee_id) AS SecondLevel
+FROM secondLevel
+GROUP BY department_id
+ORDER BY department_id
 ),
-thirdLevelCount as (
-select 
-department_id,
-count(employee_id) as ThirdLevel
-from thirdLevel
-group by department_id
-order by department_id
+thirdLevelCount AS 
+(
+SELECT 
+    department_id,
+    COUNT(employee_id) AS ThirdLevel
+FROM thirdLevel
+GROUP BY department_id
+ORDER BY department_id
 )
 
-select department_id, nvl(firstLevelCount.FirstLevel, 0) as FirstLevel, nvl(SecondLevelCount.SecondLevel, 0) as SecondLevel, nvl(ThirdLevelCount.ThirdLevel, 0) as ThirdLevel
-from deps
-left join firstLevelCount using(department_id)
-left join secondLevelCount using(department_id)
-left join thirdLevelCount using(department_id)
-order by department_id
+SELECT 
+    department_id, 
+    NVL(firstLevelCount.FirstLevel, 0) AS FirstLevel,
+    NVL(SecondLevelCount.SecondLevel, 0) AS SecondLevel,
+    NVL(ThirdLevelCount.ThirdLevel, 0) AS ThirdLevel
+FROM deps
+    LEFT JOIN firstLevelCount USING(department_id)
+    LEFT JOIN secondLevelCount USING(department_id)
+    LEFT JOIN thirdLevelCount USING(department_id)
+ORDER BY department_id
 ```
-![alt text](image-1.png)
+![alt text](resources/depsWorkersByLevel.png)
