@@ -131,26 +131,28 @@ order by department_id
 ),
 firstLevel as (
 select 
-emp.employee_id,
-deps.manager_id,
-deps.department_id
-from employees emp, deps
-where emp.manager_id in deps.manager_id
-order by deps.department_id, deps.manager_id
+department_id,
+manager_id as employee_id
+from deps
+order by department_id
 ),
 secondLevel as (
-select emp.employee_id, emp.manager_id, emp.department_id
-from employees emp
-right join firstLevel on firstLevel.employee_id=emp.manager_id
-where emp.department_id is not null
-order by emp.department_id
+select
+emp.employee_id,
+fl.employee_id as manager_id,
+fl.department_id
+from firstLevel fl
+join employees emp on fl.employee_id=emp.manager_id and fl.department_id=emp.department_id
+order by fl.department_id
 ),
 thirdLevel as (
-select emp.employee_id, emp.manager_id, emp.department_id
-from employees emp
-right join secondLevel on secondLevel.employee_id=emp.manager_id
-where emp.department_id is not null
-order by emp.department_id
+select
+emp.employee_id,
+sl.employee_id as manager_id,
+sl.department_id
+from secondLevel sl
+join employees emp on sl.employee_id=emp.manager_id and sl.department_id=emp.department_id
+order by sl.department_id
 ),
 firstLevelCount as (
 select 
@@ -162,26 +164,26 @@ order by fl.department_id
 ),
 secondLevelCount as (
 select 
-sl.department_id,
-count(sl.employee_id) as SecondLevel
-from secondLevel sl
-group by sl.department_id
-order by sl.department_id
+department_id,
+count(employee_id) as SecondLevel
+from secondLevel
+group by department_id
+order by department_id
 ),
 thirdLevelCount as (
 select 
-tl.department_id,
-count(tl.employee_id) as ThirdLevel
-from thirdLevel tl
-group by tl.department_id
-order by tl.department_id
+department_id,
+count(employee_id) as ThirdLevel
+from thirdLevel
+group by department_id
+order by department_id
 )
 
-select *
+select department_id, nvl(firstLevelCount.FirstLevel, 0) as FirstLevel, nvl(SecondLevelCount.SecondLevel, 0) as SecondLevel, nvl(ThirdLevelCount.ThirdLevel, 0) as ThirdLevel
 from deps
 left join firstLevelCount using(department_id)
 left join secondLevelCount using(department_id)
 left join thirdLevelCount using(department_id)
 order by department_id
 ```
-![alt text](image.png)
+![alt text](image-1.png)
