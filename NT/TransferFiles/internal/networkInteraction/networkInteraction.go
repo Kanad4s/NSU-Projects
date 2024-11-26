@@ -9,11 +9,13 @@ import (
 )
 
 const (
-	SuccessMsg = "success"
-	ErrMsg = "error"
-	EndSymbol = '\a'
-	bufferSize = 1048576 // 1024 ^ 2
-	bufferSizeBig = 1073741824 // 1024 ^ 3
+	SuccessMsg              = "success"
+	ErrMsg                  = "error"
+	EndSymbol               = '\a'
+	TransferFileAcceptedMsg = "9876"
+	TransferFileDeclineMsg  = "ABCD"
+	bufferSize              = 1048576    // 1024 ^ 2
+	bufferSizeBig           = 1073741824 // 1024 ^ 3
 )
 
 func GetMessage(conn net.Conn) (msg string) {
@@ -50,9 +52,8 @@ func GetBufferBySize(fileSize int64) []byte {
 }
 
 func SetBufferSize(fileSize int64) int64 {
-	if (fileSize / bufferSize >= 50) {
+	if fileSize/bufferSize >= 50 {
 		return bufferSizeBig
 	}
 	return bufferSize
 }
-

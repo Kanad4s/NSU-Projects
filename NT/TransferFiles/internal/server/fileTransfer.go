@@ -60,10 +60,10 @@ func PrepareReceivingFile(conn net.Conn) (metaFile MetaFile) {
 	}
 	if fileExists && !isOverwrite {
 		metaFile.DoReceive = false
-		message = "ABCD"
+		message = ni.TransferFileDeclineMsg
 	} else {
 		metaFile.DoReceive = true
-		message = "9876"
+		message = ni.TransferFileAcceptedMsg
 	}
 
 	ni.SendMessage(message, conn)

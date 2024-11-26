@@ -53,9 +53,9 @@ func PrepareSendFile(conn net.Conn) bool {
 }
 
 func PrintMessage(message string) {
-	if message == "9876" {
+	if message == ni.TransferFileAcceptedMsg {
 		fmt.Println("File sending is accepted")
-	} else if message == "ABCD" {
+	} else if message == ni.TransferFileDeclineMsg {
 		fmt.Println("File sending is unaccepted")
 	}
 }
@@ -63,7 +63,7 @@ func PrintMessage(message string) {
 func DoSendFile(conn net.Conn) bool {
 	response := ni.GetMessage(conn)
 	PrintMessage(response)
-	return response == "9876"
+	return response == ni.TransferFileAcceptedMsg
 }
 
 func SeparateFileName(name string) string {
