@@ -191,11 +191,12 @@ ORDER BY department_id
 )
 
 SELECT 
-    department_id, 
+    department_name, 
     NVL(firstLevelCount.FirstLevel, 0) AS FirstLevel,
     NVL(SecondLevelCount.SecondLevel, 0) AS SecondLevel,
     NVL(ThirdLevelCount.ThirdLevel, 0) AS ThirdLevel
-FROM deps
+FROM departments
+    JOIN deps USING(department_id)
     LEFT JOIN firstLevelCount USING(department_id)
     LEFT JOIN secondLevelCount USING(department_id)
     LEFT JOIN thirdLevelCount USING(department_id)
