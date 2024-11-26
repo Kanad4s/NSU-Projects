@@ -12,7 +12,7 @@ func main() {
 	fmt.Println("File to send: " + client.GetFile())
 	conn, err := net.Dial("tcp", host)
 	if err != nil {
-		fmt.Println("Error connecting:", err.Error())
+		fmt.Println("Error connecting:", err.Error())	
 		os.Exit(1)
 	}
 	defer conn.Close()
@@ -22,4 +22,5 @@ func main() {
 	}
 
 	client.SendFile(client.GetFile(), conn)
+	client.ParseControlMsg(conn)
 }

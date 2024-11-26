@@ -10,7 +10,7 @@ import (
 	"net"
 )
 
-func SendFile(fileName string, conn net.Conn) bool {
+func SendFile(fileName string, conn net.Conn) {
 	file, err := os.OpenFile(fileName, os.O_RDONLY, os.ModePerm)
 	if err!= nil {
 		fmt.Println("Error open file: ", err.Error())
@@ -26,17 +26,21 @@ func SendFile(fileName string, conn net.Conn) bool {
 				break
 			}
 			fmt.Printf("File reading error: %v\n", err.Error())
-			return false
+			return
 		}
 		fmt.Printf("buffer: %v\n", string(buffer[:read]))
 		_, err = conn.Write(buffer[:read])
 		if err != nil {
 			fmt.Printf("File data sending error: %v\n", err.Error())
-			return false
+			return
 		}
 	}
 	fmt.Println("Send finish")
-	return true
+}
+
+func ParseControlMsg(conn net.Conn) {
+	msg := ni.GetMessage(conn)
+	fmt.Println("Sending result: " + msg)
 }
 
 func PrepareSendFile(conn net.Conn) bool {

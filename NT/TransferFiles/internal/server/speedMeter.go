@@ -59,6 +59,5 @@ func (speedMeter *SpeedMeter) StartSpeedCalc(file *MetaFile) {
 }
 
 func (speedMeter *SpeedMeter) StopSpeedCalc() {
-	fmt.Println("send stop")
 	*speedMeter.FinishChannel <- true
 }
