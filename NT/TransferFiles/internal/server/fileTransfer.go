@@ -20,8 +20,8 @@ func ReceiveFile(conn net.Conn, metaFile MetaFile) {
 	filePath := storePackage + "/" + metaFile.Name
 	file, err := os.OpenFile(filePath, os.O_CREATE|os.O_RDWR, 0666)
 	if err != nil {
-		fmt.Println("Error open file")
-		return
+		// fmt.Println("Error open file")
+		panic("Error open file")
 	}
 
 	speed := NewSpeedMeter()
@@ -33,15 +33,13 @@ func ReceiveFile(conn net.Conn, metaFile MetaFile) {
 		// conn.SetReadDeadline(time.Now().Add(clientTimeout))
 		n, err := conn.Read(buffer)
 		if err != nil {
-			fmt.Println("FATAL Error receiving file")
-			return
+			panic("FATAL Error receiving file")
 		}
 		// fmt.Printf("buffer: %v\n", string(buffer[:n]))
 		receivedSize += n
 		_, err = writer.Write(buffer[:n])
 		if err != nil {
-			fmt.Println("FATAL Error writing into file")
-			return
+			panic("FATAL Error writing into file")
 		}
 	}
 	speed.StopSpeedCalc()

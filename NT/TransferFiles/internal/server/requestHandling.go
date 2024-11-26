@@ -15,7 +15,7 @@ func HandleRequest(conn net.Conn) {
 	file := PrepareReceivingFile(conn)
 	if !file.DoReceive {
 		fmt.Println("do not receive file on conn: ", conn.RemoteAddr().String())
-		return
+		panic("receiving unaccepted")
 	}
 
 	ReceiveFile(conn, file)
@@ -23,6 +23,7 @@ func HandleRequest(conn net.Conn) {
 	controlMsg := ni.SuccessMsg
 	defer func() {
 		if mes := recover(); mes != nil {
+			fmt.Printf("Error msg: %v\n", mes)
 			controlMsg = ni.ErrMsg
 		}
 		ni.SendMessage(controlMsg, conn)
