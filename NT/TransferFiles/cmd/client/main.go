@@ -9,7 +9,6 @@ import (
 
 func main() {
 	host := client.GetHost()
-	fmt.Println("File to send: " + client.GetFile())
 	conn, err := net.Dial("tcp", host)
 	if err != nil {
 		fmt.Println("Error connecting:", err.Error())	

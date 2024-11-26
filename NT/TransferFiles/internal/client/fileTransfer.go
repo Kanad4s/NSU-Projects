@@ -28,7 +28,7 @@ func SendFile(fileName string, conn net.Conn) {
 			fmt.Printf("File reading error: %v\n", err.Error())
 			return
 		}
-		fmt.Printf("buffer: %v\n", string(buffer[:read]))
+		// fmt.Printf("buffer: %v\n", string(buffer[:read]))
 		_, err = conn.Write(buffer[:read])
 		if err != nil {
 			fmt.Printf("File data sending error: %v\n", err.Error())
@@ -47,7 +47,7 @@ func PrepareSendFile(conn net.Conn) bool {
 	SendFileName(conn, GetFile())
 	SendOverwrite(conn, IsOverwrite())
 	SendFileSize(conn, GetFile())
-	fmt.Println("send parameters done")
+	// fmt.Println("send parameters done")
 	doSend := DoSendFile(conn)
 	return doSend
 }
@@ -77,7 +77,6 @@ func SeparateFileName(name string) string {
 
 func SendFileName(conn net.Conn, name string) {
 	sepName := SeparateFileName(name)
-	fmt.Println(sepName)
 	ni.SendMessage(sepName, conn)
 	response := ni.GetMessage(conn)
 	if response != ni.SuccessMsg {
@@ -110,7 +109,7 @@ func SendFileSize(conn net.Conn, fileName string) {
 		os.Exit(1)
 	}
 	sizeString := strconv.Itoa(int(fi.Size()))
-	fmt.Printf("File %v size: %v, %v\n", fileName, fi.Size(), sizeString)
+	fmt.Printf("File \"%v\" size: %v\n", fileName, sizeString)
 	ni.SendMessage(sizeString, conn)
 	response := ni.GetMessage(conn)
 	if response != ni.SuccessMsg {
@@ -120,7 +119,7 @@ func SendFileSize(conn net.Conn, fileName string) {
 
 func GetHost() string {
 	ParseInput()
-	fmt.Println("isOverwrite: ", IsOverwrite())
+	// fmt.Println("isOverwrite: ", IsOverwrite())
 	host := fmt.Sprintf("%s:%s", GetIP(), GetPort())
 	return host
 }
