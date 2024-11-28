@@ -27,6 +27,7 @@ int init_spin_lock() {
         printf("main: pthread_spin_init() failed: %s\n", strerror(err));
         return 1;
     }
+	return 0;
 }
 
 queue_t* queue_init(int max_count) {
