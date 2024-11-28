@@ -111,5 +111,5 @@ int main() {
     int err_reader = join_thread(tid_reader);
     int err_writer = join_thread(tid_writer);
     free_resources(q);
-	return err_reader || err_writer ? EXIT_FAILURE : EXIT_SUCCESS;
+	return EXIT_SUCCESS;
 }
