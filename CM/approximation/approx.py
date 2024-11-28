@@ -90,14 +90,16 @@ if __name__ == "__main__":
     plt.xlabel('x label')
     plt.ylabel('y label')
     plt.title("Approximation")
-    plt.xlim(-1, 1)
-    plt.ylim(-0.5, 1.5)
+    xBounds = [-2, 5]
+    yBounds = [-3.5, 4.5]
+    plt.xlim(xBounds[0], xBounds[1])
+    plt.ylim(yBounds[0], yBounds[1])
     
-    sample = np.linspace(-1, 1, 200)
+    sample = np.linspace(xBounds[0], xBounds[1], 200)
     plt.plot(sample, abs(sample), label='y = |x|')
 
     # for n in [1, 2, 4, 10, 20]:
-    x = np.linspace(-1, 1, args.n) 
+    x = np.linspace(xBounds[0], xBounds[1], args.n) 
     y = abs(x)
 
     polynom = NewtonPolynomial(x, y)
