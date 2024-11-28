@@ -19,7 +19,7 @@ void *qmonitor(void *arg) {
 }
 
 void init_mutex() {
-    pthread_mutexattr_t *att;
+    pthread_mutexattr_t att;
     pthread_mutexattr_setpshared(&att, PTHREAD_PROCESS_SHARED);
     int err = pthread_mutex_init(&mutex, &att);
 
