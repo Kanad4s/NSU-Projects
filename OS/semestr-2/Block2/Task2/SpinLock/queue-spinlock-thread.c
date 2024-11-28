@@ -64,6 +64,7 @@ void* writer(void *arg) {
 		int ok = queue_add(q, i);
 		if (!ok) continue;
 		i++;
+		usleep(1);
 	}
 	return NULL;
 }
