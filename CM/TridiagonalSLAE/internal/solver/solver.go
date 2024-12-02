@@ -31,7 +31,7 @@ func PrintPart(part []float64, n int, isMatrix bool) {
 		}
 	} else {
 		for i := 0; i < n; i++ {
-			fmt.Printf("%1.1f \n", part[i])
+			fmt.Printf("%1.10f \n", part[i])
 		}
 	}
 }

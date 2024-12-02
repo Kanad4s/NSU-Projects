@@ -90,12 +90,12 @@ if __name__ == "__main__":
     plt.xlabel('x label')
     plt.ylabel('y label')
     plt.title("Approximation")
-    xBounds = [-2, 5]
-    yBounds = [-3.5, 4.5]
+    xBounds = [-1, 1]
+    yBounds = [-1, 2]
     plt.xlim(xBounds[0], xBounds[1])
     plt.ylim(yBounds[0], yBounds[1])
     
-    sample = np.linspace(xBounds[0], xBounds[1], 200)
+    sample = np.linspace(xBounds[0], xBounds[1], 301)
     plt.plot(sample, abs(sample), label='y = |x|')
 
     # for n in [1, 2, 4, 10, 20]:
