@@ -1,25 +1,33 @@
 package proxy
 
-// Socks5 constant
+// Socks5 consts
+
+// Connect to SOCKS server: VER:NMETHODS:METHODS
+// SOCKS server select method: VER:METHOD
+// SOCKS Request: VER:CMD:RSV:ATYP:DST.ADDR:DST.PORT
+// SOCKS server Replies: VER:REP:RSV:ATYP:BND.ADDR:BND.PORT
 const (
-	// Version
+	// Version (VER)
 	SOCKS_VERSION byte = 0x05
 
-	// Supported authentication methods
-	SOCKS_AUTH_METHOD_NO_REQUIRED           byte = 0x00
-	SOCKS_AUTH_METHOD_NO_ACCEPTABLE_METHODS byte = 0xFF
+	// Supported authentication methods (METHODS)
+	SOCKS_AUTH_NO_REQUIRED           byte = 0x00
+	SOCKS_AUTH_NO_ACCEPTABLE_METHODS byte = 0xFF
 
-	// Supported command
-	SOCKS_CMD_CONNECT byte = 0x01
+	// Supported command (CMD)
+	SOCKS_CMD_CONNECT       byte = 0x01
+	SOCKS_CMD_BIND          byte = 0x02
+	SOCKS_CMD_UDP_ASSOCIATE      = 0x03
 
-	// Reserved byte
-	SOCKS_RESERVED_BYTE byte = 0x00
+	// Reserved (RSV)
+	SOCKS_RESERVED byte = 0x00
 
-	// Supported address type
-	SOCKS_ADDR_TYPE_IPV4 byte = 0x01
-	SOCKS_ADDR_TYPE_FQDN byte = 0x03
+	// Address type of following address (ATYP)
+	SOCKS_ATYP_IPV4 byte = 0x01
+	SOCKS_ATYP_DOMAINNAME byte = 0x03
+	SOCKS_ATYP_IPV6 byte = 0x04
 
-	// Reply
+	// Replies (REP)
 	SOCKS_REPLY_SUCCEEDED                         byte = 0x00
 	SOCKS_REPLY_GENERAL_SOCKS_SERVER_FAILURE      byte = 0x01
 	SOCKS_REPLY_CONNECTION_NOT_ALLOWED_BY_RULESET byte = 0x02

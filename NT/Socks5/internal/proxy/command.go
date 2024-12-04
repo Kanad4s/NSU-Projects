@@ -1,11 +1,11 @@
 package proxy
 
 import (
+	"Socks5/internal/log"
 	"encoding/binary"
 	"fmt"
 	"io"
 	"net"
-	"Socks5/internal/log"
 )
 
 func connectCommand(client *net.TCPConn) (*net.TCPConn, byte, error) {
@@ -37,9 +37,9 @@ func connectCommand(client *net.TCPConn) (*net.TCPConn, byte, error) {
 	if err != nil {
 		return nil, SOCKS_REPLY_CONNECTION_NOT_ALLOWED_BY_RULESET, NewErrCommandRequestParsing("No reserved byte")
 	}
-	if reservedByte[0] != SOCKS_RESERVED_BYTE {
+	if reservedByte[0] != SOCKS_RESERVED {
 		return nil, SOCKS_REPLY_CONNECTION_NOT_ALLOWED_BY_RULESET, NewErrCommandRequestParsing(fmt.Sprintf(
-			"Reserved byte must be set to %v, but not %v", SOCKS_RESERVED_BYTE, reservedByte[0]))
+			"Reserved byte must be set to %v, but not %v", SOCKS_RESERVED, reservedByte[0]))
 	}
 
 	// Check address type
@@ -49,13 +49,13 @@ func connectCommand(client *net.TCPConn) (*net.TCPConn, byte, error) {
 		return nil, SOCKS_REPLY_CONNECTION_NOT_ALLOWED_BY_RULESET, NewErrCommandRequestParsing("No address type")
 	}
 	switch addressType[0] {
-	case SOCKS_ADDR_TYPE_IPV4:
+	case SOCKS_ATYP_IPV4:
 		ipv4, port, err := readIpv4AndPort(client)
 		if err != nil {
 			return nil, SOCKS_REPLY_CONNECTION_NOT_ALLOWED_BY_RULESET, err
 		}
 		return ipv4Connect(ipv4, port)
-	case SOCKS_ADDR_TYPE_FQDN:
+	case SOCKS_ATYP_DOMAINNAME:
 		domainName, port, err := readDomainNameAndPort(client)
 		if err != nil {
 			return nil, SOCKS_REPLY_CONNECTION_NOT_ALLOWED_BY_RULESET, err
@@ -64,7 +64,7 @@ func connectCommand(client *net.TCPConn) (*net.TCPConn, byte, error) {
 	default:
 		return nil, SOCKS_REPLY_ADDRESS_TYPE_NOT_SUPPORTED, NewErrCommandRequestParsing(fmt.Sprintf(
 			"Unsupported address type %v, %v is supported", addressType[0],
-			[]byte{SOCKS_ADDR_TYPE_IPV4, SOCKS_ADDR_TYPE_FQDN}))
+			[]byte{SOCKS_ATYP_IPV4, SOCKS_ATYP_DOMAINNAME}))
 	}
 }
 
@@ -169,7 +169,7 @@ func domainNameConnect(domainName string, port int, client *net.TCPConn) (*net.T
 func sendCommandReply(client *net.TCPConn, reply byte) error {
 	// Create message
 	replyMsg := []byte{
-		SOCKS_VERSION, reply, SOCKS_RESERVED_BYTE, SOCKS_ADDR_TYPE_IPV4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		SOCKS_VERSION, reply, SOCKS_RESERVED, SOCKS_ATYP_IPV4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	}
 
 	// Send reply
