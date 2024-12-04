@@ -17,7 +17,7 @@ const (
 	// Supported command (CMD)
 	SOCKS_CMD_CONNECT       byte = 0x01
 	SOCKS_CMD_BIND          byte = 0x02
-	SOCKS_CMD_UDP_ASSOCIATE      = 0x03
+	SOCKS_CMD_UDP_ASSOCIATE byte = 0x03
 
 	// Reserved (RSV)
 	SOCKS_RESERVED byte = 0x00

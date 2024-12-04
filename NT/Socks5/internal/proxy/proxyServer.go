@@ -7,7 +7,7 @@ import (
 )
 
 func Start(port int) {
-	listener, err := net.ListenTCP("tcp4", &net.TCPAddr{Port: port})
+	listener, err := net.ListenTCP("tcp4", &net.TCPAddr{IP: net.IPv4(172, 19, 102, 68), Port: port})
 	if err != nil {
 		log.Log.Errorf("Listen socket creation error: %v", err)
 		return
@@ -65,6 +65,5 @@ func handleClient(conn *net.TCPConn) {
 	}
 	log.Log.Debugf("%v: Proxy server is connected to peer", conn.RemoteAddr())
 
-	// Transfer data
 	transferData(conn, peer)
 }

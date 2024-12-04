@@ -1,18 +1,18 @@
 package proxy
 
 import (
+	"Socks5/internal/log"
 	"io"
 	"net"
 	"sync"
-	"Socks5/internal/log"
 )
 
-func transferData(client *net.TCPConn, peer *net.TCPConn) {
+func transferData(conn *net.TCPConn, peer *net.TCPConn) {
 	var wg sync.WaitGroup
 	wg.Add(2)
 
-	go copyData(client, peer, &wg)
-	go copyData(peer, client, &wg)
+	go copyData(conn, peer, &wg)
+	go copyData(peer, conn, &wg)
 
 	wg.Wait()
 }
@@ -22,6 +22,7 @@ func copyData(dest *net.TCPConn, src *net.TCPConn, wg *sync.WaitGroup) {
 	defer dest.Close()
 
 	_, err := io.Copy(dest, src)
+
 	if err != nil {
 		log.Log.Errorf("%v: Reading error: %v", dest.RemoteAddr(), err)
 	}

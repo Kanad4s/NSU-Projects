@@ -8,10 +8,9 @@ import (
 	"net"
 )
 
-func connectCommand(client *net.TCPConn) (*net.TCPConn, byte, error) {
-	// Check version
+func connectCommand(conn *net.TCPConn) (*net.TCPConn, byte, error) {
 	version := make([]byte, 1)
-	_, err := io.ReadFull(client, version)
+	_, err := io.ReadFull(conn, version)
 	if err != nil {
 		return nil, SOCKS_REPLY_CONNECTION_NOT_ALLOWED_BY_RULESET, NewErrCommandRequestParsing("No socks version")
 	}
@@ -20,9 +19,8 @@ func connectCommand(client *net.TCPConn) (*net.TCPConn, byte, error) {
 			"Socks version %v is expected, but not %v", SOCKS_VERSION, version[0]))
 	}
 
-	// Check command
 	command := make([]byte, 1)
-	_, err = io.ReadFull(client, command)
+	_, err = io.ReadFull(conn, command)
 	if err != nil {
 		return nil, SOCKS_REPLY_CONNECTION_NOT_ALLOWED_BY_RULESET, NewErrCommandRequestParsing("No command")
 	}
@@ -31,9 +29,8 @@ func connectCommand(client *net.TCPConn) (*net.TCPConn, byte, error) {
 			"Unsupported command %v, %v command supported", command[0], SOCKS_CMD_CONNECT))
 	}
 
-	// Check reserved byte
 	reservedByte := make([]byte, 1)
-	_, err = io.ReadFull(client, reservedByte)
+	_, err = io.ReadFull(conn, reservedByte)
 	if err != nil {
 		return nil, SOCKS_REPLY_CONNECTION_NOT_ALLOWED_BY_RULESET, NewErrCommandRequestParsing("No reserved byte")
 	}
@@ -42,25 +39,24 @@ func connectCommand(client *net.TCPConn) (*net.TCPConn, byte, error) {
 			"Reserved byte must be set to %v, but not %v", SOCKS_RESERVED, reservedByte[0]))
 	}
 
-	// Check address type
 	addressType := make([]byte, 1)
-	_, err = io.ReadFull(client, addressType)
+	_, err = io.ReadFull(conn, addressType)
 	if err != nil {
 		return nil, SOCKS_REPLY_CONNECTION_NOT_ALLOWED_BY_RULESET, NewErrCommandRequestParsing("No address type")
 	}
 	switch addressType[0] {
 	case SOCKS_ATYP_IPV4:
-		ipv4, port, err := readIpv4AndPort(client)
+		ipv4, port, err := readIpv4AndPort(conn)
 		if err != nil {
 			return nil, SOCKS_REPLY_CONNECTION_NOT_ALLOWED_BY_RULESET, err
 		}
 		return ipv4Connect(ipv4, port)
 	case SOCKS_ATYP_DOMAINNAME:
-		domainName, port, err := readDomainNameAndPort(client)
+		domainName, port, err := readDomainNameAndPort(conn)
 		if err != nil {
 			return nil, SOCKS_REPLY_CONNECTION_NOT_ALLOWED_BY_RULESET, err
 		}
-		return domainNameConnect(domainName, port, client)
+		return domainNameConnect(domainName, port, conn)
 	default:
 		return nil, SOCKS_REPLY_ADDRESS_TYPE_NOT_SUPPORTED, NewErrCommandRequestParsing(fmt.Sprintf(
 			"Unsupported address type %v, %v is supported", addressType[0],
@@ -69,14 +65,12 @@ func connectCommand(client *net.TCPConn) (*net.TCPConn, byte, error) {
 }
 
 func readIpv4AndPort(client *net.TCPConn) (net.IP, int, error) {
-	// Check ipv4
 	ip := make([]byte, 4)
 	_, err := io.ReadFull(client, ip)
 	if err != nil {
 		return nil, -1, NewErrCommandRequestParsing("No ipv4 address")
 	}
 
-	// Check port
 	portBytes := make([]byte, 2)
 	_, err = io.ReadFull(client, portBytes)
 	if err != nil {
@@ -117,21 +111,18 @@ func ipv4Connect(ipv4 net.IP, port int) (*net.TCPConn, byte, error) {
 }
 
 func readDomainNameAndPort(client *net.TCPConn) (string, int, error) {
-	// Check domain name size
 	domainNameSize := make([]byte, 1)
 	_, err := io.ReadFull(client, domainNameSize)
 	if err != nil {
 		return "", -1, NewErrCommandRequestParsing("No domain name size")
 	}
 
-	// Check domain name
 	domainName := make([]byte, domainNameSize[0])
 	_, err = io.ReadFull(client, domainName)
 	if err != nil {
 		return "", -1, NewErrCommandRequestParsing("No domain name")
 	}
 
-	// Check port
 	portBytes := make([]byte, 2)
 	_, err = io.ReadFull(client, portBytes)
 	if err != nil {
@@ -143,36 +134,31 @@ func readDomainNameAndPort(client *net.TCPConn) (string, int, error) {
 }
 
 func domainNameConnect(domainName string, port int, client *net.TCPConn) (*net.TCPConn, byte, error) {
-	// Resolve domain name
 	ips, err := net.LookupIP(domainName)
 	if err != nil {
 		return nil, SOCKS_REPLY_HOST_UNREACHABLE, NewErrDNSResolving(err.Error())
 	}
 	log.Log.Debugf("%v: Domain name %v is resolved to %v", client.RemoteAddr(), domainName, ips)
 
-	// Try connecting to each ipv4 address
 	for _, ip := range ips {
 		if ipv4 := ip.To4(); ipv4 != nil {
 			peer, reply, err := ipv4Connect(ipv4, port)
 			if err == nil {
-				// Found working ip address
+				// success 
 				return peer, reply, nil
 			}
 		}
 	}
 
-	// Not found working ipv4 address
 	return nil, SOCKS_REPLY_HOST_UNREACHABLE,
 		NewErrDNSResolving("No hosts with IPv6 addresses or working IPv4 addresses")
 }
 
 func sendCommandReply(client *net.TCPConn, reply byte) error {
-	// Create message
 	replyMsg := []byte{
 		SOCKS_VERSION, reply, SOCKS_RESERVED, SOCKS_ATYP_IPV4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	}
 
-	// Send reply
 	_, err := client.Write(replyMsg)
 	if err != nil {
 		return NewErrCommandReplySending(err.Error())
