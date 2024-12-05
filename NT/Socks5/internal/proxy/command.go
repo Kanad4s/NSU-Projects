@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io"
 	"net"
+	"strconv"
+	"strings"
 )
 
 func connectCommand(conn *net.TCPConn) (*net.TCPConn, byte, error) {
@@ -138,7 +140,7 @@ func domainNameConnect(domainName string, port int, client *net.TCPConn) (*net.T
 	if err != nil {
 		return nil, SOCKS_REPLY_HOST_UNREACHABLE, NewErrDNSResolving(err.Error())
 	}
-	log.Log.Debugf("%v: Domain name %v is resolved to %v", client.RemoteAddr(), domainName, ips)
+	log.Log.Infof("%v: Domain name %v is resolved to %v", client.RemoteAddr(), domainName, ips)
 
 	for _, ip := range ips {
 		if ipv4 := ip.To4(); ipv4 != nil {
@@ -155,9 +157,24 @@ func domainNameConnect(domainName string, port int, client *net.TCPConn) (*net.T
 }
 
 func sendCommandReply(client *net.TCPConn, reply byte) error {
+	addr := strings.Split(client.LocalAddr().String(), ".")
 	replyMsg := []byte{
-		SOCKS_VERSION, reply, SOCKS_RESERVED, SOCKS_ATYP_IPV4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		SOCKS_VERSION, reply, SOCKS_RESERVED, SOCKS_ATYP_IPV4,
 	}
+
+	for i := range addr {
+		addrPart, _ := strconv.Atoi(addr[i])
+		if i == 3 {
+			addrPart, _ = strconv.Atoi(strings.Split(addr[i], ":")[0])
+		}
+		replyMsg = append(replyMsg, byte(addrPart))
+	}
+
+	port, _ := strconv.Atoi(strings.Split(addr[3], ":")[1])
+	firstPartPort := port / 100
+	secondPartPort := port % 100
+	replyMsg = append(replyMsg, byte(firstPartPort))
+	replyMsg = append(replyMsg, byte(secondPartPort))
 
 	_, err := client.Write(replyMsg)
 	if err != nil {
