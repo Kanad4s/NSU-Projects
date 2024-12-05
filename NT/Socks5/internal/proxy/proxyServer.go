@@ -7,7 +7,7 @@ import (
 )
 
 func Start(port int) {
-	listener, err := net.ListenTCP("tcp4", &net.TCPAddr{IP: net.IPv4(172, 19, 102, 68), Port: port})
+	listener, err := net.ListenTCP("tcp4", &net.TCPAddr{IP: net.IPv4(0, 0, 0, 0), Port: port})
 	if err != nil {
 		log.Log.Errorf("Listen socket creation error: %v", err)
 		return
