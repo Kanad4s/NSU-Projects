@@ -21,9 +21,11 @@ func copyData(dest *net.TCPConn, src *net.TCPConn, wg *sync.WaitGroup) {
 	defer wg.Done()
 	defer dest.Close()
 
-	_, err := io.Copy(dest, src)
+	bytes, err := io.Copy(dest, src)
 
 	if err != nil {
 		log.Log.Errorf("%v: Reading error: %v", dest.RemoteAddr(), err)
+	} else {
+		log.Log.Infof("%v: Reading success, read %v bytes", dest.RemoteAddr(), bytes)
 	}
 }

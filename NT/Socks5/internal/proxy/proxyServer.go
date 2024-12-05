@@ -7,7 +7,7 @@ import (
 )
 
 func Start(port int) {
-	listener, err := net.ListenTCP("tcp4", &net.TCPAddr{IP: net.IPv4(0, 0, 0, 0), Port: port})
+	listener, err := net.ListenTCP("tcp4", &net.TCPAddr{IP: net.IPv4(127, 0, 0, 1), Port: port})
 	if err != nil {
 		log.Log.Errorf("Listen socket creation error: %v", err)
 		return
@@ -34,7 +34,7 @@ func Start(port int) {
 func handleClient(conn *net.TCPConn) {
 	defer func() {
 		conn.Close()
-		log.Log.Debugf("%v: Client connection is closed", conn.RemoteAddr())
+		log.Log.Infof("%v: Client connection is closed", conn.RemoteAddr())
 	}()
 
 	authReply, err := authenticate(conn)
