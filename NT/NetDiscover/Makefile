@@ -1,6 +1,6 @@
 TARGET = netDiscover
 SRCS = main.c netDiscover.c inputParser.c outputParser.c
-PREFIX ?= /home/kanades/OS/semestr-2/netDiscover
+PREFIX ?= ./
 SRC_DIR = src
 SRC_SUBDIRS = .
 INCLD_DIR = include
