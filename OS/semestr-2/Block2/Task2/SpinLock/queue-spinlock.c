@@ -43,7 +43,6 @@ queue_t* queue_init(int max_count) {
 	q->last = NULL;
 	q->max_count = max_count;
 	q->count = 0;
-
 	q->add_attempts = q->get_attempts = 0;
 	q->add_count = q->get_count = 0;
 
@@ -60,10 +59,9 @@ void queue_destroy(queue_t *q) {
     stop_flag = true;
     void *ret_val;
     int err = pthread_join(q->qmonitor_tid, &ret_val);
-
-    if (err)
+    if (err) {
         fprintf(stderr, "queue_destroy: pthread_join() failed %s\n", strerror(err));
-
+	}
     qnode_t *cur_ptr_q = q->first, *next_ptr_q;
     while (cur_ptr_q != NULL) {
         next_ptr_q = cur_ptr_q->next;
@@ -74,7 +72,9 @@ void queue_destroy(queue_t *q) {
 
 void destroy_spin_lock() {
     int err = pthread_spin_destroy(&spinlock);
-    if(err) fprintf(stderr, "pthread_spin_destroy: failed %s\n", strerror(err));
+    if(err) {
+		fprintf(stderr, "pthread_spin_destroy: failed %s\n", strerror(err));
+	}
 }
 
 int queue_add(queue_t *q, int val) {
@@ -86,9 +86,8 @@ int queue_add(queue_t *q, int val) {
 	new->val = val;
 	new->next = NULL;
 
-    pthread_spin_lock(&spinlock);
 	q->add_attempts++;
-
+    pthread_spin_lock(&spinlock);
 	assert(q->count <= q->max_count);
 
 	if (q->count == q->max_count) {
@@ -111,28 +110,28 @@ int queue_add(queue_t *q, int val) {
 }
 
 int queue_get(queue_t *q, int *val) {
-    pthread_spin_lock(&spinlock);
 	q->get_attempts++;
+    pthread_spin_lock(&spinlock);
 	assert(q->count >= 0);
+
 	if (q->count == 0) {
         pthread_spin_unlock(&spinlock);
         return 0;
     }
+
 	qnode_t *tmp = q->first;
 	q->first = q->first->next;
 	q->count--;
 	q->get_count++;
-    pthread_spin_unlock(&spinlock);
     *val = tmp->val;
     free(tmp);
+    pthread_spin_unlock(&spinlock);
 	return 1;
 }
 
 void queue_print_stats(queue_t *q) {
-   pthread_spin_lock(&spinlock);
 	printf("queue stats: current size %d; attempts: (%ld %ld %ld); counts (%ld %ld %ld)\n",
            q->count,
            q->add_attempts, q->get_attempts, q->add_attempts - q->get_attempts,
            q->add_count, q->get_count, q->add_count -q->get_count);
-   pthread_spin_unlock(&spinlock);
 }

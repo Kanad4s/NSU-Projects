@@ -64,7 +64,7 @@ void* writer(void *arg) {
 		int ok = queue_add(q, i);
 		if (!ok) continue;
 		i++;
-		usleep(1);
+		// usleep(1);
 	}
 	return NULL;
 }
@@ -108,8 +108,8 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
-    int err_reader = join_thread(tid_reader);
-    int err_writer = join_thread(tid_writer);
+    join_thread(tid_reader);
+    join_thread(tid_writer);
     free_resources(q);
 	return EXIT_SUCCESS;
 }

@@ -83,8 +83,8 @@ int queue_add(queue_t *q, int val) {
 	new->val = val;
 	new->next = NULL;
 
-    pthread_mutex_lock(&mutex);
 	q->add_attempts++;
+    pthread_mutex_lock(&mutex);
 
 	assert(q->count <= q->max_count);
 
@@ -108,8 +108,8 @@ int queue_add(queue_t *q, int val) {
 }
 
 int queue_get(queue_t *q, int *val) {
-    pthread_mutex_lock(&mutex);
 	q->get_attempts++;
+    pthread_mutex_lock(&mutex);
 	assert(q->count >= 0);
 
 	if (q->count == 0) {
