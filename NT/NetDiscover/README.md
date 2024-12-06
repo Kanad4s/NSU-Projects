@@ -19,10 +19,10 @@ Successfully tagged ntdscvr:v1
 ### Running container image 
 
 ```shell
- docker run --name ntdscvr1 ntdscvr:v1
+ docker run -it --name ntdscvr1 ntdscvr:v1
 ```
 ```shell
- docker run --name ntdscvr2 ntdscvr:v1
+ docker run -it --name ntdscvr2 ntdscvr:v1
 ```
 ### Show running containers
 
