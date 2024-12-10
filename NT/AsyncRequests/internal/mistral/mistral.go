@@ -66,6 +66,11 @@ func MistralRequest(msg string, wg *sync.WaitGroup, mistralKey string) {
 	response.Print()
 }
 
+func BuildPlaceRequest(place string, address string) string {
+	request := "Расскажи про " + place +" по адрессу " + address
+	return request
+}
+
 func sendRequest(msg string, mistralKey string) (Response, error ) {
 	req := createRequest(msg, mistralKey)
 	// log.Printf("Request HTTP: %+v\n", req)
