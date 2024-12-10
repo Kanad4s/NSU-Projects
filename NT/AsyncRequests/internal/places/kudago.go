@@ -107,7 +107,7 @@ func addRequestField(url string, fieldName string, fieldValue string) string {
 
 func (response Response) Print() {
 	for i, val := range response.Results {
-		fmt.Printf("Result %d:\n\tPlace type: %v\n\tLocation: %v\n", i, val.Title, val.Address)
+		fmt.Printf("Place %d:\n\tType: %v\n\tLocation: %v\n", i, val.Title, val.Address)
 	}
 }
 
