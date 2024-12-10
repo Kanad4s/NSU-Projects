@@ -8,7 +8,6 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"sync"
 )
 
 const (
@@ -41,14 +40,14 @@ type Field struct {
 	Location string `json:"location"`
 }
 
-func Request(wg *sync.WaitGroup) {
-	defer wg.Done()
+func Request() (response Response) {
 	response, err := sendRequest()
 	if err != nil {
 		log.Printf("Error sending request: %v\n", err.Error())
-		return
+		return 
 	}
 	response.Print()
+	return
 }
 
 func sendRequest() (Response, error) {
