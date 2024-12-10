@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"sync"
 )
 
 const (
@@ -24,7 +25,7 @@ const (
 )
 
 type Request struct {
-	Model string `json:"model"`
+	Model    string    `json:"model"`
 	Messages []Message `json:"messages"`
 }
 
@@ -55,9 +56,19 @@ type Choice struct {
 	} `json:"message"`
 }
 
-func SendRequest(msg string, mistralKey string) (Response, error ) {
+func MistralRequest(msg string, wg *sync.WaitGroup, mistralKey string) {
+	defer wg.Done()
+	response, err := sendRequest(msg, mistralKey)
+	if err != nil {
+		log.Printf("Sending request failed")
+		return
+	}
+	response.Print()
+}
+
+func sendRequest(msg string, mistralKey string) (Response, error ) {
 	req := createRequest(msg, mistralKey)
-	log.Printf("Request HTTP: %+v\n", req)
+	// log.Printf("Request HTTP: %+v\n", req)
 
 	client := &http.Client{}
 	response, err := client.Do(req)
@@ -83,7 +94,7 @@ func createRequest(msg string, mistralKey string) (reqHTTP *http.Request) {
 	var request Request
 	request.Model = MISTRAL_MODEL
 	request.Messages = append(request.Messages, Message{Role: ROLE_USER, Content: msg})
-	log.Printf("request: %+v\n", request)
+	// log.Printf("request: %+v\n", request)
 	jsonData, err := json.Marshal(request)
 	if err != nil {
 		log.Fatalf("ERROR json.Marshal(): %v", err.Error())
