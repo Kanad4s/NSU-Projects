@@ -17,6 +17,7 @@ const (
 	FIELD_ID = "id"
 	FIELD_ADDRESS = "address"
 	FIELD_TITLE = "title"
+	FIELD_COORDS = "coords"
 
 	FIELD_LOCATION_NSK = "nsk"
 
@@ -38,6 +39,12 @@ type Field struct {
 	Title    string `json:"title"`
 	Address  string `json:"address"`
 	Location string `json:"location"`
+	Coords   Coords `json:"coords"`
+}
+
+type Coords struct {
+	Lat float32 `json:"lat"`
+	Lon float32 `json:"lon"`
 }
 
 func Request() (response Response) {
@@ -63,7 +70,7 @@ func sendRequest() (Response, error) {
 		errorRet := "Error read response body: " + err.Error()
 		return response, errors.New(errorRet)
 	}
-	// fmt.Printf("body: %+v\n", string(body))
+	fmt.Printf("body: %+v\n", string(body))
 
 	if resp.StatusCode != http.StatusOK {
 		errorRet := "error response status code: " + strconv.Itoa(resp.StatusCode)
@@ -83,7 +90,7 @@ func sendRequest() (Response, error) {
 func buildUrl() (url string) {
 	url = URL
 	url += "/?"
-	url = addUrlFields(url, FIELD_ID, FIELD_ADDRESS, FIELD_TITLE, FIELD_LOCATION)
+	url = addUrlFields(url, FIELD_ID, FIELD_ADDRESS, FIELD_TITLE, FIELD_LOCATION, FIELD_COORDS)
 	url = addRequestField(url, FIELD_LOCATION, FIELD_LOCATION_NSK)
 	return
 }
@@ -107,7 +114,7 @@ func addRequestField(url string, fieldName string, fieldValue string) string {
 
 func (response Response) Print() {
 	for i, val := range response.Results {
-		fmt.Printf("Place %d:\n\tType: %v\n\tLocation: %v\n", i, val.Title, val.Address)
+		fmt.Printf("Place %d:\n\tType: %v\n\tLocation: %v\n\tCoords:%f, %f\n", i, val.Title, val.Address, val.Coords.Lat, val.Coords.Lon)
 	}
 }
 
