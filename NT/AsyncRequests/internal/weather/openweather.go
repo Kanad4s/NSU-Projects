@@ -11,35 +11,35 @@ import (
 )
 
 const (
-	URL = "https://api.openweathermap.org/data/2.5/weather"
-	API_KEY = "795a48eb5a6349b996542681139cc878"
+	URL             = "https://api.openweathermap.org/data/2.5/weather"
+	API_KEY         = "795a48eb5a6349b996542681139cc878"
 
 	EXCLUDE_CURRENT = "current"
-	EXCLUDE_DAILY = "daily"
+	EXCLUDE_DAILY   = "daily"
 
-	UNITS_METRIC = "metric"
+	UNITS_METRIC    = "metric"
 )
 	
 type Response struct {
-	Coord          Coord   `json:"coord"`
+	Coord          Coord     `json:"coord"`
 	Weather        []Weather `json:"weather"`
-	Base           string  `json:"base"`
-	Main           Main    `json:"main"`
-	Visibility     int     `json:"visibility"`
-	Wind 		   Wind    `json:"wind"`
-	Snow           Snow    `json:"snow"`
-	Clouds         Clouds  `json:"clouds"`
-	Dt             int     `json:"dt"`
-	Sys            Sys     `json:"current"`
-	Timezone       int     `json:"timezone"`
-	Id             int     `json:"id"`
-	Name           string  `json:"name"`
-	Cod            int     `json:"cod"`
+	Base           string    `json:"base"`
+	Main           Main      `json:"main"`
+	Visibility     int       `json:"visibility"`
+	Wind 		   Wind      `json:"wind"`
+	Snow           Snow      `json:"snow"`
+	Clouds         Clouds    `json:"clouds"`
+	Dt             int       `json:"dt"`
+	Sys            Sys       `json:"current"`
+	Timezone       int       `json:"timezone"`
+	Id             int       `json:"id"`
+	Name           string    `json:"name"`
+	Cod            int       `json:"cod"`
 }
 
 type Coord struct {
-	Lon            float32 `json:"lon"`
-	Lat            float32 `json:"lat"`
+	Lon        float32 `json:"lon"`
+	Lat        float32 `json:"lat"`
 }
 
 type Main struct {
@@ -54,17 +54,17 @@ type Main struct {
 }
 
 type Wind struct {
-	Speed  float32 `json:"speed"`
-	Deg    int     `json:"deg"`
-	Gust   float32 `json:"gust"`
+	Speed      float32 `json:"speed"`
+	Deg        int     `json:"deg"`
+	Gust       float32 `json:"gust"`
 }
 
 type Snow struct {
-	Hour float32 `json:"1h"` 
+	Hour       float32 `json:"1h"` 
 }
 
 type Clouds struct {
-	All int `json:"all"` 
+	All        int     `json:"all"` 
 }
 
 type Sys struct {
@@ -85,12 +85,10 @@ type Weather struct {
 func Request(coords places.Coords, wg *sync.WaitGroup) {
 	defer wg.Done()
 	var response Response
-	url := buildUrl(coords.Lat, coords.Lon)
-	fmt.Println(url)
 	resp, err := http.Get(buildUrl(coords.Lat, coords.Lon))
 	if err != nil {
 	}
-	fmt.Println(resp)
+	// fmt.Println(resp)
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)

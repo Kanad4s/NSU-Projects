@@ -70,7 +70,7 @@ func sendRequest() (Response, error) {
 		errorRet := "Error read response body: " + err.Error()
 		return response, errors.New(errorRet)
 	}
-	fmt.Printf("body: %+v\n", string(body))
+	// fmt.Printf("body: %+v\n", string(body))
 
 	if resp.StatusCode != http.StatusOK {
 		errorRet := "error response status code: " + strconv.Itoa(resp.StatusCode)

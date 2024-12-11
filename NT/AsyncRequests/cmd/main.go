@@ -10,11 +10,8 @@ import (
 	"AsyncRequests/internal/weather"
 )
 
-// найти интересные места, получить информацию о них в мистрали и погоду там сейчас
 func main() {
 	mistralKey, request := cli.Parse()
-	fmt.Println(mistralKey)
-	fmt.Println(request)
 	
 	var wg sync.WaitGroup
 	if len(request) > 0 {
