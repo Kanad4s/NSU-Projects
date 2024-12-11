@@ -26,7 +26,7 @@ func main() {
 	placeId := cli.ChoosePlace(len(places.Results))
 	fmt.Printf("Selected place № %d, %s\n", placeId, places.Results[placeId].Title)
 
-	request = mistral.BuildPlaceRequest(places.Results[placeId].Title, places.Results[placeId].Address)
+	request = mistral.BuildPlaceRequest(places.Results[placeId])
 
 	wg.Add(1)
 	go mistral.MistralRequest(request, &wg, mistralKey)
