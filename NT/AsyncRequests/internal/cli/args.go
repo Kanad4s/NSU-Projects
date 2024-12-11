@@ -5,7 +5,7 @@ import (
 )
 
 type args struct {
-	Request  string `arg:"-r, --request, required" help:"request to Mistral"`
+	Request  string `arg:"-r, --request" help:"request to Mistral"`
 	Key      string `arg:"-k, --key" default:"JiPEVBapCAYltDkWq6jvJfEIlvtvbtFD" help:"Mistral Key API"`
 }
 

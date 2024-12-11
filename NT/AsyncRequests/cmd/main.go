@@ -16,8 +16,10 @@ func main() {
 	fmt.Println(request)
 	
 	var wg sync.WaitGroup
-	wg.Add(1)
-	go mistral.MistralRequest(request, &wg, mistralKey)
+	if len(request) > 0 {
+		wg.Add(1)
+		go mistral.MistralRequest(request, &wg, mistralKey)
+	}
 
 	fmt.Println("Scanning for interesting places")
 	places := places.Request()
