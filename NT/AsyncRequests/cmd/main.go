@@ -29,7 +29,8 @@ func main() {
 
 	request = mistral.BuildPlaceRequest(places.Results[placeId].Title, places.Results[placeId].Address)
 
-	weather.Request(places.Results[placeId].Coords)
+	wg.Add(1)
+	weather.Request(places.Results[placeId].Coords, &wg)
 	wg.Add(1)
 	go mistral.MistralRequest(request, &wg, mistralKey)
 
