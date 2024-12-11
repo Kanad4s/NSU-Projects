@@ -21,29 +21,58 @@ const (
 )
 	
 type Response struct {
-	Lat float32 
-	Lon float32
-	Timezone int
-	TimezoneOffset int
-
+	Coord          Coord   `json:"coord"`
+	Weather        []Weather `json:"weather"`
+	Base           string  `json:"base"`
+	Main           Main    `json:"main"`
+	Visibility     int     `json:"visibility"`
+	Wind 		   Wind    `json:"wind"`
+	Snow           Snow    `json:"snow"`
+	Clouds         Clouds  `json:"clouds"`
+	Dt             int     `json:"dt"`
+	Sys            Sys     `json:"current"`
+	Timezone       int     `json:"timezone"`
+	Id             int     `json:"id"`
+	Name           string  `json:"name"`
+	Cod            int     `json:"cod"`
 }
 
-type Current struct {
-	Dt         int     `json:"dt"`
-	Sunrise    int     `json:"sunrise"`
-	Sunset     int     `json:"sunset"`
+type Coord struct {
+	Lon            float32 `json:"lon"`
+	Lat            float32 `json:"lat"`
+}
+
+type Main struct {
 	Temp       float32 `json:"temp"`
 	FeelsLike  float32 `json:"feels_like"`
+	TempMin    float32 `json:"temp_min"`
+	TempMax    float32 `json:"temp_max"`
 	Pressure   float32 `json:"pressure"`
 	Humidity   int     `json:"humidity"`
-	DewPoint   float32 `json:"dew_point"`
-	Uvi        float32 `json:"uvi"`
-	Clouds     int     `json:"clouds"`
-	Visibility int     `json:"visibility"`
-	WindSpeed  float32 `json:"wind_speed"`
-	WindDeg    int     `json:"wind_deg"`
-	WindGust   float32 `json:"wind_gust"`
-	Weather    Weather `json:"weather"`
+	SeaLevel   int     `json:"sea_level"`
+	GrndLevel  int     `json:"grnd_level"`
+}
+
+type Wind struct {
+	Speed  float32 `json:"speed"`
+	Deg    int     `json:"deg"`
+	Gust   float32 `json:"gust"`
+}
+
+type Snow struct {
+	Hour float32 `json:"1h"` 
+}
+
+type Clouds struct {
+	All int `json:"all"` 
+}
+
+type Sys struct {
+	Type       int     `json:"type"`
+	Id         int     `json:"id"`
+	Country    string  `json:"country"`
+	Sunrise    int     `json:"sunrise"`
+	Sunset     int     `json:"sunset"`
 }
 
 type Weather struct {
@@ -51,13 +80,6 @@ type Weather struct {
 	Main        string `json:"main"`
 	Description string `json:"description"`
 	Icon        string `json:"icon"`
-}
-
-type Alerts struct {
-	SenderName  string `json:"sender_name"`
-	Event       string `json:"event"`
-	End         int    `json:"end"`
-	Description string `json:"description"`
 }
 
 func Request(coords places.Coords, wg *sync.WaitGroup) {
@@ -68,6 +90,7 @@ func Request(coords places.Coords, wg *sync.WaitGroup) {
 	resp, err := http.Get(buildUrl(coords.Lat, coords.Lon))
 	if err != nil {
 	}
+	fmt.Println(resp)
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
@@ -76,7 +99,7 @@ func Request(coords places.Coords, wg *sync.WaitGroup) {
 		fmt.Println(errorRet)
 		return
 	}
-	fmt.Printf("body: %+v\n", string(body))
+	// fmt.Printf("body: %+v\n", string(body))
 
 	if resp.StatusCode != http.StatusOK {
 		errorRet := "error response status code: " + strconv.Itoa(resp.StatusCode)
@@ -107,5 +130,6 @@ func buildUrl(lat float32, lon float32) (url string) {
 }
 
 func (response Response) print() {
-	
+	fmt.Printf("WEATHER:\n\tТемпература: %.2f, ощущается как %.2f\n\tВетер: %.2f м/с\n\tКрасочное описание дня: %s",
+	response.Main.Temp, response.Main.FeelsLike, response.Wind.Speed, response.Weather[0].Description)
 }
