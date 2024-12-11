@@ -7,6 +7,7 @@ import (
 	"AsyncRequests/internal/cli"
 	"AsyncRequests/internal/mistral"
 	"AsyncRequests/internal/places"
+	"AsyncRequests/internal/weather"
 )
 
 // найти интересные места, получить информацию о них в мистрали и погоду там сейчас
@@ -27,6 +28,8 @@ func main() {
 	fmt.Printf("Selected place № %d, %s\n", placeId, places.Results[placeId].Title)
 
 	request = mistral.BuildPlaceRequest(places.Results[placeId].Title, places.Results[placeId].Address)
+
+	weather.Request(places.Results[placeId].Coords)
 	wg.Add(1)
 	go mistral.MistralRequest(request, &wg, mistralKey)
 
