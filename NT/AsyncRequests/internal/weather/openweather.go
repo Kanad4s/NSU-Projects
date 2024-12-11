@@ -128,6 +128,6 @@ func buildUrl(lat float32, lon float32) (url string) {
 }
 
 func (response Response) print() {
-	fmt.Printf("WEATHER:\n\tТемпература: %.2f, ощущается как %.2f\n\tВетер: %.2f м/с\n\tКрасочное описание дня: %s",
+	fmt.Printf("WEATHER:\n\tТемпература: %.2f, ощущается как %.2f\n\tВетер: %.2f м/с\n\tКрасочное описание дня: %s\n",
 	response.Main.Temp, response.Main.FeelsLike, response.Wind.Speed, response.Weather[0].Description)
 }

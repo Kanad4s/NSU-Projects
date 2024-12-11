@@ -114,8 +114,8 @@ func createRequest(msg string, mistralKey string) (reqHTTP *http.Request) {
 }
 
 func (response Response) Print() {
-	for i, val := range response.Choices {
-		fmt.Printf("Response %d, \n%s\n", i, val)
+	for _, val := range response.Choices {
+		fmt.Printf("MistralAI place description:\n\t%s\n", val.Message.Content)
 	}
 }
 
