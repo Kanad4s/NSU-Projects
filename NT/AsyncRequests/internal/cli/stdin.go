@@ -3,6 +3,7 @@ package cli
 import "fmt"
 
 func ChoosePlace(placeCount int) (placeId int) {
+	placeId = -1
 	fmt.Printf("Please indicate the number of the place you are interested in\n")
 scanId:
 	fmt.Scanf("%d\n", &placeId)
