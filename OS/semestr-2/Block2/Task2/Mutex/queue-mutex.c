@@ -5,7 +5,7 @@
 #include "queue-mutex.h"
 
 pthread_mutex_t mutex;
-volatile int stop_flag = false;
+volatile int stop_flag = 0;
 
 void *qmonitor(void *arg) {
 	queue_t *q = (queue_t *)arg;
@@ -53,7 +53,7 @@ queue_t* queue_init(int max_count) {
 }
 
 void queue_destroy(queue_t *q) {
-    stop_flag = true;
+    stop_flag = 1;
     void* ret_val;
     int err = pthread_join(q->qmonitor_tid, &ret_val);
 

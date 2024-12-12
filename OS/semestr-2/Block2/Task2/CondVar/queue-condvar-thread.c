@@ -40,7 +40,7 @@ void* reader(void *arg) {
 
 	set_cpu(1);
 
-	while (true) {
+	while (1) {
 		int val = -1;
 		int ok = queue_get(q, &val);
 		if (!ok) continue;
@@ -61,7 +61,7 @@ void* writer(void *arg) {
 
 	set_cpu(2);
 
-	while (true) {
+	while (1) {
 		int ok = queue_add(q, i);
 		if (!ok) continue;
 		i++;
