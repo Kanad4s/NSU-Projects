@@ -88,6 +88,7 @@ int queue_add(queue_t *q, int val) {
 
 	assert(q->count <= q->max_count);
 
+// здесь condvar
 	if (q->count == q->max_count) {
         pthread_mutex_unlock(&mutex);
         free(new);

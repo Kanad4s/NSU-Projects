@@ -9,7 +9,7 @@
 #include <assert.h>
 #include "myMutex.h"
 
-#define ITER_COUNT 100000000
+#define ITER_COUNT 1000
 
 volatile long int counter = 0;
 

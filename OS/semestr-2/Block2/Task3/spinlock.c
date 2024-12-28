@@ -54,7 +54,7 @@ void linked_list_destroy(linked_list_t *ll) {
 void *inc_routine(void *args) {
     linked_list_t *ll = (linked_list_t *) args;
 
-    while (true) {
+    while (1) {
         pthread_spin_lock(&ll->first->sync);
         node_t *prev = ll->first, *cur;
         while (prev->next != NULL) {
@@ -75,7 +75,7 @@ void *inc_routine(void *args) {
 void *decr_routine(void *args) {
     linked_list_t *ll = (linked_list_t *) args;
 
-    while (true) {
+    while (1) {
         pthread_spin_lock(&ll->first->sync);
         node_t *prev = ll->first, *cur;
         while (prev->next != NULL) {
@@ -96,7 +96,7 @@ void *decr_routine(void *args) {
 void *eq_routine(void *args) {
     linked_list_t *ll = (linked_list_t *) args;
 
-    while (true) {
+    while (1) {
         pthread_spin_lock(&ll->first->sync);
         node_t *prev = ll->first, *cur;
         while (prev->next != NULL) {
@@ -116,7 +116,7 @@ void *eq_routine(void *args) {
 void *swap_routine(void *args) {
     linked_list_t *ll = (linked_list_t *) args;
 
-    while (true) {
+    while (1) {
         pthread_spin_lock(&ll->first->sync);
         node_t *prev = ll->first, *cur, *next;
         while (prev->next != NULL) {
@@ -149,7 +149,7 @@ void *swap_routine(void *args) {
 }
 
 void *print_routine(void *args) {
-    while (true) {
+    while (1) {
         sleep(1);
         printf("inc: %d/%d,\t\tdecr: %d/%d,\t\teq: %d/%d,\t\tswap: %d/%d\n", inc_count, inc_iter, decr_count, decr_iter,
                eq_count, eq_iter, swap_count, swap_iter);

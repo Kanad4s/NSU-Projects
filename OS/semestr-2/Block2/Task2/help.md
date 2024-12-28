@@ -122,7 +122,7 @@ while() {
     while (flag != 1) {
         wait(condvar, mutex);
     }
-    printf();
+    work();
     flag = 2;
     signal(condvar);
     unlock(mutex);
