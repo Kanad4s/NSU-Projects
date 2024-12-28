@@ -122,7 +122,7 @@ void *swap_routine(void *args) {
 
     while (1) {
         pthread_rwlock_rdlock(&ll->first->sync);
-        node_t *prev = ll->first, *cur, *next;
+        node_t *prev = ll->first, *cur, *next, *tmp;
         while (prev->next != NULL) {
             if (rand() % 100 != 0) {
                 cur = prev->next;
@@ -131,23 +131,24 @@ void *swap_routine(void *args) {
                 prev = cur;
                 continue;
             }
+            pthread_rwlock_wrlock(&prev->sync);
             cur = prev->next;
             pthread_rwlock_wrlock(&cur->sync);
             next = cur->next;
             if (next == NULL) {
+                pthread_rwlock_unlock(&prev->sync);
                 pthread_rwlock_unlock(&cur->sync);
                 break;
             }
             pthread_rwlock_wrlock(&next->sync);
             prev->next = next;
-            pthread_rwlock_unlock(&prev->sync);
             cur->next = next->next;
-            pthread_rwlock_unlock(&cur->sync);
             next->next = cur;
             ++swap_count;
+            pthread_rwlock_unlock(&prev->sync);
+            pthread_rwlock_unlock(&cur->sync);
             prev = next;
             pthread_rwlock_unlock(&prev->sync);
-            pthread_rwlock_rdlock(&prev->sync);
         }
         pthread_rwlock_unlock(&prev->sync);
         ++swap_iter;
