@@ -84,7 +84,7 @@ void destroy_mutex() {
 int queue_add(queue_t *q, int val) {
     q->add_attempts++;
     pthread_mutex_lock(&mutex);
-    while (shared_data != OK) {
+    if (q->count == q->max_count) {
         pthread_cond_wait(&cond, &mutex);
     }
 
@@ -104,7 +104,6 @@ int queue_add(queue_t *q, int val) {
     q->count++;
     q->add_count++;
 
-    shared_data = NOK;
     pthread_cond_signal(&cond);
     pthread_mutex_unlock(&mutex);
     return 1;
@@ -113,7 +112,7 @@ int queue_add(queue_t *q, int val) {
 int queue_get(queue_t *q, int *val) {
     q->get_attempts++;
     pthread_mutex_lock(&mutex);
-    while (shared_data != NOK) {
+    if (q->count == 0) {
         pthread_cond_wait(&cond, &mutex);
     }
 
@@ -125,7 +124,6 @@ int queue_get(queue_t *q, int *val) {
     q->get_count++;
     free(tmp);
 
-    shared_data = OK;
     pthread_cond_signal(&cond);
     pthread_mutex_unlock(&mutex);
     return 1;
