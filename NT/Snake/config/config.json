@@ -1,0 +1,20 @@
+{
+    "p2p": {
+        "delay": 1000,
+        "multicast": {
+            "address": "239.192.0.4",
+            "port": 9192
+        }
+    },
+    "api": {
+        "public_url": "192.168.3.43:9193",
+        "port": 9193,
+        "timeout": 1000
+    },
+    "hub": {
+        "multicast": {
+            "address": "239.192.0.5",
+            "port": 9194
+        }
+    }
+}
