@@ -16,6 +16,7 @@ const (
 	TransferFileDeclineMsg  = "ABCD"
 	bufferSize              = 1048576    // 1024 ^ 2
 	bufferSizeBig           = 1073741824 // 1024 ^ 3
+	// bufferSizeBig           = 1048576
 )
 
 func GetMessage(conn net.Conn) (msg string) {
@@ -53,7 +54,9 @@ func GetBufferBySize(fileSize int64) []byte {
 
 func SetBufferSize(fileSize int64) int64 {
 	if fileSize/bufferSize >= 50 {
+		fmt.Println("choose big buffer")
 		return bufferSizeBig
 	}
+	fmt.Println("choose std buffer")
 	return bufferSize
 }
