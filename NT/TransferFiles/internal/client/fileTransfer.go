@@ -8,6 +8,7 @@ import (
 	"strings"
 	"io"
 	"net"
+	"time"
 )
 
 func SendFile(fileName string, conn net.Conn) {
@@ -29,6 +30,8 @@ func SendFile(fileName string, conn net.Conn) {
 			return
 		}
 		// fmt.Printf("buffer: %v\n", string(buffer[:read]))
+		fmt.Printf("itteration\n")
+		time.Sleep(1 * time.Second)
 		_, err = conn.Write(buffer[:read])
 		if err != nil {
 			fmt.Printf("File data sending error: %v\n", err.Error())

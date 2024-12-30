@@ -8,6 +8,8 @@ import (
 	"log"
 	"net/http"
 	"sync"
+
+	"AsyncRequests/internal/places"
 )
 
 const (
@@ -66,8 +68,8 @@ func MistralRequest(msg string, wg *sync.WaitGroup, mistralKey string) {
 	response.Print()
 }
 
-func BuildPlaceRequest(place string, address string) string {
-	request := "Расскажи про " + place +" по адрессу " + address
+func BuildPlaceRequest(place places.Field) string {
+	request := "Расскажи про " + place.Title +" по адрессу: город " + place.Location + " " + place.Address
 	return request
 }
 
