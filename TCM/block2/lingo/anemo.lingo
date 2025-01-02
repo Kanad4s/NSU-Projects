@@ -1,0 +1,77 @@
+prog = ws decl*:d 
+	(def_form | def_func)*
+	"{" ws formula:pred "}" ws 
+	stat:b 
+	"{" ws formula:post "}" ws 
+	{ createVeriProg(:d, :b, :pred, :post) };
+decl = "var" ws id:v ":" ws type:t ";" ws { NmDecl(:v, :t) };
+
+type  = int | array;
+int   = "int" ws { NmIntType() };
+array = "[" ws type:t "]" ws { NmArrType(:t) };
+
+def_form = "formula" ws fol_name:n "(" ws arg*:args ")" ws formula:body { createDefForm(:n, :args, :body) };
+def_func = "function" ws fol_name:n "(" ws arg*:args ")" ws term:body { createDefFunc(:n, :args, :body) };
+arg = fol_name $s ("," ws)? { $s };
+
+stat   = print | test | seq | choice | loop | assign | ifelse | while;
+test   = "(" ws expr:e1 cond$s ws expr:e2 ")" ws "?" ws { NmTest($s, :e1, :e2) };
+seq    = "{" ws stat:s1 ";" ws stat:s2 seqs*:ss "}" ws { createSeq(:s1, :s2, :ss) };
+seqs   = ";" ws stat;
+choice = "{" ws stat:s1 "U" ws stat:s2 chs*:ss "}" ws { createChoice(:s1, :s2, :ss) };
+chs    = "U" ws stat;
+loop   = "*" ws "{" ws formula:inv "}" ws stat:b { createLoop(:b, :inv) };
+print  = "print" ws "(" ws expr:e ")" ws { NmPrint(:e) };
+assign = id:v ":=" ws expr:e { NmAssign(:v, :e) };
+ifelse = "if"    ws "(" ws expr:e1 cond$s ws expr:e2 ")" ws stat:s1 "else" ws stat:s2 { createIfElse($s, :e1, :e2, :s1, :s2) };
+while  = "while" ws "(" ws expr:e1 cond$s ws expr:e2 ")" ws "inv" ws "{" ws formula:inv "}" ws stat:s1 { createWhile($s, :e1, :e2, :s1, :inv) };
+
+expr   = const | bin_op | un_op | update | apply | var;
+const  = digit+ $s ws { NmInt(s2i($s)) };
+bin_op = "(" ws expr:l ("+"|"*"|"/"|"-"|"%") $s ws expr:r ")" ws { NmBinOp($s, :l, :r) };
+un_op  = "-" $s ws expr:e { NmUnOp($s, :e) };
+apply  = "app" ws "(" ws expr:a "," ws expr:i ")" ws { NmApp(:a, :i) };
+update = "upd" ws "(" ws expr:a "," ws expr:i "," ws expr:v ")" ws { NmUpd(:a, :i, :v) };
+arrval = "," ws expr;
+
+
+formula = 
+	"(" ws formula:a "&"   ws formula:b ")" ws { FolAnd(:a, :b) } |
+	"(" ws formula:a "V"   ws formula:b ")" ws { FolOr(:a, :b) } |
+	"(" ws formula:a "->"  ws formula:b ")" ws { FolImpl(:a, :b) } |
+	"(" ws formula:a "<->" ws formula:b ")" ws { createFolEqual(:a, :b) } |
+	"-." ws formula:a                  { FolNot(:a) } |
+	quant:q "." ws formula:a           { FolQuant(:q, :a) } |
+	"T" ws                             { FolTrue() } |
+	"F" ws                             { FolFalse() } |
+	fol_name:n terms:as { FolPred(:n, :as) } |
+	"(" ws term:a1 ( "<=" | ">=" | "<" | ">" | "==" | "=" | "!=") $s ws term:a2 ")" ws { createBinPred($s, :a1, :a2) } |
+	fol_name:n                         { createPred(:n) };
+
+term = 
+	"(" ws term:a1 ("+" | "-" | "*" | "/" | "%") $s ws term:a2 ")" ws { createBinTerm($s, :a1, :a2) } |
+	fol_name:n terms:as { FolFunc(:n, :as) } | fol_var;
+
+terms = zero_terms | one_term | some_terms;
+	zero_terms = "()" ws { createZeroTerms() };
+	one_term   = "(" ws term:t ")" ws { createOneTerm(:t) };
+	some_terms = "(" ws term:t1 ("," ws term)*:ts ")" ws { createSomeTerms(:t1, :ts) };
+
+quant =
+	("A" | "Forall") ws fol_var:v { FolForall(:v) } |
+	("E" | "Exists") ws fol_var:v { FolExists(:v) };
+fol_var = var_name:n { FolVar(:n) };
+
+fol_name = (!s char1)+$s ws { $s };
+var_name = (!s char2)+$s ws { $s };
+s = (' ' | '\t' | '\n' | '\r') +;
+char2 = !'{' !'}' !'(' !'&' !'V' !'+' !'-' !'*' !'/' !'%' !')' !',' !'.' !' ' '\u0000'-'\uFFFF';
+char1 = !'{' !'}' !'(' !')' !',' !'.' !' ' '\u0000'-'\uFFFF';
+
+var    = id:v { NmVar(:v) };
+cond   = "!=" | "==" | "<=" | ">=" | "<" | ">" ;
+
+id = letter+ $s ws { $s };
+letter = 'a'-'z';
+digit  = '0'-'9';
+ws = (' ' | '\t' | '\n' | '\r')*;

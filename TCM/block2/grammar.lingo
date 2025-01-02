@@ -1,0 +1,15 @@
+term = dbl | var | sum | sub | mul | div | pow | neg;
+
+dbl = ws digit + $a ws {Dbl(s2d($a))};
+var = ws letter + $v ws {Var($v)};
+
+sum = "(" ws term:l ws "+" ws term:r ws ")" ws { Sum(:l, :r) };
+sub = "(" ws term:l ws "-" ws term:r ws ")" ws { Sub(:l, :r) };
+mul = "(" ws term:l ws "*" ws term:r ws ")" ws { Mul(:l, :r) };
+div = "(" ws term:l ws "/" ws term:r ws ")" ws { Div(:l, :r) };
+pow = "(" ws term:l ws "^" ws term:r ws ")" ws { Pow(:l, :r) };
+neg = ws "-" ws term:a ws { Neg(:a) };
+
+digit = '0' - '9';
+letter = 'a' - 'z' | 'A' - 'Z';
+ws = (' ' | '\t' | '\n')*;

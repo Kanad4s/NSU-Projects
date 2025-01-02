@@ -1,0 +1,100 @@
+import lingo/pegcode/driver;
+import grammar;
+import string;
+import alg/algebr_2_rational;
+import alg/algebr;
+import smartSimplify;
+import simplify;
+import derivative;
+import alg/derivative;
+import alg/simplify;
+
+lingoGrammarOp : ref Maybe<[PegOp]> = ref None();
+
+chooseGrammar() {
+    onlyOnce(lingoGrammarOp, \ -> { 
+        mode = getUrlParameter("mode");   
+        if (mode == "rpn") {
+            println("Chose rpn grammar\n");
+            compilePegGrammar("#include grammarRPN.lingo");
+        } else {
+            println("Chose simple grammar\n");
+            compilePegGrammar("#include grammar.lingo");
+    } 
+    });
+}
+
+s2MyExpr(str: string) -> MyExpr {
+    parsic(chooseGrammar(), str, defaultPegActions);
+}
+
+myExpr2s(myExpr : MyExpr) -> string {
+    switch(myExpr : MyExpr) {
+        Dbl(var) : d2s(var);
+        Var(var) : var;
+        Sum(l, r) : "(" + myExpr2s(l) + "+" + myExpr2s(r) + ")";
+        Sub(l, r) : "(" + myExpr2s(l) + "-" + myExpr2s(r) + ")";
+        Mul(l, r) : "(" + myExpr2s(l) + "*" + myExpr2s(r) + ")";
+        Div(l, r) : "(" + myExpr2s(l) + "/" + myExpr2s(r) + ")";
+        Pow(l, r) : "(" + myExpr2s(l) + "^" + myExpr2s(r) + ")";
+        Neg(var) : "-" + myExpr2s(var);
+    }
+}
+
+calculateMyExpr(myExpr : MyExpr, vars : Tree<string, int>) -> double {
+    switch(myExpr : MyExpr) {
+        Dbl(var) : var;
+        Var(x) : {
+            switch(lookupTree(vars, x)) {
+                Some(val): i2d(val);
+                None(): 0.0;
+            }
+        }
+        Sum(l, r) : calculateMyExpr(l, vars) + calculateMyExpr(r, vars);
+        Sub(l, r) : calculateMyExpr(l, vars) - calculateMyExpr(r, vars);
+        Mul(l, r) : calculateMyExpr(l, vars) * calculateMyExpr(r, vars);
+        Div(l, r) : {
+            divider = calculateMyExpr(r, vars);
+            if (divider == 0.0) {
+                println("Error division by zero!");
+                quit(1);
+            }
+            calculateMyExpr(l, vars) / divider;
+        };
+        Pow(l, r) : dpow(calculateMyExpr(l, vars), calculateMyExpr(r, vars));
+        Neg(var) : - calculateMyExpr(var, vars);
+    }
+}
+
+main() {
+    vars = setTreeValues(TreeEmpty(), [Pair("x", 4), Pair("y", 2), Pair("z", 8)]);
+    //str: string = "(1+(4*7))";
+    str: string = "((1/1000000000)+(1/1000000000))";
+    exp = getUrlParameter("exp");
+    println("exp: " + exp);
+    mode = getUrlParameter("mode");
+    if (mode == "rat") {
+        println(smartSimplify(exp));
+    } else if (mode == "sim") {
+        println(myExpr2s(mysimplify(s2MyExpr(exp))));
+    } else if (mode == "dif") {
+        myExpr : MyExpr = deriveParam(s2MyExpr(exp));
+        println(myExpr2s(myExpr));
+        println(myExpr2s(mysimplify(myExpr)));
+    } else {
+        if (exp != "") {
+            println("Parse: " + exp);
+            myExpr : MyExpr = s2MyExpr(exp);
+            println(myExpr);
+            println(calculateMyExpr(myExpr, vars));
+            println(myExpr2s(myExpr));
+        } else {
+            println("Parse: " + str);
+            myExpr : MyExpr = s2MyExpr(str);
+            println(myExpr);
+            println(calculateMyExpr(myExpr, vars));
+            println(myExpr2s(myExpr));
+        }
+    }
+    quit(0)
+}

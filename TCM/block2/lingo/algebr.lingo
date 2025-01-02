@@ -1,0 +1,16 @@
+S = ws (sum | min | mul | div | neg | var | int | pow);
+sum = "(" ws S:l ws "+" ws S:r ws ")" ws { AlgSum(:l, :r)};
+min = "(" ws S:l ws "-" ws S:r ws ")" ws { AlgMin(:l, :r)};
+mul = "(" ws S:l ws "*" ws S:r ws ")" ws { AlgMul(:l, :r)};
+div = "(" ws S:l ws "/" ws S:r ws ")" ws { AlgDiv(:l, :r)};
+pow = "(" ws S:l ws "^" ws S:r ws ")" ws { AlgPow(:l, :r) };
+neg = "-" ws S:e { AlgNeg(:e)};
+int = digit+ $s ws { AlgInt(s2i($s)) };
+digit = '0'-'9';
+var = letter+ $s ws { AlgVar($s) };
+letter = 'a'-'z';
+
+ws = ws_*;
+ws_ = ' ' | '\t' | '\n' | '\r';
+
+
