@@ -10,3 +10,15 @@
 * [Список интересных мест](https://kudago.com/public-api)
 * [Погода](https://openweathermap.org/api)
 * [MistralAI](https://mistral.ai/)
+
+Есть возможность заранее сделать запрос к MistralAI с помощью флагов ```-r, --request```
+
+## Usage
+### Building
+Go to AsyncRequest/build  
+
+```make build```
+
+### Start
+
+```./mistral -k="your_mistral_key" -r="additional_request"```
