@@ -68,6 +68,14 @@ void spinlock_unlock(spinlock_t *s) {
 ```
 
 ## Результаты
+On 2 threads
+Tech, real, user, sys
+* Semaphore, 4, 4, 4
+* Spinlock,  4, 9, 0
+* Mutex,     4, 6, 2
+* CondVar,   4, 3, 3
+
+
 ### Без синхронизации
 * попыток add в разы больше, чем получилось примерно в 4 раза
 * попыток get в разы больше, чем получилось
