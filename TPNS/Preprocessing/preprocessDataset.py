@@ -108,9 +108,15 @@ y = df['Price'].values
 scores = [gainRatio(ds, y, i) for i in range(ds.shape[1])]
 
 ranking = np.argsort(scores)[::-1]
+
+dfgr = pd.DataFrame()
+
 print("Gain Ratio:")
 for i in ranking:
     print(f"{columns[i]}: {scores[i]:.5f}")
+    dfgr[columns[i]] = [scores[i]]
+
+print(dfgr)
 
 # sklearn
 from sklearn.feature_selection import SelectKBest, f_classif, chi2, VarianceThreshold
@@ -120,7 +126,7 @@ y = df['Price']
 print(x.describe())
 tmpSelector = VarianceThreshold()
 X_train_filtered = tmpSelector.fit_transform(x)
-kbest = SelectKBest(score_func = f_classif, k = 'all')
+kbest = SelectKBest(score_func = chi2, k = 'all')
 kbest.fit(X_train_filtered, y)
 
 scores = kbest.scores_
@@ -132,5 +138,8 @@ sorted_features = [feature_names[i] for i in sorted_indices]
 print("Признаки в порядке значимости:")
 for feature, score in zip(sorted_features, sorted_scores):
     print(f"{feature}: {score:.2f}")
+    dfgr.loc[1, feature] = score
 
+print(dfgr)
+dfgr.to_csv("../base/gr_laptop.csv")
 df.to_csv("../base/processed_laptop.csv", index=False)
