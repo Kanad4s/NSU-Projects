@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS "Бригады" (
+	"id" serial PRIMARY KEY,
+	"Бригадир" INTEGER NOT NULL REFERENCES "Рабочие"("id") ON DELETE RESTRICT
+);
+ALTER TABLE "Рабочие" ADD CONSTRAINT "Рабочие_fk2" FOREIGN KEY ("бригада") REFERENCES "Бригады"("id") ON DELETE RESTRICT;
