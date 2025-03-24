@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS "Люди" (
-    "id" serial PRIMARY KEY,
-    "ФИО" varchar(255) NOT NULL,
-    "дата_рождения" date NOT NULL,
+    "id" SERIAL PRIMARY KEY,
+    "ФИО" VARCHAR(255) NOT NULL,
+    "дата_рождения" DATE NOT NULL,
     "кол-во_детей" INTEGER NOT NULL CHECK ("кол-во_детей" >= 0),
-    "дата_устройства" date NOT NULL,
-    "дата_увольнения" date,
+    "дата_устройства" DATE NOT NULL,
+    "дата_увольнения" DATE,
     UNIQUE ("ФИО", "дата_рождения"),
     CONSTRAINT "дата_увольнения_после_устройства" 
         CHECK ("дата_увольнения" IS NULL OR "дата_увольнения" > "дата_устройства"),
