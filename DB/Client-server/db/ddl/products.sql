@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS "Ракеты" (
 );
 
 CREATE TABLE IF NOT EXISTS "Вертолеты" (
-    "id"INTEGER NOT NULL UNIQUE REFERENCES "Модели_изделий"("id") ON DELETE CASCADE ON UPDATE RESTRICT,
+    "id" INTEGER NOT NULL UNIQUE REFERENCES "Модели_изделий"("id") ON DELETE CASCADE ON UPDATE RESTRICT,
     "грузоподъемность" NUMERIC(10, 2) NOT NULL CHECK ("грузоподъемность" > 0),
     "высота_подъема" INTEGER NOT NULL CHECK ("высота_подъема" BETWEEN 0 AND 100000),
     "макс_скорость" INTEGER NOT NULL CHECK ("макс_скорость" BETWEEN 0 AND 300000000)
@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS "Планеры" (
 	"аэро_качество" NUMERIC(5,2) NOT NULL CHECK ("аэро_качество" > 0 )
 );
 
+
 CREATE TABLE IF NOT EXISTS "Дельтапланы" (
 	"id" INTEGER NOT NULL UNIQUE REFERENCES "Модели_изделий"("id") ON DELETE CASCADE ON UPDATE RESTRICT,
 	"вес" INTEGER  NOT NULL CHECK ("вес" > 0),
@@ -59,13 +60,11 @@ CREATE TABLE IF NOT EXISTS "Дельтапланы" (
 	"угол_веера" NUMERIC(5,2)  NOT NULL CHECK ("угол_веера" BETWEEN 0 AND 180)
 );
 
+
 CREATE TABLE IF NOT EXISTS "Выпускаемые_изделия" (
     "id" SERIAL PRIMARY KEY,
     "модель" INTEGER NOT NULL REFERENCES "Модели_изделий"("id") ON DELETE CASCADE ON UPDATE RESTRICT,
     "начало_производства" DATE NOT NULL CHECK ("начало_производства" <= CURRENT_DATE),
     "дата_выпуска" DATE CHECK ("дата_выпуска" >= "начало_производства" OR "дата_выпуска" IS NULL)
 );
-
-
-
 
