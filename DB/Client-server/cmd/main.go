@@ -12,12 +12,7 @@ func main() {
 		Sslmode: "disable",
 	}
 	db1 := db.Connect(dbInfo)
-	// db.Query("select * from professions", db1)
-	// db.Query("", db1)
-	// str := db.ReadFile(db.PassToDDL + "00_people.sql")
-	// db.Query(str, db1)
 	db.Drop(db1)
-	// db.CreateTables(db1)
-	// db.Query("select * from Люди", db1)
+	db.CreateTables(db1)
 	db.Close(db1)
 }
