@@ -20,6 +20,7 @@ func CreateTables(db *sqlx.DB) {
 	createStaff(db)
 	createProducts(db)
 	createWorkshops(db)
+	createLabs(db)
 }
 
 func createStaff(db *sqlx.DB) {
@@ -32,6 +33,10 @@ func createProducts(db *sqlx.DB) {
 
 func createWorkshops(db *sqlx.DB) {
 	db.Exec(readQuery(PassToDDL + "workshops.sql"))
+}
+
+func createLabs(db *sqlx.DB) {
+	db.Exec(readQuery(PassToDDL + "labs.sql"))
 }
 
 func readQuery(fileName string) string {

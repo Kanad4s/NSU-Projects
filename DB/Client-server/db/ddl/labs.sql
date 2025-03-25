@@ -16,9 +16,8 @@ CREATE TABLE IF NOT EXISTS "Лаборатория_цех" (
 );
 
 CREATE TABLE IF NOT EXISTS "Испытатели" (
-	"id" INTEGER REFERENCES "ИТ_персонал"("id")  ON DELETE RESTRICT ON UPDATE CASCADE,
-	"лаборатория" INTEGER REFERENCES "Лаборатории"("id") ON DELETE CASCADE ON UPDATE CASCADE,
-    PRIMARY KEY ("сотрудник", "лаборатория")
+	"id" INTEGER UNIQUE REFERENCES "ИТ_персонал"("id")  ON DELETE RESTRICT ON UPDATE CASCADE,
+	"лаборатория" INTEGER REFERENCES "Лаборатории"("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "Набор_испытаний" (
