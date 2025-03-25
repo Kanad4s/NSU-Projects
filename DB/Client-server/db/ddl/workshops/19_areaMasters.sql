@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS "Мастера_участка" (
+	"участок" INTEGER NOT NULL REFERENCES "Участки_цехов"("id") ON DELETE CASCADE ON UPDATE CASCADE,
+	"мастер" INTEGER NOT NULL REFERENCES "ИТ_персонал"("id") ON DELETE CASCADE ON UPDATE CASCADE,
+	PRIMARY KEY ("участок", "мастер")
+);

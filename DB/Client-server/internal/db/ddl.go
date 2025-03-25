@@ -13,23 +13,28 @@ const (
 )
 
 func Drop(db *sqlx.DB) {
-	db.Exec(readFile(PassToDDL + "dropAll.sql"))
+	db.Exec(readQuery(PassToDDL + "dropAll.sql"))
 }
 
 func CreateTables(db *sqlx.DB) {
 	createStaff(db)
+	createProducts(db)
+	createWorkshops(db)
 }
 
 func createStaff(db *sqlx.DB) {
-	db.Exec(readFile(PassToDDL + "00_people.sql"))
-	db.Exec(readFile(PassToDDL + "01_categoriesET.sql"))
-	db.Exec(readFile(PassToDDL + "02_staffET.sql"))
-	db.Exec(readFile(PassToDDL + "03_categoriesWorkers.sql"))
-	db.Exec(readFile(PassToDDL + "04_workers.sql"))
-	db.Exec(readFile(PassToDDL + "05_brigade.sql"))
+	db.Exec(readQuery(PassToDDL + "staff.sql"))
 }
 
-func readFile(fileName string) string {
+func createProducts(db *sqlx.DB) {
+	db.Exec(readQuery(PassToDDL + "products.sql"))
+}
+
+func createWorkshops(db *sqlx.DB) {
+	db.Exec(readQuery(PassToDDL + "workshops.sql"))
+}
+
+func readQuery(fileName string) string {
 	file, err := os.Open(fileName)
 	if err != nil {
 		fmt.Println(err)
