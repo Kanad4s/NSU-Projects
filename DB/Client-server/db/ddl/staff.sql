@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS "Категории_ИТ_персонала"
 
 CREATE TABLE IF NOT EXISTS "ИТ_персонал" (
     "id" SERIAL PRIMARY KEY,
-    "человек" INTEGER NOT NULL UNIQUE REFERENCES "Люди"("id") ON DELETE CASCADE ON UPDATE RESTRICT,
-    "категория" INTEGER NOT NULL REFERENCES "Категории_ИТ_персонала"("id") ON DELETE CASCADE ON UPDATE RESTRICT,
+    "человек" INTEGER NOT NULL UNIQUE REFERENCES "Люди"("id") ON DELETE CASCADE ON UPDATE CASCADE,
+    "категория" INTEGER NOT NULL REFERENCES "Категории_ИТ_персонала"("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     "уровень_допуска" CHAR NOT NULL CHECK ("уровень_допуска" IN ('A', 'B', 'C')),
     "знания_английского" varchar(255) NOT NULL CHECK ("знания_английского" IN ('A1', 'A2', 'B1', 'B2', 'C1', 'C2'))
 );
@@ -38,16 +38,16 @@ CREATE TABLE IF NOT EXISTS "Категории_рабочих" (
 
 CREATE TABLE IF NOT EXISTS "Рабочие" (
     "id" serial PRIMARY KEY,
-    "человек" INTEGER NOT NULL UNIQUE REFERENCES "Люди"("id") ON DELETE CASCADE ON UPDATE RESTRICT,
+    "человек" INTEGER NOT NULL UNIQUE REFERENCES "Люди"("id") ON DELETE CASCADE ON UPDATE CASCADE,
     "бригада" INTEGER,
-    "категория" INTEGER NOT NULL REFERENCES "Категории_рабочих"("id") ON DELETE CASCADE ON UPDATE RESTRICT,
+    "категория" INTEGER NOT NULL REFERENCES "Категории_рабочих"("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     "физическая_форма" varchar(255) NOT NULL CHECK ("физическая_форма" IN ('отличная', 'хорошая', 'удовлетворительная', 'плохая')),
     "размер_спецодежды" INTEGER NOT NULL CHECK ("размер_спецодежды" BETWEEN 40 AND 60)
 );
 
 CREATE TABLE IF NOT EXISTS "Бригады" (
 	"id" serial PRIMARY KEY,
-	"Бригадир" INTEGER NOT NULL REFERENCES "Рабочие"("id") ON DELETE CASCADE ON UPDATE RESTRICT
+	"Бригадир" INTEGER NOT NULL REFERENCES "Рабочие"("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
-ALTER TABLE "Рабочие" ADD CONSTRAINT "Рабочие_fk2" FOREIGN KEY ("бригада") REFERENCES "Бригады"("id") ON DELETE CASCADE ON UPDATE RESTRICT;
+ALTER TABLE "Рабочие" ADD CONSTRAINT "Рабочие_fk2" FOREIGN KEY ("бригада") REFERENCES "Бригады"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
