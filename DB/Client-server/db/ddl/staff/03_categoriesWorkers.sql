@@ -1,4 +1,4 @@
 CREATE TABLE IF NOT EXISTS "Категории_рабочих" (
-	"id" serial PRIMARY KEY,
-	"название" INTEGER NOT NULL UNIQUE
+	"id" SERIAL PRIMARY KEY,
+	"название" VARCHAR(255) NOT NULL UNIQUE
 );

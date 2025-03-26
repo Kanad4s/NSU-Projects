@@ -11,8 +11,9 @@ func main() {
 		Name:    "postgres",
 		Sslmode: "disable",
 	}
-	db1 := db.Connect(dbInfo)
-	db.Drop(db1)
-	db.CreateTables(db1)
-	db.Close(db1)
+	connDB := db.Connect(dbInfo)
+	db.Drop(connDB)
+	db.CreateTables(connDB)
+	db.FillData(connDB)
+	db.Close(connDB)
 }
