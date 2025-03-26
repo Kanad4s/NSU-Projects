@@ -1,7 +1,11 @@
 import os
+import sys
 
-script_dir = os.path.dirname(os.path.abspath(__file__))
-root_dir = output_file_path = os.path.join(script_dir, f"../db/ddl")
+if len(sys.argv) < 2:
+    print("Использование: python3 buildSQL.py <pass/to/dirs>")
+    sys.exit(1)
+
+root_dir = sys.argv[1]
 
 print(f"Начало обработки папки: {root_dir}")
 
