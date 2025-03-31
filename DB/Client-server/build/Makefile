@@ -9,7 +9,7 @@ DB_QUERIES_DIR = ../db
 
 .PHONY: build, run, data, ddl, clean, help
 
-build: ddl, data
+build: ddl data
 	$(GO) mod tidy
 	$(GO) build $(BUILD_FLAGS) -o $(TARGET) $(SRC_DIR)
 ddl:
@@ -17,7 +17,7 @@ ddl:
 data:
 	$(PYTHON) $(SQL_BUILD_SCRIPT) $(DB_QUERIES_DIR)/data
 
-run: ddl, data
+run: ddl data
 	$(GO) run $(SRC_DIR)
 
 clean:
