@@ -3,4 +3,4 @@ VALUES
     ('Гражданский'),
     ('Военный'),
     ('Транспортный')
-ON CONFLICT ("название") DO NOTHING;
+ON CONFLICT DO NOTHING;

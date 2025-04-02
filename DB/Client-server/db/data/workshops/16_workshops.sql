@@ -3,4 +3,5 @@ VALUES
     (1),
     (4),
     (16),
-    (15);
+    (15)
+ON CONFLICT DO NOTHING;

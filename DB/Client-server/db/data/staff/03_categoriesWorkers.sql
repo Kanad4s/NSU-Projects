@@ -15,4 +15,4 @@ VALUES
     ('Гальваник'),
     ('Литейщик'),
     ('Ткач')
-ON CONFLICT ("название") DO NOTHING;
+ON CONFLICT DO NOTHING;

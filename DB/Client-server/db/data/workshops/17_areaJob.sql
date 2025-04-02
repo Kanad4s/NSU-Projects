@@ -12,4 +12,4 @@ VALUES
     ('Монтаж шасси'),
     ('Окраска'),
     ('Сборка корпуса')
-ON CONFLICT ("название") DO NOTHING;
+ON CONFLICT DO NOTHING;

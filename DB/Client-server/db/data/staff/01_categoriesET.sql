@@ -10,4 +10,4 @@ VALUES
     ('Слесарь-ремонтник'),
     ('Техник'),
     ('Энергетик')
-ON CONFLICT ("название") DO NOTHING;
+ON CONFLICT DO NOTHING;

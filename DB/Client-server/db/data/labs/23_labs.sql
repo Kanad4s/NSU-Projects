@@ -5,4 +5,4 @@ VALUES
     ('Солнышко'),
     ('Электрон'),
     ('Лаборатория №1')
-ON CONFLICT ("название") DO NOTHING;
+ON CONFLICT DO NOTHING;
