@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS "Участки_цехов" (
 	"id" SERIAL PRIMARY KEY,
 	"цех" INTEGER NOT NULL REFERENCES "Цеха"("id") ON DELETE CASCADE ON UPDATE CASCADE,
 	"начальник" INTEGER NOT NULL REFERENCES "ИТ_персонал"("id") ON DELETE CASCADE ON UPDATE CASCADE,
-	"вид_работы" INTEGER NOT NULL REFERENCES "Виды_работ_на_участке"("id") ON DELETE RESTRICT ON UPDATE RESTRICT
+	"вид_работы" INTEGER NOT NULL REFERENCES "Виды_работ_на_участке"("id") ON DELETE RESTRICT ON UPDATE RESTRICT,
+	UNIQUE("цех", "начальник")
 );
 
 CREATE TABLE IF NOT EXISTS "Мастера_участка" (
@@ -24,7 +25,9 @@ CREATE TABLE IF NOT EXISTS "Мастера_участка" (
 CREATE TABLE IF NOT EXISTS "План_сборки" (
 	"id" SERIAL PRIMARY KEY,
 	"модель" INTEGER NOT NULL REFERENCES "Модели_изделий"("id") ON DELETE CASCADE ON UPDATE CASCADE,
-	"работа" INTEGER NOT NULL REFERENCES "Виды_работ_на_участке"("id") ON DELETE RESTRICT ON UPDATE RESTRICT
+	"работа" INTEGER NOT NULL REFERENCES "Виды_работ_на_участке"("id") ON DELETE RESTRICT ON UPDATE RESTRICT,
+	"этап" INTEGER NOT NULL CHECK ("этап" > 0),
+	UNIQUE("модель", "работа", "этап")
 );
 
 CREATE TABLE IF NOT EXISTS "Выполненные_работы" (

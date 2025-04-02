@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS "Виды_испытательного_оборудования" (
+CREATE TABLE IF NOT EXISTS "Виды_испытаний" (
 	"id" SERIAL PRIMARY KEY,
 	"название" VARCHAR(255) NOT NULL UNIQUE
 );
@@ -23,14 +23,14 @@ CREATE TABLE IF NOT EXISTS "Испытатели" (
 CREATE TABLE IF NOT EXISTS "Набор_испытаний" (
 	"id" SERIAL PRIMARY KEY,
 	"модель" INTEGER NOT NULL REFERENCES "Модели_изделий"("id") ON DELETE CASCADE ON UPDATE CASCADE,
-	"вид_испытания" INTEGER NOT NULL REFERENCES "Виды_испытательного_оборудования"("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+	"вид_испытания" INTEGER NOT NULL REFERENCES "Виды_испытаний"("id") ON DELETE RESTRICT ON UPDATE CASCADE,
 	"описание" TEXT,
 	UNIQUE ("модель", "вид_испытания")
 );
 
 CREATE TABLE IF NOT EXISTS "Испытательное_оборудование" (
 	"id" SERIAL PRIMARY KEY,
-	"вид" INTEGER NOT NULL REFERENCES "Виды_испытательного_оборудования"("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+	"вид" INTEGER NOT NULL REFERENCES "Виды_испытаний"("id") ON DELETE RESTRICT ON UPDATE CASCADE,
 	"название" VARCHAR(255) NOT NULL,
 	"дата_производства" DATE NOT NULL,
 	"лаборатория" INTEGER NOT NULL REFERENCES "Лаборатории"("id") ON DELETE RESTRICT ON UPDATE CASCADE

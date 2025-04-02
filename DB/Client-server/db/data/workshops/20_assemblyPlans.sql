@@ -141,4 +141,4 @@ VALUES
     (3, 12, 8),
     (5, 12, 8),
     (7, 12, 8)
-ON CONFLICT("модель", "работа") DO NOTHING;
+ON CONFLICT("модель", "работа", "этап") DO NOTHING;
