@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	PassToData = "../db/data/"
+	PassToData = "../db/dml/"
 )
 
 func FillData(db *sqlx.DB) {
