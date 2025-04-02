@@ -7,17 +7,17 @@ PYTHON = python3
 SQL_BUILD_SCRIPT = ./buildSQL.py 
 DB_QUERIES_DIR = ../db
 
-.PHONY: build, run, data, ddl, clean, help
+.PHONY: build, run, dml, ddl, clean, help
 
-build: ddl data
+build: ddl dml
 	$(GO) mod tidy
 	$(GO) build $(BUILD_FLAGS) -o $(TARGET) $(SRC_DIR)
 ddl:
 	$(PYTHON) $(SQL_BUILD_SCRIPT) $(DB_QUERIES_DIR)/ddl
-data:
-	$(PYTHON) $(SQL_BUILD_SCRIPT) $(DB_QUERIES_DIR)/data
+dml:
+	$(PYTHON) $(SQL_BUILD_SCRIPT) $(DB_QUERIES_DIR)/dml
 
-run: ddl data
+run: ddl dml
 	$(GO) run $(SRC_DIR)
 
 clean:
@@ -26,10 +26,10 @@ clean:
 help:
 	@echo "Available commands:"
 	@echo "\t build:"
-	@echo "\t\t form sql data and ddl scripts and build client"
+	@echo "\t\t form sql dml and ddl scripts and build client"
 	@echo "\t run:"
-	@echo "\t\t form sql data and ddl scripts and run client"
-	@echo "\t data:"
+	@echo "\t\t form sql dml and ddl scripts and run client"
+	@echo "\t dml:"
 	@echo "\t\t form sql scripts to fill db tables"
 	@echo "\t ddl:"
 	@echo "\t\t form sql scripts to create db tables"
