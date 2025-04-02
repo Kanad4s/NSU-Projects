@@ -3,7 +3,8 @@ VALUES
     (1),
     (4),
     (16),
-    (15);
+    (15)
+ON CONFLICT DO NOTHING;
 
 INSERT INTO "Виды_работ_на_участке" ("название")
 VALUES
@@ -19,7 +20,7 @@ VALUES
     ('Монтаж шасси'),
     ('Окраска'),
     ('Сборка корпуса')
-ON CONFLICT ("название") DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 INSERT INTO "Участки_цехов" ("цех", "начальник", "вид_работы")
 VALUES 
@@ -42,7 +43,7 @@ VALUES
     (4, 15, 9),
     (4, 17, 10),
     (4, 15, 12)
-ON CONFLICT ("цех", "начальник") DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 INSERT INTO "Мастера_участка" ("участок", "мастер")
 VALUES
@@ -86,7 +87,7 @@ VALUES
     (17, 74),
     (16, 75),
     (15, 76)
-ON CONFLICT("участок", "мастер") DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 
 INSERT INTO "План_сборки"("модель", "работа", "этап")
@@ -232,7 +233,7 @@ VALUES
     (3, 12, 8),
     (5, 12, 8),
     (7, 12, 8)
-ON CONFLICT("модель", "работа", "этап") DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 
 

@@ -3,4 +3,4 @@ VALUES
     ('Артиллерийские'),
     ('Авиационные'),
     ('Военно-морские')
-ON CONFLICT ("название") DO NOTHING;
+ON CONFLICT DO NOTHING;

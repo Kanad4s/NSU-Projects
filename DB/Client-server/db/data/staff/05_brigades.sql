@@ -7,7 +7,7 @@ VALUES
     (15),
     (18),
     (21)
-ON CONFLICT ("бригадир") DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 UPDATE "Рабочие"
 SET "бригада" = 1

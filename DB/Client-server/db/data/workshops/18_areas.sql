@@ -19,4 +19,4 @@ VALUES
     (4, 15, 9),
     (4, 17, 10),
     (4, 15, 12)
-ON CONFLICT ("цех", "начальник") DO NOTHING;
+ON CONFLICT DO NOTHING;

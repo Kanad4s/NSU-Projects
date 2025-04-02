@@ -25,4 +25,4 @@ VALUES
     (43, NULL, 12, 'плохая', 60),
     (44, NULL, 4, 'отличная', 50),
     (45, NULL, 9, 'хорошая', 49)
-ON CONFLICT ("человек") DO NOTHING;
+ON CONFLICT DO NOTHING;

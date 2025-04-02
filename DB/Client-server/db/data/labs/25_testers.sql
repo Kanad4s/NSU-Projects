@@ -15,4 +15,4 @@ VALUES
     (74, 3),
     (69, 4),
     (68, 5)
-ON CONFLICT ("id") DO NOTHING;
+ON CONFLICT DO NOTHING;

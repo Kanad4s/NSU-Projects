@@ -80,4 +80,4 @@ VALUES
     (118, 7, 'C', 'C2'),
     (119, 1, 'C', 'B2'),
     (120, 2, 'A', 'A1')
-ON CONFLICT ("человек") DO NOTHING;
+ON CONFLICT DO NOTHING;

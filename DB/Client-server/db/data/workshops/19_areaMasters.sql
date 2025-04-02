@@ -40,4 +40,4 @@ VALUES
     (17, 74),
     (16, 75),
     (15, 76)
-ON CONFLICT("участок", "мастер") DO NOTHING;
+ON CONFLICT DO NOTHING;

@@ -5,4 +5,4 @@ VALUES
     ('Дельтапланы'),
     ('Планеры'),
     ('Ракеты')
-ON CONFLICT ("название") DO NOTHING;
+ON CONFLICT DO NOTHING;
