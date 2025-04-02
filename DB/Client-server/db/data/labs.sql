@@ -6,7 +6,7 @@ VALUES
     ('Коррозийный тест'),
     ('Испытание электронных систем'),
     ('Статическое испытание')
-ON CONFLICT ("название") DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 
 INSERT INTO "Лаборатории"("название") 
@@ -16,7 +16,7 @@ VALUES
     ('Солнышко'),
     ('Электрон'),
     ('Лаборатория №1')
-ON CONFLICT ("название") DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 
 INSERT INTO "Лаборатория_цех"("цех", "лаборатория") 
@@ -34,7 +34,8 @@ VALUES
     (3, 5),
     (4, 1),
     (4, 2),
-    (4, 5);
+    (4, 5)
+ON CONFLICT DO NOTHING;
 
 
 INSERT INTO "Испытатели" ("id", "лаборатория") 
@@ -54,7 +55,7 @@ VALUES
     (74, 3),
     (69, 4),
     (68, 5)
-ON CONFLICT ("id") DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 
 
