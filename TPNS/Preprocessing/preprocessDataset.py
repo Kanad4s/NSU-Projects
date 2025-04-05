@@ -141,5 +141,5 @@ for feature, score in zip(sorted_features, sorted_scores):
     dfgr.loc[1, feature] = score
 
 print(dfgr)
-dfgr.to_csv("../base/gr_laptop.csv")
-df.to_csv("../base/processed_laptop.csv", index=False)
+dfgr.to_csv("../base/Laptop_gr.csv")
+df.to_csv("../base/Processed_laptop.csv", index=False)
