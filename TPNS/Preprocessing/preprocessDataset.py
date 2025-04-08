@@ -49,6 +49,8 @@ def discretizeFloatToInt(out, y, column):
   nStep = 5
   ma = max(y)
   mi = min(y)
+  if column == 'Price':
+    nStep = 40
   step = (ma - mi) / nStep
   # print(f'max: {max(y)}, min: {min(y)}, step: {step}')
   for i in range(len(y)):
