@@ -17,11 +17,13 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE TRIGGER check_worker_unique
+DROP TRIGGER IF EXISTS check_worker_unique ON "Рабочие";
+CREATE TRIGGER check_worker_unique
 BEFORE INSERT OR UPDATE ON "Рабочие"
 FOR EACH ROW EXECUTE FUNCTION check_person_unique();
 
-CREATE OR REPLACE TRIGGER check_it_unique
+DROP TRIGGER IF EXISTS check_it_unique ON "ИТ_персонал";
+CREATE TRIGGER check_it_unique
 BEFORE INSERT OR UPDATE ON "ИТ_персонал"
 FOR EACH ROW EXECUTE FUNCTION check_person_unique();
 
@@ -47,7 +49,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE TRIGGER trg_check_brigadir_consistency
+DROP TRIGGER IF EXISTS trg_check_brigadir_consistency ON "Рабочие";
+CREATE TRIGGER trg_check_brigadir_consistency
 BEFORE INSERT OR UPDATE ON "Рабочие"
 FOR EACH ROW
 EXECUTE FUNCTION check_brigadir_consistency();
