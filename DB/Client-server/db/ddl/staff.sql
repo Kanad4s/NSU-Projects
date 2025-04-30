@@ -45,6 +45,14 @@ CREATE TABLE IF NOT EXISTS "Рабочие" (
     "размер_спецодежды" INTEGER NOT NULL CHECK ("размер_спецодежды" BETWEEN 40 AND 60)
 );
 
+
+CREATE TABLE IF NOT EXISTS "Бригады" (
+	"id" SERIAL PRIMARY KEY,
+	"бригадир" INTEGER NOT NULL UNIQUE REFERENCES "Рабочие"("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+ALTER TABLE "Рабочие" ADD CONSTRAINT "Рабочие_fk2" FOREIGN KEY ("бригада") REFERENCES "Бригады"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+
 CREATE OR REPLACE FUNCTION check_person_unique()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -64,19 +72,17 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE TRIGGER check_worker_unique
+DROP TRIGGER IF EXISTS check_worker_unique ON "Рабочие";
+CREATE TRIGGER check_worker_unique
 BEFORE INSERT OR UPDATE ON "Рабочие"
 FOR EACH ROW EXECUTE FUNCTION check_person_unique();
 
-CREATE OR REPLACE TRIGGER check_it_unique
+DROP TRIGGER IF EXISTS check_it_unique ON "ИТ_персонал";
+CREATE TRIGGER check_it_unique
 BEFORE INSERT OR UPDATE ON "ИТ_персонал"
 FOR EACH ROW EXECUTE FUNCTION check_person_unique();
 
-CREATE TABLE IF NOT EXISTS "Бригады" (
-	"id" SERIAL PRIMARY KEY,
-	"бригадир" INTEGER NOT NULL UNIQUE REFERENCES "Рабочие"("id") ON DELETE RESTRICT ON UPDATE CASCADE
-);
-ALTER TABLE "Рабочие" ADD CONSTRAINT "Рабочие_fk2" FOREIGN KEY ("бригада") REFERENCES "Бригады"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
 
 CREATE OR REPLACE FUNCTION check_brigadir_consistency()
 RETURNS trigger AS $$
@@ -98,11 +104,10 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE TRIGGER trg_check_brigadir_consistency
+DROP TRIGGER IF EXISTS trg_check_brigadir_consistency ON "Рабочие";
+CREATE TRIGGER trg_check_brigadir_consistency
 BEFORE INSERT OR UPDATE ON "Рабочие"
 FOR EACH ROW
 EXECUTE FUNCTION check_brigadir_consistency();
-
-
 
 
