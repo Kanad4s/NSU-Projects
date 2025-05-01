@@ -127,4 +127,3 @@ FOR EACH ROW
 EXECUTE FUNCTION check_unique_model_type();
 
 
-
