@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить человека</title>
+</head>
+<body>
+    <h1>Добавить человека</h1>
+    <form action="/staff/people/add" method="post">
+        <label>ФИО:</label><br>
+        <input type="text" name="fio" required><br><br>
+
+        <label>Дата рождения (ГГГГ-ММ-ДД):</label><br>
+        <input type="date" name="birth_date" required><br><br>
+
+        <label>Количество детей:</label><br>
+        <input type="number" name="children_count" min="0" required><br><br>
+
+        <label>Дата приёма на работу (ГГГГ-ММ-ДД):</label><br>
+        <input type="date" name="hire_date" required><br><br>
+
+        <label>Дата увольнения (если есть):</label><br>
+        <input type="date" name="dismissal_date"><br><br>
+
+        <button type="submit">Сохранить</button>
+    </form>
+    <br>
+    <a href="/staff/people">Назад к списку</a>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{{define "workers"}}
+  {{template "workersLayout" .}}
+{{end}}
+
+{{define "title"}}Список рабочих{{end}}
+
+{{define "workersContent"}}
+<h1>Список рабочих</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>PersonID</th>
+            <th>Бригада</th>
+            <th>Категория</th>
+            <th>Физическая форма</th>
+            <th>Размер одежды</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{range .Workers}}
+        <tr>
+            <td>{{.ID}}</td>
+            <td>{{.PersonID}}</td>
+            <td>{{.BrigadeID}}</td>
+            <td>{{.CategoryID}}</td>
+            <td>{{.PhysicalForm}}</td>
+            <td>{{.UniformSize}}</td>
+            <td><a href="/workers/delete/{{.ID}}">Удалить</a></td>
+        </tr>
+    {{end}}
+    </tbody>
+</table>
+{{end}}
+

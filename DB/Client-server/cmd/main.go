@@ -2,6 +2,12 @@ package main
 
 import (
 	"client-server/internal/db"
+	"log"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/template/html/v2"
+
+	"client-server/internal/route"
 )
 
 func main() {
@@ -11,9 +17,19 @@ func main() {
 		Name:    "postgres",
 		Sslmode: "disable",
 	}
-	connDB := db.Connect(dbInfo)
-	db.Drop(connDB)
-	db.CreateTables(connDB)
-	db.FillData(connDB)
-	db.Close(connDB)
+	database := db.Connect(dbInfo)
+	defer db.Close(database)
+	db.Drop(database)
+	db.CreateTables(database)
+	db.FillData(database)
+
+	engine := html.New("../views", ".html")
+	engine.Reload(true)
+	app := fiber.New(fiber.Config{
+		Views: engine,
+	})
+
+	route.Setup(app, database)
+
+	log.Fatal(app.Listen(":3003"))
 }

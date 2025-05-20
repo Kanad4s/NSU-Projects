@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить рабочего</title>
+</head>
+<body>
+    <h1>Добавить рабочего</h1>
+    <form action="/staff/workers/add" method="post">
+        <label>Человек (ID):</label><br>
+        <input type="number" name="person_id" required><br><br>
+
+        <label>Бригада (ID, можно пусто):</label><br>
+        <select name="brigade_id">
+            <option value="">-- Не выбрано --</option>
+            {{range .Brigades}}
+                <option value="{{.ID}}">Бригада №{{.ID}} — {{.Brigadier}}</option>
+            {{end}}
+        </select><br><br>
+
+        <label for="category_id">Категория (ID)</label><br>
+        <select name="category_id" required>
+            {{range .Categories}}
+                <option value="{{.ID}}">{{.Name}}</option>
+            {{end}}
+        </select><br><br>
+
+        <label>Физическая форма:</label><br>
+        <select name="phys_form" required>
+            <option value="отличная">отличная</option>
+            <option value="хорошая">хорошая</option>
+            <option value="удовлетворительная">удовлетворительная</option>
+            <option value="плохая">плохая</option>
+        </select><br><br>
+
+        <label>Размер спецодежды:</label><br>
+        <input type="number" name="size" min="40" max="60" required><br><br>
+
+        <button type="submit">Сохранить</button>
+    </form>
+    <br>
+    <a href="/staff/workers">Назад к списку</a>
+</body>
+</html>
