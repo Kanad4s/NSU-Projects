@@ -9,8 +9,8 @@ import (
 )
 
 func Setup(app *fiber.App, db *sqlx.DB) {
+	app.Get("/", handler.GetMenu())
 	setupStaff(app, db)
-	app.Get("/", handler.GetPeople(db))
 }
 
 func setupStaff(app *fiber.App, db *sqlx.DB) {

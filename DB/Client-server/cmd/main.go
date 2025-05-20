@@ -28,6 +28,7 @@ func main() {
 	app := fiber.New(fiber.Config{
 		Views: engine,
 	})
+	app.Static("/img", "../src/img")
 
 	route.Setup(app, database)
 
