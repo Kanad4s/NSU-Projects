@@ -3,7 +3,6 @@ package handler
 import (
 	"client-server/internal/model"
 	"database/sql"
-	"fmt"
 	"strconv"
 	"time"
 
@@ -37,12 +36,10 @@ func GetPeople(db *sqlx.DB) fiber.Handler {
 			people = append(people, p)
 		}
 
-		fmt.Println("People count:", len(people))
-
 		return c.Render("people", fiber.Map{
 			"Title":  "Список людей",
 			"People": people,
-		}, "layout")
+		})
 	}
 }
 
@@ -69,7 +66,7 @@ func AddPerson(db *sqlx.DB) fiber.Handler {
 		if err != nil {
 			return err
 		}
-		return c.Redirect("/")
+		return c.Redirect("/staff/people")
 	}
 }
 
@@ -80,6 +77,6 @@ func DeletePerson(db *sqlx.DB) fiber.Handler {
 		if err != nil {
 			return err
 		}
-		return c.Redirect("/")
+		return c.Redirect("/staff/people")
 	}
 }

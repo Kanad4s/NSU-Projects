@@ -25,5 +25,18 @@ type WorkerCategory struct {
 
 type Brigade struct {
 	ID        int    `db:"id"`
-	Brigadier string `db:"brigadier_name"` // имя бригадира (ФИО)
+	Brigadier string `db:"brigadier_name"`
+}
+
+type StaffET struct {
+	ID           int    `db:"id"`
+	PersonID     int    `db:"человек"`
+	CategoryID   int    `db:"категория"`
+	AccessLevel  string `db:"уровень_допуска"`
+	EnglishLevel string `db:"знания_английского"`
+}
+
+type StaffETCategory struct {
+	ID   int    `db:"id"`
+	Name string `db:"название"`
 }

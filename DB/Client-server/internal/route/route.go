@@ -17,10 +17,15 @@ func setupStaff(app *fiber.App, db *sqlx.DB) {
 	app.Get("/staff/people", handler.GetPeople(db))
 	app.Get("/staff/people/add", handler.GetAddPersonForm(db))
 	app.Post("/staff/people/add", handler.AddPerson(db))
-	app.Get("/staff/delete/:id", handler.DeletePerson(db))
+	app.Get("/staff/people/delete/:id", handler.DeletePerson(db))
 
 	app.Get("/staff/workers", handler.GetWorkers(db))
 	app.Get("/staff/workers/add", handler.GetAddWorkerForm(db))
 	app.Post("/staff/workers/add", handler.AddWorker(db))
 	app.Get("/staff/workers/delete/:id", handler.DeleteWorker(db))
+
+	app.Get("/staff/staffET", handler.GetStaffET(db))
+	app.Get("/staff/staffET/add", handler.GetAddStaffETForm(db))
+	app.Post("/staff/staffET/add", handler.AddStaffET(db))
+	app.Get("/staff/staffET/delete/:id", handler.DeleteStaffET(db))
 }

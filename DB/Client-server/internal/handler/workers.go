@@ -89,7 +89,7 @@ func AddWorker(db *sqlx.DB) fiber.Handler {
 			return err
 		}
 
-		return c.Redirect("/workers")
+		return c.Redirect("/staff/workers")
 	}
 }
 
@@ -100,6 +100,6 @@ func DeleteWorker(db *sqlx.DB) fiber.Handler {
 		if err != nil {
 			return err
 		}
-		return c.Redirect("/workers")
+		return c.Redirect("/staff/workers")
 	}
 }

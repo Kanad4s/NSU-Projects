@@ -1,4 +1,4 @@
-{{define "layout"}}
+{{define "staffETLayout"}}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -56,12 +56,12 @@
 <body>
     <div class="nav">
         <a href="/">Меню</a>
-        <a href="/staff/people/add">Добавить человека</a>
+        <a href="/staff/staffET/add">Добавить специалиста</a>
         <a href="/staff/workers">Рабочие</a>
-        <a href="/staff/staffET">ИТ персонал</a>
+        <a href="/staff/people">Люди</a>
     </div>
 
-    {{block "content" .}}{{end}}
+    {{block "staffETContent" .}}{{end}}
 </body>
 </html>
 {{end}}
