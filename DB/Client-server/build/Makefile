@@ -6,8 +6,9 @@ GO = go
 PYTHON = python3
 SQL_BUILD_SCRIPT = ./buildSQL.py 
 DB_QUERIES_DIR = ../db
+PORT ?= 3000
 
-.PHONY: build, run, dml, ddl, clean, help
+.PHONY: build, run, dml, ddl, clean, help, killport
 
 build: ddl dml
 	$(GO) mod tidy
@@ -17,8 +18,19 @@ ddl:
 dml:
 	$(PYTHON) $(SQL_BUILD_SCRIPT) $(DB_QUERIES_DIR)/dml
 
-run: ddl dml
+run: ddl dml killport
 	$(GO) run $(SRC_DIR)
+
+killport:
+	@echo "Checking port $(PORT)..."
+	@PID=$$(lsof -ti tcp:$(PORT)); \
+	if [ -n "$$PID" ]; then \
+		echo "Port $(PORT) is in use by PID $$PID. Killing..."; \
+		kill -9 $$PID; \
+	else \
+		echo "Port $(PORT) is free."; \
+	fi
+
 
 clean:
 	rm -rf $(TARGET)
