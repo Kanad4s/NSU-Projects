@@ -4,7 +4,6 @@ import (
 	"client-server/internal/model"
 	"database/sql"
 	"strconv"
-	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/jmoiron/sqlx"
@@ -12,33 +11,38 @@ import (
 
 func GetPlanes(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		rows, err := db.Query(`SELECT id, "ФИО", "дата_рождения", "кол-во_детей", "дата_устройства", "дата_увольнения" FROM "Люди"`)
+		var planes []model.Planes
+		err := db.Select(&planes, `SELECT id, категория, размах_крыла, "кол-во_мест", макс_скорость FROM "Самолеты" ORDER BY id`)
 		if err != nil {
 			return err
 		}
-		defer rows.Close()
 
-		var people []model.Person
-		for rows.Next() {
-			var p model.Person
-			var birth, hire time.Time
-			var dismissal sql.NullTime
-			err := rows.Scan(&p.ID, &p.FIO, &birth, &p.ChildrenCount, &hire, &dismissal)
-			if err != nil {
-				return err
-			}
-			p.BirthDate = birth.Format("2006-01-02")
-			p.HireDate = hire.Format("2006-01-02")
-			if dismissal.Valid {
-				date := dismissal.Time.Format("2006-01-02")
-				p.DismissalDate = &date
-			}
-			people = append(people, p)
+		var categories []model.PlanesCategory
+		err = db.Select(&categories, `SELECT id, название FROM "Категории_самолетов"`)
+		if err != nil {
+			return err
 		}
 
-		return c.Render("people", fiber.Map{
-			"Title":  "Список людей",
-			"People": people,
+		categoryMap := make(map[int]string)
+		for _, cat := range categories {
+			categoryMap[cat.ID] = cat.Name
+		}
+
+		var models []model.ProductModel
+		err = db.Select(&models, `SELECT id, название FROM "Модели_изделий"`)
+		if err != nil {
+			return err
+		}
+		modelMap := make(map[int]string)
+		for _, m := range models {
+			modelMap[m.ID] = m.Name
+		}
+
+		return c.Render("products/models/planes", fiber.Map{
+			"Title":       "Самолёты",
+			"Planes":      planes,
+			"CategoryMap": categoryMap,
+			"ModelMap":    modelMap,
 		})
 	}
 }

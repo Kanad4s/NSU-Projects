@@ -55,36 +55,33 @@
 <body>
     <div class="nav">
         <a href="/">Меню</a>
-        <a href="/products/models/add">Добавить модель</a>
-        <a href="/products/manufacturedProducts">Выпускаемые изделия</a>
-        <a href="/products/models/planes">Самолеты</a>
+        <a href="/products/models/add">Добавить самолет</a>
+        <a href="/products/models">Модели</a>
         <a href="/products/models/rockets">Ракеты</a>
         <a href="/products/models/helicopters">Вертолеты</a>
         <a href="/products/models/gliders">Планеры</a>
         <a href="/products/models/hangGliders">Дельтапланы</a>
     </div>
 
-    <h1>Модели изделий</h1>
+    <h1>Модели самолётов</h1>
     <table>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Вид</th>
-                <th>Название</th>
-                <th>Описание</th>
-                <th>Дата разработки</th>
-                <th>Действия</th>
+                <th>Категория</th>
+                <th>Размах крыла (м)</th>
+                <th>Кол-во мест</th>
+                <th>Макс. скорость (км/ч)</th>
             </tr>
         </thead>
         <tbody>
-        {{range .Models}}
+        {{range .Planes}}
             <tr>
-                <td>{{.ID}}</td>
-                <td>{{.TypeID}} - {{index $.TypesMap .TypeID}}</td>
-                <td>{{.Name}}</td>
-                <td>{{.Description}}</td>
-                <td>{{FormatDate .DevelopmentDate}}</td>
-                <td><a href="/products/people/delete/{{.ID}}">Удалить</a></td>
+                <td>{{.ID}} - {{index $.ModelMap .ID}}</td>
+                <td>{{index $.CategoryMap .CategoryID}}</td>
+                <td>{{printf "%.2f" .WingSpan}}</td>
+                <td>{{.SeatCount}}</td>
+                <td>{{.MaxSpeed}}</td>
             </tr>
         {{end}}
         </tbody>
