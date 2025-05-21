@@ -21,8 +21,8 @@
     {{range .StaffET}}
         <tr>
             <td>{{.ID}}</td>
-            <td>{{.PersonID}}</td>
-            <td>{{.CategoryID}}</td>
+            <td>{{.PersonID}} - {{index $.PeopleMap .PersonID}}</td>
+            <td>{{.CategoryID}} — {{index $.CategoryMap .CategoryID}}</td>
             <td>{{.AccessLevel}}</td>
             <td>{{.EnglishLevel}}</td>
             <td><a href="/staff/staffET/delete/{{.ID}}">Удалить</a></td>

@@ -2,7 +2,6 @@ package handler
 
 import (
 	"client-server/internal/model"
-	"fmt"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -27,11 +26,37 @@ func GetStaffET(db *sqlx.DB) fiber.Handler {
 			staff = append(staff, s)
 		}
 
-		fmt.Println("People count:", len(staff))
-		fmt.Println(staff)
+		var categories []model.StaffETCategory
+		err = db.Select(&categories, "SELECT id, название FROM Категории_ИТ_персонала")
+		if err != nil {
+			return err
+		}
+
+		categoryMap := make(map[int]string)
+		for _, cat := range categories {
+			categoryMap[cat.ID] = cat.Name
+		}
+
+		var people []model.Person
+		err = db.Select(&people, `
+			SELECT p.id, p.ФИО
+			FROM Люди p
+			JOIN ИТ_персонал w ON  w.человек = p.id
+		`)
+		if err != nil {
+			return err
+		}
+
+		peopleMap := make(map[int]string)
+		for _, p := range people {
+			peopleMap[p.ID] = p.FIO
+		}
+
 		return c.Render("staff/staffET", fiber.Map{
-			"Title":   "Список ИТ персонала",
-			"StaffET": staff,
+			"Title":       "Список ИТ персонала",
+			"StaffET":     staff,
+			"CategoryMap": categoryMap,
+			"PeopleMap":   peopleMap,
 		}, "staffETLayout")
 	}
 }

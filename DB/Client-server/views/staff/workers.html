@@ -10,7 +10,7 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>PersonID</th>
+            <th>Человек</th>
             <th>Бригада</th>
             <th>Категория</th>
             <th>Физическая форма</th>
@@ -22,9 +22,9 @@
     {{range .Workers}}
         <tr>
             <td>{{.ID}}</td>
-            <td>{{.PersonID}}</td>
+            <td>{{.PersonID}} - {{index $.PeopleMap .PersonID}}</td>
             <td>{{.BrigadeID}}</td>
-            <td>{{.CategoryID}}</td>
+            <td>{{.CategoryID}} — {{index $.CategoryMap .CategoryID}}</td>
             <td>{{.PhysicalForm}}</td>
             <td>{{.UniformSize}}</td>
             <td><a href="/staff/workers/delete/{{.ID}}">Удалить</a></td>

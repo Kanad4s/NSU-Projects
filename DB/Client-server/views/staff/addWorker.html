@@ -7,8 +7,14 @@
 <body>
     <h1>Добавить рабочего</h1>
     <form action="/staff/workers/add" method="post">
-        <label>Человек (ID):</label><br>
-        <input type="number" name="person_id" required><br><br>
+        <label for="person">Человек:</label><br>
+        <select name="person_id" id="person" required>
+            {{range .People}}
+            <option value="{{.ID}}">
+                {{.FIO}} (ID: {{.ID}})
+            </option>
+            {{end}}
+        </select><br><br>
 
         <label>Бригада (ID, можно пусто):</label><br>
         <select name="brigade_id">

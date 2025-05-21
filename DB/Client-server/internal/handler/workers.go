@@ -12,7 +12,7 @@ import (
 
 func GetWorkers(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		rows, err := db.Query(`SELECT id, человек, бригада, категория, физическая_форма, размер_спецодежды FROM "Рабочие"`)
+		rows, err := db.Query(`SELECT id, человек, бригада, категория, физическая_форма, размер_спецодежды FROM "Рабочие" order by id`)
 		if err != nil {
 			return err
 		}
@@ -32,22 +32,49 @@ func GetWorkers(db *sqlx.DB) fiber.Handler {
 			}
 			workers = append(workers, w)
 		}
-		return c.Render("workers", fiber.Map{
-			"Title":   "Рабочие",
-			"Workers": workers,
+
+		var categories []model.StaffETCategory
+		err = db.Select(&categories, "SELECT id, название FROM Категории_рабочих")
+		if err != nil {
+			return err
+		}
+
+		categoryMap := make(map[int]string)
+		for _, cat := range categories {
+			categoryMap[cat.ID] = cat.Name
+		}
+
+		var people []model.Person
+		err = db.Select(&people, `
+			SELECT p.id, p.ФИО
+			FROM Люди p
+			JOIN Рабочие w ON  w.человек = p.id
+		`)
+		if err != nil {
+			return err
+		}
+
+		peopleMap := make(map[int]string)
+		for _, p := range people {
+			peopleMap[p.ID] = p.FIO
+		}
+
+		return c.Render("staff/workers", fiber.Map{
+			"Title":       "Рабочие",
+			"Workers":     workers,
+			"PeopleMap":   peopleMap,
+			"CategoryMap": categoryMap,
 		}, "workersLayout")
 	}
 }
 
 func GetAddWorkerForm(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		// Категории рабочих
 		var categories []model.WorkerCategory
 		if err := db.Select(&categories, `SELECT id, "название" FROM "Категории_рабочих"`); err != nil {
 			return err
 		}
 
-		// Бригады с ФИО бригадира
 		var brigades []model.Brigade
 		query := `
             SELECT b.id, p.ФИО AS brigadier_name
@@ -60,9 +87,24 @@ func GetAddWorkerForm(db *sqlx.DB) fiber.Handler {
 			return err
 		}
 
+		var availablePeople []model.Person
+		err := db.Select(&availablePeople, `
+			SELECT id, ФИО
+			FROM Люди
+			WHERE дата_увольнения IS NULL AND id NOT IN (
+				SELECT человек FROM ИТ_персонал
+				UNION
+				SELECT человек FROM Рабочие
+			) 
+		`)
+		if err != nil {
+			return err
+		}
+
 		return c.Render("staff/addWorker", fiber.Map{
 			"Categories": categories,
 			"Brigades":   brigades,
+			"People":     availablePeople,
 			"Title":      "Добавить рабочего",
 		})
 	}

@@ -1,21 +1,21 @@
 package model
 
 type Person struct {
-	ID            int
-	FIO           string
-	BirthDate     string
-	ChildrenCount int
-	HireDate      string
-	DismissalDate *string
+	ID            int     `db:"id"`
+	FIO           string  `db:"ФИО"`
+	BirthDate     string  `db:"дата_рождения"`
+	ChildrenCount int     `db:"кол-во_детей"`
+	HireDate      string  `db:"дата_устройства"`
+	DismissalDate *string `db:"дата_увольнения"`
 }
 
 type Worker struct {
-	ID           int
-	PersonID     int
-	BrigadeID    *int
-	CategoryID   int
-	PhysicalForm string
-	UniformSize  int
+	ID           int    `db:"id"`
+	PersonID     int    `db:"человек"`
+	BrigadeID    *int   `db:"бригада"`
+	CategoryID   int    `db:"категория"`
+	PhysicalForm string `db:"физическая_форма"`
+	UniformSize  int    `db:"размер_спецодежды"`
 }
 
 type WorkerCategory struct {
