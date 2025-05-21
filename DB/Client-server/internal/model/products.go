@@ -42,3 +42,25 @@ type RocketCategory struct {
 	ID   int    `db:"id"`
 	Name string `db:"название"`
 }
+
+type Helicopter struct {
+	ID        int     `db:"id"`
+	Lift      float64 `db:"грузоподъемность"`
+	MaxHeight int     `db:"высота_подъема"`
+	MaxSpeed  int     `db:"макс_скорость"`
+}
+
+type Glider struct {
+	ID          int     `db:"id"`
+	Weight      int     `db:"вес"`
+	WingSpan    int     `db:"размах_крыла"`
+	MaxSpeed    int     `db:"макс_скорость"`
+	AeroQuality float64 `db:"аэро_качество"`
+}
+
+type HangGlider struct {
+	ID       int     `db:"id"`
+	Weight   int     `db:"вес"`
+	MaxSpeed int     `db:"макс_скорость"`
+	FanAngle float64 `db:"угол_веера"`
+}

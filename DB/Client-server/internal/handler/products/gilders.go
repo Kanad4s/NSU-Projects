@@ -4,7 +4,6 @@ import (
 	"client-server/internal/model"
 	"database/sql"
 	"strconv"
-	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/jmoiron/sqlx"
@@ -12,41 +11,38 @@ import (
 
 func GetGliders(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		rows, err := db.Query(`SELECT id, "ФИО", "дата_рождения", "кол-во_детей", "дата_устройства", "дата_увольнения" FROM "Люди"`)
+		var gliders []model.Glider
+		err := db.Select(&gliders, `
+			SELECT id, "вес", "размах_крыла", "макс_скорость", "аэро_качество"
+			FROM "Планеры"
+			ORDER BY id
+		`)
 		if err != nil {
 			return err
 		}
-		defer rows.Close()
 
-		var people []model.Person
-		for rows.Next() {
-			var p model.Person
-			var birth, hire time.Time
-			var dismissal sql.NullTime
-			err := rows.Scan(&p.ID, &p.FIO, &birth, &p.ChildrenCount, &hire, &dismissal)
-			if err != nil {
-				return err
-			}
-			p.BirthDate = birth.Format("2006-01-02")
-			p.HireDate = hire.Format("2006-01-02")
-			if dismissal.Valid {
-				date := dismissal.Time.Format("2006-01-02")
-				p.DismissalDate = &date
-			}
-			people = append(people, p)
+		var models []model.ProductModel
+		err = db.Select(&models, `SELECT id, "название" FROM "Модели_изделий"`)
+		if err != nil {
+			return err
+		}
+		modelMap := make(map[int]string)
+		for _, m := range models {
+			modelMap[m.ID] = m.Name
 		}
 
-		return c.Render("people", fiber.Map{
-			"Title":  "Список людей",
-			"People": people,
+		return c.Render("products/models/gliders", fiber.Map{
+			"Title":    "Планеры",
+			"Gliders":  gliders,
+			"ModelMap": modelMap,
 		})
 	}
 }
 
 func GetAddGliderForm(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return c.Render("staff/addPerson", fiber.Map{
-			"Title": "Добавить человека",
+		return c.Render("products/models/addGlider", fiber.Map{
+			"Title": "Добавить планер",
 		})
 	}
 }
@@ -66,17 +62,17 @@ func AddGlider(db *sqlx.DB) fiber.Handler {
 		if err != nil {
 			return err
 		}
-		return c.Redirect("/staff/people")
+		return c.Redirect("products/models/gliders")
 	}
 }
 
 func DeleteGlider(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		id := c.Params("id")
-		_, err := db.Exec(`DELETE FROM "Люди" WHERE id = $1`, id)
+		_, err := db.Exec(`DELETE FROM "Планеры" WHERE id = $1`, id)
 		if err != nil {
 			return err
 		}
-		return c.Redirect("/staff/people")
+		return c.Redirect("products/models/gliders")
 	}
 }

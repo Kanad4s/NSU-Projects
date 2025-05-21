@@ -49,8 +49,8 @@ func GetPlanes(db *sqlx.DB) fiber.Handler {
 
 func GetAddPlaneForm(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return c.Render("staff/addPerson", fiber.Map{
-			"Title": "Добавить человека",
+		return c.Render("products/models/addPlane", fiber.Map{
+			"Title": "Добавить самолет",
 		})
 	}
 }
@@ -70,17 +70,17 @@ func AddPlane(db *sqlx.DB) fiber.Handler {
 		if err != nil {
 			return err
 		}
-		return c.Redirect("/staff/people")
+		return c.Redirect("products/models/planes")
 	}
 }
 
 func DeletePlane(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		id := c.Params("id")
-		_, err := db.Exec(`DELETE FROM "Люди" WHERE id = $1`, id)
+		_, err := db.Exec(`DELETE FROM "Самолеты" WHERE id = $1`, id)
 		if err != nil {
 			return err
 		}
-		return c.Redirect("/staff/people")
+		return c.Redirect("products/models/planes")
 	}
 }
