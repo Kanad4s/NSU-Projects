@@ -21,7 +21,6 @@ func GetRockets(db *sqlx.DB) fiber.Handler {
 			return err
 		}
 
-		// Названия категорий ракет
 		var categories []model.RocketCategory
 		err = db.Select(&categories, `SELECT id, название FROM "Категории_ракет"`)
 		if err != nil {
@@ -53,8 +52,8 @@ func GetRockets(db *sqlx.DB) fiber.Handler {
 
 func GetAddRocketForm(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return c.Render("staff/addPerson", fiber.Map{
-			"Title": "Добавить человека",
+		return c.Render("products/models/addRocket", fiber.Map{
+			"Title": "Добавить ракету",
 		})
 	}
 }
@@ -81,10 +80,10 @@ func AddRocket(db *sqlx.DB) fiber.Handler {
 func DeleteRocket(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		id := c.Params("id")
-		_, err := db.Exec(`DELETE FROM "Люди" WHERE id = $1`, id)
+		_, err := db.Exec(`DELETE FROM "Ракеты" WHERE id = $1`, id)
 		if err != nil {
 			return err
 		}
-		return c.Redirect("/staff/people")
+		return c.Redirect("/products/models/rockets")
 	}
 }
