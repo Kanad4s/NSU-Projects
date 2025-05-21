@@ -2,6 +2,7 @@ package main
 
 import (
 	"client-server/internal/db"
+	"client-server/internal/handler/functions"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -25,6 +26,7 @@ func main() {
 
 	engine := html.New("../views", ".html")
 	engine.Reload(true)
+	engine.AddFunc("FormatDate", functions.FormatDate)
 	app := fiber.New(fiber.Config{
 		Views: engine,
 	})

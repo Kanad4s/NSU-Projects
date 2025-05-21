@@ -1,4 +1,4 @@
-package handler
+package products
 
 import (
 	"client-server/internal/model"
@@ -10,7 +10,7 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-func GetPeople(db *sqlx.DB) fiber.Handler {
+func GetHangGliders(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		rows, err := db.Query(`SELECT id, "ФИО", "дата_рождения", "кол-во_детей", "дата_устройства", "дата_увольнения" FROM "Люди"`)
 		if err != nil {
@@ -43,7 +43,7 @@ func GetPeople(db *sqlx.DB) fiber.Handler {
 	}
 }
 
-func GetAddPersonForm(db *sqlx.DB) fiber.Handler {
+func GetAddHangGliderForm(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		return c.Render("staff/addPerson", fiber.Map{
 			"Title": "Добавить человека",
@@ -51,7 +51,7 @@ func GetAddPersonForm(db *sqlx.DB) fiber.Handler {
 	}
 }
 
-func AddPerson(db *sqlx.DB) fiber.Handler {
+func AddHangGlider(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		fio := c.FormValue("fio")
 		birth := c.FormValue("birth")
@@ -70,7 +70,7 @@ func AddPerson(db *sqlx.DB) fiber.Handler {
 	}
 }
 
-func DeletePerson(db *sqlx.DB) fiber.Handler {
+func DeleteHangGlider(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		id := c.Params("id")
 		_, err := db.Exec(`DELETE FROM "Люди" WHERE id = $1`, id)
