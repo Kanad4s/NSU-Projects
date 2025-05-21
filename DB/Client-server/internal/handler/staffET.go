@@ -74,8 +74,16 @@ func DeleteStaffET(db *sqlx.DB) fiber.Handler {
 
 func GetAddStaffETForm(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		var people []model.Person
-		if err := db.Select(&people, `SELECT id, "ФИО" FROM "Люди" WHERE id NOT IN (SELECT "человек" FROM "ИТ_персонал")`); err != nil {
+		var availablePeople []model.Person
+		if err := db.Select(&availablePeople, `
+			SELECT id, ФИО
+			FROM Люди
+			WHERE дата_увольнения IS NULL AND id NOT IN (
+				SELECT человек FROM ИТ_персонал
+				UNION
+				SELECT человек FROM Рабочие
+			) 
+		`); err != nil {
 			return err
 		}
 
@@ -86,7 +94,7 @@ func GetAddStaffETForm(db *sqlx.DB) fiber.Handler {
 
 		return c.Render("staff/addStaffET", fiber.Map{
 			"Title":      "Добавить ИТ персонал",
-			"People":     people,
+			"People":     availablePeople,
 			"Categories": categories,
 		})
 	}
