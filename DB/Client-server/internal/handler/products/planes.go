@@ -11,13 +11,13 @@ import (
 
 func GetPlanes(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		var planes []model.Planes
+		var planes []model.Plane
 		err := db.Select(&planes, `SELECT id, категория, размах_крыла, "кол-во_мест", макс_скорость FROM "Самолеты" ORDER BY id`)
 		if err != nil {
 			return err
 		}
 
-		var categories []model.PlanesCategory
+		var categories []model.PlaneCategory
 		err = db.Select(&categories, `SELECT id, название FROM "Категории_самолетов"`)
 		if err != nil {
 			return err

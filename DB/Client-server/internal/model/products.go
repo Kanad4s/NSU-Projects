@@ -15,7 +15,7 @@ type ModelTypes struct {
 	Name string `db:"название"`
 }
 
-type Planes struct {
+type Plane struct {
 	ID         int     `db:"id"`
 	CategoryID int     `db:"категория"`
 	WingSpan   float64 `db:"размах_крыла"`
@@ -23,7 +23,22 @@ type Planes struct {
 	MaxSpeed   int     `db:"макс_скорость"`
 }
 
-type PlanesCategory struct {
+type PlaneCategory struct {
+	ID   int    `db:"id"`
+	Name string `db:"название"`
+}
+
+type Rocket struct {
+	ID         int     `db:"id"`
+	CategoryID int     `db:"категория"`
+	Caliber    int     `db:"калибр"`
+	Power      float64 `db:"мощность"`
+	Range      int     `db:"дальность"`
+	Weight     float64 `db:"вес"`
+	MaxSpeed   int     `db:"макс_скорость"`
+}
+
+type RocketCategory struct {
 	ID   int    `db:"id"`
 	Name string `db:"название"`
 }

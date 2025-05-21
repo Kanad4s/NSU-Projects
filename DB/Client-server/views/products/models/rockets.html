@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.Title}}</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 2em;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #eee;
+        }
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        form {
+            max-width: 400px;
+        }
+        label {
+            display: block;
+            margin-top: 1em;
+        }
+        input, button {
+            width: 100%;
+            padding: 0.5em;
+            margin-top: 0.5em;
+        }
+        .nav {
+            margin-bottom: 1em;
+        }
+        .nav a {
+            margin-right: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="/">Меню</a>
+        <a href="/products/models/rockets/add">Добавить ракету</a>
+        <a href="/products/models">Модели</a>
+        <a href="/products/models/planes">Самолеты</a>
+        <a href="/products/models/helicopters">Вертолеты</a>
+        <a href="/products/models/gliders">Планеры</a>
+        <a href="/products/models/hangGliders">Дельтапланы</a>
+    </div>
+
+    <h1>Список ракет</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Категория</th>
+                <th>Калибр (мм)</th>
+                <th>Мощность</th>
+                <th>Дальность (м)</th>
+                <th>Вес (кг)</th>
+                <th>Макс. скорость (км/ч)</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{range .Rockets}}
+            <tr>
+                <td>{{.ID}}</td>
+                <td>{{index $.ModelMap .ID}}</td>
+                <td>{{index $.CategoryMap .CategoryID}}</td>
+                <td>{{.Caliber}}</td>
+                <td>{{printf "%.2f" .Power}}</td>
+                <td>{{.Range}}</td>
+                <td>{{printf "%.2f" .Weight}}</td>
+                <td>{{.MaxSpeed}}</td>
+            </tr>
+        {{end}}
+        </tbody>
+    </table>
+</body>
+</html>
