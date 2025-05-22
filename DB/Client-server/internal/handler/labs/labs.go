@@ -66,7 +66,7 @@ func AddLab(db *sqlx.DB) fiber.Handler {
 func DeleteLab(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		id := c.Params("id")
-		_, err := db.Exec(`DELETE FROM "Люди" WHERE id = $1`, id)
+		_, err := db.Exec(`DELETE FROM "Лаборатории" WHERE id = $1`, id)
 		if err != nil {
 			return err
 		}

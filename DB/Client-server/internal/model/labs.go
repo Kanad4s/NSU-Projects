@@ -6,7 +6,19 @@ type Laboratory struct {
 }
 
 type LaboratoryWithWorkshops struct {
-	ID        int        `db:"id"`
-	Name      string     `db:"название"`
-	Workshops []Workshop // вручную добавим после запроса
+	ID        int    `db:"id"`
+	Name      string `db:"название"`
+	Workshops []Workshop
+}
+
+type Tester struct {
+	ID           int `db:"id"`
+	LaboratoryID int `db:"лаборатория"`
+}
+
+type TesterWithLab struct {
+	ID           int     `db:"id"`
+	Name         string  `db:"ФИО"`
+	LaboratoryID int     `db:"лаборатория"`
+	LabName      *string `db:"название_лаборатории"`
 }
