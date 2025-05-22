@@ -3,7 +3,6 @@ package products
 import (
 	"client-server/internal/model"
 	"database/sql"
-	"fmt"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -31,7 +30,7 @@ func GetHelicopters(db *sqlx.DB) fiber.Handler {
 		for _, m := range models {
 			modelMap[m.ID] = m.Name
 		}
-		fmt.Println(len(helicopters))
+
 		return c.Render("products/models/helicopters", fiber.Map{
 			"Title":       "Вертолеты",
 			"Helicopters": helicopters,
@@ -63,7 +62,7 @@ func AddHelicopter(db *sqlx.DB) fiber.Handler {
 		if err != nil {
 			return err
 		}
-		return c.Redirect("products/models/helicopters")
+		return c.Redirect("/products/models/helicopters")
 	}
 }
 
@@ -74,6 +73,6 @@ func DeleteHelicopter(db *sqlx.DB) fiber.Handler {
 		if err != nil {
 			return err
 		}
-		return c.Redirect("products/models/helicopters")
+		return c.Redirect("/products/models/helicopters")
 	}
 }

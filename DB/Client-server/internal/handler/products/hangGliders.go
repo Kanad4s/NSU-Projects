@@ -62,7 +62,7 @@ func AddHangGlider(db *sqlx.DB) fiber.Handler {
 		if err != nil {
 			return err
 		}
-		return c.Redirect("products/models/hangGliders")
+		return c.Redirect("/products/models/hangGliders")
 	}
 }
 
@@ -73,6 +73,6 @@ func DeleteHangGlider(db *sqlx.DB) fiber.Handler {
 		if err != nil {
 			return err
 		}
-		return c.Redirect("products/models/hangGliders")
+		return c.Redirect("/products/models/hangGliders")
 	}
 }

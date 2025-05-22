@@ -70,7 +70,7 @@ func AddPlane(db *sqlx.DB) fiber.Handler {
 		if err != nil {
 			return err
 		}
-		return c.Redirect("products/models/planes")
+		return c.Redirect("/products/models/planes")
 	}
 }
 
@@ -81,6 +81,6 @@ func DeletePlane(db *sqlx.DB) fiber.Handler {
 		if err != nil {
 			return err
 		}
-		return c.Redirect("products/models/planes")
+		return c.Redirect("/products/models/planes")
 	}
 }
