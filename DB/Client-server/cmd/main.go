@@ -27,6 +27,7 @@ func main() {
 	engine := html.New("../views", ".html")
 	engine.Reload(true)
 	engine.AddFunc("FormatDate", functions.FormatDate)
+	engine.AddFunc("FormatDateWithNull", functions.FormatDateWithNull)
 	app := fiber.New(fiber.Config{
 		Views: engine,
 	})

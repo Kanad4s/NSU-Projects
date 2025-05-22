@@ -64,3 +64,10 @@ type HangGlider struct {
 	MaxSpeed int     `db:"макс_скорость"`
 	FanAngle float64 `db:"угол_веера"`
 }
+
+type ProducedProduct struct {
+	ID              int        `db:"id"`
+	ModelID         int        `db:"модель"`
+	StartProduction time.Time  `db:"начало_производства"`
+	ReleaseDate     *time.Time `db:"дата_выпуска"`
+}
