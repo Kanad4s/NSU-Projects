@@ -25,7 +25,7 @@ type WorkerCategory struct {
 
 type Brigade struct {
 	ID        int    `db:"id"`
-	Brigadier string `db:"brigadier_name"`
+	Brigadier string `db:"бригадир"`
 }
 
 type StaffET struct {

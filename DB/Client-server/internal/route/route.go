@@ -1,6 +1,7 @@
 package route
 
 import (
+	"client-server/internal/handler/labs"
 	"client-server/internal/handler/products"
 	"client-server/internal/handler/staff"
 
@@ -13,6 +14,7 @@ func Setup(app *fiber.App, db *sqlx.DB) {
 	app.Get("/", staff.GetMenu())
 	setupStaff(app, db)
 	setupProducts(app, db)
+	setupLabs(app, db)
 }
 
 func setupStaff(app *fiber.App, db *sqlx.DB) {
@@ -67,4 +69,21 @@ func setupProducts(app *fiber.App, db *sqlx.DB) {
 	app.Get("/products/models/hangGliders/add", products.GetAddHangGliderForm(db))
 	app.Post("/products/models/hangGliders/add", products.AddHangGlider(db))
 	app.Get("/products/models/hangGliders/delete/:id", products.DeleteHangGlider(db))
+}
+
+func setupLabs(app *fiber.App, db *sqlx.DB) {
+	app.Get("/labs/labs", labs.GetLabs(db))
+	app.Get("/labs/labs/add", labs.GetAddLabForm(db))
+	app.Post("/labs/labs/add", labs.AddLab(db))
+	app.Get("/labs/labs/delete/:id", labs.DeleteLab(db))
+
+	// app.Get("/labs/workers", labs.GetWorkers(db))
+	// app.Get("/labs/workers/add", labs.GetAddWorkerForm(db))
+	// app.Post("/labs/workers/add", labs.AddWorker(db))
+	// app.Get("/labs/workers/delete/:id", labs.DeleteWorker(db))
+
+	// app.Get("/labs/labsET", labs.GetStaffET(db))
+	// app.Get("/labs/labsET/add", labs.GetAddStaffETForm(db))
+	// app.Post("/labs/labsET/add", labs.AddStaffET(db))
+	// app.Get("/labs/labsET/delete/:id", labs.DeleteStaffET(db))
 }
