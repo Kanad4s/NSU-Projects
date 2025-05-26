@@ -69,7 +69,7 @@ func AddTestList(db *sqlx.DB) fiber.Handler {
 func DeleteTestList(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		id := c.Params("id")
-		_, err := db.Exec(`DELETE FROM "Испытания" WHERE id = $1`, id)
+		_, err := db.Exec(`DELETE FROM "Набор_испытаний" WHERE id = $1`, id)
 		if err != nil {
 			return err
 		}
