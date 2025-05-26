@@ -4,6 +4,7 @@ import (
 	"client-server/internal/handler/labs"
 	"client-server/internal/handler/products"
 	"client-server/internal/handler/staff"
+	"client-server/internal/handler/workshops"
 
 	"github.com/jmoiron/sqlx"
 
@@ -15,6 +16,7 @@ func Setup(app *fiber.App, db *sqlx.DB) {
 	setupStaff(app, db)
 	setupProducts(app, db)
 	setupLabs(app, db)
+	setupWorkshops(app, db)
 }
 
 func setupStaff(app *fiber.App, db *sqlx.DB) {
@@ -96,4 +98,26 @@ func setupLabs(app *fiber.App, db *sqlx.DB) {
 	app.Get("/labs/testsList/add", labs.GetAddTestListForm(db))
 	app.Post("/labs/testsList/add", labs.AddTestList(db))
 	app.Get("/labs/testsList/delete/:id", labs.DeleteTestList(db))
+}
+
+func setupWorkshops(app *fiber.App, db *sqlx.DB) {
+	app.Get("/workshops/workshops", workshops.GetWorkshops(db))
+	app.Get("/workshops/workshops/add", workshops.GetAddWorkshopForm(db))
+	app.Post("/workshops/workshops/add", workshops.AddWorkshop(db))
+	app.Get("/workshops/workshops/delete/:id", workshops.DeleteWorkshop(db))
+
+	app.Get("/workshops/areas", workshops.GetAreas(db))
+	app.Get("/workshops/areas/add", workshops.GetAddAreaForm(db))
+	app.Post("/workshops/areas/add", workshops.AddArea(db))
+	app.Get("/workshops/areas/delete/:id", workshops.DeleteArea(db))
+
+	app.Get("/workshops/assemblyPlans", workshops.GetAssemblyPlans(db))
+	app.Get("/workshops/assemblyPlans/add", workshops.GetAddAssemblyPlanForm(db))
+	app.Post("/workshops/assemblyPlans/add", workshops.AddAssemblyPlan(db))
+	app.Get("/workshops/assemblyPlans/delete/:id", workshops.DeleteAssemblyPlan(db))
+
+	app.Get("/workshops/doneWorks", workshops.GetDoneWorks(db))
+	app.Get("/workshops/doneWorks/add", workshops.GetAddDoneWorkForm(db))
+	app.Post("/workshops/doneWorks/add", workshops.AddDoneWork(db))
+	app.Get("/workshops/doneWorks/delete/:id", workshops.DeleteDoneWork(db))
 }
