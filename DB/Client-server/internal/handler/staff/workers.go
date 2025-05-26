@@ -77,7 +77,7 @@ func GetAddWorkerForm(db *sqlx.DB) fiber.Handler {
 
 		var brigades []model.Brigade
 		query := `
-            SELECT b.id, p.ФИО AS brigadier_name
+            SELECT b.id, p.ФИО AS бригадир
             FROM "Бригады" b
             JOIN "Рабочие" w ON w.id = b.бригадир
             JOIN "Люди" p ON p.id = w.id
