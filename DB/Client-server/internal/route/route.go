@@ -86,4 +86,14 @@ func setupLabs(app *fiber.App, db *sqlx.DB) {
 	app.Get("/labs/equipment/add", labs.GetAddEquipmentForm(db))
 	app.Post("/labs/equipment/add", labs.AddEquipment(db))
 	app.Get("/labs/equipment/delete/:id", labs.DeleteEquipment(db))
+
+	app.Get("/labs/tests", labs.GetPerformedTests(db))
+	app.Get("/labs/tests/add", labs.GetAddPerformedTestForm(db))
+	app.Post("/labs/tests/add", labs.AddPerformedTest(db))
+	app.Get("/labs/tests/delete/:id", labs.DeletePerformedTest(db))
+
+	app.Get("/labs/testsList", labs.GetTestsList(db))
+	app.Get("/labs/testsList/add", labs.GetAddTestListForm(db))
+	app.Post("/labs/testsList/add", labs.AddTestList(db))
+	app.Get("/labs/testsList/delete/:id", labs.DeleteTestList(db))
 }
