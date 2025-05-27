@@ -1,5 +1,7 @@
 package model
 
+import "time"
+
 type Workshop struct {
 	ID   int    `db:"id"`
 	Name string `db:"название"`
@@ -45,4 +47,26 @@ type AssemblyPlanWithNames struct {
 	ModelName string `db:"модель_название"`
 	WorkName  string `db:"работа_название"`
 	Stage     int    `db:"этап"`
+}
+
+type DoneWorks struct {
+	ID            int        `db:"id"`
+	Area          int        `db:"участок"`
+	Brigade       int        `db:"бригада"`
+	Product       int        `db:"изделие"`
+	Stage         int        `db:"этап"`
+	ArrivalDate   time.Time  `db:"поступление"`
+	DepartureDate *time.Time `db:"покидание"` // Nullable
+}
+
+type DoneWorksWithNames struct {
+	ID            int        `db:"id"`
+	Area          int        `db:"участок"`
+	Workshop      string     `db:"цех_название"`
+	Brigade       int        `db:"бригада"`
+	ProductName   string     `db:"изделие_название"`
+	Stage         int        `db:"этап"`
+	WorkName      string     `db:"работа_название"`
+	ArrivalDate   time.Time  `db:"поступление"`
+	DepartureDate *time.Time `db:"покидание"` // Nullable
 }

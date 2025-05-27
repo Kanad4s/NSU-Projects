@@ -12,59 +12,35 @@ import (
 
 func GetDoneWorks(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		rows, err := db.Query(`SELECT id, человек, бригада, категория, физическая_форма, размер_спецодежды FROM "Рабочие" order by id`)
-		if err != nil {
+		var works []model.DoneWorksWithNames
+
+		query := `
+			SELECT 
+				вр.id,
+				вр."участок",
+				ц."название" AS "цех_название",
+				вр."бригада",
+				ми."название" AS "изделие_название",
+				вр."этап",
+				вру."название" AS "работа_название",
+				вр."поступление",
+				вр."покидание"
+			FROM "Выполненные_работы" вр
+			JOIN "Участки_цехов" у ON вр."участок" = у.id
+			JOIN "Виды_работ_на_участке" вру ON у."вид_работы" = вру.id
+			JOIN "Цеха" ц ON у."цех" = ц.id
+			JOIN "Выпускаемые_изделия" ви ON вр."изделие" = ви.id
+			JOIN "Модели_изделий" ми ON ви."модель" = ми.id
+			ORDER BY вр.id
+		`
+		if err := db.Select(&works, query); err != nil {
 			return err
-		}
-		defer rows.Close()
-
-		var workers []model.Worker
-		for rows.Next() {
-			var w model.Worker
-			var brigade sql.NullInt64
-			err := rows.Scan(&w.ID, &w.PersonID, &brigade, &w.CategoryID, &w.PhysicalForm, &w.UniformSize)
-			if err != nil {
-				return err
-			}
-			if brigade.Valid {
-				b := int(brigade.Int64)
-				w.BrigadeID = &b
-			}
-			workers = append(workers, w)
-		}
-
-		var categories []model.StaffETCategory
-		err = db.Select(&categories, "SELECT id, название FROM Категории_рабочих")
-		if err != nil {
-			return err
-		}
-
-		categoryMap := make(map[int]string)
-		for _, cat := range categories {
-			categoryMap[cat.ID] = cat.Name
-		}
-
-		var people []model.Person
-		err = db.Select(&people, `
-			SELECT p.id, p.ФИО
-			FROM Люди p
-			JOIN Рабочие w ON  w.человек = p.id
-		`)
-		if err != nil {
-			return err
-		}
-
-		peopleMap := make(map[int]string)
-		for _, p := range people {
-			peopleMap[p.ID] = p.FIO
 		}
 
 		return c.Render("workshops/doneWorks", fiber.Map{
-			"Title":       "Рабочие",
-			"Workers":     workers,
-			"PeopleMap":   peopleMap,
-			"CategoryMap": categoryMap,
-		}, "workersLayout")
+			"Title": "Выполненные работы",
+			"Works": works,
+		})
 	}
 }
 

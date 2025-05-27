@@ -45,44 +45,43 @@
 <body>
     <div class="nav">
         <a href="/">Меню</a>
-        <a href="/workshops/workshops/add">Добавить цех</a>
+        <a href="/workshops/workshops">Цеха</a>
         <a href="/workshops/areas">Участки цехов</a>
         <a href="/workshops/assemblyPlans">Планы сборки</a>
-        <a href="/workshops/doneWorks">Выполненные работы</a>
     </div>
 
-    <h1>Список цехов</h1>
+    <h1>Выполненные работы</h1>
 
-    <a class="add-button" href="/labs/departments/add">Добавить цех</a>
+    <a class="add-button" href="/workshops/doneWorks/add">Добавить работу</a>
 
     <table>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Название</th>
-                <th>Начальник</th>
-                <th>Лаборатории</th>
+                <th>Цех</th>
+                <th>Участок</th>
+                <th>Бригада</th>
+                <th>Изделие</th>
+                <th>Этап</th>
+                <th>Работа</th>
+                <th>Поступление</th>
+                <th>Покидание</th>
                 <th>Действия</th>
             </tr>
         </thead>
         <tbody>
-            {{range .Workshops}}
+            {{range .Works}}
             <tr>
                 <td>{{.ID}}</td>
-                <td>{{.Name}}</td>
-                <td>{{.Boss}}</td>
-                <td>
-                    {{if .Laboratories}}
-                        <ul>
-                        {{range .Laboratories}}
-                            <li>{{.Name}}</li>
-                        {{end}}
-                        </ul>
-                    {{else}}
-                        <em>Нет лабораторий</em>
-                    {{end}}
-                </td>
-                <td><a href="/workshops/workshops/delete/{{.ID}}">Удалить</a></td>
+                <td>{{.Workshop}}</td>
+                <td>{{.Area}}</td>
+                <td>{{.Brigade}}</td>
+                <td>{{.ProductName}}</td>
+                <td>{{.Stage}}</td>
+                <td>{{.WorkName}}</td>
+                <td>{{FormatDate .DepartureDate}}</td>
+                <td>{{if .DepartureDate}}{{FormatDate .DepartureDate}}{{else}}—{{end}}</td>
+                <td><a href="/workshops/doneWorks/delete/{{.ID}}">Удалить</a></td>
             </tr>
             {{else}}
             <tr><td colspan="4"><em>Нет записей</em></td></tr>
