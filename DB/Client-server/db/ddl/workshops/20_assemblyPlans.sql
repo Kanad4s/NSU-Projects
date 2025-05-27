@@ -5,3 +5,4 @@ CREATE TABLE IF NOT EXISTS "План_сборки" (
 	"этап" INTEGER NOT NULL CHECK ("этап" > 0),
 	UNIQUE("модель", "работа", "этап")
 );
+

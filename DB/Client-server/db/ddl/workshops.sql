@@ -31,6 +31,8 @@ CREATE TABLE IF NOT EXISTS "План_сборки" (
 	UNIQUE("модель", "работа", "этап")
 );
 
+
+
 CREATE TABLE IF NOT EXISTS "Выполненные_работы" (
 	"id" SERIAL PRIMARY KEY,
 	"участок" INTEGER NOT NULL REFERENCES "Участки_цехов"("id") ON DELETE RESTRICT ON UPDATE RESTRICT,

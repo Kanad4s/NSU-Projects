@@ -32,3 +32,17 @@ type Master struct {
 	ID   int    `db:"id"`
 	Name string `db:"ФИО"`
 }
+
+type AssemblyPlan struct {
+	ID    int `db:"id"`
+	Model int `db:"модель"`
+	Work  int `db:"работа"`
+	Stage int `db:"этап"`
+}
+
+type AssemblyPlanWithNames struct {
+	ID        int    `db:"id"`
+	ModelName string `db:"модель_название"`
+	WorkName  string `db:"работа_название"`
+	Stage     int    `db:"этап"`
+}
