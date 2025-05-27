@@ -12,59 +12,41 @@ import (
 
 func GetAreas(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		rows, err := db.Query(`SELECT id, человек, бригада, категория, физическая_форма, размер_спецодежды FROM "Рабочие" order by id`)
-		if err != nil {
+		var areas []model.AreaWithName
+
+		query := `
+		SELECT a.id, w."название" as "цех", p."ФИО", tw."название" AS "вид_работы"
+		FROM "Участки_цехов" a
+		JOIN "Цеха" w ON w.id = a."цех"
+		JOIN "ИТ_персонал" m ON a."начальник" = m.id
+		JOIN "Люди" p ON p.id = m.id
+		JOIN "Виды_работ_на_участке" tw on tw.id = a."вид_работы"
+		ORDER BY a.id;
+		`
+
+		if err := db.Select(&areas, query); err != nil {
 			return err
 		}
-		defer rows.Close()
 
-		var workers []model.Worker
-		for rows.Next() {
-			var w model.Worker
-			var brigade sql.NullInt64
-			err := rows.Scan(&w.ID, &w.PersonID, &brigade, &w.CategoryID, &w.PhysicalForm, &w.UniformSize)
+		for i := range areas {
+			var masters []model.Master
+			err := db.Select(&masters, `SELECT it.id, p."ФИО" 
+				FROM "Участки_цехов" a 
+				JOIN "Мастера_участка" m ON m."участок" = a."id"
+				JOIN "ИТ_персонал" it ON m."мастер" = it.id
+				JOIN "Люди" p ON p.id = it.id
+				WHERE m."участок" = $1 ORDER BY id
+				`, areas[i].ID)
 			if err != nil {
 				return err
 			}
-			if brigade.Valid {
-				b := int(brigade.Int64)
-				w.BrigadeID = &b
-			}
-			workers = append(workers, w)
+			areas[i].Masters = masters
 		}
 
-		var categories []model.StaffETCategory
-		err = db.Select(&categories, "SELECT id, название FROM Категории_рабочих")
-		if err != nil {
-			return err
-		}
-
-		categoryMap := make(map[int]string)
-		for _, cat := range categories {
-			categoryMap[cat.ID] = cat.Name
-		}
-
-		var people []model.Person
-		err = db.Select(&people, `
-			SELECT p.id, p.ФИО
-			FROM Люди p
-			JOIN Рабочие w ON  w.человек = p.id
-		`)
-		if err != nil {
-			return err
-		}
-
-		peopleMap := make(map[int]string)
-		for _, p := range people {
-			peopleMap[p.ID] = p.FIO
-		}
-
-		return c.Render("staff/workers", fiber.Map{
-			"Title":       "Рабочие",
-			"Workers":     workers,
-			"PeopleMap":   peopleMap,
-			"CategoryMap": categoryMap,
-		}, "workersLayout")
+		return c.Render("workshops/areas", fiber.Map{
+			"Title": "Участки цехов",
+			"Areas": areas,
+		})
 	}
 }
 
@@ -131,17 +113,17 @@ func AddArea(db *sqlx.DB) fiber.Handler {
 			return err
 		}
 
-		return c.Redirect("/staff/workers")
+		return c.Redirect("/workshops/areas")
 	}
 }
 
 func DeleteArea(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		id := c.Params("id")
-		_, err := db.Exec(`DELETE FROM "Рабочие" WHERE id = $1`, id)
+		_, err := db.Exec(`DELETE FROM "Участки_цехов" WHERE id = $1`, id)
 		if err != nil {
 			return err
 		}
-		return c.Redirect("/staff/workers")
+		return c.Redirect("/workshops/areas")
 	}
 }

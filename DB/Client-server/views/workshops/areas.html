@@ -45,44 +45,46 @@
 <body>
     <div class="nav">
         <a href="/">Меню</a>
-        <a href="/workshops/workshops/add">Добавить цех</a>
-        <a href="/workshops/areas">Участки цехов</a>
+        <a href="/workshops/workshops/add">Добавить участок цеха</a>
+        <a href="/workshops/areas">Цеха</a>
         <a href="/workshops/assemblyPlans">Планы сборки</a>
         <a href="/workshops/doneWorks">Выполненные работы</a>
     </div>
 
-    <h1>Список цехов</h1>
+    <h1>Список участков цехов</h1>
 
-    <a class="add-button" href="/labs/departments/add">Добавить цех</a>
+    <a class="add-button" href="/workshops/areas/add">Добавить участок</a>
 
     <table>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Название</th>
+                <th>Цех</th>
+                <th>Вид работы</th>
                 <th>Начальник</th>
-                <th>Лаборатории</th>
+                <th>Мастера</th>
                 <th>Действия</th>
             </tr>
         </thead>
         <tbody>
-            {{range .Workshops}}
+            {{range .Areas}}
             <tr>
                 <td>{{.ID}}</td>
-                <td>{{.Name}}</td>
-                <td>{{.Boss}}</td>
+                <td>{{.WorkshopName}}</td>
+                <td>{{.WorkName}}</td>
+                <td>{{.BossName}}</td>
                 <td>
-                    {{if .Laboratories}}
+                    {{if .Masters}}
                         <ul>
-                        {{range .Laboratories}}
+                        {{range .Masters}}
                             <li>{{.Name}}</li>
                         {{end}}
                         </ul>
                     {{else}}
-                        <em>Нет лабораторий</em>
+                        <em>Нет мастеров</em>
                     {{end}}
                 </td>
-                <td><a href="/workshops/workshops/delete/{{.ID}}">Удалить</a></td>
+                <td><a href="/workshops/areas/delete/{{.ID}}">Удалить</a></td>
             </tr>
             {{else}}
             <tr><td colspan="4"><em>Нет записей</em></td></tr>
