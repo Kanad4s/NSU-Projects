@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.Title}}</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 2em;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #eee;
+        }
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        form {
+            max-width: 400px;
+        }
+        label {
+            display: block;
+            margin-top: 1em;
+        }
+        input, button {
+            width: 100%;
+            padding: 0.5em;
+            margin-top: 0.5em;
+        }
+        .nav {
+            margin-bottom: 1em;
+        }
+        .nav a {
+            margin-right: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="/">Меню</a>
+        <a href="/products/models/helicopter/add">Добавить вертолет</a>
+        <a href="/products/models">Модели</a>
+        <a href="/products/models/planes">Самолеты</a>
+        <a href="/products/models/rockets">Ракеты</a>
+        <a href="/products/models/gliders">Планеры</a>
+        <a href="/products/models/hangGliders">Дельтапланы</a>
+    </div>
+
+    <h1>Модели вертолетов</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Грузоподъемность (кг)</th>
+                <th>Макс. высота подъема (м)</th>
+                <th>Макс. скорость (км/ч)</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{range .Helicopters}}
+            <tr>
+                <td>{{.ID}}</td>
+                <td>{{index $.ModelMap .ID}}</td>
+                <td>{{printf "%.2f" .Lift}}</td>
+                <td>{{.MaxHeight}}</td>
+                <td>{{.MaxSpeed}}</td>
+                <td><a href="/products/models/helicopters/delete/{{.ID}}">Удалить</a></td>
+            </tr>
+        {{end}}
+        </tbody>
+    </table>
+</body>
+</html>

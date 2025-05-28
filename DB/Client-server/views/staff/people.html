@@ -1,0 +1,37 @@
+{{define "people"}}
+  {{template "layout" .}}
+{{end}}
+
+{{define "title"}}Список людей{{end}}
+
+{{define "content"}}
+<h1>Список людей</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>ФИО</th>
+            <th>Дата рождения</th>
+            <th>Кол-во детей</th>
+            <th>Дата устройства</th>
+            <th>Дата увольнения</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{range .People}}
+        <tr>
+            <td>{{.ID}}</td>
+            <td>{{.FIO}}</td>
+            <td>{{.BirthDate}}</td>
+            <td>{{.ChildrenCount}}</td>
+            <td>{{.HireDate}}</td>
+            <td>{{if .DismissalDate}}{{.DismissalDate}}{{else}}—{{end}}</td>
+            <td><a href="/staff/people/delete/{{.ID}}">Удалить</a></td>
+        </tr>
+    {{end}}
+    </tbody>
+</table>
+{{end}}
+
+

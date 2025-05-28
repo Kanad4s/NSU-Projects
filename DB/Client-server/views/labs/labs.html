@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.Title}}</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 2em;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #eee;
+        }
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        form {
+            max-width: 400px;
+        }
+        label {
+            display: block;
+            margin-top: 1em;
+        }
+        input, button {
+            width: 100%;
+            padding: 0.5em;
+            margin-top: 0.5em;
+        }
+        .nav {
+            margin-bottom: 1em;
+        }
+        .nav a {
+            margin-right: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="/">Меню</a>
+        <a href="/labs/labs/add">Добавить лабораторию</a>
+        <a href="/labs/equipment">Испытательное оборудование</a>
+        <a href="/labs/tests">Проведенные испытания</a>
+        <a href="/labs/testsList">Испытания</a>
+        <a href="/labs/testers">Испытатели</a>
+    </div>
+
+    <h1>Лаборатории</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Цеха</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{range .Labs}}
+            <tr>
+                <td>{{.ID}}</td>
+                <td>{{.Name}}</td>
+                <td>
+                    {{if .Workshops}}
+                        <ul>
+                        {{range .Workshops}}
+                            <li>{{.Name}}</li>
+                        {{end}}
+                        </ul>
+                    {{else}}
+                        <em>Нет цехов</em>
+                    {{end}}
+                </td>
+                <td><a href="/labs/labs/delete/{{.ID}}">Удалить</a></td>
+            </tr>
+        {{end}}
+        </tbody>
+    </table>
+</body>
+</html>

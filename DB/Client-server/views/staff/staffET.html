@@ -1,0 +1,33 @@
+{{define "staffET"}}
+  {{template "staffETLayout" .}}
+{{end}}
+
+{{define "title"}}Список ИТ персонала{{end}}
+
+{{define "staffETContent"}}
+<h1>Список ИТ персонала</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Человек</th>
+            <th>Категория</th>
+            <th>Уровень допуска</th>
+            <th>Знание английского</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{range .StaffET}}
+        <tr>
+            <td>{{.ID}}</td>
+            <td>{{.PersonID}} - {{index $.PeopleMap .PersonID}}</td>
+            <td>{{.CategoryID}} — {{index $.CategoryMap .CategoryID}}</td>
+            <td>{{.AccessLevel}}</td>
+            <td>{{.EnglishLevel}}</td>
+            <td><a href="/staff/staffET/delete/{{.ID}}">Удалить</a></td>
+        </tr>
+    {{end}}
+    </tbody>
+</table>
+{{end}}

@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS "Виды_испытаний" (
+	"id" SERIAL PRIMARY KEY,
+	"название" VARCHAR(255) NOT NULL UNIQUE
+);
