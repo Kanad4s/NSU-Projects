@@ -79,7 +79,7 @@
                 <td>{{.ProductName}}</td>
                 <td>{{.Stage}}</td>
                 <td>{{.WorkName}}</td>
-                <td>{{FormatDate .DepartureDate}}</td>
+                <td>{{FormatDate .ArrivalDate}}</td>
                 <td>{{if .DepartureDate}}{{FormatDate .DepartureDate}}{{else}}—{{end}}</td>
                 <td><a href="/workshops/doneWorks/delete/{{.ID}}">Удалить</a></td>
             </tr>
