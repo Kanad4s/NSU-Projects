@@ -41,3 +41,30 @@ CREATE TRIGGER триггер_проверка_даты_испытателя
 BEFORE INSERT OR UPDATE ON "Испытания"
 FOR EACH ROW
 EXECUTE FUNCTION проверить_дату_работы_испытателя();
+
+CREATE OR REPLACE FUNCTION проверить_вид_испытания_и_оборудования()
+RETURNS TRIGGER AS $$
+DECLARE
+    вид_из_набора INTEGER;
+    вид_из_оборудования INTEGER;
+BEGIN
+    SELECT "вид_испытания" INTO вид_из_набора
+    FROM "Набор_испытаний"
+    WHERE id = NEW."испытание";
+
+    SELECT "вид" INTO вид_из_оборудования
+    FROM "Испытательное_оборудование"
+    WHERE id = NEW."оборудование";
+
+    IF вид_из_набора IS DISTINCT FROM вид_из_оборудования THEN
+        RAISE EXCEPTION 'Несовпадение вида испытания (% из набора) и вида оборудования (%) в id=%', вид_из_набора, вид_из_оборудования, NEW.id;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER триггер_проверка_вида_испытания
+BEFORE INSERT OR UPDATE ON "Испытания"
+FOR EACH ROW
+EXECUTE FUNCTION проверить_вид_испытания_и_оборудования();
