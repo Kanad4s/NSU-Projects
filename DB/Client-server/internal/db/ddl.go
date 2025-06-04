@@ -21,7 +21,7 @@ func CreateTables(db *sqlx.DB) {
 	createProducts(db)
 	createWorkshops(db)
 	createLabs(db)
-	createQuerries(db)
+	createQueries(db)
 }
 
 func createStaff(db *sqlx.DB) {
@@ -40,7 +40,7 @@ func createLabs(db *sqlx.DB) {
 	db.Exec(readQuery(PassToDDL + "labs.sql"))
 }
 
-func createQuerries(db *sqlx.DB) {
+func createQueries(db *sqlx.DB) {
 	db.Exec(readQuery(PassToDDL + "query.sql"))
 }
 

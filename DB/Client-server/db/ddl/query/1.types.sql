@@ -42,3 +42,6 @@ BEGIN
     ORDER BY c.id;
 END;
 $$ LANGUAGE plpgsql;
+
+
+-- select * from перечень_изделий(NULL, 'Самолеты');
