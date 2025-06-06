@@ -63,3 +63,6 @@ Module.symvers
 Mkfile.old
 dkms.conf
 TPNS/base/*.ipynb
+
+# Config files
+.env

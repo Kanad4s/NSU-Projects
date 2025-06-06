@@ -1,6 +1,7 @@
 package app
 
 import (
+	"client-server/internal/env"
 	"client-server/internal/handler/functions"
 	"client-server/internal/route"
 	"log"
@@ -26,7 +27,7 @@ func Start(database *sqlx.DB) {
 
 	route.Setup(app, database)
 
-	log.Fatal(app.Listen(":3003"))
+	log.Fatal(app.Listen(":" + env.GetPort()))
 }
 
 func setupEngine() *html.Engine {
