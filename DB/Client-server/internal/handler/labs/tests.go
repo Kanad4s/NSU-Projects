@@ -16,13 +16,14 @@ func GetPerformedTests(db *sqlx.DB) fiber.Handler {
 		query := `
             SELECT 
                 t.id,
-                ts.описание AS TestName,
-                p."модель" AS ProductName,
+                tt."название" AS TestName,
+                p.id AS ProductName,
                 t.дата,
                 people."ФИО" AS TesterName,
                 e."название" AS EquipmentName
             FROM "Испытания" t
             JOIN "Набор_испытаний" ts ON t.испытание = ts.id
+			JOIN "Виды_испытаний" tt ON tt.id = ts."вид_испытания"
             JOIN "Выпускаемые_изделия" p ON t.изделие = p.id
             JOIN "Испытатели" s ON t.испытатель = s.id
             JOIN "Люди" people ON people.id = s.id

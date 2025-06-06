@@ -3,44 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{{.Title}}</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            background-color: #f7f7f7;
-            margin: 2em;
-        }
-        h1 {
-            color: #333;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1em;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-        th {
-            background-color: #eee;
-        }
-        .nav a {
-            margin-right: 1em;
-        }
-        .add-button {
-            margin-top: 1em;
-            display: inline-block;
-            padding: 0.5em 1em;
-            background-color: #007BFF;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-        .add-button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     <div class="nav">
@@ -79,7 +42,7 @@
                 <td>{{.ProductName}}</td>
                 <td>{{.Stage}}</td>
                 <td>{{.WorkName}}</td>
-                <td>{{FormatDate .DepartureDate}}</td>
+                <td>{{FormatDate .ArrivalDate}}</td>
                 <td>{{if .DepartureDate}}{{FormatDate .DepartureDate}}{{else}}—{{end}}</td>
                 <td><a href="/workshops/doneWorks/delete/{{.ID}}">Удалить</a></td>
             </tr>
