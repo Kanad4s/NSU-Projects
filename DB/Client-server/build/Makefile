@@ -6,7 +6,7 @@ GO = go
 PYTHON = python3
 SQL_BUILD_SCRIPT = ./buildSQL.py 
 DB_QUERIES_DIR = ../db
-PORT ?= 3000
+PORT ?= 3003
 
 .PHONY: build, run, dml, ddl, clean, help, killport
 
