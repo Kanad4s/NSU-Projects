@@ -7,7 +7,7 @@
 {{define "content"}}
 <h1>Список людей</h1>
 
-    <a class="add-button" href="/staff/people/add">Добавить человека</a>
+    <a class="add-button" href="/staff/people/add">Добавить человека </a>
 
 <table>
     <thead>
@@ -30,7 +30,11 @@
             <td>{{.ChildrenCount}}</td>
             <td>{{.HireDate}}</td>
             <td>{{if .DismissalDate}}{{.DismissalDate}}{{else}}—{{end}}</td>
-            <td><a href="/staff/people/delete/{{.ID}}">Удалить</a></td>
+            <td>
+                <a href="/staff/people/edit/{{.ID}}">Изменить</a> |
+                <a href="/staff/people/delete/{{.ID}}">Удалить</a>
+            </td>
+
         </tr>
     {{end}}
     </tbody>

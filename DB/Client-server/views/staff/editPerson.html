@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <h1>Редактировать человека</h1>
+
+    <form method="POST" action="/staff/people/edit/{{.Person.ID}}">
+        <label for="fio">ФИО:</label>
+        <input type="text" id="fio" name="fio" value="{{.Person.FIO}}" required><br>
+
+        <label for="birth">Дата рождения:</label>
+        <input type="date" id="birth" name="birth" value="{{.Person.BirthDate}}" required><br>
+
+        <label for="children">Кол-во детей:</label>
+        <input type="number" id="children" name="children" min="0" value="{{.Person.ChildrenCount}}" required><br>
+
+        <label for="hire">Дата устройства:</label>
+        <input type="date" id="hire" name="hire" value="{{.Person.HireDate}}" required><br>
+
+        <label for="dismissal">Дата увольнения:</label>
+        <input type="date" id="dismissal" name="dismissal" value="{{.Person.DismissalDate}}"><br>
+
+        <button type="submit">Сохранить</button>
+        <a href="/staff/people">Отмена</a>
+</form>
+</body>
+</html>
+
+
+{{define "content"}}
+
+{{end}}

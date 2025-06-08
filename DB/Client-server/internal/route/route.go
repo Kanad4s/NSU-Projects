@@ -24,6 +24,8 @@ func setupStaff(app *fiber.App, db *sqlx.DB) {
 	app.Get("/staff/people/add", staff.GetAddPersonForm(db))
 	app.Post("/staff/people/add", staff.AddPerson(db))
 	app.Get("/staff/people/delete/:id", staff.DeletePerson(db))
+	app.Get("/staff/people/edit/:id", staff.GetEditPersonForm(db))
+	app.Post("/staff/people/edit/:id", staff.EditPerson(db))
 
 	app.Get("/staff/workers", staff.GetWorkers(db))
 	app.Get("/staff/workers/add", staff.GetAddWorkerForm(db))
