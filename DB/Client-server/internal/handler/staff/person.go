@@ -54,7 +54,7 @@ func GetPeople(db *sqlx.DB) fiber.Handler {
 
 func GetAddPersonForm(db *sqlx.DB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		return c.Render("staff/addPerson", fiber.Map{
+		return c.Render("staff/people/addPerson", fiber.Map{
 			"Title": "Добавить человека",
 		})
 	}
@@ -111,7 +111,7 @@ func GetEditPersonForm(db *sqlx.DB) fiber.Handler {
 			p.DismissalDate = &d
 		}
 
-		return c.Render("staff/editPerson", fiber.Map{
+		return c.Render("staff/people/editPerson", fiber.Map{
 			"Title":  "Редактировать человека",
 			"Person": p,
 		})
