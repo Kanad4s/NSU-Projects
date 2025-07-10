@@ -52,7 +52,7 @@ func GetStaffET(db *sqlx.DB) fiber.Handler {
 			peopleMap[p.ID] = p.FIO
 		}
 
-		return c.Render("staff/staffET", fiber.Map{
+		return c.Render("staff/staff/staffET", fiber.Map{
 			"Title":       "Список ИТ персонала",
 			"StaffET":     staff,
 			"CategoryMap": categoryMap,
@@ -92,7 +92,7 @@ func GetAddStaffETForm(db *sqlx.DB) fiber.Handler {
 			return err
 		}
 
-		return c.Render("staff/addStaffET", fiber.Map{
+		return c.Render("staff/staff/addStaffET", fiber.Map{
 			"Title":      "Добавить ИТ персонал",
 			"People":     availablePeople,
 			"Categories": categories,

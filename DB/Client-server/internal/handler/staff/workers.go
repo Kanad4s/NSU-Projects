@@ -59,7 +59,7 @@ func GetWorkers(db *sqlx.DB) fiber.Handler {
 			peopleMap[p.ID] = p.FIO
 		}
 
-		return c.Render("staff/workers", fiber.Map{
+		return c.Render("staff/workers/workers", fiber.Map{
 			"Title":       "Рабочие",
 			"Workers":     workers,
 			"PeopleMap":   peopleMap,
@@ -101,7 +101,7 @@ func GetAddWorkerForm(db *sqlx.DB) fiber.Handler {
 			return err
 		}
 
-		return c.Render("staff/addWorker", fiber.Map{
+		return c.Render("staff/workers/addWorker", fiber.Map{
 			"Categories": categories,
 			"Brigades":   brigades,
 			"People":     availablePeople,
