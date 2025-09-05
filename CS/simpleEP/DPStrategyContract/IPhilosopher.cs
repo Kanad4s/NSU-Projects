@@ -1,5 +1,5 @@
 
-namespace StrategyContract;
+namespace DPStrategyContract;
 
 public interface IPhilosopher
 {
