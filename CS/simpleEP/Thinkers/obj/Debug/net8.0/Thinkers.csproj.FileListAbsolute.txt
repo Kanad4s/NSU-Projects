@@ -1,0 +1,14 @@
+/home/kanad4s/projects/dotc/Thinkers/bin/Debug/net8.0/Thinkers
+/home/kanad4s/projects/dotc/Thinkers/bin/Debug/net8.0/Thinkers.deps.json
+/home/kanad4s/projects/dotc/Thinkers/bin/Debug/net8.0/Thinkers.runtimeconfig.json
+/home/kanad4s/projects/dotc/Thinkers/bin/Debug/net8.0/Thinkers.dll
+/home/kanad4s/projects/dotc/Thinkers/bin/Debug/net8.0/Thinkers.pdb
+/home/kanad4s/projects/dotc/Thinkers/obj/Debug/net8.0/Thinkers.GeneratedMSBuildEditorConfig.editorconfig
+/home/kanad4s/projects/dotc/Thinkers/obj/Debug/net8.0/Thinkers.AssemblyInfoInputs.cache
+/home/kanad4s/projects/dotc/Thinkers/obj/Debug/net8.0/Thinkers.AssemblyInfo.cs
+/home/kanad4s/projects/dotc/Thinkers/obj/Debug/net8.0/Thinkers.csproj.CoreCompileInputs.cache
+/home/kanad4s/projects/dotc/Thinkers/obj/Debug/net8.0/Thinkers.dll
+/home/kanad4s/projects/dotc/Thinkers/obj/Debug/net8.0/refint/Thinkers.dll
+/home/kanad4s/projects/dotc/Thinkers/obj/Debug/net8.0/Thinkers.pdb
+/home/kanad4s/projects/dotc/Thinkers/obj/Debug/net8.0/Thinkers.genruntimeconfig.cache
+/home/kanad4s/projects/dotc/Thinkers/obj/Debug/net8.0/ref/Thinkers.dll
