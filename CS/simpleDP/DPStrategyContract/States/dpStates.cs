@@ -1,8 +1,8 @@
 namespace DPStrategyContract.States
 {
-    public enum PhilosopherStates
+    public enum PhilosopherState
     {
-        Thinking = 1,
+        Thinking,
         Hungry,
         Eating
     }
