@@ -3,9 +3,9 @@ using System;
 using System.IO;
 
 
-namespace Programm;
+namespace Program;
 
-public class Programm
+public class Program
 {
     static void Main(string[] args)
     {
@@ -20,5 +20,11 @@ public class Programm
         Console.WriteLine($"Steps: {appConfig.Simulation.Steps}");
         Console.WriteLine($"Philosophers file: {appConfig.PhilosophersFile}");
 
+        var names = new FilePhilosopherNameProvider(appConfig.PhilosophersFile);
+        foreach (var name in names.GetNames().ToArray())
+        {
+            Console.WriteLine(name);
+        }
+        // Console.WriteLine(names.GetNames().ToArray()[0]);
     }
 }
