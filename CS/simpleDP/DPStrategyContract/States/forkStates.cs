@@ -1,4 +1,4 @@
-namespace DPStrategyContract.States
+namespace DPStrategyContract
 {
     public enum ForkStates
     {

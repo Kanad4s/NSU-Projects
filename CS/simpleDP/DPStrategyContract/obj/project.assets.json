@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/kanad4s/projects/dotc/DPStrategyContract/DPStrategyContract.csproj",
+      "projectUniqueName": "/home/kanad4s/NSU-Projects/CS/simpleDP/DPStrategyContract/DPStrategyContract.csproj",
       "projectName": "DPStrategyContract",
-      "projectPath": "/home/kanad4s/projects/dotc/DPStrategyContract/DPStrategyContract.csproj",
+      "projectPath": "/home/kanad4s/NSU-Projects/CS/simpleDP/DPStrategyContract/DPStrategyContract.csproj",
       "packagesPath": "/home/kanad4s/.nuget/packages/",
-      "outputPath": "/home/kanad4s/projects/dotc/DPStrategyContract/obj/",
+      "outputPath": "/home/kanad4s/NSU-Projects/CS/simpleDP/DPStrategyContract/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/kanad4s/.nuget/NuGet/NuGet.Config"

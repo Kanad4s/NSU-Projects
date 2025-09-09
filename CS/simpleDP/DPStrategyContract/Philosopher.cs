@@ -2,16 +2,28 @@ namespace DPStrategyContract;
 
 public class Philosopher
 {
-    private int Id { get; }
-    private string Name { get; }
-    private PhilosopherState philosopherState { get; }
-    private int MealsEaten { get; set; }
+    public string _name { get; }
+    // private PhilosopherState _philosopherState { get; }
+    private int _mealsEaten { get; set; }
 
-    private readonly IPhilosopherStrategy _strategy;
+    // private readonly IPhilosopherStrategy _strategy;
 
     bool IsThinking { get; }
     bool IsHungry { get; }
     bool IsEating { get; }
+
+     public Philosopher(string name)
+    {
+        _name = name;
+        _mealsEaten = 0;
+    }
+
+    // public Philosopher(string name, PhilosopherState philosopherState)
+    // {
+    //     _name = name;
+    //     _philosopherState = philosopherState;
+    //     _mealsEaten = 0;
+    // }
 
     // bool HasLeftFork { get; }
     // bool HasRightFork { get; }

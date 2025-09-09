@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = DPStrategyContract
-build_property.ProjectDir = /home/kanad4s/projects/dotc/DPStrategyContract/
+build_property.ProjectDir = /home/kanad4s/NSU-Projects/CS/simpleDP/DPStrategyContract/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

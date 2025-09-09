@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
+using Program.Simulation;
 
 
 namespace Program;
@@ -25,6 +26,11 @@ public class Program
         {
             Console.WriteLine(name);
         }
-        // Console.WriteLine(names.GetNames().ToArray()[0]);
+        
+        var pd = PhilosopherFactory.CreatePhilosophers(names.GetNames());
+        foreach (var pda in pd)
+        {
+            Console.WriteLine(pda._name);
+        }
     }
 }

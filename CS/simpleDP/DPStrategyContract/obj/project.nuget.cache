@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZFgeJ5ZOxQs8HSc0+m0/oTd9zeny3AE+U8e7Dls+X1NPFRVHQxsz8iXEQtxNAevoUJu4GWoENnA/VrY428v8KA==",
+  "dgSpecHash": "nT/EyBIZXWFb9ZhX2jEF7OWAURk1/N9wzrA4DgXcXcD3WO7U5XbsQ/NcKQdvq9UUf0lZLpHs5Tr1yd7SXWsFLw==",
   "success": true,
-  "projectFilePath": "/home/kanad4s/projects/dotc/DPStrategyContract/DPStrategyContract.csproj",
+  "projectFilePath": "/home/kanad4s/NSU-Projects/CS/simpleDP/DPStrategyContract/DPStrategyContract.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

@@ -1,4 +1,4 @@
-namespace DPStrategyContract.Actions
+namespace DPStrategyContract
 {
     public enum PhilosopherActions
     {
