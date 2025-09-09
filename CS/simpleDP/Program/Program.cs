@@ -26,11 +26,13 @@ public class Program
         {
             Console.WriteLine(name);
         }
-        
+
         var pd = PhilosopherFactory.CreatePhilosophers(names.GetNames());
         foreach (var pda in pd)
         {
             Console.WriteLine(pda._name);
         }
+        
+        
     }
 }

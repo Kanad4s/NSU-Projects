@@ -3,7 +3,7 @@ namespace DPStrategyContract;
 public class Philosopher
 {
     public string _name { get; }
-    // private PhilosopherState _philosopherState { get; }
+    private PhilosopherState _state { get; set; }
     private int _mealsEaten { get; set; }
 
     // private readonly IPhilosopherStrategy _strategy;
