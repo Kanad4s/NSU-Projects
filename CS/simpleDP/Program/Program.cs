@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using Program.Simulation;
+using DPStrategies;
 
 
 namespace Program;
@@ -27,7 +28,9 @@ public class Program
             Console.WriteLine(name);
         }
 
-        var pd = PhilosopherFactory.CreatePhilosophers(names.GetNames());
+        var strategy = new NaiveStrategy();
+
+        var pd = PhilosopherFactory.CreatePhilosophers(names.GetNames(), strategy);
         foreach (var pda in pd)
         {
             Console.WriteLine(pda._name);

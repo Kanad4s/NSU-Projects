@@ -1,13 +1,15 @@
+using DPStrategyContract;
+
 namespace Simulation.Statistic;
 
 public static class Statistic
 {
-    public static StatusSimulation(List<Philosophers> philosophers, List<Fork> forks)
+    public static void StatusSimulation(List<Philosopher> philosophers, List<Fork> forks)
     {
         StatusPhilosophers(philosophers);
         StatusForks(forks);
     }
-    public void StatusPhilosophers(List<Philosophers> philosophers)
+    public static void StatusPhilosophers(List<Philosopher> philosophers)
     {
         Console.WriteLine("Философы:");
         foreach (var p in philosophers)
@@ -16,7 +18,7 @@ public static class Statistic
         }
     }
 
-    public void StatusForks(List<Fork> forks)
+    public static void StatusForks(List<Fork> forks)
     {
 
     }

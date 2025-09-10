@@ -2,17 +2,19 @@ using DPStrategyContract.States;
 
 namespace DPStrategyContract;
 
-public class Philosopher(string name)
+public class Philosopher(string name, IPhilosopherStrategy strategy)
 {
-    public string _name { get; } = name;
-    private PhilosopherState _state { get; set; }
-    private int _mealsEaten { get; set; } = 0;
+    public string _name { get; set; } = name;
+    public PhilosopherState _state { get; set; }
+    public int _mealsEaten { get; set; } = 0;
 
-    // private readonly IPhilosopherStrategy _strategy;
+    public required IPhilosopherStrategy _strategy { get; set; } = strategy;
 
-    bool IsThinking { get; }
-    bool IsHungry { get; }
-    bool IsEating { get; }
+    public void Decide()
+    {
+        strategy.Decide(this);
+    }
+
 
     // public Philosopher(string name, PhilosopherState philosopherState)
     // {

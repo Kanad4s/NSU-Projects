@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DPStrategyContract\DPStrategyContract.csproj" />
+    <ProjectReference Include="..\DPStrategies\DPStrategies.csproj" />
   </ItemGroup>
 
 </Project>
