@@ -1,6 +1,6 @@
 namespace DPStrategyContract.States
 {
-    public enum ForkStates
+    public enum ForkState
     {
         Available,
         InUse

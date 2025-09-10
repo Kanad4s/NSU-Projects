@@ -1,6 +1,6 @@
 namespace DPStrategyContract.Actions
 {
-    public enum PhilosopherActions
+    public enum PhilosopherAction
     {
         None,
         TakeLeftFork,
