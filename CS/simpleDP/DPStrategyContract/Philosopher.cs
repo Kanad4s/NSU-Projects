@@ -6,13 +6,13 @@ public class Philosopher(string name, IPhilosopherStrategy strategy)
 {
     public string _name { get; set; } = name;
     public PhilosopherState _state { get; set; }
+    public IPhilosopherStrategy _strategy { get; set; } = strategy;
     public int _mealsEaten { get; set; } = 0;
 
-    public required IPhilosopherStrategy _strategy { get; set; } = strategy;
 
     public void Decide()
     {
-        strategy.Decide(this);
+        _strategy.Decide(this);
     }
 
 
