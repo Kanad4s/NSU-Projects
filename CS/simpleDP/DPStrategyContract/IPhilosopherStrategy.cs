@@ -1,3 +1,5 @@
+using DPStrategyContract.Actions;
+
 namespace DPStrategyContract;
 
 public interface IPhilosopherStrategy

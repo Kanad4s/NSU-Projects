@@ -1,4 +1,4 @@
-namespace DPStrategyContract
+namespace DPStrategyContract.States
 {
     public enum PhilosopherState
     {

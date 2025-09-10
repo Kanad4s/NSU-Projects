@@ -1,22 +1,18 @@
+using DPStrategyContract.States;
+
 namespace DPStrategyContract;
 
-public class Philosopher
+public class Philosopher(string name)
 {
-    public string _name { get; }
+    public string _name { get; } = name;
     private PhilosopherState _state { get; set; }
-    private int _mealsEaten { get; set; }
+    private int _mealsEaten { get; set; } = 0;
 
     // private readonly IPhilosopherStrategy _strategy;
 
     bool IsThinking { get; }
     bool IsHungry { get; }
     bool IsEating { get; }
-
-     public Philosopher(string name)
-    {
-        _name = name;
-        _mealsEaten = 0;
-    }
 
     // public Philosopher(string name, PhilosopherState philosopherState)
     // {

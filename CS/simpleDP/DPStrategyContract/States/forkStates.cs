@@ -1,8 +1,8 @@
-namespace DPStrategyContract
+namespace DPStrategyContract.States
 {
     public enum ForkStates
     {
-        Available = 1,
+        Available,
         InUse
     }
 }

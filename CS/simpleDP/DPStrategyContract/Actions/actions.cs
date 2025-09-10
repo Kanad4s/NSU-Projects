@@ -1,8 +1,8 @@
-namespace DPStrategyContract
+namespace DPStrategyContract.Actions
 {
     public enum PhilosopherActions
     {
-        None = 0,
+        None,
         TakeLeftFork,
         TakeRightFork,
         ReleaseLeftFork,
