@@ -1,16 +1,23 @@
 using System.Collections.Generic;
 using DPStrategyContract;
+using DPStrategyContract.States;
 namespace Program.Simulation;
 
 public static class Factory
 {
-    public static List<Philosopher> CreatePhilosophers(IEnumerable<string> names, IPhilosopherStrategy strategy)
+    public static List<Philosopher> CreatePhilosophers(List<string> names, IPhilosopherStrategy strategy, List<Fork> forks)
     {
         var philosophers = new List<Philosopher>();
 
-        foreach (var name in names)
+        for (var i = 0; i < names.Count; i++)
         {
-            philosophers.Add(new Philosopher(name, strategy));
+            philosophers.Add(new Philosopher(
+                names[i],
+                strategy,
+                PhilosopherState.Thinking,
+                forks[i],
+                forks[(i + 1) % forks.Count]
+            ));
         }
 
         return philosophers;
