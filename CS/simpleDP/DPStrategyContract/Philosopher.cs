@@ -6,41 +6,78 @@ public class Philosopher
 {
     public string Name { get; }
     public PhilosopherState State { get; set; }
+
+    public int StateDuration { get; set; } = 0;
     public IPhilosopherStrategy Strategy { get; set; }
 
     public int MealsEaten = 0;
     public Fork LeftFork { get; set; }
     public Fork RightFork { get; set; }
 
-    public Philosopher(string name, IPhilosopherStrategy strategy, PhilosopherState state, Fork leftFork, Fork rightFork)
+    private int _thinkingMin { get; }
+    private int _thinkingMax { get; }
+    private int _eatingMin { get; }
+    private int _eatingMax { get; }
+
+    public Philosopher(string name, IPhilosopherStrategy strategy, PhilosopherState state,
+        Fork leftFork, Fork rightFork, int thinkingMin, int thinkingMax, int eatingMin, int eatingMax)
     {
         Name = name;
         Strategy = strategy;
         State = state;
         LeftFork = leftFork;
         RightFork = rightFork;
+        _thinkingMin = thinkingMin;
+        _thinkingMax = thinkingMax;
+        _eatingMin = eatingMin;
+        _eatingMax = eatingMax;
     }
-
 
     public void Decide()
     {
         Strategy.Decide(this);
     }
 
+    public void StartThinking()
+    {
+        LeftFork.Release();
+        RightFork.Release();
+        State = PhilosopherState.Thinking;
+        StateDuration = Random.Shared.Next(_thinkingMin, _thinkingMax + 1);
+    }
 
-    // public Philosopher(string name, PhilosopherState philosopherState)
-    // {
-    //     _name = name;
-    //     _philosopherState = philosopherState;
-    //     _mealsEaten = 0;
-    // }
+    public bool TryEating()
+    {
+        if (LeftFork.Owner == this && RightFork.Owner == this)
+        {
+            State = PhilosopherState.Eating;
+            StateDuration = Random.Shared.Next(_eatingMin, _eatingMax + 1);
+            return true;
+        }
 
-    // bool HasLeftFork { get; }
-    // bool HasRightFork { get; }
-    // bool IsLeftForkAvailable { get; }
-    // bool IsRightForkAvailable { get; }
+        return false;
+    }
 
-    // nullable 
-    // int? RemainingThinkingSteps { get; }
-    // int? RemainingEatingSteps { get; }
+    public void Step()
+    {
+        if (StateDuration > 1)
+        {
+            StateDuration--;
+            return;
+        }
+
+        if (State == PhilosopherState.Eating)
+        {
+            StartThinking();
+        }
+        else if (State == PhilosopherState.Thinking)
+        {
+            State = PhilosopherState.Hungry;
+            StateDuration = 0;
+        }
+        else
+        {
+            Strategy.Decide(this);
+        }
+    }
 }
