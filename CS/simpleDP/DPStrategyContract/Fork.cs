@@ -16,6 +16,25 @@ public class Fork(int id)
         return State == ForkState.InUse;
     }
 
+    public void Release()
+    {
+        State = ForkState.Available;
+        Owner = null;
+    }
 
+    public bool TryUse(Philosopher philosopher)
+    {
+        if (State == ForkState.InUse)
+        {
+            return philosopher == Owner;
+        }
+        else if (State == ForkState.Available)
+        {
+            Owner = philosopher;
+            State = ForkState.InUse;
+            return true;
+        }
+        return false;
+    }
 
 }
