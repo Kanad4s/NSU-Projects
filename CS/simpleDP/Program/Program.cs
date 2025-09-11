@@ -28,13 +28,17 @@ public class Program
             Console.WriteLine(name);
         }
 
+        var forks = Factory.CreateForks(names.GetNames().Count());
+
         var strategy = new NaiveStrategy();
 
-        var pd = PhilosopherFactory.CreatePhilosophers(names.GetNames(), strategy);
+        var pd = Factory.CreatePhilosophers(names.GetNames(), strategy);
         foreach (var pda in pd)
         {
             Console.WriteLine(pda._name);
         }
+
+        
 
     }
 }

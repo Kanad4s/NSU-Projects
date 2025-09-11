@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using DPStrategyContract;
 namespace Program.Simulation;
 
-public static class PhilosopherFactory
+public static class Factory
 {
     public static List<Philosopher> CreatePhilosophers(IEnumerable<string> names, IPhilosopherStrategy strategy)
     {
@@ -14,6 +14,18 @@ public static class PhilosopherFactory
         }
 
         return philosophers;
+    }
+
+    public static List<Fork> CreateForks(int count)
+    {
+        var forks = new List<Fork>();
+
+        for (var i = 0; i < count; i++)
+        {
+            forks.Add(new Fork(i));
+        }
+
+        return forks;
     }
     
 }
