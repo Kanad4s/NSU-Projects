@@ -4,10 +4,12 @@ namespace Simulation.Statistic;
 
 public static class Statistic
 {
-    public static void StatusSimulation(List<Philosopher> philosophers, List<Fork> forks)
+    public static void StatusSimulation(int step, List<Philosopher> philosophers, List<Fork> forks)
     {
+        Console.WriteLine($"===== ШАГ {step} =====");
         StatusPhilosophers(philosophers);
         StatusForks(forks, philosophers);
+        Console.WriteLine();
     }
     public static void StatusPhilosophers(List<Philosopher> philosophers)
     {
@@ -26,8 +28,9 @@ public static class Statistic
             Console.Write($"\tFork-{f.Id}: {f.State} ");
             if (f.Owner != null)
             {
-                Console.Write($"(используется {f.Owner.Name})\n");
+                Console.WriteLine($"(используется {f.Owner.Name})");
             }
+            Console.WriteLine();
         }
     }
 }

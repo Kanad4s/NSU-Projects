@@ -32,13 +32,14 @@ public class Program
 
         var strategy = new NaiveStrategy();
 
-        var pd = Factory.CreatePhilosophers([.. names.GetNames()], strategy, forks);
-        foreach (var pda in pd)
+        var philosophers = Factory.CreatePhilosophers([.. names.GetNames()], strategy, forks);
+        foreach (var pda in philosophers)
         {
             Console.WriteLine(pda.Name);
         }
 
-
+        // var sim = new PDSimulation();
+        PDSimulation.Simulate(philosophers, forks, appConfig.Simulation.Steps);
 
     }
 }

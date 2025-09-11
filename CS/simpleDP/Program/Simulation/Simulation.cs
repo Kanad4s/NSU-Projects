@@ -3,14 +3,14 @@ using Simulation.Statistic;
 
 namespace Program.Simulation;
 
-public static class Simulation
+public static class PDSimulation
 {
     public static void Simulate(List<Philosopher> philosophers, List<Fork> forks, int steps)
     {
         for (int i = 0; i < steps; i++)
         {
             SimulationStep(philosophers);
-            Statistic.StatusSimulation(philosophers, forks);
+            Statistic.StatusSimulation(i, philosophers, forks);
         }
     }
 
