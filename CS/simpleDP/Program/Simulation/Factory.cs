@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using DPStrategyContract;
 using DPStrategyContract.States;
+using Program.Infrastructure.Config;
 namespace Program.Simulation;
 
 public static class Factory
 {
-    public static List<Philosopher> CreatePhilosophers(List<string> names, IPhilosopherStrategy strategy, List<Fork> forks)
+    public static List<Philosopher> CreatePhilosophers(List<string> names, IPhilosopherStrategy strategy,
+        List<Fork> forks, AppConfig config)
     {
         var philosophers = new List<Philosopher>();
 
@@ -16,7 +18,11 @@ public static class Factory
                 strategy,
                 PhilosopherState.Thinking,
                 forks[i],
-                forks[(i + 1) % forks.Count]
+                forks[(i + 1) % forks.Count],
+                config.Simulation.ThinkingMin,
+                config.Simulation.ThinkingMax,
+                config.Simulation.EatingMin,
+                config.Simulation.EatingMax
             ));
         }
 

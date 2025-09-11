@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using Program.Simulation;
 using DPStrategies;
+using Program.Infrastructure.Config;
 
 
 namespace Program;
@@ -32,14 +33,12 @@ public class Program
 
         var strategy = new NaiveStrategy();
 
-        var philosophers = Factory.CreatePhilosophers([.. names.GetNames()], strategy, forks);
+        var philosophers = Factory.CreatePhilosophers([.. names.GetNames()], strategy, forks, appConfig);
         foreach (var pda in philosophers)
         {
             Console.WriteLine(pda.Name);
         }
 
-        // var sim = new PDSimulation();
         PDSimulation.Simulate(philosophers, forks, appConfig.Simulation.Steps);
-
     }
 }
