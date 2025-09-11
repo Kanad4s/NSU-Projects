@@ -24,7 +24,7 @@ public static class Statistic
         foreach (var f in forks)
         {
             Console.Write($"\tFork-{f.Id}: {f.State} ");
-            if (f.IsInUse())
+            if (f.Owner != null)
             {
                 Console.Write($"(используется {f.Owner.Name})\n");
             }
