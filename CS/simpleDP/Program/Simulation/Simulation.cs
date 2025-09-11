@@ -7,6 +7,7 @@ public static class PDSimulation
 {
     public static void Simulate(List<Philosopher> philosophers, List<Fork> forks, int steps)
     {
+        PrepareSimulation(philosophers, forks);
         for (int i = 0; i < steps; i++)
         {
             SimulationStep(philosophers);
@@ -19,6 +20,18 @@ public static class PDSimulation
         foreach (var p in philosophers)
         {
             p.Decide();
+        }
+    }
+
+    private static void PrepareSimulation(List<Philosopher> philosophers, List<Fork> forks)
+    {
+        foreach (var p in philosophers)
+        {
+            p.StartThinking();
+        }
+        foreach (var f in forks)
+        {
+            f.Release();
         }
     }
 }
