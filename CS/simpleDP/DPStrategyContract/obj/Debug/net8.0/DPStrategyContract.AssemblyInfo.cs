@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DPStrategyContract")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+21721a6bc205cb86c17b383e7a4cde157a47d1dd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b43906523ba250cb4e633365769e098370a3ea54")]
 [assembly: System.Reflection.AssemblyProductAttribute("DPStrategyContract")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DPStrategyContract")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

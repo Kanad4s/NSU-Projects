@@ -68,6 +68,7 @@ public class Philosopher
 
         if (State == PhilosopherState.Eating)
         {
+            MealsEaten++;
             StartThinking();
         }
         else if (State == PhilosopherState.Thinking)
@@ -77,7 +78,7 @@ public class Philosopher
         }
         else
         {
-            Strategy.Decide(this);
+            // Strategy.Decide(this);
         }
     }
 }

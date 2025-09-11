@@ -6,10 +6,11 @@ namespace DPStrategies;
 public class NaiveStrategy() : IPhilosopherStrategy
 {
     public string StrategyName { get; set; } = "Naive Strategy";
-    public PhilosopherAction Decide(Philosopher philosopher)
+    public void Decide(Philosopher philosopher)
     {
-        philosopher.State = PhilosopherState.Thinking;
-        return PhilosopherAction.TakeLeftFork;
+        philosopher.Step();
+        // philosopher.State = PhilosopherState.Thinking;
+        // return PhilosopherAction.TakeLeftFork;
     }
 
 }

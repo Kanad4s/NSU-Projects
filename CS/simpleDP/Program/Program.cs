@@ -24,20 +24,12 @@ public class Program
         Console.WriteLine($"Philosophers file: {appConfig.PhilosophersFile}");
 
         var names = new FilePhilosopherNameProvider(appConfig.PhilosophersFile);
-        foreach (var name in names.GetNames().ToArray())
-        {
-            Console.WriteLine(name);
-        }
 
         var forks = Factory.CreateForks(names.GetNames().Count());
 
         var strategy = new NaiveStrategy();
 
         var philosophers = Factory.CreatePhilosophers([.. names.GetNames()], strategy, forks, appConfig);
-        foreach (var pda in philosophers)
-        {
-            Console.WriteLine(pda.Name);
-        }
 
         PDSimulation.Simulate(philosophers, forks, appConfig.Simulation.Steps);
     }
