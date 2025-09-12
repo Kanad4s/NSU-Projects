@@ -9,9 +9,11 @@ public class PDSimulation(List<Philosopher> philosophers, List<Fork> forks)
     public void Simulate(List<Philosopher> philosophers, List<Fork> forks, int steps, IPhilosopherStrategy strategy)
     {
         var isDeadlock = false;
+        int lastStep = 0;
         PrepareSimulation(philosophers, forks);
         for (int i = 0; i < steps && !isDeadlock; i++)
         {
+            lastStep = i;
             isDeadlock = SimulationStep(philosophers, strategy);
             _stat.StepUpdate(i, philosophers, forks);
             if (i % 100000 == 0)
@@ -22,6 +24,7 @@ public class PDSimulation(List<Philosopher> philosophers, List<Fork> forks)
         CliStatistic.Show(_stat, philosophers, forks);
         if (isDeadlock)
         {
+            _stat.ShowStatusSimulation(lastStep, philosophers, forks);
             CliStatistic.DeadlockShow();
         }
     }

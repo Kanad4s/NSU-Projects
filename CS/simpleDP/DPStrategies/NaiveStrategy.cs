@@ -39,7 +39,7 @@ public class NaiveStrategy : IPhilosopherStrategy
                     _deadlockTime[philosopher]++;
                 }
             }
-            if (_deadlockTime[philosopher] > 10)
+            if (_deadlockTime[philosopher] > 2)
             {
                 return false;
             }
