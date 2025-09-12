@@ -8,7 +8,6 @@ public class Philosopher
     public PhilosopherState State { get; set; }
 
     public int StateDuration { get; set; } = 0;
-    public IPhilosopherStrategy Strategy { get; set; }
 
     public int MealsEaten = 0;
     public Fork LeftFork { get; set; }
@@ -19,11 +18,10 @@ public class Philosopher
     private int _eatingMin { get; }
     private int _eatingMax { get; }
 
-    public Philosopher(string name, IPhilosopherStrategy strategy, PhilosopherState state,
-        Fork leftFork, Fork rightFork, int thinkingMin, int thinkingMax, int eatingMin, int eatingMax)
+    public Philosopher(string name, PhilosopherState state, Fork leftFork, Fork rightFork,
+        int thinkingMin, int thinkingMax, int eatingMin, int eatingMax)
     {
         Name = name;
-        Strategy = strategy;
         State = state;
         LeftFork = leftFork;
         RightFork = rightFork;
@@ -31,11 +29,6 @@ public class Philosopher
         _thinkingMax = thinkingMax;
         _eatingMin = eatingMin;
         _eatingMax = eatingMax;
-    }
-
-    public void Decide()
-    {
-        Strategy.Decide(this);
     }
 
     public void StartThinking()
@@ -58,27 +51,27 @@ public class Philosopher
         return false;
     }
 
-    public void Step()
+    public bool Step()
     {
         if (StateDuration > 1)
         {
             StateDuration--;
-            return;
+            return true;
         }
 
         if (State == PhilosopherState.Eating)
         {
             MealsEaten++;
             StartThinking();
+            return true;
         }
         else if (State == PhilosopherState.Thinking)
         {
             State = PhilosopherState.Hungry;
             StateDuration = 0;
+            return true;
         }
-        else
-        {
-            // Strategy.Decide(this);
-        }
+        
+        return false;
     }
 }

@@ -29,8 +29,8 @@ public class Program
 
         var strategy = new NaiveStrategy();
 
-        var philosophers = Factory.CreatePhilosophers([.. names.GetNames()], strategy, forks, appConfig);
+        var philosophers = Factory.CreatePhilosophers([.. names.GetNames()], forks, appConfig);
 
-        PDSimulation.Simulate(philosophers, forks, appConfig.Simulation.Steps);
+        PDSimulation.Simulate(philosophers, forks, appConfig.Simulation.Steps, new NaiveStrategy());
     }
 }

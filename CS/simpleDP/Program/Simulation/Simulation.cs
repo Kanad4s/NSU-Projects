@@ -5,7 +5,7 @@ namespace Program.Simulation;
 
 public static class PDSimulation
 {
-    public static void Simulate(List<Philosopher> philosophers, List<Fork> forks, int steps)
+    public static void Simulate(List<Philosopher> philosophers, List<Fork> forks, int steps, IPhilosopherStrategy strategy)
     {
         PrepareSimulation(philosophers, forks);
         for (int i = 0; i < steps; i++)
@@ -19,7 +19,7 @@ public static class PDSimulation
     {
         foreach (var p in philosophers)
         {
-            p.Decide();
+            // p.Decide();
         }
     }
 

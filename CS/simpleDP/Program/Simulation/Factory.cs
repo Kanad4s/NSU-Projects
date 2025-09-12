@@ -6,8 +6,7 @@ namespace Program.Simulation;
 
 public static class Factory
 {
-    public static List<Philosopher> CreatePhilosophers(List<string> names, IPhilosopherStrategy strategy,
-        List<Fork> forks, AppConfig config)
+    public static List<Philosopher> CreatePhilosophers(List<string> names, List<Fork> forks, AppConfig config)
     {
         var philosophers = new List<Philosopher>();
 
@@ -15,7 +14,6 @@ public static class Factory
         {
             philosophers.Add(new Philosopher(
                 names[i],
-                strategy,
                 PhilosopherState.Thinking,
                 forks[i],
                 forks[(i + 1) % forks.Count],
