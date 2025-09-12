@@ -1,29 +1,33 @@
+using System.Runtime.InteropServices.Marshalling;
 using DPStrategyContract;
-using Simulation.Statistic;
 
 namespace Program.Simulation;
 
-public static class PDSimulation
+public  class PDSimulation(List<Philosopher> philosophers, List<Fork> forks)
 {
-    public static void Simulate(List<Philosopher> philosophers, List<Fork> forks, int steps, IPhilosopherStrategy strategy)
+    private  Statistic _stat = new(philosophers, forks);
+    public  void Simulate(List<Philosopher> philosophers, List<Fork> forks, int steps, IPhilosopherStrategy strategy)
     {
         PrepareSimulation(philosophers, forks);
         for (int i = 0; i < steps; i++)
         {
-            SimulationStep(philosophers);
-            Statistic.StatusSimulation(i, philosophers, forks);
+            SimulationStep(philosophers, strategy);
+            _stat.StepUpdate(i, philosophers, forks);
+            _stat.StatusSimulation(i, philosophers, forks);
         }
+        CliStatistic.Show(_stat, philosophers, forks);
     }
 
-    public static void SimulationStep(List<Philosopher> philosophers)
+    public  void SimulationStep(List<Philosopher> philosophers, IPhilosopherStrategy strategy)
     {
         foreach (var p in philosophers)
         {
-            // p.Decide();
+            p.Step();
+            strategy.Decide(p);
         }
     }
 
-    private static void PrepareSimulation(List<Philosopher> philosophers, List<Fork> forks)
+    private  void PrepareSimulation(List<Philosopher> philosophers, List<Fork> forks)
     {
         foreach (var p in philosophers)
         {

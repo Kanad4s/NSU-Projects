@@ -31,6 +31,7 @@ public class Program
 
         var philosophers = Factory.CreatePhilosophers([.. names.GetNames()], forks, appConfig);
 
-        PDSimulation.Simulate(philosophers, forks, appConfig.Simulation.Steps, new NaiveStrategy());
+        var sim = new PDSimulation(philosophers, forks);
+        sim.Simulate(philosophers, forks, appConfig.Simulation.Steps, new NaiveStrategy());
     }
 }

@@ -7,7 +7,7 @@ public class Philosopher
     public string Name { get; }
     public PhilosopherState State { get; set; }
 
-    public int StateDuration { get; set; } = 0;
+    public int StateDuration { get; private set; } = 0;
 
     public int MealsEaten = 0;
     public Fork LeftFork { get; set; }
@@ -70,8 +70,8 @@ public class Philosopher
             State = PhilosopherState.Hungry;
             StateDuration = 0;
             return true;
-        }
-        
+        } 
+
         return false;
     }
 }
