@@ -4,7 +4,7 @@ namespace DPStrategyContract;
 
 public interface IPhilosopherStrategy
 {
-    void Decide(Philosopher philosopher);
+    bool Decide(Philosopher philosopher);
     string StrategyName { get; }
 
 }

@@ -70,8 +70,44 @@ public class Philosopher
             State = PhilosopherState.Hungry;
             StateDuration = 0;
             return true;
-        } 
+        }
+        else if (State == PhilosopherState.Hungry)
+        {
+            if (TryEating())
+            {
+                return true;
+            }
+        }
 
         return false;
+    }
+
+    public bool TryTakeLeftFork()
+    {
+        return LeftFork.TryUse(this);
+    }
+    public bool TryTakeRightFork()
+    {
+        return RightFork.TryUse(this);
+    }
+
+    public void ReleaseLeftFork()
+    {
+        LeftFork.Release();
+    }
+
+    public void ReleaseRightFork()
+    {
+        RightFork.Release();
+    }
+
+    public bool HasLeftFork()
+    {
+        return LeftFork.Owner == this;
+    }
+
+    public bool HasRightFork()
+    {
+        return RightFork.Owner == this;
     }
 }

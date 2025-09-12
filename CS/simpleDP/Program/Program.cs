@@ -27,11 +27,11 @@ public class Program
 
         var forks = Factory.CreateForks(names.GetNames().Count());
 
-        var strategy = new NaiveStrategy();
-
         var philosophers = Factory.CreatePhilosophers([.. names.GetNames()], forks, appConfig);
+        
+        var strategy = new NaiveStrategy(philosophers);
 
         var sim = new PDSimulation(philosophers, forks);
-        sim.Simulate(philosophers, forks, appConfig.Simulation.Steps, new NaiveStrategy());
+        sim.Simulate(philosophers, forks, appConfig.Simulation.Steps, strategy);
     }
 }

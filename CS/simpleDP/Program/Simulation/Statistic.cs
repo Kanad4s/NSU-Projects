@@ -17,6 +17,7 @@ public class Statistic
         {
             PhilosopherWaiting.Add(p.Name, 0);
             MealsEaten.Add(p.Name, 0);
+
         }
 
         foreach (var f in forks)
@@ -55,8 +56,9 @@ public class Statistic
         Steps++;
     }
 
-    public void StatusSimulation(int step, List<Philosopher> philosophers, List<Fork> forks)
+    public void ShowStatusSimulation(int step, List<Philosopher> philosophers, List<Fork> forks)
     {
+        Console.Clear();
         Console.WriteLine($"===== ШАГ {step} =====");
         StatusPhilosophers(philosophers);
         StatusForks(forks);

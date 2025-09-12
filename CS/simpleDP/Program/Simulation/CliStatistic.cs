@@ -26,4 +26,12 @@ public static class CliStatistic
             Console.WriteLine($"\t   Eat: {stat.Steps - stat.ForkBlocked[f.Id] - stat.ForkAvailable[f.Id]} steps out of {stat.Steps}");
         }
     }
+
+    public static void DeadlockShow()
+    {
+        Console.WriteLine("DEADLOCK");
+        Console.WriteLine("DEADLOCK");
+        Console.WriteLine("DEADLOCK");
+    }
+
 }
