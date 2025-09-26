@@ -3,57 +3,54 @@ using DPStrategyContract;
 
 namespace Program.Simulation;
 
-public class PDSimulation(List<Philosopher> philosophers, List<Fork> forks)
+public class PDSimulation(List<Philosopher> philosophers, List<Fork> forks, IPhilosophersStrategy strategy)
 {
-    private  Statistic _stat = new(philosophers, forks);
-    public void Simulate(List<Philosopher> philosophers, List<Fork> forks, int steps, IPhilosopherStrategy strategy)
+    private Statistic _stat = new(philosophers, forks);
+    private List<Philosopher> _philosophers = philosophers;
+    private List<Fork> _forks = forks;
+    private IPhilosophersStrategy _strategy = strategy;
+    public void Simulate(int steps)
     {
         var isDeadlock = false;
         int lastStep = 0;
-        PrepareSimulation(philosophers, forks);
+        PrepareSimulation();
+
         for (int i = 0; i < steps && !isDeadlock; i++)
         {
             lastStep = i;
-            isDeadlock = SimulationStep(philosophers, strategy);
-            _stat.StepUpdate(i, philosophers, forks);
+            isDeadlock = SimulationStep();
+            _stat.StepUpdate(i, _philosophers, _forks);
             if (i % 100000 == 0)
             {
-                _stat.ShowStatusSimulation(i, philosophers, forks);
+                _stat.ShowStatusSimulation(i, _philosophers, _forks);
             }
         }
-        CliStatistic.Show(_stat, philosophers, forks);
+
+        CliStatistic.Show(_stat, _philosophers, _forks);
+
         if (isDeadlock)
         {
-            _stat.ShowStatusSimulation(lastStep, philosophers, forks);
+            _stat.ShowStatusSimulation(lastStep, _philosophers, _forks);
             CliStatistic.DeadlockShow();
         }
     }
 
-    public bool SimulationStep(List<Philosopher> philosophers, IPhilosopherStrategy strategy)
+    public bool SimulationStep()
     {
-        int isDeadlock = 0;
-        foreach (var p in philosophers)
-        {
-            if (!strategy.Decide(p))
-            {
-                isDeadlock++;
-            }
-        }
-        if (isDeadlock == philosophers.Count)
-        {
-            return true;
-        }
+        int philosophersStepped;
 
-        return false;
+        philosophersStepped = _strategy.Step(_philosophers);
+
+        return philosophersStepped == _philosophers.Count;
     }
 
-    private void PrepareSimulation(List<Philosopher> philosophers, List<Fork> forks)
+    private void PrepareSimulation()
     {
-        foreach (var p in philosophers)
+        foreach (var p in _philosophers)
         {
             p.StartThinking();
         }
-        foreach (var f in forks)
+        foreach (var f in _forks)
         {
             f.Release();
         }

@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.IO;
 using Program.Simulation;
 using DPStrategies;
 using Program.Infrastructure.Config;
@@ -29,9 +27,11 @@ public class Program
 
         var philosophers = Factory.CreatePhilosophers([.. names.GetNames()], forks, appConfig);
         
-        var strategy = new NaiveStrategy(philosophers);
+        // var strategy = new NaiveStrategy(philosophers);
 
-        var sim = new PDSimulation(philosophers, forks);
-        sim.Simulate(philosophers, forks, appConfig.Simulation.Steps, strategy);
+        var strategy = new CoordinatorStrategy(philosophers, forks);
+
+        var simulation = new PDSimulation(philosophers, forks, strategy);
+        simulation.Simulate(appConfig.Simulation.Steps);
     }
 }
