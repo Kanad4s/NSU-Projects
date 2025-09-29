@@ -8,3 +8,4 @@ public interface IPhilosophersStrategy
 }
 
 public delegate void OnHungry(Philosopher philosopher);
+public delegate bool TryTakeFork(Philosopher philosopher, Fork fork);

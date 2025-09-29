@@ -1,11 +1,9 @@
 using DPStrategyContract;
-using DPStrategyContract.Actions;
-using DPStrategyContract.States;
 namespace DPStrategies;
-// отдельно домен в один проект, в другой инфраструктуру, далее от задач
-// domen  -философ и вилка
-public class NaiveStrategy : IPhilosopherStrategy
+
+public class NaiveStrategy : IPhilosophersStrategy
 {
+    private const int _stepsInactive = 2;
     private Dictionary<Philosopher, int> _deadlockTime;
 
     public NaiveStrategy(List<Philosopher> philosophers)
@@ -17,34 +15,44 @@ public class NaiveStrategy : IPhilosopherStrategy
         }
     }
     public string StrategyName { get; set; } = "Naive Strategy";
-    public bool Decide(Philosopher philosopher)
+    public int Step(List<Philosopher> philosophers)
     {
-        if (!philosopher.Step())
+        int philosophersStepped = 0;
+        foreach (var p in philosophers)
         {
-            if (!philosopher.HasLeftFork())
+            if (!p.Step())
             {
-                if (philosopher.TryTakeLeftFork())
+                if (!p.HasLeftFork())
                 {
-                    _deadlockTime[philosopher] = 0;
-                }
-            }
-            else
-            {
-                if (philosopher.TryTakeRightFork())
-                {
-                    _deadlockTime[philosopher] = 0;
+                    if (p.TryTakeLeftFork())
+                    {
+                        philosophersStepped++;
+                        _deadlockTime[p] = 0;
+                    }
                 }
                 else
                 {
-                    _deadlockTime[philosopher]++;
+                    if (p.TryTakeRightFork())
+                    {
+                        philosophersStepped++;
+                        _deadlockTime[p] = 0;
+                    }
+                    else
+                    {
+                        _deadlockTime[p]++;
+                    }
                 }
+                if (_deadlockTime[p] > _stepsInactive)
+                {
+                    Console.WriteLine("Philosopher waits too match");
+                    // return false;
+                }
+                continue;
             }
-            if (_deadlockTime[philosopher] > 2)
-            {
-                return false;
-            }
+            philosophersStepped++;
         }
-        return true;
+
+        return philosophersStepped;
     }
 
 }

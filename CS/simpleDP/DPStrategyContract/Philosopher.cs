@@ -18,6 +18,8 @@ public class Philosopher
     private int _eatingMin { get; }
     private int _eatingMax { get; }
 
+    public event OnHungry Hungry;
+
     public Philosopher(string name, PhilosopherState state, Fork leftFork, Fork rightFork,
         int thinkingMin, int thinkingMax, int eatingMin, int eatingMax)
     {
@@ -58,8 +60,7 @@ public class Philosopher
             StateDuration--;
             return true;
         }
-
-        if (State == PhilosopherState.Eating)
+        else if (State == PhilosopherState.Eating)
         {
             MealsEaten++;
             StartThinking();
@@ -73,13 +74,48 @@ public class Philosopher
         }
         else if (State == PhilosopherState.Hungry)
         {
-            if (TryEating())
-            {
-                return true;
-            }
+            return TryEating();
         }
 
         return false;
+    }
+
+    public bool StepWithCoordinator()
+    {
+        if (StateDuration > 1)
+        {
+            StateDuration--;
+            return true;
+        }
+
+        if (State == PhilosopherState.Eating)
+        {
+            MealsEaten++;
+            StartThinking();
+            return true;
+        }
+        else if (State == PhilosopherState.Thinking)
+        {
+            State = PhilosopherState.Hungry;
+            StateDuration = 0;
+            Hungry(this);
+            return true;
+        }
+        else if (State == PhilosopherState.Hungry)
+        {
+            return TryEating();
+        }
+        return false;
+    }
+
+    public bool TryTakeFork(Fork fork)
+    {
+        if (fork == LeftFork)
+        {
+            return TryTakeLeftFork();
+        }
+
+        return TryTakeRightFork();
     }
 
     public bool TryTakeLeftFork()

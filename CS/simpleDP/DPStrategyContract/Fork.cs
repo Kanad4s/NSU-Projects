@@ -16,6 +16,11 @@ public class Fork(int id)
         return State == ForkState.InUse;
     }
 
+    public bool IsAvailable()
+    {
+        return State == ForkState.Available;
+    }
+
     public void Release()
     {
         State = ForkState.Available;
