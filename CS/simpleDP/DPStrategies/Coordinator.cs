@@ -11,7 +11,6 @@ public class Coordinator
     private List<Philosopher> _processingHungryQueue;
 
     public event TryTakeFork TakeFork;
-    // public event Action<Philosopher, Fork> TryTakeFork;
 
     public Coordinator(List<Philosopher> philosophers, List<Fork> forks)
     {
@@ -58,7 +57,6 @@ public class Coordinator
                 StartProcessPhilosopher(p);
             }
         }
-        // Console.WriteLine("decide Hungry");
         return decideCount;
     }
 
