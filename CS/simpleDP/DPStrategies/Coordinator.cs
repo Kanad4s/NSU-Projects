@@ -10,7 +10,7 @@ public class Coordinator
     private List<Philosopher> _hungryQueue;
     private List<Philosopher> _processingHungryQueue;
 
-    public event TryTakeFork TakeFork;
+    public event TryTakeFork? TakeFork;
 
     public Coordinator(List<Philosopher> philosophers, List<Fork> forks)
     {
@@ -41,7 +41,7 @@ public class Coordinator
         int decideCount = 0;
         foreach (var p in _processingHungryQueue.ToList())
         {
-            if (TakeFork(p, GetFork(p)))
+            if (TakeFork!(p, GetFork(p)))
             {
                 decideCount++;
             }
