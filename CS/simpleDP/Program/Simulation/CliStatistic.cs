@@ -7,6 +7,7 @@ public static class CliStatistic
     public static void Show(Statistic stat, List<Philosopher> philosophers, List<Fork> forks)
     {
         Console.WriteLine("METRICS:");
+        Console.WriteLine($"Steps: {stat.Steps}");
         Console.WriteLine("Пропускная способность:");
         foreach (var p in philosophers)
         {
