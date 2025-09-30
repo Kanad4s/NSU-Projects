@@ -58,7 +58,7 @@ public class Statistic
 
     public void ShowStatusSimulation(int step, List<Philosopher> philosophers, List<Fork> forks)
     {
-        Console.Clear();
+        // Console.Clear();
         Console.WriteLine($"===== ШАГ {step} =====");
         StatusPhilosophers(philosophers);
         StatusForks(forks);

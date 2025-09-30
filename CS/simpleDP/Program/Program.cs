@@ -28,10 +28,10 @@ public class Program
 
         var philosophers = Factory.CreatePhilosophers([.. names.GetNames()], forks, appConfig);
 
-        // var strategy = new NaiveStrategy(philosophers);
+        var strategy = new NaiveStrategy(philosophers);
 
-        var coordinator = new Coordinator(philosophers, forks);
-        var strategy = new CoordinatorStrategy(philosophers, coordinator);
+        // var coordinator = new Coordinator(philosophers, forks);
+        // var strategy = new CoordinatorStrategy(philosophers, coordinator);
 
         var simulation = new PDSimulation(philosophers, forks, strategy);
         simulation.Simulate(appConfig.Simulation.Steps);

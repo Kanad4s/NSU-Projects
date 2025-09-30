@@ -44,7 +44,7 @@ public class NaiveStrategy : IPhilosophersStrategy
                 }
                 if (_deadlockTime[p] > _stepsInactive)
                 {
-                    Console.WriteLine("Philosopher waits too match");
+                    // Console.WriteLine("Philosopher waits too match");
                     // return false;
                 }
                 continue;
