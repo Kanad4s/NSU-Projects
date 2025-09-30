@@ -41,7 +41,7 @@ public class PDSimulation(List<Philosopher> philosophers, List<Fork> forks, IPhi
 
         philosophersStepped = _strategy.Step(_philosophers);
 
-        return philosophersStepped == _philosophers.Count;
+        return philosophersStepped == 0;
     }
 
     private void PrepareSimulation()

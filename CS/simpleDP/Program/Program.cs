@@ -2,6 +2,7 @@
 using Program.Simulation;
 using DPStrategies;
 using Program.Infrastructure.Config;
+using DPStrategyContract;
 
 
 namespace Program;

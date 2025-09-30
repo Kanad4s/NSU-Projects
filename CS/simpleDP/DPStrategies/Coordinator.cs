@@ -40,7 +40,7 @@ public class Coordinator
     public int DecideHungry()
     {
         int decideCount = 0;
-        foreach (var p in _processingHungryQueue)
+        foreach (var p in _processingHungryQueue.ToList())
         {
             if (TakeFork(p, GetFork(p)))
             {
@@ -51,14 +51,14 @@ public class Coordinator
                 FinishProcessPhilosopher(p);
             }
         }
-        foreach (var p in _hungryQueue)
+        foreach (var p in _hungryQueue.ToList())
         {
             if (IsAbleToProcess(p))
             {
                 StartProcessPhilosopher(p);
             }
         }
-        Console.WriteLine("decide Hungry");
+        // Console.WriteLine("decide Hungry");
         return decideCount;
     }
 
