@@ -22,4 +22,4 @@ jobs:
 
     - name: Test SSH connection
       run: |
-        ssh -i ~/.ssh/id_ed25519 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "echo 'SSH works!'"
+        ssh -i "${{ secrets.SSH_PRIVATE_KEY }}" ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "echo 'SSH works!'"
