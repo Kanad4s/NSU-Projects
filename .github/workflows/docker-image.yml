@@ -18,8 +18,8 @@ jobs:
         echo "User: ${{ secrets.SERVER_USER }}"
         echo "Host: ${{ secrets.SERVER_HOST }}"
         echo "Password length: ${#SSH_PASSWORD}"
-        env:
-          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+      env:
+        SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
     - name: Test SSH connection
       run: | 
         sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "echo 'SSH works!'"
