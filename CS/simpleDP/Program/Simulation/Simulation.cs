@@ -3,6 +3,7 @@ using DPStrategyContract;
 
 namespace Program.Simulation;
 
+// add table
 public class PDSimulation(List<Philosopher> philosophers, List<Fork> forks, IPhilosophersStrategy strategy)
 {
     private Statistic _stat = new(philosophers, forks);
@@ -18,11 +19,12 @@ public class PDSimulation(List<Philosopher> philosophers, List<Fork> forks, IPhi
         for (int i = 0; i < steps && !isDeadlock; i++)
         {
             lastStep = i;
+            // отдельный детектор дедлоков или детект их в мониторе
             isDeadlock = SimulationStep();
             _stat.StepUpdate(i, _philosophers, _forks);
             if (i % 100000 == 0)
             {
-                _stat.ShowStatusSimulation(i, _philosophers, _forks);
+                CliStatistic.ShowStatusSimulation(i, _philosophers, _forks);
             }
         }
 
@@ -30,7 +32,7 @@ public class PDSimulation(List<Philosopher> philosophers, List<Fork> forks, IPhi
 
         if (isDeadlock)
         {
-            _stat.ShowStatusSimulation(lastStep, _philosophers, _forks);
+            CliStatistic.ShowStatusSimulation(lastStep, _philosophers, _forks);
             CliStatistic.DeadlockShow();
         }
     }
