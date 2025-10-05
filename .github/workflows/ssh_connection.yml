@@ -11,7 +11,7 @@ jobs:
     - name: Setup SSH
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/booktok
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/booktok
         chmod 600 ~/booktok
     - name: Add server to known hosts
       run: |
@@ -24,4 +24,4 @@ jobs:
 
     - name: Test SSH connection
       run: |
-        ssh -o StrictHostKeyChecking=no -i ~/booktok ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "echo 'SSH works!'"
+        ssh -i ~/booktok ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "echo 'SSH works!'"
