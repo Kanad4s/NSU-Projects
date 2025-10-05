@@ -11,12 +11,12 @@ jobs:
     - name: Setup SSH
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/booktok.key
-        chmod 600 ~/.ssh/booktok.key
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/booktok.key
+        chmod 600 ~/booktok.key
     - name: Add server to known hosts
       run: |
         ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
-        ssh-keygen -l -f ~/.ssh/booktok.key
+        ssh-keygen -l -f ~/booktok.key
 
     # - name: Debug SSH key format
     #   run: |
@@ -25,4 +25,4 @@ jobs:
 
     - name: Test SSH connection
       run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/booktok.key ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "echo 'SSH works!!'"
+        ssh -o StrictHostKeyChecking=no -i ~/booktok.key ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "echo 'SSH works!!'"
