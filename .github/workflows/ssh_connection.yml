@@ -16,7 +16,6 @@ jobs:
     - name: Add server to known hosts
       run: |
         ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
-        ssh-keygen -l -f ~/booktok
 
     # - name: Debug SSH key format
     #   run: |
