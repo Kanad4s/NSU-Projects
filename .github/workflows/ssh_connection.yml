@@ -24,5 +24,4 @@ jobs:
 
     - name: Test SSH connection
       run: |
-        # sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "echo 'SSH works!!!'"
         ssh -i ~/booktok ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "echo 'SSH works!'"
