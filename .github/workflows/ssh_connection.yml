@@ -11,7 +11,7 @@ jobs:
     - name: Setup SSH
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/booktok
+        echo "${{ secrets.SSH_PASSWORD }}" > ~/booktok
         chmod 600 ~/booktok
     - name: Add server to known hosts
       run: |
