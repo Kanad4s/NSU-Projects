@@ -1,15 +1,39 @@
 using System.Runtime.InteropServices.Marshalling;
 using DPStrategyContract;
+using Program.Infrastructure.Config;
 
 namespace Program.Simulation;
 
 // add table
-public class PDSimulation(List<Philosopher> philosophers, List<Fork> forks, IPhilosophersStrategy strategy)
+public class PDSimulation
 {
-    private Statistic _stat = new(philosophers, forks);
-    private List<Philosopher> _philosophers = philosophers;
-    private List<Fork> _forks = forks;
-    private IPhilosophersStrategy _strategy = strategy;
+    private Statistic _stat;
+    private Table _table;
+    private List<Philosopher> _philosophers;
+    private List<Fork> _forks;
+    private IPhilosophersStrategy _strategy;
+
+    public PDSimulation(List<Philosopher> philosophers, List<Fork> forks, IPhilosophersStrategy strategy)
+    {
+        _stat = new(philosophers, forks);
+        _philosophers = philosophers;
+        _forks = forks;
+        _strategy = strategy;
+    }
+
+    public PDSimulation(AppConfig config)
+    {
+        var names = new FilePhilosopherNameProvider(config.PhilosophersFile);
+
+        _forks = Factory.CreateForks(names.GetNames().Count());
+
+        _table = new(_forks);
+
+        _philosophers = Factory.CreatePhilosophers([.. names.GetNames()], _forks, config);
+
+        _table.SitPhilosophers(_philosophers);
+
+    }
     public void Simulate(int steps)
     {
         var isDeadlock = false;
@@ -45,6 +69,7 @@ public class PDSimulation(List<Philosopher> philosophers, List<Fork> forks, IPhi
 
         return philosophersStepped == 0;
     }
+
 
     private void PrepareSimulation()
     {

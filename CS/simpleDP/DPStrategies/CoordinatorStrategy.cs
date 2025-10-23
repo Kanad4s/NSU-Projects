@@ -6,6 +6,7 @@ public class CoordinatorStrategy : IPhilosophersStrategy
     private Dictionary<Philosopher, int> _deadlockTime;
     private Coordinator _coordinator;
 
+// в координаторе должна быть стратегия
     public CoordinatorStrategy(List<Philosopher> philosophers, Coordinator coordinator)
     {
         _deadlockTime = [];
@@ -33,8 +34,5 @@ public class CoordinatorStrategy : IPhilosophersStrategy
 
         return philosophersStepped;
     }
-
-
-
 
 }

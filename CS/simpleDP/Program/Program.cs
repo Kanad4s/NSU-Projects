@@ -22,18 +22,7 @@ public class Program
         Console.WriteLine($"Steps: {appConfig.Simulation.Steps}");
         Console.WriteLine($"Philosophers file: {appConfig.PhilosophersFile}");
 
-        var names = new FilePhilosopherNameProvider(appConfig.PhilosophersFile);
-
-        var forks = Factory.CreateForks(names.GetNames().Count());
-
-        var philosophers = Factory.CreatePhilosophers([.. names.GetNames()], forks, appConfig);
-
-        // var strategy = new NaiveStrategy(philosophers);
-
-        var coordinator = new Coordinator(philosophers, forks);
-        var strategy = new CoordinatorStrategy(philosophers, coordinator);
-
-        var simulation = new PDSimulation(philosophers, forks, strategy);
+        var simulation = new PDSimulation(appConfig);
         simulation.Simulate(appConfig.Simulation.Steps);
     }
 }

@@ -33,6 +33,29 @@ public class Philosopher
         _eatingMax = eatingMax;
     }
 
+    public Philosopher(string name, PhilosopherState state,
+        int thinkingMin, int thinkingMax, int eatingMin, int eatingMax)
+    {
+        Name = name;
+        State = state;
+        _thinkingMin = thinkingMin;
+        _thinkingMax = thinkingMax;
+        _eatingMin = eatingMin;
+        _eatingMax = eatingMax;
+    }
+
+    public void SetFork(Fork fork, bool isLeft)
+    {
+        if (isLeft)
+        {
+            LeftFork = fork;
+        }
+        else
+        {
+            RightFork = fork;
+        }
+    }
+
     public void StartThinking()
     {
         LeftFork.Release();
@@ -41,6 +64,7 @@ public class Philosopher
         StateDuration = Random.Shared.Next(_thinkingMin, _thinkingMax + 1);
     }
 
+// перевести в голодное состояние
     public bool TryEating()
     {
         if (LeftFork.Owner == this && RightFork.Owner == this)
@@ -68,6 +92,7 @@ public class Philosopher
         }
         else if (State == PhilosopherState.Thinking)
         {
+            // 
             State = PhilosopherState.Hungry;
             StateDuration = 0;
             return true;
@@ -80,6 +105,7 @@ public class Philosopher
         return false;
     }
 
+// все взаимодействие через делегаты и в наивной стратегии
     public bool StepWithCoordinator()
     {
         if (StateDuration > 1)
