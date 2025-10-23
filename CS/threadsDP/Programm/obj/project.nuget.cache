@@ -1,8 +1,21 @@
 {
   "version": 2,
-  "dgSpecHash": "8D+L/WFberEtaU8/uiZEKzgjQXOtCQzCZbDNMThPXMMkN/E3q8acjOorIgxBHfiCVGfX9AwL3sWAYWZYcQT+eA==",
+  "dgSpecHash": "dV7CZLbA8dZRkOzSS0GoayPjUcqBQzX2DkwJ6x+Xrh+dxv6ZsWRFeTmdp+sapJ+nQjEtP9OfIdCT9uCagU4MeQ==",
   "success": true,
   "projectFilePath": "/home/kanad4s/NSU-Projects/CS/threadsDP/Programm/Programm.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/kanad4s/.nuget/packages/microsoft.extensions.configuration/9.0.10/microsoft.extensions.configuration.9.0.10.nupkg.sha512",
+    "/home/kanad4s/.nuget/packages/microsoft.extensions.configuration.abstractions/9.0.10/microsoft.extensions.configuration.abstractions.9.0.10.nupkg.sha512",
+    "/home/kanad4s/.nuget/packages/microsoft.extensions.configuration.binder/9.0.10/microsoft.extensions.configuration.binder.9.0.10.nupkg.sha512",
+    "/home/kanad4s/.nuget/packages/microsoft.extensions.configuration.fileextensions/9.0.10/microsoft.extensions.configuration.fileextensions.9.0.10.nupkg.sha512",
+    "/home/kanad4s/.nuget/packages/microsoft.extensions.configuration.json/9.0.10/microsoft.extensions.configuration.json.9.0.10.nupkg.sha512",
+    "/home/kanad4s/.nuget/packages/microsoft.extensions.fileproviders.abstractions/9.0.10/microsoft.extensions.fileproviders.abstractions.9.0.10.nupkg.sha512",
+    "/home/kanad4s/.nuget/packages/microsoft.extensions.fileproviders.physical/9.0.10/microsoft.extensions.fileproviders.physical.9.0.10.nupkg.sha512",
+    "/home/kanad4s/.nuget/packages/microsoft.extensions.filesystemglobbing/9.0.10/microsoft.extensions.filesystemglobbing.9.0.10.nupkg.sha512",
+    "/home/kanad4s/.nuget/packages/microsoft.extensions.primitives/9.0.10/microsoft.extensions.primitives.9.0.10.nupkg.sha512",
+    "/home/kanad4s/.nuget/packages/system.io.pipelines/9.0.10/system.io.pipelines.9.0.10.nupkg.sha512",
+    "/home/kanad4s/.nuget/packages/system.text.encodings.web/9.0.10/system.text.encodings.web.9.0.10.nupkg.sha512",
+    "/home/kanad4s/.nuget/packages/system.text.json/9.0.10/system.text.json.9.0.10.nupkg.sha512"
+  ],
   "logs": []
 }

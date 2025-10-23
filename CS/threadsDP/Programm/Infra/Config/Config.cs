@@ -1,3 +1,6 @@
+using System.IO;
+using Microsoft.Extensions.Configuration;
+
 namespace Programm.Infrastructure.Config
 {
     public class SimulationConfig
@@ -13,5 +16,18 @@ namespace Programm.Infrastructure.Config
     {
         public SimulationConfig Simulation { get; set; } = new();
         public string PhilosophersFile { get; set; } = "Config/appsettings.json";
+
+        public static AppConfig GetConfig()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("Config/appsettings.json", optional: false, reloadOnChange: true);
+
+            IConfiguration configuration = builder.Build();
+
+            return configuration.Get<AppConfig>() ?? new AppConfig();
+        }
+
     }
+
 }
