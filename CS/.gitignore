@@ -1,1 +1,51 @@
-CS/simpleEP/.vscode/settings.json
+# .NET build outputs
+bin/
+obj/
+
+# Test artifacts
+TestResults/
+*.trx
+
+# Logs
+*.log
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
+.coverage
+.coveragexml
+
+# BenchmarkDotNet
+BenchmarkDotNet.Artifacts/
+
+# NuGet local packages (optional)
+packages/
+*.nupkg
+
+# IDE: JetBrains Rider / IntelliJ / VS / VS Code
+.idea/
+.vscode/
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.iml
+*.csproj.user
+*.DotSettings.user
+*.sln.DotSettings.user
+_ReSharper*/
+.ReSharper*/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env files (keep examples)
+.env
+.env.*
+!.env.example
+
+# Misc
+*.stackdump
+

@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DiningPhilosophers.Contracts\DiningPhilosophers.Contracts.csproj" />
+    <ProjectReference Include="..\DiningPhilosophers.Simulator\DiningPhilosophers.Simulator.csproj" />
+    <ProjectReference Include="..\DiningPhilosophers.Strategies.Naive\DiningPhilosophers.Strategies.Naive.csproj" />
+    <ProjectReference Include="..\DiningPhilosophers.Strategies.Coordinator\DiningPhilosophers.Strategies.Coordinator.csproj" />
+  </ItemGroup>
+</Project>
+
