@@ -10,7 +10,6 @@ public class SimulationStateTransitionsTests
     [Fact]
     public void Philosopher_cycles_through_Thinking_Hungry_Eating_Thinking()
     {
-        // Arrange
         var names = new[] { "A", "B", "C" };
         var renderer = new TestRenderer();
         var sim = new Simulator.Simulation(
@@ -19,13 +18,11 @@ public class SimulationStateTransitionsTests
             renderer);
         var strategy = new NaiveLeftRightStrategy();
 
-        // Act
         sim.Run(
             strategy,
             steps: 200,
             renderEvery: 1);
 
-        // Assert
         var events = renderer.Events
             .OrderBy(e => e.Step)
             .ToList();
@@ -108,7 +105,6 @@ public class SimulationStateTransitionsTests
                 return true;
             }
 
-            // иначе пробуем со следующего появления первого состояния
         }
     }
 }

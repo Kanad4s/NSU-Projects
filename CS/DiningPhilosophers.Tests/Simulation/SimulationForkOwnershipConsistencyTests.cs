@@ -12,7 +12,6 @@ public class SimulationForkOwnershipConsistencyTests
     [Fact]
     public void When_philosopher_is_eating_both_adjacent_forks_are_owned_by_him_and_released_after()
     {
-        // Arrange
         var names = new[] { "A", "B", "C" };
         var renderer = new TestRenderer();
         var sim = new Simulator.Simulation(
@@ -21,7 +20,6 @@ public class SimulationForkOwnershipConsistencyTests
             renderer);
         var strategy = new NaiveLeftRightStrategy();
 
-        // Act
         sim.Run(
             strategy,
             steps: 300,
@@ -67,7 +65,6 @@ public class SimulationForkOwnershipConsistencyTests
             left.OwnerPhilosopherId.Should().Be(pid);
             right.OwnerPhilosopherId.Should().Be(pid);
 
-            // Найти момент возврата к Thinking
             var backIdx = states.FindIndex(
                 eatIdx + 1,
                 s => s.P.State == PhilosopherState.Thinking);

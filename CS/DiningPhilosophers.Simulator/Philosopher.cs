@@ -11,15 +11,12 @@ public sealed class Philosopher
     public bool HasLeftFork { get; private set; }
     public bool HasRightFork { get; private set; }
 
-    // Таймеры взятия вилок 
     private int _takingLeftStepsLeft;
     private int _takingRightStepsLeft;
 
-    // Таймеры состояний
     private int _thinkingStepsLeft;
     private int _eatingStepsLeft;
 
-    // Для метрики
     public int EatenCount { get; private set; }
     public int WaitingInHungry { get; private set; } 
     public int MaxWaitingInHungry { get; private set; }
@@ -75,7 +72,6 @@ public sealed class Philosopher
             if (_takingRightStepsLeft == 0) HasRightFork = true;
         }
 
-        // Обработка текущего состояния
         switch (State)
         {
             case PhilosopherState.Thinking:

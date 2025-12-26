@@ -35,7 +35,6 @@ public class SimulationLifetimeService : BackgroundService
         }
         catch (OperationCanceledException)
         {
-            // Симуляция прервана извне
             _logger.LogInformation("Симуляция прервана");
         }
 

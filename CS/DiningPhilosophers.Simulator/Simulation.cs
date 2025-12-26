@@ -11,7 +11,6 @@ public sealed class Simulation
 
     private long _stepsRun;
     
-    // детектор дедлока
     private int  _noProgressSteps;
     private const int DeadlockGrace = 10; 
     private bool _deadlockDetected;

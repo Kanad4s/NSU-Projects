@@ -10,7 +10,6 @@ public sealed class ConcurrentFork
     public ForkState State { get; private set; } = ForkState.Available;
     public int? OwnerId { get; private set; }
 
-    // true, если вилка прямо сейчас участвует в еде (для метрик)
     private bool _inEatingUse;
 
     public long FreeMs { get; private set; }

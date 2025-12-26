@@ -7,11 +7,11 @@ public static class RealTimeTiming
 
     public const int RenderPeriodMs = 150;    
 
-    public const int ThinkMinMs = 30;
-    public const int ThinkMaxMs = 100;
+    public const int ThinkMinMs = 120;
+    public const int ThinkMaxMs = 200;
 
-    public const int EatMinMs = 40;
-    public const int EatMaxMs = 50;
+    public const int EatMinMs = 10;
+    public const int EatMaxMs = 20;
 
     public const int TakeForkMs = 20;
 }
